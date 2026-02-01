@@ -9,6 +9,7 @@ bgmapeditor_tiles
 .env.local
 .env.*.local
 frontend/.env
+*.exemple
 
 # Node modules
 node_modules/
