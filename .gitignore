@@ -1,0 +1,29 @@
+bgmapeditor_tiles
+
+# Security - never commit passwords
+.htpasswd
+*.htpasswd
+
+# Environment files
+.env
+.env.local
+.env.*.local
+frontend/.env
+
+# Node modules
+node_modules/
+frontend/node_modules/
+
+# Build outputs
+frontend/dist/
+backend/staticfiles/
+
+# Python
+*.pyc
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Documentation (markdown files)
+*.md
+!README.md

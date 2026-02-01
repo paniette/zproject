@@ -1,0 +1,48 @@
+/* Global styles with landing page colors */
+:root {
+  --primary-color: #e63946;
+  --secondary-color: #457b9d;
+  --dark-color: #1d3557;
+  --light-color: #f1faee;
+  --danger-color: #bc1c1c;
+  --success-color: #2a9d8f;
+  --brown-dark: #3d2817;
+  --brown-medium: #5a3e2b;
+  --brown-light: #8b6f47;
+  --gray-dark: #2c2c2c;
+  --gray-medium: #4a4a4a;
+  --gray-light: #6b6b6b;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Roboto:wght@300;400;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #3d2817 0%, #2c2c2c 100%);
+  color: white;
+  overflow: hidden;
+}
+
+#app {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Titles with Creepster font */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Creepster', cursive;
+  color: var(--primary-color);
+}
+
+/* Buttons */
+button {
+  font-family: 'Roboto', sans-serif;
+}

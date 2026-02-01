@@ -1,0 +1,97 @@
+{
+  "name": "cyrilou",
+  "pack": null,
+  "grid": {
+    "width": 10,
+    "height": 10,
+    "tileSize": 10
+  },
+  "layers": {
+    "tiles": [
+      {
+        "id": "tile_1769957465328_ku03rllvp",
+        "x": 270,
+        "y": 170,
+        "asset": "G-Zombicide-BP/01.tiles/35V.png/r_0.png",
+        "rotation": 0
+      },
+      {
+        "id": "tile_1769957466366_0ersvlh8f",
+        "x": 295,
+        "y": 195,
+        "asset": "G-Zombicide-BP/01.tiles/35R.png/r_0.png",
+        "rotation": 0
+      },
+      {
+        "id": "tile_1769957464598_z8qjv82se",
+        "x": 245,
+        "y": 195,
+        "asset": "G-Zombicide-BP/01.tiles/36R.png/r_0.png",
+        "rotation": 0
+      },
+      {
+        "id": "tile_1769957462540_c3prgkmyb",
+        "x": 245,
+        "y": 170,
+        "asset": "G-Zombicide-BP/01.tiles/30R.png/r_0.png",
+        "rotation": 90
+      },
+      {
+        "id": "tile_1769957463637_8693tdgux",
+        "x": 295,
+        "y": 170,
+        "asset": "G-Zombicide-BP/01.tiles/33R.png/r_0.png",
+        "rotation": 180
+      },
+      {
+        "id": "tile_1769957493764_zunf36mnd",
+        "x": 270,
+        "y": 195,
+        "asset": "G-Zombicide-BP/01.tiles/3V.png/r_0.png",
+        "rotation": 90
+      }
+    ],
+    "objects": [
+      {
+        "type": "02.doors",
+        "asset": "G-Zombicide-BP/02.doors/Door-Closed-Red.png/r_0.png",
+        "x": 256,
+        "y": 183,
+        "rotation": 0,
+        "id": "obj_1769958211758_ew4w0swdb"
+      },
+      {
+        "type": "02.doors",
+        "asset": "G-Zombicide-BP/02.doors/Door-Closed-Red.png/r_0.png",
+        "x": 298,
+        "y": 179,
+        "rotation": 180,
+        "id": "obj_1769958212712_5orh98t6p"
+      },
+      {
+        "type": "02.doors",
+        "asset": "G-Zombicide-BP/02.doors/Door-Closed-Red.png/r_0.png",
+        "x": 314,
+        "y": 184,
+        "rotation": 0,
+        "id": "obj_1769958215133_ttavzrnf9"
+      },
+      {
+        "type": "02.doors",
+        "asset": "G-Zombicide-BP/02.doors/Door-Closed-Red.png/r_0.png",
+        "x": 257,
+        "y": 209,
+        "rotation": 0,
+        "id": "obj_1769958216937_e92ohtq6d"
+      }
+    ]
+  },
+  "gridOffsetX": -2133,
+  "gridOffsetY": -1573,
+  "metadata": {
+    "created": "2026-02-01T15:51:45.519071",
+    "modified": "2026-02-01T16:03:51.996814",
+    "author": "temp"
+  },
+  "id": "map_53facd8e31d2"
+}

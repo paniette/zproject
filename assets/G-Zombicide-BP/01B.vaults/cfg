@@ -1,0 +1,5 @@
+z-index=2
+align=0
+name=Vaults
+max=Vault-Door-Purple-Closed.png:2;Vault-Door-Purple-Open.png:2;Vault-Door-Yellow-Closed.png:2;Vault-Door-Yellow-Open.png:2;Vault-Purple.png:1;Vault-Yellow.png:1
+pairs=Vault-Door-Purple-Closed.png:Vault-Door-Purple-Open.png;Vault-Door-Yellow-Closed.png:Vault-Door-Yellow-Open.png

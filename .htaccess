@@ -1,0 +1,50 @@
+# Apache configuration for Zombicide Editor
+# This file protects the /editor/ directory with basic authentication
+
+# Enable rewrite engine
+RewriteEngine On
+
+# Protect the editor directory
+<DirectoryMatch "^/editor/">
+    # Require authentication
+    AuthType Basic
+    AuthName "Zombicide Editor - Accès Restreint"
+        AuthUserFile /path/to/.htpasswd
+        # Example: AuthUserFile /home/user/.htpasswd
+        # Or if .htpasswd is in the same directory: AuthUserFile /var/www/html/.htpasswd
+    Require valid-user
+    
+    # Allow access to static files (images, CSS, JS)
+    <FilesMatch "\.(css|js|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot|json)$">
+        Require all granted
+    </FilesMatch>
+</DirectoryMatch>
+
+# Alternative: Protect specific paths
+# Uncomment if you want to protect only certain paths
+# <LocationMatch "^/editor/(index\.html|.*\.html)$">
+#     AuthType Basic
+#     AuthName "Zombicide Editor - Accès Restreint"
+#     AuthUserFile /path/to/.htpasswd
+#     Require valid-user
+# </LocationMatch>
+
+# Serve index.html for SPA routing
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /editor/
+    
+    # Don't rewrite files that exist
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    
+    # Rewrite everything else to index.html
+    RewriteRule . /editor/index.html [L]
+</IfModule>
+
+# CORS headers for assets (if needed)
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type"
+</IfModule>

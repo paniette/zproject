@@ -1,0 +1,5 @@
+z-index=3
+align=0
+name=Other Tokens
+max=Noise.png:18;Dragon-Bile.png:4;Dragon-Fire.png:2;Magic-Dome.png:2;Exit-1.png:1;Exit-2.png:1;Extra-Action.png:1;First-Player-Token.png:1;Objective-Blue.png:1;Objective-Green.png:1;Objective-Red.png:10;Rotten.png:1;Spawn-Blue.png:1;Spawn-Green.png:1;Spawn-Necromancer-Beige.png:1;Spawn-Necromancer-Blue.png:1;Spawn-Necromancer-Brown.png:1;Spawn-Necromancer-Green.png:1;Spawn-Necromancer-Purple.png:1;Spawn-Necromancer-Red.png:1;Spawn-Red.png:12
+pairs=Dragon-Bile.png:Dragon-Fire.png;Dragon-Bile.png:Magic-Dome.png;Exit-1.png:Exit-2.png;Objective-Blue.png:Objective-Red.png;Objective-Green.png:Objective-Red.png;Spawn-Blue.png:Spawn-Red.png;Spawn-Green.png:Spawn-Red.png;Spawn-Necromancer-Beige.png:Spawn-Red.png;Spawn-Necromancer-Blue.png:Spawn-Red.png;Spawn-Necromancer-Brown.png:Spawn-Red.png;Spawn-Necromancer-Green.png:Spawn-Red.png;Spawn-Necromancer-Purple.png:Spawn-Red.png;Spawn-Necromancer-Red.png:Spawn-Red.png;
