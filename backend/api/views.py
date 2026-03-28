@@ -259,18 +259,34 @@ class CustomPackUploadView(APIView):
             
             image_file = request.FILES.get('image')
             asset_name = request.data.get('asset_name')
-            target_size = int(request.data.get('target_size', 32))
             category = request.data.get('category', '01.tiles')
             pack_name = request.data.get('pack_name', 'custom')
-            
+            tw = request.data.get('target_width')
+            th = request.data.get('target_height')
+            target_size = request.data.get('target_size', 32)
+
             if not image_file or not asset_name:
                 return Response(
                     {"error": "image and asset_name are required"},
                     status=status.HTTP_400_BAD_REQUEST
                 )
-            
+
             uploader = PackUploader(pack_name)
-            result = uploader.upload_and_normalize(image_file, asset_name, target_size, category)
+            if tw is not None and th is not None:
+                result = uploader.upload_and_normalize(
+                    image_file,
+                    asset_name,
+                    category,
+                    target_width=int(tw),
+                    target_height=int(th),
+                )
+            else:
+                result = uploader.upload_and_normalize(
+                    image_file,
+                    asset_name,
+                    category,
+                    target_size=int(target_size),
+                )
             
             return Response(result, status=status.HTTP_201_CREATED)
         except Exception as e:
