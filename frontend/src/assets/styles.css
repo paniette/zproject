@@ -1,4 +1,9 @@
-/* Global styles with landing page colors */
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Roboto:wght@300;400;700&display=swap');
+
+/*
+ * Thème de l’éditeur : couleurs centralisées dans :root.
+ * Pour un thème alternatif, définir sur <html> : data-theme="slate" (voir bloc ci-dessous).
+ */
 :root {
   --primary-color: #e63946;
   --secondary-color: #457b9d;
@@ -12,9 +17,27 @@
   --gray-dark: #2c2c2c;
   --gray-medium: #4a4a4a;
   --gray-light: #6b6b6b;
+  --editor-bg-start: var(--brown-dark);
+  --editor-bg-end: var(--gray-dark);
+  /* Liste native des <select> : fond clair côté OS — texte foncé obligatoire */
+  --select-option-text: #1a1a1a;
+  --select-option-bg: #ffffff;
+  --shadow-accent: rgba(230, 57, 70, 0.3);
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Roboto:wght@300;400;700&display=swap');
+html[data-theme='slate'] {
+  --primary-color: #94a3b8;
+  --secondary-color: #64748b;
+  --dark-color: #0f172a;
+  --light-color: #f8fafc;
+  --brown-dark: #1e293b;
+  --brown-medium: #334155;
+  --brown-light: #475569;
+  --gray-dark: #0f172a;
+  --gray-medium: #334155;
+  --gray-light: #64748b;
+  --shadow-accent: rgba(148, 163, 184, 0.35);
+}
 
 * {
   margin: 0;
@@ -22,9 +45,16 @@
   box-sizing: border-box;
 }
 
+/* Options du menu déroulant : lisibles sur fond clair (Windows / Chromium) */
+select option,
+select optgroup {
+  color: var(--select-option-text);
+  background-color: var(--select-option-bg);
+}
+
 body {
   font-family: 'Roboto', sans-serif;
-  background: linear-gradient(135deg, #3d2817 0%, #2c2c2c 100%);
+  background: linear-gradient(135deg, var(--editor-bg-start) 0%, var(--editor-bg-end) 100%);
   color: white;
   overflow: hidden;
 }

@@ -1,3 +1,7 @@
+/*
+ * Thème page d’accueil : toutes les couleurs d’accent passent par les variables :root.
+ * Thème alternatif : <html data-theme="ocean"> (exemple ci-dessous).
+ */
 :root {
     --primary-color: #e63946;
     --secondary-color: #457b9d;
@@ -6,12 +10,35 @@
     --danger-color: #bc1c1c;
     --success-color: #2a9d8f;
     --max-width: 1200px;
+    --hero-overlay: rgba(0, 0, 0, 0.7);
+    --signup-overlay: rgba(0, 0, 0, 0.8);
+    --surface-border: #eeeeee;
+    --text-on-dark: #ffffff;
+    --select-option-text: #1a1a1a;
+    --select-option-bg: #ffffff;
+    --card-shadow: rgba(0, 0, 0, 0.1);
+    --editor-mockup-shadow: rgba(0, 0, 0, 0.3);
+}
+
+html[data-theme='ocean'] {
+    --primary-color: #0077b6;
+    --secondary-color: #00b4d8;
+    --dark-color: #03045e;
+    --light-color: #caf0f8;
+    --hero-overlay: rgba(3, 4, 94, 0.75);
+    --signup-overlay: rgba(3, 4, 94, 0.82);
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+select option,
+select optgroup {
+    color: var(--select-option-text);
+    background-color: var(--select-option-bg);
 }
 
 body {
@@ -23,10 +50,10 @@ body {
 
 /* Header et Navigation */
 .hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    background: linear-gradient(var(--hero-overlay), var(--hero-overlay)),
                 url('../assets/hero-bg.jpg') center/cover;
     min-height: 100vh;
-    color: white;
+    color: var(--text-on-dark);
     display: flex;
     flex-direction: column;
 }
@@ -53,7 +80,7 @@ body {
 }
 
 .nav-links a {
-    color: white;
+    color: var(--text-on-dark);
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease;
@@ -101,13 +128,13 @@ body {
 
 .btn-primary {
     background-color: var(--primary-color);
-    color: white;
+    color: var(--text-on-dark);
 }
 
 .btn-secondary {
     background-color: transparent;
-    border: 2px solid white;
-    color: white;
+    border: 2px solid var(--text-on-dark);
+    color: var(--text-on-dark);
 }
 
 .cta-buttons {
@@ -137,11 +164,11 @@ h2 {
 }
 
 .feature-card {
-    background: white;
+    background: var(--select-option-bg);
     padding: 2rem;
     border-radius: 10px;
     text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px var(--card-shadow);
     transition: transform 0.3s ease;
 }
 
@@ -156,7 +183,7 @@ h2 {
 
 /* Editor Preview */
 .editor-preview {
-    background-color: white;
+    background-color: var(--select-option-bg);
 }
 
 .editor-showcase {
@@ -182,7 +209,7 @@ h2 {
     height: 100%;
     object-fit: contain;
     border-radius: 8px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 16px var(--editor-mockup-shadow);
 }
 
 .editor-features ul {
@@ -191,7 +218,7 @@ h2 {
 
 .editor-features li {
     padding: 1rem 0;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--surface-border);
 }
 
 .editor-features li:last-child {
@@ -200,9 +227,9 @@ h2 {
 
 /* Signup Section */
 .signup {
-    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+    background: linear-gradient(var(--signup-overlay), var(--signup-overlay)),
                 url('../assets/signup-bg.jpg') center/cover;
-    color: white;
+    color: var(--text-on-dark);
     text-align: center;
 }
 
@@ -226,12 +253,14 @@ h2 {
     border: none;
     border-radius: 5px;
     font-size: 1rem;
+    color: var(--select-option-text);
+    background: var(--select-option-bg);
 }
 
 /* Footer */
 footer {
     background-color: var(--dark-color);
-    color: white;
+    color: var(--text-on-dark);
     padding: 3rem 1rem 1rem;
 }
 
@@ -249,7 +278,7 @@ footer {
 }
 
 .footer-section a {
-    color: white;
+    color: var(--text-on-dark);
     text-decoration: none;
     display: block;
     margin-bottom: 0.5rem;
