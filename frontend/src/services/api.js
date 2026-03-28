@@ -31,7 +31,7 @@ async function loadStaticMapsIndex() {
   if (staticMapsIndex) return staticMapsIndex
   
   try {
-    const response = await fetch('/maps-index.json')
+    const response = await fetch('./maps-index.json')  // Chemin relatif explicite depuis editor.html
     staticMapsIndex = await response.json()
     return staticMapsIndex
   } catch (error) {
@@ -78,11 +78,12 @@ export default {
 
   // Assets
   getAsset(assetPath) {
+    const baseUrl = import.meta.env.BASE_URL || ''
     // Handle both /assets/ and /bgmapeditor_tiles/ paths
     if (assetPath.startsWith('assets/') || assetPath.startsWith('bgmapeditor_tiles/')) {
-      return `/${assetPath}`
+      return `${baseUrl}${assetPath}`
     }
-    return `/assets/${assetPath}`
+    return `${baseUrl}assets/${assetPath}`
   },
 
   // Users
@@ -132,7 +133,7 @@ export default {
       if (!map) {
         // Try loading from static maps directory
         try {
-          const response = await fetch(`/maps/${mapId}.json`)
+          const response = await fetch(`./maps/${mapId}.json`)  // Chemin relatif explicite
           if (response.ok) {
             map = await response.json()
           }

@@ -196,10 +196,11 @@ const loadImage = (assetPath) => {
     }
     img.onerror = () => resolve(null)
     // Try both /assets/ and /bgmapeditor_tiles/ paths
+    const baseUrl = import.meta.env.BASE_URL || ''
     if (assetPath.startsWith('assets/') || assetPath.startsWith('bgmapeditor_tiles/')) {
-      img.src = `/${assetPath}`
+      img.src = `${baseUrl}${assetPath}`
     } else {
-      img.src = `/assets/${assetPath}`
+      img.src = `${baseUrl}assets/${assetPath}`
     }
   })
 }

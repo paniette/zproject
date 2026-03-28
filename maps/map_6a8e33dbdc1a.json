@@ -1,0 +1,107 @@
+{
+  "name": "lélio",
+  "pack": null,
+  "grid": {
+    "width": 10,
+    "height": 10,
+    "tileSize": 10
+  },
+  "layers": {
+    "tiles": [
+      {
+        "id": "tile_1769957251921_t1qwvidky",
+        "x": 264,
+        "y": 159,
+        "asset": "G-Zombicide-A5-2E/01.tiles/1V.png/r_0.png",
+        "rotation": 0
+      },
+      {
+        "id": "tile_1769957249475_v0w0vsg57",
+        "x": 239,
+        "y": 159,
+        "asset": "G-Zombicide-A5-2E/01.tiles/1R.png/r_0.png",
+        "rotation": 180
+      }
+    ],
+    "objects": [
+      {
+        "type": "02.doors",
+        "asset": "G-Zombicide-BP/02.doors/Door-Closed-Green.png/r_0.png",
+        "x": 245,
+        "y": 161,
+        "rotation": 0,
+        "id": "obj_1769957392430_oqsjugds9"
+      },
+      {
+        "type": "02.doors",
+        "asset": "G-Zombicide-BP/02.doors/Door-Closed-Green.png/r_0.png",
+        "x": 257,
+        "y": 165,
+        "rotation": 0,
+        "id": "obj_1769957392746_br7lnqu68"
+      },
+      {
+        "type": "02.doors",
+        "asset": "G-Zombicide-BP/02.doors/Door-Closed-Green.png/r_0.png",
+        "x": 252,
+        "y": 174,
+        "rotation": 0,
+        "id": "obj_1769957393165_2vneotyp8"
+      },
+      {
+        "type": "02.doors",
+        "asset": "G-Zombicide-BP/02.doors/Door-Closed-Green.png/r_0.png",
+        "x": 245,
+        "y": 175,
+        "rotation": 0,
+        "id": "obj_1769957393488_b2q3u28gq"
+      },
+      {
+        "type": "02.doors",
+        "asset": "G-Zombicide-BP/02.doors/Door-Closed-Green.png/r_0.png",
+        "x": 272,
+        "y": 164,
+        "rotation": 0,
+        "id": "obj_1769957394057_w8ncwiqpk"
+      },
+      {
+        "type": "02.doors",
+        "asset": "G-Zombicide-BP/02.doors/Door-Closed-Green.png/r_0.png",
+        "x": 282,
+        "y": 163,
+        "rotation": 0,
+        "id": "obj_1769957394336_juf7is8g4"
+      },
+      {
+        "type": "02.doors",
+        "asset": "G-Zombicide-BP/02.doors/Door-Closed-Green.png/r_0.png",
+        "x": 278,
+        "y": 169,
+        "rotation": 0,
+        "id": "obj_1769957394676_03nxu7ks3"
+      },
+      {
+        "type": "02.doors",
+        "asset": "G-Zombicide-BP/02.doors/Door-Closed-Green.png/r_0.png",
+        "x": 279,
+        "y": 176,
+        "rotation": 0,
+        "id": "obj_1769957395043_luofxfnxw"
+      },
+      {
+        "type": "02.doors",
+        "asset": "G-Zombicide-BP/02.doors/Door-Closed-Green.png/r_0.png",
+        "x": 268,
+        "y": 177,
+        "rotation": 0,
+        "id": "obj_1769957395379_1uj5kifd0"
+      }
+    ]
+  },
+  "metadata": {
+    "created": "2026-02-01T15:50:35.464950",
+    "modified": "2026-02-01T15:50:35.464950",
+    "author": "temp"
+  },
+  "id": "map_6a8e33dbdc1a"
+}

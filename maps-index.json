@@ -1,0 +1,23 @@
+{
+  "maps": [
+    {
+      "id": "map_53facd8e31d2",
+      "name": "cyrilou",
+      "metadata": {
+        "created": "2026-02-01T15:51:45.519071",
+        "modified": "2026-02-01T16:03:51.996814",
+        "author": "temp"
+      }
+    },
+    {
+      "id": "map_6a8e33dbdc1a",
+      "name": "lélio",
+      "metadata": {
+        "created": "2026-02-01T15:50:35.464950",
+        "modified": "2026-02-01T15:50:35.464950",
+        "author": "temp"
+      }
+    }
+  ],
+  "generated_at": "2026-02-01T16:39:49.248241"
+}

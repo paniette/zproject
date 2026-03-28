@@ -104,7 +104,7 @@ CORS_ALLOW_CREDENTIALS = True
 # Paths for Zombicide assets
 # Unified assets directory - all packs go here (uploaded ZIPs and existing bgmapeditor_tiles)
 ASSETS_DIR = BASE_DIR / 'assets'
-BG_MAPEDITOR_TILES_DIR = BASE_DIR / 'bgmapeditor_tiles'  # Legacy, will be migrated to assets/
+BG_MAPEDITOR_TILES_DIR = BASE_DIR / 'assets'  # Legacy,bgmapeditor_tiles will be migrated to assets/
 PACKS_DIR = MEDIA_ROOT / 'packs'
 USERS_DIR = MEDIA_ROOT / 'users'
 

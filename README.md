@@ -2,6 +2,8 @@
 
 Éditeur de cartes Zombicide compatible avec les packs du Mapeditor Windows.
 
+Contexte détaillé pour le développement (architecture, interactions canvas, fichiers pivots) : [`docs/CONTEXT.md`](docs/CONTEXT.md).
+
 ## Fonctionnalités
 
 - Import de packs ZIP compatibles avec Mapeditor Windows

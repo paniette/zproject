@@ -96,23 +96,24 @@ const getAssets = (packId, category) => {
 }
 
 const getAssetThumbnail = (asset) => {
+  const baseUrl = import.meta.env.BASE_URL || ''
   // Try to get thumbnail, fallback to main image
   if (asset.thumbnail) {
     // Thumbnail path is already relative, use it directly
     const thumbPath = asset.thumbnail
     // Check if path starts with bgmapeditor_tiles or assets
     if (thumbPath.startsWith('bgmapeditor_tiles/') || thumbPath.startsWith('assets/')) {
-      return `/${thumbPath}`
+      return `${baseUrl}${thumbPath}`
     }
     // Try both possible locations - first assets, then bgmapeditor_tiles
-    return `/assets/${thumbPath}`
+    return `${baseUrl}assets/${thumbPath}`
   }
   // Fallback to main image
   const mainPath = asset.path
   if (mainPath.startsWith('bgmapeditor_tiles/') || mainPath.startsWith('assets/')) {
-    return `/${mainPath}`
+    return `${baseUrl}${mainPath}`
   }
-  return `/assets/${mainPath}`
+  return `${baseUrl}assets/${mainPath}`
 }
 
 const selectedAsset = ref(null)

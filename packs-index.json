@@ -1,0 +1,1323 @@
+{
+  "packs": [
+    {
+      "id": "G-Zombicide-BP",
+      "name": "Zombicide Black Plague",
+      "image": "guillotine.png",
+      "align": 25,
+      "assets": {
+        "01.tiles": [
+          {
+            "name": "1R.png",
+            "path": "G-Zombicide-BP/01.tiles/1R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/1R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/1R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/1R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/1R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/1R.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "1V.png"
+          },
+          {
+            "name": "1V.png",
+            "path": "G-Zombicide-BP/01.tiles/1V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/1V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/1V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/1V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/1V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/1V.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "1R.png"
+          },
+          {
+            "name": "26R.png",
+            "path": "G-Zombicide-BP/01.tiles/26R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/26R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/26R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/26R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/26R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/26R.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "26V.png",
+            "path": "G-Zombicide-BP/01.tiles/26V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/26V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/26V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/26V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/26V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/26V.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "27R.png",
+            "path": "G-Zombicide-BP/01.tiles/27R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/27R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/27R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/27R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/27R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/27R.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "27V.png",
+            "path": "G-Zombicide-BP/01.tiles/27V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/27V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/27V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/27V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/27V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/27V.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "28R.png",
+            "path": "G-Zombicide-BP/01.tiles/28R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/28R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/28R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/28R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/28R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/28R.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "28V.png",
+            "path": "G-Zombicide-BP/01.tiles/28V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/28V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/28V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/28V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/28V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/28V.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "29R.png",
+            "path": "G-Zombicide-BP/01.tiles/29R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/29R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/29R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/29R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/29R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/29R.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "29V.png",
+            "path": "G-Zombicide-BP/01.tiles/29V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/29V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/29V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/29V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/29V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/29V.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "2R.png",
+            "path": "G-Zombicide-BP/01.tiles/2R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/2R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/2R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/2R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/2R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/2R.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "2V.png"
+          },
+          {
+            "name": "2V.png",
+            "path": "G-Zombicide-BP/01.tiles/2V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/2V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/2V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/2V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/2V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/2V.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "2R.png"
+          },
+          {
+            "name": "30R.png",
+            "path": "G-Zombicide-BP/01.tiles/30R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/30R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/30R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/30R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/30R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/30R.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "30V.png",
+            "path": "G-Zombicide-BP/01.tiles/30V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/30V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/30V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/30V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/30V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/30V.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "31R.png",
+            "path": "G-Zombicide-BP/01.tiles/31R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/31R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/31R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/31R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/31R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/31R.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "31V.png",
+            "path": "G-Zombicide-BP/01.tiles/31V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/31V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/31V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/31V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/31V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/31V.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "32R.png",
+            "path": "G-Zombicide-BP/01.tiles/32R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/32R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/32R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/32R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/32R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/32R.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "32V.png",
+            "path": "G-Zombicide-BP/01.tiles/32V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/32V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/32V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/32V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/32V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/32V.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "33R.png",
+            "path": "G-Zombicide-BP/01.tiles/33R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/33R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/33R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/33R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/33R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/33R.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "33V.png",
+            "path": "G-Zombicide-BP/01.tiles/33V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/33V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/33V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/33V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/33V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/33V.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "34R.png",
+            "path": "G-Zombicide-BP/01.tiles/34R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/34R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/34R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/34R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/34R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/34R.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "34V.png",
+            "path": "G-Zombicide-BP/01.tiles/34V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/34V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/34V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/34V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/34V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/34V.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "35R.png",
+            "path": "G-Zombicide-BP/01.tiles/35R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/35R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/35R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/35R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/35R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/35R.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "35V.png",
+            "path": "G-Zombicide-BP/01.tiles/35V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/35V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/35V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/35V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/35V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/35V.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "36R.png",
+            "path": "G-Zombicide-BP/01.tiles/36R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/36R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/36R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/36R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/36R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/36R.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "36V.png",
+            "path": "G-Zombicide-BP/01.tiles/36V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/36V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/36V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/36V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/36V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/36V.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "37R.png",
+            "path": "G-Zombicide-BP/01.tiles/37R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/37R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/37R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/37R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/37R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/37R.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "37V.png",
+            "path": "G-Zombicide-BP/01.tiles/37V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/37V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/37V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/37V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/37V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/37V.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "38R.png",
+            "path": "G-Zombicide-BP/01.tiles/38R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/38R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/38R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/38R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/38R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/38R.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "38V.png",
+            "path": "G-Zombicide-BP/01.tiles/38V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/38V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/38V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/38V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/38V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/38V.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "39R.png",
+            "path": "G-Zombicide-BP/01.tiles/39R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/39R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/39R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/39R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/39R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/39R.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "39V.png",
+            "path": "G-Zombicide-BP/01.tiles/39V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/39V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/39V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/39V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/39V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/39V.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "3R.png",
+            "path": "G-Zombicide-BP/01.tiles/3R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/3R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/3R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/3R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/3R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/3R.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "3V.png"
+          },
+          {
+            "name": "3V.png",
+            "path": "G-Zombicide-BP/01.tiles/3V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/3V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/3V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/3V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/3V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/3V.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "3R.png"
+          },
+          {
+            "name": "40R.png",
+            "path": "G-Zombicide-BP/01.tiles/40R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/40R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/40R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/40R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/40R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/40R.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "40V.png",
+            "path": "G-Zombicide-BP/01.tiles/40V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/40V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/40V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/40V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/40V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/40V.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "41R.png",
+            "path": "G-Zombicide-BP/01.tiles/41R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/41R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/41R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/41R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/41R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/41R.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "41V.png",
+            "path": "G-Zombicide-BP/01.tiles/41V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/41V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/41V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/41V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/41V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/41V.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "42R.png",
+            "path": "G-Zombicide-BP/01.tiles/42R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/42R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/42R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/42R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/42R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/42R.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "42V.png",
+            "path": "G-Zombicide-BP/01.tiles/42V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/42V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/42V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/42V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/42V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/42V.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "4R.png",
+            "path": "G-Zombicide-BP/01.tiles/4R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/4R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/4R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/4R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/4R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/4R.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "4V.png"
+          },
+          {
+            "name": "4V.png",
+            "path": "G-Zombicide-BP/01.tiles/4V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/4V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/4V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/4V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/4V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/4V.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "4R.png"
+          },
+          {
+            "name": "5R.png",
+            "path": "G-Zombicide-BP/01.tiles/5R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/5R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/5R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/5R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/5R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/5R.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "5V.png"
+          },
+          {
+            "name": "5V.png",
+            "path": "G-Zombicide-BP/01.tiles/5V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/5V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/5V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/5V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/5V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/5V.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "5R.png"
+          },
+          {
+            "name": "6R.png",
+            "path": "G-Zombicide-BP/01.tiles/6R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/6R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/6R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/6R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/6R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/6R.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "6V.png"
+          },
+          {
+            "name": "6V.png",
+            "path": "G-Zombicide-BP/01.tiles/6V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/6V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/6V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/6V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/6V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/6V.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "6R.png"
+          },
+          {
+            "name": "7R.png",
+            "path": "G-Zombicide-BP/01.tiles/7R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/7R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/7R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/7R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/7R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/7R.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "7V.png"
+          },
+          {
+            "name": "7V.png",
+            "path": "G-Zombicide-BP/01.tiles/7V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/7V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/7V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/7V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/7V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/7V.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "7R.png"
+          },
+          {
+            "name": "8R.png",
+            "path": "G-Zombicide-BP/01.tiles/8R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/8R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/8R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/8R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/8R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/8R.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "8V.png"
+          },
+          {
+            "name": "8V.png",
+            "path": "G-Zombicide-BP/01.tiles/8V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/8V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/8V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/8V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/8V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/8V.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "8R.png"
+          },
+          {
+            "name": "9R.png",
+            "path": "G-Zombicide-BP/01.tiles/9R.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/9R.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/9R.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/9R.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/9R.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/9R.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "9V.png"
+          },
+          {
+            "name": "9V.png",
+            "path": "G-Zombicide-BP/01.tiles/9V.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01.tiles/9V.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01.tiles/9V.png/r_0.png",
+              "90": "G-Zombicide-BP/01.tiles/9V.png/r_90.png",
+              "180": "G-Zombicide-BP/01.tiles/9V.png/r_180.png",
+              "270": "G-Zombicide-BP/01.tiles/9V.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "9R.png"
+          }
+        ],
+        "01B.vaults": [
+          {
+            "name": "Vault-Door-Purple-Closed.png",
+            "path": "G-Zombicide-BP/01B.vaults/Vault-Door-Purple-Closed.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01B.vaults/Vault-Door-Purple-Closed.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01B.vaults/Vault-Door-Purple-Closed.png/r_0.png",
+              "90": "G-Zombicide-BP/01B.vaults/Vault-Door-Purple-Closed.png/r_90.png",
+              "180": "G-Zombicide-BP/01B.vaults/Vault-Door-Purple-Closed.png/r_180.png",
+              "270": "G-Zombicide-BP/01B.vaults/Vault-Door-Purple-Closed.png/r_270.png"
+            },
+            "max": 2,
+            "pair": "Vault-Door-Purple-Open.png"
+          },
+          {
+            "name": "Vault-Door-Purple-Open.png",
+            "path": "G-Zombicide-BP/01B.vaults/Vault-Door-Purple-Open.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01B.vaults/Vault-Door-Purple-Open.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01B.vaults/Vault-Door-Purple-Open.png/r_0.png",
+              "90": "G-Zombicide-BP/01B.vaults/Vault-Door-Purple-Open.png/r_90.png",
+              "180": "G-Zombicide-BP/01B.vaults/Vault-Door-Purple-Open.png/r_180.png",
+              "270": "G-Zombicide-BP/01B.vaults/Vault-Door-Purple-Open.png/r_270.png"
+            },
+            "max": 2,
+            "pair": "Vault-Door-Purple-Closed.png"
+          },
+          {
+            "name": "Vault-Door-Yellow-Closed.png",
+            "path": "G-Zombicide-BP/01B.vaults/Vault-Door-Yellow-Closed.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01B.vaults/Vault-Door-Yellow-Closed.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01B.vaults/Vault-Door-Yellow-Closed.png/r_0.png",
+              "90": "G-Zombicide-BP/01B.vaults/Vault-Door-Yellow-Closed.png/r_90.png",
+              "180": "G-Zombicide-BP/01B.vaults/Vault-Door-Yellow-Closed.png/r_180.png",
+              "270": "G-Zombicide-BP/01B.vaults/Vault-Door-Yellow-Closed.png/r_270.png"
+            },
+            "max": 2,
+            "pair": "Vault-Door-Yellow-Open.png"
+          },
+          {
+            "name": "Vault-Door-Yellow-Open.png",
+            "path": "G-Zombicide-BP/01B.vaults/Vault-Door-Yellow-Open.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01B.vaults/Vault-Door-Yellow-Open.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01B.vaults/Vault-Door-Yellow-Open.png/r_0.png",
+              "90": "G-Zombicide-BP/01B.vaults/Vault-Door-Yellow-Open.png/r_90.png",
+              "180": "G-Zombicide-BP/01B.vaults/Vault-Door-Yellow-Open.png/r_180.png",
+              "270": "G-Zombicide-BP/01B.vaults/Vault-Door-Yellow-Open.png/r_270.png"
+            },
+            "max": 2,
+            "pair": "Vault-Door-Yellow-Closed.png"
+          },
+          {
+            "name": "Vault-Purple.png",
+            "path": "G-Zombicide-BP/01B.vaults/Vault-Purple.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01B.vaults/Vault-Purple.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01B.vaults/Vault-Purple.png/r_0.png",
+              "90": "G-Zombicide-BP/01B.vaults/Vault-Purple.png/r_90.png",
+              "180": "G-Zombicide-BP/01B.vaults/Vault-Purple.png/r_180.png",
+              "270": "G-Zombicide-BP/01B.vaults/Vault-Purple.png/r_270.png"
+            },
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "Vault-Yellow.png",
+            "path": "G-Zombicide-BP/01B.vaults/Vault-Yellow.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/01B.vaults/Vault-Yellow.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/01B.vaults/Vault-Yellow.png/r_0.png",
+              "90": "G-Zombicide-BP/01B.vaults/Vault-Yellow.png/r_90.png",
+              "180": "G-Zombicide-BP/01B.vaults/Vault-Yellow.png/r_180.png",
+              "270": "G-Zombicide-BP/01B.vaults/Vault-Yellow.png/r_270.png"
+            },
+            "max": 1,
+            "pair": null
+          }
+        ],
+        "02.doors": [
+          {
+            "name": "Door-Closed-Blue.png",
+            "path": "G-Zombicide-BP/02.doors/Door-Closed-Blue.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/02.doors/Door-Closed-Blue.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/02.doors/Door-Closed-Blue.png/r_0.png",
+              "90": "G-Zombicide-BP/02.doors/Door-Closed-Blue.png/r_90.png",
+              "180": "G-Zombicide-BP/02.doors/Door-Closed-Blue.png/r_180.png",
+              "270": "G-Zombicide-BP/02.doors/Door-Closed-Blue.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "Door-Open-Blue.png"
+          },
+          {
+            "name": "Door-Closed-Green.png",
+            "path": "G-Zombicide-BP/02.doors/Door-Closed-Green.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/02.doors/Door-Closed-Green.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/02.doors/Door-Closed-Green.png/r_0.png",
+              "90": "G-Zombicide-BP/02.doors/Door-Closed-Green.png/r_90.png",
+              "180": "G-Zombicide-BP/02.doors/Door-Closed-Green.png/r_180.png",
+              "270": "G-Zombicide-BP/02.doors/Door-Closed-Green.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "Door-Open-Green.png"
+          },
+          {
+            "name": "Door-Closed-Red.png",
+            "path": "G-Zombicide-BP/02.doors/Door-Closed-Red.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/02.doors/Door-Closed-Red.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/02.doors/Door-Closed-Red.png/r_0.png",
+              "90": "G-Zombicide-BP/02.doors/Door-Closed-Red.png/r_90.png",
+              "180": "G-Zombicide-BP/02.doors/Door-Closed-Red.png/r_180.png",
+              "270": "G-Zombicide-BP/02.doors/Door-Closed-Red.png/r_270.png"
+            },
+            "max": 12,
+            "pair": "Door-Open-Red.png"
+          },
+          {
+            "name": "Door-Open-Blue.png",
+            "path": "G-Zombicide-BP/02.doors/Door-Open-Blue.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/02.doors/Door-Open-Blue.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/02.doors/Door-Open-Blue.png/r_0.png",
+              "90": "G-Zombicide-BP/02.doors/Door-Open-Blue.png/r_90.png",
+              "180": "G-Zombicide-BP/02.doors/Door-Open-Blue.png/r_180.png",
+              "270": "G-Zombicide-BP/02.doors/Door-Open-Blue.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "Door-Closed-Blue.png"
+          },
+          {
+            "name": "Door-Open-Green.png",
+            "path": "G-Zombicide-BP/02.doors/Door-Open-Green.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/02.doors/Door-Open-Green.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/02.doors/Door-Open-Green.png/r_0.png",
+              "90": "G-Zombicide-BP/02.doors/Door-Open-Green.png/r_90.png",
+              "180": "G-Zombicide-BP/02.doors/Door-Open-Green.png/r_180.png",
+              "270": "G-Zombicide-BP/02.doors/Door-Open-Green.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "Door-Closed-Green.png"
+          },
+          {
+            "name": "Door-Open-Red.png",
+            "path": "G-Zombicide-BP/02.doors/Door-Open-Red.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/02.doors/Door-Open-Red.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/02.doors/Door-Open-Red.png/r_0.png",
+              "90": "G-Zombicide-BP/02.doors/Door-Open-Red.png/r_90.png",
+              "180": "G-Zombicide-BP/02.doors/Door-Open-Red.png/r_180.png",
+              "270": "G-Zombicide-BP/02.doors/Door-Open-Red.png/r_270.png"
+            },
+            "max": 12,
+            "pair": "Door-Closed-Red.png"
+          }
+        ],
+        "04.other tokens": [
+          {
+            "name": "AreaBlue.png",
+            "path": "G-Zombicide-BP/04.other tokens/AreaBlue.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/AreaBlue.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/AreaBlue.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/AreaBlue.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/AreaBlue.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/AreaBlue.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "AreaRed.png",
+            "path": "G-Zombicide-BP/04.other tokens/AreaRed.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/AreaRed.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/AreaRed.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/AreaRed.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/AreaRed.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/AreaRed.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "CHAUDRON.png",
+            "path": "G-Zombicide-BP/04.other tokens/CHAUDRON.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/CHAUDRON.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/CHAUDRON.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/CHAUDRON.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/CHAUDRON.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/CHAUDRON.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Dragon-Bile.png",
+            "path": "G-Zombicide-BP/04.other tokens/Dragon-Bile.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/Dragon-Bile.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/Dragon-Bile.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/Dragon-Bile.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/Dragon-Bile.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/Dragon-Bile.png/r_270.png"
+            },
+            "max": 4,
+            "pair": "Magic-Dome.png"
+          },
+          {
+            "name": "Dragon-Fire.png",
+            "path": "G-Zombicide-BP/04.other tokens/Dragon-Fire.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/Dragon-Fire.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/Dragon-Fire.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/Dragon-Fire.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/Dragon-Fire.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/Dragon-Fire.png/r_270.png"
+            },
+            "max": 2,
+            "pair": "Dragon-Bile.png"
+          },
+          {
+            "name": "ECHELLE.png",
+            "path": "G-Zombicide-BP/04.other tokens/ECHELLE.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/ECHELLE.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/ECHELLE.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/ECHELLE.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/ECHELLE.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/ECHELLE.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Exit-1.png",
+            "path": "G-Zombicide-BP/04.other tokens/Exit-1.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/Exit-1.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/Exit-1.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/Exit-1.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/Exit-1.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/Exit-1.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "Exit-2.png"
+          },
+          {
+            "name": "Exit-2.png",
+            "path": "G-Zombicide-BP/04.other tokens/Exit-2.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/Exit-2.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/Exit-2.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/Exit-2.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/Exit-2.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/Exit-2.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "Exit-1.png"
+          },
+          {
+            "name": "Extra-Action.png",
+            "path": "G-Zombicide-BP/04.other tokens/Extra-Action.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/Extra-Action.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/Extra-Action.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/Extra-Action.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/Extra-Action.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/Extra-Action.png/r_270.png"
+            },
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "First-Player-Token.png",
+            "path": "G-Zombicide-BP/04.other tokens/First-Player-Token.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/First-Player-Token.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/First-Player-Token.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/First-Player-Token.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/First-Player-Token.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/First-Player-Token.png/r_270.png"
+            },
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "Locator-1.png",
+            "path": "G-Zombicide-BP/04.other tokens/Locator-1.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/Locator-1.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/Locator-1.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/Locator-1.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/Locator-1.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/Locator-1.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Locator-2.png",
+            "path": "G-Zombicide-BP/04.other tokens/Locator-2.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/Locator-2.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/Locator-2.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/Locator-2.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/Locator-2.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/Locator-2.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Magic-Dome.png",
+            "path": "G-Zombicide-BP/04.other tokens/Magic-Dome.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/Magic-Dome.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/Magic-Dome.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/Magic-Dome.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/Magic-Dome.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/Magic-Dome.png/r_270.png"
+            },
+            "max": 2,
+            "pair": "Dragon-Bile.png"
+          },
+          {
+            "name": "Noise.png",
+            "path": "G-Zombicide-BP/04.other tokens/Noise.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/Noise.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/Noise.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/Noise.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/Noise.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/Noise.png/r_270.png"
+            },
+            "max": 18,
+            "pair": null
+          },
+          {
+            "name": "Objective-Blue.png",
+            "path": "G-Zombicide-BP/04.other tokens/Objective-Blue.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/Objective-Blue.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/Objective-Blue.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/Objective-Blue.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/Objective-Blue.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/Objective-Blue.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "Objective-Red.png"
+          },
+          {
+            "name": "Objective-Green.png",
+            "path": "G-Zombicide-BP/04.other tokens/Objective-Green.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/Objective-Green.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/Objective-Green.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/Objective-Green.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/Objective-Green.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/Objective-Green.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "Objective-Red.png"
+          },
+          {
+            "name": "Objective-Red.png",
+            "path": "G-Zombicide-BP/04.other tokens/Objective-Red.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/Objective-Red.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/Objective-Red.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/Objective-Red.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/Objective-Red.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/Objective-Red.png/r_270.png"
+            },
+            "max": 10,
+            "pair": "Objective-Green.png"
+          },
+          {
+            "name": "PIZZA.png",
+            "path": "G-Zombicide-BP/04.other tokens/PIZZA.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/PIZZA.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/PIZZA.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/PIZZA.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/PIZZA.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/PIZZA.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "POPSUP.png",
+            "path": "G-Zombicide-BP/04.other tokens/POPSUP.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/POPSUP.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/POPSUP.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/POPSUP.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/POPSUP.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/POPSUP.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Rotten.png",
+            "path": "G-Zombicide-BP/04.other tokens/Rotten.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/Rotten.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/Rotten.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/Rotten.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/Rotten.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/Rotten.png/r_270.png"
+            },
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "SIGNAL.png",
+            "path": "G-Zombicide-BP/04.other tokens/SIGNAL.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/SIGNAL.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/SIGNAL.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/SIGNAL.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/SIGNAL.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/SIGNAL.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Spawn-Blue.png",
+            "path": "G-Zombicide-BP/04.other tokens/Spawn-Blue.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/Spawn-Blue.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/Spawn-Blue.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/Spawn-Blue.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/Spawn-Blue.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/Spawn-Blue.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "Spawn-Red.png"
+          },
+          {
+            "name": "Spawn-Green.png",
+            "path": "G-Zombicide-BP/04.other tokens/Spawn-Green.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/Spawn-Green.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/Spawn-Green.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/Spawn-Green.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/Spawn-Green.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/Spawn-Green.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "Spawn-Red.png"
+          },
+          {
+            "name": "Spawn-Necromancer-Beige.png",
+            "path": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Beige.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Beige.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Beige.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Beige.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Beige.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Beige.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "Spawn-Red.png"
+          },
+          {
+            "name": "Spawn-Necromancer-Blue.png",
+            "path": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Blue.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Blue.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Blue.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Blue.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Blue.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Blue.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "Spawn-Red.png"
+          },
+          {
+            "name": "Spawn-Necromancer-Brown.png",
+            "path": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Brown.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Brown.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Brown.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Brown.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Brown.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Brown.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "Spawn-Red.png"
+          },
+          {
+            "name": "Spawn-Necromancer-Green.png",
+            "path": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Green.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Green.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Green.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Green.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Green.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Green.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "Spawn-Red.png"
+          },
+          {
+            "name": "Spawn-Necromancer-Purple.png",
+            "path": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Purple.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Purple.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Purple.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Purple.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Purple.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Purple.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "Spawn-Red.png"
+          },
+          {
+            "name": "Spawn-Necromancer-Red.png",
+            "path": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Red.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Red.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Red.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Red.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Red.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/Spawn-Necromancer-Red.png/r_270.png"
+            },
+            "max": 1,
+            "pair": "Spawn-Red.png"
+          },
+          {
+            "name": "Spawn-Red.png",
+            "path": "G-Zombicide-BP/04.other tokens/Spawn-Red.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/Spawn-Red.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/Spawn-Red.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/Spawn-Red.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/Spawn-Red.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/Spawn-Red.png/r_270.png"
+            },
+            "max": 12,
+            "pair": "Spawn-Necromancer-Red.png"
+          },
+          {
+            "name": "StaringArea.png",
+            "path": "G-Zombicide-BP/04.other tokens/StaringArea.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/04.other tokens/StaringArea.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/04.other tokens/StaringArea.png/r_0.png",
+              "90": "G-Zombicide-BP/04.other tokens/StaringArea.png/r_90.png",
+              "180": "G-Zombicide-BP/04.other tokens/StaringArea.png/r_180.png",
+              "270": "G-Zombicide-BP/04.other tokens/StaringArea.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          }
+        ],
+        "05.zombies": [
+          {
+            "name": "Zomb-Abomination.png",
+            "path": "G-Zombicide-BP/05.zombies/Zomb-Abomination.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/05.zombies/Zomb-Abomination.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/05.zombies/Zomb-Abomination.png/r_0.png",
+              "90": "G-Zombicide-BP/05.zombies/Zomb-Abomination.png/r_90.png",
+              "180": "G-Zombicide-BP/05.zombies/Zomb-Abomination.png/r_180.png",
+              "270": "G-Zombicide-BP/05.zombies/Zomb-Abomination.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Zomb-Fatty.png",
+            "path": "G-Zombicide-BP/05.zombies/Zomb-Fatty.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/05.zombies/Zomb-Fatty.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/05.zombies/Zomb-Fatty.png/r_0.png",
+              "90": "G-Zombicide-BP/05.zombies/Zomb-Fatty.png/r_90.png",
+              "180": "G-Zombicide-BP/05.zombies/Zomb-Fatty.png/r_180.png",
+              "270": "G-Zombicide-BP/05.zombies/Zomb-Fatty.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Zomb-Necromancer.png",
+            "path": "G-Zombicide-BP/05.zombies/Zomb-Necromancer.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/05.zombies/Zomb-Necromancer.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/05.zombies/Zomb-Necromancer.png/r_0.png",
+              "90": "G-Zombicide-BP/05.zombies/Zomb-Necromancer.png/r_90.png",
+              "180": "G-Zombicide-BP/05.zombies/Zomb-Necromancer.png/r_180.png",
+              "270": "G-Zombicide-BP/05.zombies/Zomb-Necromancer.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Zomb-Runner.png",
+            "path": "G-Zombicide-BP/05.zombies/Zomb-Runner.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/05.zombies/Zomb-Runner.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/05.zombies/Zomb-Runner.png/r_0.png",
+              "90": "G-Zombicide-BP/05.zombies/Zomb-Runner.png/r_90.png",
+              "180": "G-Zombicide-BP/05.zombies/Zomb-Runner.png/r_180.png",
+              "270": "G-Zombicide-BP/05.zombies/Zomb-Runner.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Zomb-Walker.png",
+            "path": "G-Zombicide-BP/05.zombies/Zomb-Walker.png/r_0.png",
+            "thumbnail": "G-Zombicide-BP/05.zombies/Zomb-Walker.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-BP/05.zombies/Zomb-Walker.png/r_0.png",
+              "90": "G-Zombicide-BP/05.zombies/Zomb-Walker.png/r_90.png",
+              "180": "G-Zombicide-BP/05.zombies/Zomb-Walker.png/r_180.png",
+              "270": "G-Zombicide-BP/05.zombies/Zomb-Walker.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          }
+        ]
+      }
+    }
+  ],
+  "generated_at": "2026-02-01T16:39:30.565067"
+}
