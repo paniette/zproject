@@ -3,47 +3,63 @@
     <div class="pack-uploader">
       <div class="modal-header">
         <h3>Upload d'Asset Personnalisé</h3>
-        <button @click="close" class="close-btn">×</button>
+        <button type="button" @click="close" class="close-btn" aria-label="Fermer">×</button>
       </div>
       <form @submit.prevent="uploadAsset" class="upload-form">
         <div class="form-group">
           <label>Fichier image</label>
-          <input type="file" @change="handleFileSelect" accept="image/*" required />
+          <input
+            ref="fileInputRef"
+            type="file"
+            @change="handleFileSelect"
+            accept="image/*"
+            required
+          />
           <div v-if="previewImage" class="preview">
-            <img :src="previewImage" alt="Preview" />
+            <img :src="previewImage" alt="Aperçu" />
           </div>
         </div>
-        
+
         <div class="form-group">
           <label>Nom de l'asset</label>
-          <input v-model="assetName" type="text" required />
+          <input v-model="assetName" type="text" required placeholder="ex. MonTuile.png" />
         </div>
-        
+
         <div class="form-group">
           <label>Taille cible (pixels)</label>
           <input v-model.number="targetSize" type="number" min="16" max="512" required />
         </div>
-        
-        <div class="form-group">
-          <label>Pack</label>
-          <select v-model="packName" @change="loadPackCategories" required>
-            <option value="">Sélectionner un pack</option>
-            <option v-for="pack in availablePacks" :key="pack.id" :value="pack.id">
-              {{ pack.name }}
-            </option>
-          </select>
-        </div>
-        
-        <div class="form-group">
-          <label>Catégorie</label>
-          <select v-model="category" :disabled="!packName || categories.length === 0" required>
-            <option value="">Sélectionner une catégorie</option>
-            <option v-for="cat in categories" :key="cat" :value="cat">
-              {{ cat }}
-            </option>
-          </select>
-        </div>
-        
+
+        <template v-if="isContextual">
+          <div class="form-group contextual-info">
+            <label>Pack</label>
+            <p class="readonly-field">{{ contextualPackTitle }}</p>
+            <label>Catégorie</label>
+            <p class="readonly-field">{{ category }}</p>
+          </div>
+        </template>
+        <template v-else>
+          <div class="form-group">
+            <label>Pack</label>
+            <select v-model="packName" @change="loadPackCategories" required>
+              <option value="">Sélectionner un pack</option>
+              <option v-for="pack in availablePacks" :key="pack.id" :value="pack.id">
+                {{ pack.name }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Catégorie</label>
+            <select v-model="category" :disabled="!packName || categories.length === 0" required>
+              <option value="">Sélectionner une catégorie</option>
+              <option v-for="cat in categories" :key="cat" :value="cat">
+                {{ cat }}
+              </option>
+            </select>
+          </div>
+        </template>
+
         <button type="submit" :disabled="uploading || !packName || !category" class="submit-btn">
           {{ uploading ? 'Upload en cours...' : 'Upload et Normaliser' }}
         </button>
@@ -53,22 +69,40 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import api from '@/services/api'
 
 const props = defineProps({
   show: {
     type: Boolean,
     default: true
+  },
+  packId: {
+    type: String,
+    default: ''
+  },
+  categoryPreset: {
+    type: String,
+    default: ''
   }
 })
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'uploaded'])
 
 const close = () => {
   emit('close')
 }
 
+const isContextual = computed(
+  () => !!(props.packId && props.categoryPreset)
+)
+
+const contextualPackTitle = computed(() => {
+  const p = availablePacks.value.find((x) => x.id === packName.value)
+  return p?.name || packName.value || props.packId
+})
+
+const fileInputRef = ref(null)
 const assetName = ref('')
 const targetSize = ref(250)
 const category = ref('')
@@ -96,7 +130,7 @@ const loadPackCategories = async () => {
     category.value = ''
     return
   }
-  
+
   try {
     const response = await api.getPackAssets(packName.value)
     if (response.data) {
@@ -111,8 +145,24 @@ const loadPackCategories = async () => {
   }
 }
 
+const syncContextualFields = () => {
+  if (props.show && isContextual.value) {
+    packName.value = props.packId
+    category.value = props.categoryPreset
+  }
+}
+
+watch(
+  () => [props.show, props.packId, props.categoryPreset],
+  () => {
+    syncContextualFields()
+  },
+  { immediate: true }
+)
+
 onMounted(async () => {
   await loadPacks()
+  syncContextualFields()
 })
 
 const handleFileSelect = (event) => {
@@ -132,14 +182,14 @@ const uploadAsset = async () => {
     alert('Veuillez sélectionner un fichier')
     return
   }
-  
+
   if (!packName.value || !category.value) {
     alert('Veuillez sélectionner un pack et une catégorie')
     return
   }
-  
+
   uploading.value = true
-  
+
   try {
     const formData = new FormData()
     formData.append('image', selectedFile.value)
@@ -147,24 +197,31 @@ const uploadAsset = async () => {
     formData.append('target_size', targetSize.value)
     formData.append('category', category.value)
     formData.append('pack_name', packName.value)
-    
+
     await api.uploadCustomPack(formData)
     alert('Asset uploadé avec succès!')
-    
-    // Reset form
+
+    const pid = packName.value
+    emit('uploaded', { packId: pid })
+    window.dispatchEvent(new CustomEvent('pack-assets-updated', { detail: { packId: pid } }))
+
     assetName.value = ''
     targetSize.value = 250
     selectedFile.value = null
     previewImage.value = null
-    category.value = ''
-    
-    // Reload packs to refresh
+    if (fileInputRef.value) {
+      fileInputRef.value.value = ''
+    }
+
+    if (!isContextual.value) {
+      category.value = ''
+    }
+
     await loadPacks()
-    // Trigger pack refresh in AssetPanel
     window.dispatchEvent(new CustomEvent('packs-refresh'))
   } catch (error) {
     console.error('Error uploading asset:', error)
-    alert('Erreur lors de l\'upload: ' + (error.response?.data?.error || error.message))
+    alert("Erreur lors de l'upload: " + (error.response?.data?.error || error.message))
   } finally {
     uploading.value = false
   }
@@ -194,7 +251,7 @@ const uploadAsset = async () => {
   overflow-y: auto;
   color: white;
   border: 2px solid var(--primary-color);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
 }
 
 .modal-header {
@@ -240,6 +297,16 @@ const uploadAsset = async () => {
   display: flex;
   flex-direction: column;
   gap: 5px;
+}
+
+.contextual-info .readonly-field {
+  margin: 0;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  border: 1px solid var(--brown-light);
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 0.95rem;
 }
 
 .form-group label {

@@ -1,24 +1,48 @@
 """
 Upload and normalize custom pack assets
 """
-import os
+import re
 from pathlib import Path
 from PIL import Image
 from django.conf import settings
 from .utils import ensure_directory
 
 
+def sanitize_asset_name(name):
+    """Safe folder name under pack/category (no path traversal)."""
+    if not name or not str(name).strip():
+        raise ValueError('asset_name is required')
+    s = str(name).strip()
+    if '..' in s or '/' in s or '\\' in s:
+        raise ValueError('invalid characters in asset_name')
+    if s in ('.', '..') or s.startswith('.'):
+        raise ValueError('invalid asset_name')
+    s = re.sub(r'[\x00-\x1f<>:"|?*]', '_', s)
+    return s
+
+
+def sanitize_path_segment(seg, field_name):
+    if not seg or not str(seg).strip():
+        raise ValueError(f'{field_name} is required')
+    s = str(seg).strip()
+    if '..' in s or '/' in s or '\\' in s:
+        raise ValueError(f'invalid {field_name}')
+    return s
+
+
 class PackUploader:
     """Handle upload and normalization of custom pack assets"""
     
     def __init__(self, pack_name):
-        self.pack_name = pack_name
+        self.pack_name = sanitize_path_segment(pack_name, 'pack_name')
         # Create packs in /assets/ directory (unified location)
-        self.pack_dir = Path(settings.ASSETS_DIR) / pack_name
+        self.pack_dir = Path(settings.ASSETS_DIR) / self.pack_name
         ensure_directory(self.pack_dir)
     
     def upload_and_normalize(self, image_file, asset_name, target_size, category):
         """Upload an image and normalize it (create rotations and thumbnail)"""
+        asset_name = sanitize_asset_name(asset_name)
+        category = sanitize_path_segment(category, 'category')
         # Ensure category directory exists
         category_dir = self.pack_dir / category
         ensure_directory(category_dir)
@@ -130,6 +154,7 @@ class PackUploader:
     @staticmethod
     def create_pack(pack_name):
         """Create a new custom pack in /assets/ directory"""
+        pack_name = sanitize_path_segment(pack_name, 'pack_name')
         pack_dir = Path(settings.ASSETS_DIR) / pack_name
         ensure_directory(pack_dir)
         
