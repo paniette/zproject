@@ -21,13 +21,46 @@
         </div>
 
         <div class="form-group">
-          <label>Nom de l'asset</label>
-          <input v-model="assetName" type="text" required placeholder="ex. MonTuile.png" />
+          <label for="asset-kind">Type (préréglage BP)</label>
+          <select id="asset-kind" v-model="assetKind" class="full-width">
+            <option v-for="opt in assetKindOptions" :key="opt.value" :value="opt.value">
+              {{ opt.label }} ({{ opt.w }}×{{ opt.h }} px)
+            </option>
+          </select>
+          <p class="hint">Change le type pour pré-remplir largeur et hauteur ; tu peux les modifier ensuite.</p>
         </div>
 
         <div class="form-group">
-          <label>Taille cible (pixels)</label>
-          <input v-model.number="targetSize" type="number" min="16" max="512" required />
+          <label>Dimensions finales (utilisées pour l’upload)</label>
+          <div class="dim-inputs">
+            <div>
+              <label for="target-w">Largeur (px)</label>
+              <input
+                id="target-w"
+                v-model.number="targetW"
+                type="number"
+                min="8"
+                max="2048"
+                required
+              />
+            </div>
+            <div>
+              <label for="target-h">Hauteur (px)</label>
+              <input
+                id="target-h"
+                v-model.number="targetH"
+                type="number"
+                min="8"
+                max="2048"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Nom de l'asset</label>
+          <input v-model="assetName" type="text" required placeholder="ex. MonTuile.png" />
         </div>
 
         <template v-if="isContextual">
@@ -72,6 +105,13 @@
 import { ref, onMounted, computed, watch } from 'vue'
 import api from '@/services/api'
 
+/** Références mesurées G-Zombicide-BP : tuile 1R, spawn Spawn-Blue, objectif type PIZZA */
+const assetKindOptions = [
+  { value: 'tile', label: 'Tuile', w: 250, h: 250 },
+  { value: 'spawn', label: 'Spawn', w: 52, h: 26 },
+  { value: 'objective', label: 'Objectif', w: 40, h: 40 }
+]
+
 const props = defineProps({
   show: {
     type: Boolean,
@@ -103,8 +143,10 @@ const contextualPackTitle = computed(() => {
 })
 
 const fileInputRef = ref(null)
+const assetKind = ref('objective')
+const targetW = ref(40)
+const targetH = ref(40)
 const assetName = ref('')
-const targetSize = ref(250)
 const category = ref('')
 const packName = ref('')
 const selectedFile = ref(null)
@@ -112,6 +154,16 @@ const previewImage = ref(null)
 const uploading = ref(false)
 const availablePacks = ref([])
 const categories = ref([])
+
+function applyKindDimensions() {
+  const o = assetKindOptions.find((x) => x.value === assetKind.value)
+  if (o) {
+    targetW.value = o.w
+    targetH.value = o.h
+  }
+}
+
+watch(assetKind, applyKindDimensions)
 
 const loadPacks = async () => {
   try {
@@ -145,10 +197,21 @@ const loadPackCategories = async () => {
   }
 }
 
+function suggestKindForCategory(cat) {
+  if (!cat) return
+  if (cat.includes('01.tiles') || cat === '01.tiles') {
+    assetKind.value = 'tile'
+  } else {
+    assetKind.value = 'objective'
+  }
+  applyKindDimensions()
+}
+
 const syncContextualFields = () => {
   if (props.show && isContextual.value) {
     packName.value = props.packId
     category.value = props.categoryPreset
+    suggestKindForCategory(props.categoryPreset)
   }
 }
 
@@ -160,9 +223,23 @@ watch(
   { immediate: true }
 )
 
+function clampDim(n, fallback) {
+  const v = Number(n)
+  if (!Number.isFinite(v)) return fallback
+  return Math.min(2048, Math.max(8, Math.round(v)))
+}
+
+const targetDimensions = computed(() => ({
+  w: clampDim(targetW.value, 40),
+  h: clampDim(targetH.value, 40)
+}))
+
 onMounted(async () => {
   await loadPacks()
   syncContextualFields()
+  if (!isContextual.value) {
+    applyKindDimensions()
+  }
 })
 
 const handleFileSelect = (event) => {
@@ -191,10 +268,12 @@ const uploadAsset = async () => {
   uploading.value = true
 
   try {
+    const { w, h } = targetDimensions.value
     const formData = new FormData()
     formData.append('image', selectedFile.value)
     formData.append('asset_name', assetName.value)
-    formData.append('target_size', targetSize.value)
+    formData.append('target_width', String(w))
+    formData.append('target_height', String(h))
     formData.append('category', category.value)
     formData.append('pack_name', packName.value)
 
@@ -206,7 +285,9 @@ const uploadAsset = async () => {
     window.dispatchEvent(new CustomEvent('pack-assets-updated', { detail: { packId: pid } }))
 
     assetName.value = ''
-    targetSize.value = 250
+    assetKind.value = 'objective'
+    targetW.value = 40
+    targetH.value = 40
     selectedFile.value = null
     previewImage.value = null
     if (fileInputRef.value) {
@@ -215,6 +296,8 @@ const uploadAsset = async () => {
 
     if (!isContextual.value) {
       category.value = ''
+    } else {
+      suggestKindForCategory(props.categoryPreset)
     }
 
     await loadPacks()
@@ -299,6 +382,17 @@ const uploadAsset = async () => {
   gap: 5px;
 }
 
+.hint {
+  margin: 4px 0 0;
+  font-size: 0.8rem;
+  opacity: 0.85;
+  line-height: 1.35;
+}
+
+.full-width {
+  width: 100%;
+}
+
 .contextual-info .readonly-field {
   margin: 0;
   padding: 8px;
@@ -373,5 +467,18 @@ const uploadAsset = async () => {
 .submit-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.dim-inputs {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.dim-inputs > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 </style>

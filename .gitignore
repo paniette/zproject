@@ -1,5 +1,8 @@
 bgmapeditor_tiles
 
+# Packs Zombicide et build copié à la racine (ajout local, Django crée le dossier si besoin)
+/assets/
+
 # Security - never commit passwords
 .htpasswd
 *.htpasswd

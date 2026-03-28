@@ -2,6 +2,7 @@
 Upload and normalize custom pack assets
 """
 import re
+import shutil
 from pathlib import Path
 from PIL import Image
 from django.conf import settings
@@ -39,30 +40,65 @@ class PackUploader:
         self.pack_dir = Path(settings.ASSETS_DIR) / self.pack_name
         ensure_directory(self.pack_dir)
     
-    def upload_and_normalize(self, image_file, asset_name, target_size, category):
-        """Upload an image and normalize it (create rotations and thumbnail)"""
+    def upload_and_normalize(
+        self,
+        image_file,
+        asset_name,
+        category,
+        target_size=None,
+        target_width=None,
+        target_height=None,
+    ):
+        """Upload an image and normalize it (create rotations and thumbnail).
+
+        Either pass target_size (square) or target_width + target_height (rectangle).
+        """
         asset_name = sanitize_asset_name(asset_name)
         category = sanitize_path_segment(category, 'category')
+
+        if target_width is not None and target_height is not None:
+            tw, th = int(target_width), int(target_height)
+        elif target_size is not None:
+            ts = int(target_size)
+            tw, th = ts, ts
+        else:
+            tw, th = 32, 32
+
+        if tw < 8 or th < 8 or tw > 2048 or th > 2048:
+            raise ValueError('target dimensions must be between 8 and 2048')
+
         # Ensure category directory exists
         category_dir = self.pack_dir / category
         ensure_directory(category_dir)
-        
+
         # Create asset directory
         asset_dir = category_dir / asset_name
         ensure_directory(asset_dir)
-        
+
         # Load and resize image
         img = Image.open(image_file)
         img = img.convert('RGBA')
-        img_resized = img.resize((target_size, target_size), Image.Resampling.LANCZOS)
-        
-        # Generate rotations
+        img_resized = img.resize((tw, th), Image.Resampling.LANCZOS)
+        is_square = tw == th
+
         rotations = {}
-        for angle in [0, 90, 180, 270]:
-            rotated = img_resized.rotate(-angle, expand=False)
+        r0_path = asset_dir / 'r_0.png'
+        img_resized.save(r0_path, 'PNG')
+        try:
+            rotations[0] = str(r0_path.relative_to(settings.ASSETS_DIR))
+        except ValueError:
+            try:
+                rotations[0] = str(r0_path.relative_to(settings.BG_MAPEDITOR_TILES_DIR))
+            except ValueError:
+                rotations[0] = str(r0_path.relative_to(settings.PACKS_DIR))
+
+        for angle in [90, 180, 270]:
             rot_path = asset_dir / f'r_{angle}.png'
-            rotated.save(rot_path, 'PNG')
-            # Path relative to assets directory
+            if is_square:
+                rotated = img_resized.rotate(-angle, expand=False)
+                rotated.save(rot_path, 'PNG')
+            else:
+                shutil.copyfile(r0_path, rot_path)
             try:
                 rotations[angle] = str(rot_path.relative_to(settings.ASSETS_DIR))
             except ValueError:
@@ -70,10 +106,13 @@ class PackUploader:
                     rotations[angle] = str(rot_path.relative_to(settings.BG_MAPEDITOR_TILES_DIR))
                 except ValueError:
                     rotations[angle] = str(rot_path.relative_to(settings.PACKS_DIR))
-        
-        # Generate thumbnail (smaller version)
-        thumb_size = min(64, target_size // 2)
-        thumb = img_resized.resize((thumb_size, thumb_size), Image.Resampling.LANCZOS)
+
+        # Thumbnail: fit inside ~64px box, keep aspect ratio
+        thumb_max = 64
+        scale = min(thumb_max / tw, thumb_max / th, 1.0)
+        t_w = max(1, int(round(tw * scale)))
+        t_h = max(1, int(round(th * scale)))
+        thumb = img_resized.resize((t_w, t_h), Image.Resampling.LANCZOS)
         thumb_path = asset_dir / 'r_thumb.png'
         thumb.save(thumb_path, 'PNG')
         
