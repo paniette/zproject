@@ -28,19 +28,39 @@
                 <img :src="getAssetThumbnail(asset)" :alt="asset.name" class="asset-thumbnail" />
                 <span class="asset-name">{{ asset.name }}</span>
               </div>
+              <button
+                v-if="!config.staticMode"
+                type="button"
+                class="asset-item asset-item-add"
+                aria-label="Ajouter un asset personnalisé dans cette catégorie"
+                @click.stop="openInlineUploader(pack.id, category)"
+              >
+                <span class="asset-add-plus" aria-hidden="true">+</span>
+                <span class="asset-name">Ajouter</span>
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <PackUploader
+      v-if="inlineUploaderOpen"
+      :show="true"
+      :pack-id="inlineUpload.packId"
+      :category-preset="inlineUpload.category"
+      @close="inlineUploaderOpen = false"
+      @uploaded="onInlineUploaded"
+    />
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { usePacksStore } from '@/stores/packsStore'
 import { useAssetsStore } from '@/stores/assetsStore'
+import { config } from '@/config'
 import api from '@/services/api'
+import PackUploader from './PackUploader.vue'
 
 const packsStore = usePacksStore()
 const assetsStore = useAssetsStore()
@@ -49,6 +69,42 @@ const openPacks = ref(new Set())
 const openCategories = ref(new Map())
 
 const packs = computed(() => packsStore.packs)
+
+const inlineUploaderOpen = ref(false)
+const inlineUpload = ref({ packId: '', category: '' })
+
+const openInlineUploader = (packId, category) => {
+  inlineUpload.value = { packId, category }
+  inlineUploaderOpen.value = true
+}
+
+const onInlineUploaded = () => {
+  inlineUploaderOpen.value = false
+}
+
+const refetchPackAssets = async (packId) => {
+  try {
+    const response = await api.getPackAssets(packId)
+    if (response.data) {
+      assetsStore.setAssets(packId, response.data)
+    }
+  } catch (error) {
+    console.error('Error refreshing pack assets:', error)
+  }
+}
+
+const onPackAssetsUpdated = (e) => {
+  const packId = e.detail?.packId
+  if (packId) refetchPackAssets(packId)
+}
+
+onMounted(() => {
+  window.addEventListener('pack-assets-updated', onPackAssetsUpdated)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('pack-assets-updated', onPackAssetsUpdated)
+})
 
 const togglePack = async (packId) => {
   if (openPacks.value.has(packId)) {
@@ -266,6 +322,39 @@ const isSelected = (asset) => {
 
 .asset-item:active {
   cursor: grabbing;
+}
+
+.asset-item-add {
+  cursor: pointer;
+  border-style: dashed;
+  border-color: var(--primary-color);
+  background: rgba(255, 255, 255, 0.85);
+  justify-content: center;
+}
+
+.asset-item-add:hover {
+  background: rgba(230, 57, 70, 0.12);
+  border-color: var(--primary-color);
+}
+
+.asset-item-add:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.asset-add-plus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  margin-bottom: 5px;
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--primary-color);
+  border-radius: 4px;
+  background: rgba(230, 57, 70, 0.08);
 }
 
 .asset-thumbnail {
