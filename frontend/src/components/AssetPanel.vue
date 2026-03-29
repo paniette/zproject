@@ -311,13 +311,13 @@ const isSelected = (asset) => {
 .asset-item:hover {
   transform: scale(1.05);
   border-color: var(--primary-color);
-  box-shadow: 0 2px 8px rgba(230, 57, 70, 0.3);
+  box-shadow: 0 2px 8px var(--shadow-accent);
 }
 
 .asset-item.selected {
   border-color: var(--primary-color);
-  background: rgba(230, 57, 70, 0.1);
-  box-shadow: 0 0 8px rgba(230, 57, 70, 0.5);
+  background: var(--glow-soft);
+  box-shadow: 0 0 8px var(--glow-strong);
 }
 
 .asset-item:active {

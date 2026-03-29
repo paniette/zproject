@@ -12,6 +12,8 @@
         />
       </div>
       <nav class="header-nav">
+        <ThemeSelector />
+        <span class="separator">|</span>
         <UserSelector />
         <span class="separator">|</span>
         <button @click="openMapLoader" class="header-btn">Charger</button>
@@ -31,6 +33,7 @@
 
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue'
+import ThemeSelector from './ThemeSelector.vue'
 import UserSelector from './UserSelector.vue'
 import MapLoader from './MapLoader.vue'
 import PackZipUploader from './PackZipUploader.vue'
@@ -294,7 +297,7 @@ const exportMap = () => {
   font-family: 'Creepster', cursive;
   font-size: 1.8rem;
   font-weight: normal;
-  color: #e63946;
+  color: var(--primary-color);
 }
 
 .header-nav {
@@ -326,6 +329,6 @@ const exportMap = () => {
   background: var(--brown-light);
   border-color: var(--primary-color);
   transform: translateY(-2px);
-  box-shadow: 0 2px 4px rgba(230, 57, 70, 0.3);
+  box-shadow: 0 2px 4px var(--shadow-accent);
 }
 </style>

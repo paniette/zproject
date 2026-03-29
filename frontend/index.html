@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
+    <script>
+      try {
+        var _t = localStorage.getItem('zproject-editor-theme');
+        if (_t) document.documentElement.setAttribute('data-theme', _t);
+      } catch (e) {}
+    </script>
     <meta charset="UTF-8">
     <link rel="icon" type="image/svg+xml" href="/vite.svg">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
