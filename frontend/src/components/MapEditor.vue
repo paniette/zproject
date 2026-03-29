@@ -1,6 +1,5 @@
 <template>
   <div class="map-editor">
-    <AppHeader />
     <div class="editor-container">
       <AssetPanel class="asset-panel" />
       <CanvasGrid class="canvas-grid" />
@@ -11,7 +10,6 @@
 
 <script setup>
 import { onMounted } from 'vue'
-import AppHeader from './AppHeader.vue'
 import AssetPanel from './AssetPanel.vue'
 import CanvasGrid from './CanvasGrid.vue'
 import PropertyPanel from './PropertyPanel.vue'
@@ -34,12 +32,8 @@ const loadPacks = async () => {
 }
 
 onMounted(async () => {
-  // Load packs on mount
   await loadPacks()
-  
-  // Listen for pack refresh events (when new packs are uploaded)
   window.addEventListener('packs-refresh', loadPacks)
-  
   return () => {
     window.removeEventListener('packs-refresh', loadPacks)
   }

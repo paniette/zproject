@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import { defaultMission, mergeMissionFromPayload } from '@/utils/mission'
-
 const MAX_HISTORY = 50
 
 function cloneLayers (layers) {

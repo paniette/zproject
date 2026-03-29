@@ -4,6 +4,7 @@
     <div v-if="mapStore.isPreviewMode" class="preview-banner" aria-live="polite">Aperçu — édition désactivée</div>
     <canvas
       ref="canvasRef"
+      class="map-editor-canvas"
       @mousedown="handleMouseDown"
       @mousemove="handleMouseMove"
       @mouseup="handleMouseUp"

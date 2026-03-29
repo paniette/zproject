@@ -1,16 +1,21 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import MapEditor from '@/components/MapEditor.vue'
+import EditorLayout from '@/components/EditorLayout.vue'
 
 const routes = [
   {
     path: '/',
     name: 'MapEditor',
-    component: MapEditor
+    component: EditorLayout
+  },
+  {
+    path: '/mission',
+    name: 'MissionEditor',
+    component: EditorLayout
   }
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),  // HashHistory fonctionne mieux avec les fichiers statiques
+  history: createWebHashHistory(),
   routes
 })
 

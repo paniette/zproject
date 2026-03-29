@@ -54,4 +54,3 @@ export function mergeMissionFromPayload (raw) {
     mapImageDataUrl: raw.mapImageDataUrl ?? null
   }
 }
-

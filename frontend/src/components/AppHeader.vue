@@ -304,7 +304,8 @@ const saveMap = async () => {
         created: mapStore.currentMapId ? undefined : new Date().toISOString(),
         modified: new Date().toISOString(),
         author: userStore.currentUser
-      }
+      },
+      mission: JSON.parse(JSON.stringify(mapStore.mission))
     }
     delete mapData.id
 
@@ -532,5 +533,4 @@ const exportMap = () => {
   justify-content: center;
   min-width: 2.25rem;
 }
-
 </style>

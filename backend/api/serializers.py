@@ -18,3 +18,4 @@ class MapSerializer(serializers.Serializer):
     grid = serializers.DictField()
     layers = serializers.DictField()
     metadata = serializers.DictField(required=False)
+    mission = serializers.DictField(required=False)
