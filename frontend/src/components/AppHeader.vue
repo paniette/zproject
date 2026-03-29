@@ -331,65 +331,24 @@ const saveMap = async () => {
   }
 }
 
-const exportMap = () => {
-  // Show export modal
+const exportMap = async () => {
   const format = prompt('Format (png/jpeg):', 'png')
-  if (!format) return
-  
-  const showGrid = confirm('Afficher la grille?')
-  const resolution = prompt('Résolution (1=standard, 2=2x, 4=4x):', '1')
-  const scale = parseFloat(resolution) || 1
-  
-  // Get canvas from CanvasGrid
-  const canvas = document.querySelector('canvas')
-  if (!canvas) {
-    alert('Canvas non trouvé')
-    return
+  if (format === null) return
+  const fmt = (format || 'png').trim().toLowerCase()
+  const mime = fmt === 'jpg' || fmt === 'jpeg' ? 'image/jpeg' : 'image/png'
+  const quality = mime === 'image/jpeg' ? 0.95 : 0.92
+  try {
+    const dataURL = await requestCanvasExportWithoutGrid({ mimeType: mime, quality })
+    const ext = mime === 'image/jpeg' ? 'jpg' : 'png'
+    const link = document.createElement('a')
+    link.download = `${mapStore.mapName || 'map'}_${new Date().toISOString().split('T')[0]}.${ext}`
+    link.href = dataURL
+    link.click()
+    alert('Export réussi!')
+  } catch (e) {
+    console.error(e)
+    alert('Erreur export: ' + (e?.message || e))
   }
-  
-  // Create export canvas
-  const exportCanvas = document.createElement('canvas')
-  const ctx = exportCanvas.getContext('2d')
-  const tileSize = mapStore.tileSize * scale
-  const width = mapStore.gridSize.width * tileSize
-  const height = mapStore.gridSize.height * tileSize
-  
-  exportCanvas.width = width
-  exportCanvas.height = height
-  
-  // Draw background
-  ctx.fillStyle = '#f0f0f0'
-  ctx.fillRect(0, 0, width, height)
-  
-  // Draw grid if requested
-  if (showGrid) {
-    ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)'
-    ctx.lineWidth = 1
-    for (let x = 0; x <= mapStore.gridSize.width; x++) {
-      ctx.beginPath()
-      ctx.moveTo(x * tileSize, 0)
-      ctx.lineTo(x * tileSize, height)
-      ctx.stroke()
-    }
-    for (let y = 0; y <= mapStore.gridSize.height; y++) {
-      ctx.beginPath()
-      ctx.moveTo(0, y * tileSize)
-      ctx.lineTo(width, y * tileSize)
-      ctx.stroke()
-    }
-  }
-  
-  // Draw tiles and objects (simplified - would need to load images)
-  // For now, just export the current canvas
-  const dataURL = canvas.toDataURL(`image/${format}`, 0.95)
-  
-  // Download
-  const link = document.createElement('a')
-  link.download = `${mapStore.mapName || 'map'}_${new Date().toISOString().split('T')[0]}.${format}`
-  link.href = dataURL
-  link.click()
-  
-  alert('Export réussi!')
 }
 </script>
 

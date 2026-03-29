@@ -87,6 +87,7 @@ import { computed, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMapStore } from '@/stores/mapStore'
 import { deriveTilesFromLayers } from '@/utils/mission'
+import { requestCanvasExportWithoutGrid } from '@/services/canvasExport'
 import MissionPagePreview from './MissionPagePreview.vue'
 
 const mapStore = useMapStore()
@@ -135,18 +136,13 @@ function syncTiles () {
   mapStore.patchMission({ tilesUsed: codes })
 }
 
-function captureMap () {
-  const canvas = document.querySelector('canvas.map-editor-canvas')
-  if (!canvas) {
-    alert("Canvas introuvable. Revenez sur l'onglet Carte puis réessayez.")
-    return
-  }
+async function captureMap () {
   try {
-    const dataUrl = canvas.toDataURL('image/png', 0.92)
+    const dataUrl = await requestCanvasExportWithoutGrid({ mimeType: 'image/png', quality: 0.92 })
     mapStore.patchMission({ mapImageDataUrl: dataUrl })
   } catch (e) {
     console.error(e)
-    alert('Impossible de capturer le canvas (origine des tuiles bloquée ?)')
+    alert('Impossible de capturer la carte (vérifiez que l\'onglet Carte a bien chargé le canvas).')
   }
 }
 

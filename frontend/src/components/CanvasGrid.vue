@@ -25,6 +25,7 @@ import { ref, onMounted, onUnmounted, watch } from 'vue'
 import { useMapStore } from '@/stores/mapStore'
 import { useToolStore } from '@/stores/toolStore'
 import { renderGrid, getGridCoordinates, getGridCoordinatesWithSnap } from '@/services/canvasRenderer'
+import { CANVAS_EXPORT_REQUEST, CANVAS_EXPORT_RESPONSE } from '@/services/canvasExport'
 import Toolbar from './Toolbar.vue'
 
 const mapStore = useMapStore()
@@ -49,6 +50,8 @@ const dragCompoundActive = ref(false)
 const imageCache = new Map() // Store: { image: Image, width: number, height: number }
 const isDrawing = ref(false) // Flag to prevent concurrent draws
 const gridInitialized = ref(false) // Flag pour savoir si la grille a été initialisée
+/** Si true, le prochain draw n'affiche pas les lignes de grille (export PNG / capture mission). */
+const hideGridForExport = ref(false)
 
 
 onMounted(() => {
@@ -60,10 +63,12 @@ onMounted(() => {
   }
 
   window.addEventListener('resize', resizeCanvas)
+  window.addEventListener(CANVAS_EXPORT_REQUEST, handleExportRequest)
 })
 
 onUnmounted(() => {
   window.removeEventListener('resize', resizeCanvas)
+  window.removeEventListener(CANVAS_EXPORT_REQUEST, handleExportRequest)
 })
 
 watch(() => mapStore.layers, () => {
@@ -139,20 +144,22 @@ const draw = async () => {
     ctx.value.scale(zoom.value, zoom.value)
 
   // Draw grid covering entire canvas and extending 4x for large maps (in world space, so squares scale with zoom)
-  const gridWidth = (canvas.width / zoom.value) * 4
-  const gridHeight = (canvas.height / zoom.value) * 4
-  renderGrid(
-    ctx.value,
-    mapStore.gridSize.width,
-    mapStore.gridSize.height,
-    mapStore.tileSize,
-    0,
-    0,
-    gridWidth,
-    gridHeight,
-    mapStore.gridOffsetX,
-    mapStore.gridOffsetY
-  )
+  if (!hideGridForExport.value) {
+    const gridWidth = (canvas.width / zoom.value) * 4
+    const gridHeight = (canvas.height / zoom.value) * 4
+    renderGrid(
+      ctx.value,
+      mapStore.gridSize.width,
+      mapStore.gridSize.height,
+      mapStore.tileSize,
+      0,
+      0,
+      gridWidth,
+      gridHeight,
+      mapStore.gridOffsetX,
+      mapStore.gridOffsetY
+    )
+  }
 
   // Draw tiles - wait for all to complete
   await Promise.all(
@@ -177,6 +184,35 @@ const draw = async () => {
   ctx.value.restore()
   } finally {
     isDrawing.value = false
+  }
+}
+
+const waitForDrawIdle = async () => {
+  for (let i = 0; i < 200; i++) {
+    if (!isDrawing.value) return
+    await new Promise((r) => requestAnimationFrame(r))
+  }
+}
+
+const handleExportRequest = async (e) => {
+  const { mimeType = 'image/png', quality = 0.92 } = e.detail || {}
+  try {
+    await waitForDrawIdle()
+    hideGridForExport.value = true
+    await draw()
+    const canvas = canvasRef.value
+    if (!canvas) throw new Error('Canvas indisponible')
+    const dataUrl = mimeType.includes('jpeg')
+      ? canvas.toDataURL('image/jpeg', quality)
+      : canvas.toDataURL(mimeType)
+    hideGridForExport.value = false
+    await draw()
+    window.dispatchEvent(new CustomEvent(CANVAS_EXPORT_RESPONSE, { detail: { dataUrl } }))
+  } catch (err) {
+    hideGridForExport.value = false
+    await waitForDrawIdle()
+    await draw()
+    window.dispatchEvent(new CustomEvent(CANVAS_EXPORT_RESPONSE, { detail: { error: err } }))
   }
 }
 

@@ -47,4 +47,3 @@ export function requestCanvasExportWithoutGrid ({ mimeType = 'image/png', qualit
     window.dispatchEvent(new CustomEvent(CANVAS_EXPORT_REQUEST, { detail: { mimeType, quality } }))
   })
 }
-
