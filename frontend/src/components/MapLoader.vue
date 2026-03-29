@@ -212,7 +212,7 @@ onMounted(() => {
 }
 
 .delete-btn {
-  background: rgba(230, 57, 70, 0.2);
+  background: var(--overlay-primary-weak);
   border: 1px solid var(--primary-color);
   border-radius: 4px;
   padding: 8px 12px;
@@ -223,7 +223,7 @@ onMounted(() => {
 }
 
 .delete-btn:hover {
-  background: rgba(230, 57, 70, 0.4);
+  background: var(--overlay-primary-mid);
   transform: scale(1.1);
 }
 

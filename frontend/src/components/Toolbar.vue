@@ -71,7 +71,7 @@ const tools = [
 .tool-btn.active {
   background: var(--primary-color);
   border-color: var(--primary-color);
-  box-shadow: 0 0 8px rgba(230, 57, 70, 0.5);
+  box-shadow: 0 0 8px var(--glow-strong);
 }
 
 .tool-icon {

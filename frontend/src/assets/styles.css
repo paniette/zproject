@@ -23,8 +23,13 @@
   --select-option-text: #1a1a1a;
   --select-option-bg: #ffffff;
   --shadow-accent: rgba(230, 57, 70, 0.3);
+  --glow-soft: color-mix(in srgb, var(--primary-color) 14%, transparent);
+  --glow-strong: color-mix(in srgb, var(--primary-color) 48%, transparent);
+  --overlay-primary-weak: color-mix(in srgb, var(--primary-color) 22%, transparent);
+  --overlay-primary-mid: color-mix(in srgb, var(--primary-color) 42%, transparent);
 }
 
+/* Gris froid, interface type IDE */
 html[data-theme='slate'] {
   --primary-color: #94a3b8;
   --secondary-color: #64748b;
@@ -37,6 +42,44 @@ html[data-theme='slate'] {
   --gray-medium: #334155;
   --gray-light: #64748b;
   --shadow-accent: rgba(148, 163, 184, 0.35);
+}
+
+/* Vert infection / nécrose */
+html[data-theme='necro'] {
+  --primary-color: #bef264;
+  --secondary-color: #4d7c0f;
+  --dark-color: #14532d;
+  --light-color: #ecfccb;
+  --danger-color: #ef4444;
+  --success-color: #22c55e;
+  --brown-dark: #14532d;
+  --brown-medium: #166534;
+  --brown-light: #22c55e;
+  --gray-dark: #052e16;
+  --gray-medium: #15803d;
+  --gray-light: #4ade80;
+  --editor-bg-start: #052e16;
+  --editor-bg-end: #14532d;
+  --shadow-accent: rgba(190, 242, 100, 0.35);
+}
+
+/* Violet nuit / abyssal */
+html[data-theme='abyss'] {
+  --primary-color: #c084fc;
+  --secondary-color: #818cf8;
+  --dark-color: #1e1b4b;
+  --light-color: #e0e7ff;
+  --danger-color: #f472b6;
+  --success-color: #34d399;
+  --brown-dark: #312e81;
+  --brown-medium: #4338ca;
+  --brown-light: #6366f1;
+  --gray-dark: #1e1b4b;
+  --gray-medium: #3730a3;
+  --gray-light: #818cf8;
+  --editor-bg-start: #1e1b4b;
+  --editor-bg-end: #312e81;
+  --shadow-accent: rgba(192, 132, 252, 0.4);
 }
 
 * {
