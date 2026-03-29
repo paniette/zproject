@@ -461,7 +461,7 @@ const uploadAsset = async () => {
   background: var(--brown-light);
   border-color: var(--primary-color);
   transform: translateY(-2px);
-  box-shadow: 0 2px 8px rgba(230, 57, 70, 0.3);
+  box-shadow: 0 2px 8px var(--shadow-accent);
 }
 
 .submit-btn:disabled {

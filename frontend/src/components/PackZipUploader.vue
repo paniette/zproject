@@ -246,7 +246,7 @@ onMounted(() => {
 
 .progress-bar {
   height: 100%;
-  background: #457b9d;
+  background: var(--secondary-color);
   transition: width 0.3s;
 }
 
@@ -275,7 +275,7 @@ onMounted(() => {
   background: var(--brown-light);
   border-color: var(--primary-color);
   transform: translateY(-2px);
-  box-shadow: 0 2px 8px rgba(230, 57, 70, 0.3);
+  box-shadow: 0 2px 8px var(--shadow-accent);
 }
 
 .submit-btn:disabled {
@@ -315,7 +315,7 @@ onMounted(() => {
 
 .delete-btn {
   padding: 4px 8px;
-  background: #e63946;
+  background: var(--primary-color);
   color: white;
   border: none;
   border-radius: 4px;
@@ -324,6 +324,6 @@ onMounted(() => {
 }
 
 .delete-btn:hover {
-  background: #bc1c1c;
+  background: var(--danger-color);
 }
 </style>
