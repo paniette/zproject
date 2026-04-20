@@ -1,13 +1,14 @@
 <template>
   <div class="canvas-grid">
     <Toolbar />
+    <div v-if="mapStore.isPreviewMode" class="preview-banner" aria-live="polite">Aperçu — édition désactivée</div>
     <canvas
       ref="canvasRef"
       @mousedown="handleMouseDown"
       @mousemove="handleMouseMove"
       @mouseup="handleMouseUp"
       @wheel="handleWheel"
-      :class="{ 'grab-cursor': isPanning || (!hoveredItem && !isDragging), 'grabbing-cursor': isDragging && isPanning }"
+      :class="{ 'grab-cursor': isPanning || (!hoveredItem && !isDragging), 'grabbing-cursor': isDragging && isPanning, 'preview-canvas': mapStore.isPreviewMode }"
     ></canvas>
     <div class="canvas-controls">
       <button @click="zoomIn">+</button>
@@ -41,6 +42,8 @@ const draggedObject = ref(null)
 const dragStartCoords = ref({ x: 0, y: 0 })
 const dragOffset = ref({ x: 0, y: 0 }) // Offset du curseur par rapport à l'image au début du drag
 const hoveredItem = ref(null)
+/** compound undo : une entrée pour tout un drag déplacement */
+const dragCompoundActive = ref(false)
 
 const imageCache = new Map() // Store: { image: Image, width: number, height: number }
 const isDrawing = ref(false) // Flag to prevent concurrent draws
@@ -412,6 +415,13 @@ const findItemAtWorldCoords = (worldX, worldY) => {
 
 const handleMouseDown = (event) => {
   if (event.button === 0) { // Left click
+    if (mapStore.isPreviewMode) {
+      isPanning.value = true
+      isDragging.value = true
+      dragStart.value = { x: event.clientX, y: event.clientY }
+      dragStartCoords.value = { x: mapStore.gridOffsetX, y: mapStore.gridOffsetY }
+      return
+    }
     // Convertir en coordonnées monde pour détecter si on clique sur un élément (comme pour hover)
     const rect = canvasRef.value.getBoundingClientRect()
     const worldX = (event.clientX - rect.left - panX.value) / zoom.value
@@ -467,10 +477,7 @@ const handleMouseDown = (event) => {
         if (found.type === 'object') {
           mapStore.updateObject(found.item.id, { rotation: (found.item.rotation + 90) % 360 })
         } else {
-          // For tiles, we need to update them (they don't have update method, so we replace)
-          const newRotation = (found.item.rotation + 90) % 360
-          mapStore.layers.tiles = mapStore.layers.tiles.filter(t => t.id !== found.item.id)
-          mapStore.layers.tiles.push({ ...found.item, rotation: newRotation })
+          mapStore.updateTile(found.item.id, { rotation: (found.item.rotation + 90) % 360 })
         }
         draw()
       }
@@ -497,7 +504,9 @@ const handleMouseDown = (event) => {
           dragOffset.value = { x: 0, y: 0 }
         }
         
-        // Sélectionner et commencer le drag
+        // Sélectionner et commencer le drag (une entrée d'historique pour tout le déplacement)
+        mapStore.beginCompound()
+        dragCompoundActive.value = true
         toolStore.selectObject(found.item.id)
         draggedObject.value = found
         dragStartCoords.value = { x: coords.x, y: coords.y }
@@ -559,6 +568,10 @@ const handleMouseDown = (event) => {
     dragStartCoords.value = { x: mapStore.gridOffsetX, y: mapStore.gridOffsetY }
     updateCursor()
   } else if (event.button === 2) { // Right click - rotate
+    if (mapStore.isPreviewMode) {
+      event.preventDefault()
+      return
+    }
     event.preventDefault()
     const coords = getGridCoordinates(
       event.clientX,
@@ -576,9 +589,7 @@ const handleMouseDown = (event) => {
       if (found.type === 'object') {
         mapStore.updateObject(found.item.id, { rotation: (found.item.rotation + 90) % 360 })
       } else {
-        const newRotation = (found.item.rotation + 90) % 360
-        mapStore.layers.tiles = mapStore.layers.tiles.filter(t => t.id !== found.item.id)
-        mapStore.layers.tiles.push({ ...found.item, rotation: newRotation })
+        mapStore.updateTile(found.item.id, { rotation: (found.item.rotation + 90) % 360 })
       }
       draw()
     }
@@ -586,6 +597,16 @@ const handleMouseDown = (event) => {
 }
 
 const handleMouseMove = (event) => {
+  if (mapStore.isPreviewMode && isDragging.value && isPanning.value) {
+    const deltaX = (event.clientX - dragStart.value.x) / zoom.value
+    const deltaY = (event.clientY - dragStart.value.y) / zoom.value
+    mapStore.setGridOffset(
+      dragStartCoords.value.x + deltaX,
+      dragStartCoords.value.y + deltaY
+    )
+    draw()
+    return
+  }
   if (isDragging.value) {
     if (isPanning.value) {
       // Pan the grid (déplacer grille + éléments)
@@ -616,10 +637,7 @@ const handleMouseMove = (event) => {
         if (draggedObject.value.type === 'object') {
           mapStore.updateObject(draggedObject.value.item.id, { x: gridX, y: gridY })
         } else {
-          // Update tile position
-          const tile = draggedObject.value.item
-          mapStore.layers.tiles = mapStore.layers.tiles.filter(t => t.id !== tile.id)
-          mapStore.layers.tiles.push({ ...tile, x: gridX, y: gridY })
+          mapStore.updateTile(draggedObject.value.item.id, { x: gridX, y: gridY })
         }
         dragStartCoords.value = { x: gridX, y: gridY }
         draw()
@@ -678,6 +696,10 @@ const updateCursor = () => {
 
 const handleMouseUp = (event) => {
   if (event.button === 0) {
+    if (dragCompoundActive.value) {
+      mapStore.endCompound()
+      dragCompoundActive.value = false
+    }
     isDragging.value = false
     isPanning.value = false
     draggedObject.value = null
@@ -720,6 +742,7 @@ onMounted(() => {
 
     canvas.addEventListener('drop', (e) => {
       e.preventDefault()
+      if (mapStore.isPreviewMode) return
       const data = e.dataTransfer.getData('application/json')
       if (data) {
         const asset = JSON.parse(data)
@@ -784,6 +807,25 @@ canvas.grab-cursor {
 
 canvas.grabbing-cursor {
   cursor: grabbing;
+}
+
+.preview-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  padding: 6px 12px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  background: color-mix(in srgb, var(--primary-color) 35%, #1a1a1a);
+  color: #fff;
+  pointer-events: none;
+}
+
+.preview-canvas {
+  opacity: 0.98;
 }
 
 .canvas-controls {
