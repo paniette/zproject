@@ -834,9 +834,11 @@ onMounted(() => {
           })
           newItemId = mapStore.layers.objects[mapStore.layers.objects.length - 1].id
         }
-        // Sélectionner automatiquement l'élément créé
+        // Drop depuis la liste : repasser en mode déplacer (ex. après rotation / suppression)
+        toolStore.setTool('move')
         toolStore.selectObject(newItemId)
         draw()
+        updateCursor()
       }
     })
   }
