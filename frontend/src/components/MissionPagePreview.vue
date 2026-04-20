@@ -382,22 +382,38 @@ const topGridColumnsStyle = computed(() => {
   .mission-page-preview {
     padding: 0;
     display: block;
+    width: 100%;
+    min-height: 297mm;
+    box-sizing: border-box;
+    background: var(--mp-bg);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
   .mp-sheet {
     width: 100%;
     max-width: none;
     aspect-ratio: auto;
-    min-height: 0;
+    min-height: 297mm;
+    display: flex;
+    flex-direction: column;
     box-shadow: none;
     border-radius: 0;
     overflow: visible;
+    background: var(--mp-bg);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
   .mp-sheet-inner {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
     overflow: visible;
     padding: 10mm 12mm;
     gap: 0.5rem;
+    box-sizing: border-box;
   }
 
   .mp-map-placeholder {

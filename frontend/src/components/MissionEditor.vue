@@ -303,16 +303,19 @@ watch(
   }
   .mission-editor {
     display: block;
-    background: white;
+    min-height: 297mm;
+    background: transparent;
     color: black;
   }
   .mission-preview-panel {
     padding: 0;
+    min-height: 297mm;
   }
   .preview-scroll {
     overflow: visible;
     background: none;
     padding: 0;
+    min-height: 297mm;
   }
 }
 </style>

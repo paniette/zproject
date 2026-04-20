@@ -124,20 +124,25 @@ button {
 @media print {
   @page {
     size: A4;
-    margin: 10mm;
+    margin: 0;
+  }
+
+  html {
+    height: auto;
   }
 
   body {
     overflow: visible !important;
-    background: white !important;
+    min-height: 297mm;
+    background: transparent !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
 
   #app {
-    width: auto !important;
+    width: 100% !important;
+    min-height: 297mm !important;
     height: auto !important;
-    min-height: 0 !important;
     display: block !important;
   }
 
@@ -148,16 +153,16 @@ button {
   .editor-layout {
     display: block !important;
     width: 100% !important;
+    min-height: 297mm !important;
     height: auto !important;
-    min-height: 0 !important;
     overflow: visible !important;
   }
 
   .editor-stack {
     position: static !important;
     width: 100% !important;
+    min-height: 297mm !important;
     height: auto !important;
-    min-height: 0 !important;
     overflow: visible !important;
   }
 
@@ -165,8 +170,8 @@ button {
     position: static !important;
     inset: auto !important;
     width: 100% !important;
+    min-height: 297mm !important;
     height: auto !important;
-    min-height: 0 !important;
     max-height: none !important;
     overflow: visible !important;
   }
