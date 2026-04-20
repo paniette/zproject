@@ -29,7 +29,10 @@ import { useToolStore } from '@/stores/toolStore'
 import { renderGrid, getGridCoordinates, getGridCoordinatesWithSnap } from '@/services/canvasRenderer'
 import { CANVAS_EXPORT_REQUEST, CANVAS_EXPORT_RESPONSE } from '@/services/canvasExport'
 import { collectUsedTilePairKeys, isTilePairLocked } from '@/utils/tilePairs'
+import { boundsForImageOnGrid, unionBounds, expandBounds } from '@/utils/mapExportBounds'
 import Toolbar from './Toolbar.vue'
+
+const EXPORT_MARGIN_PX = 8
 
 const mapStore = useMapStore()
 const toolStore = useToolStore()
@@ -178,12 +181,34 @@ watch(() => hoveredItem.value, () => {
   // draw() is already called in handleMouseMove when hover changes
 })
 
+/**
+ * Quand l’onglet Carte est masqué (v-show), le conteneur du canvas a souvent 0×0 :
+ * on prend la taille de `.editor-stack` pour garder un buffer dessinable (export / capture mission).
+ */
+function getCanvasTargetSize (canvas) {
+  const container = canvas?.parentElement
+  let w = container?.clientWidth ?? 0
+  let h = container?.clientHeight ?? 0
+  if (!w || !h) {
+    const stack = typeof document !== 'undefined' ? document.querySelector('.editor-stack') : null
+    if (stack) {
+      w = stack.clientWidth || w
+      h = stack.clientHeight || h
+    }
+  }
+  if (!w || !h) {
+    w = 800
+    h = 600
+  }
+  return [w, h]
+}
+
 const resizeCanvas = () => {
   const canvas = canvasRef.value
   if (canvas) {
-    const container = canvas.parentElement
-    canvas.width = container.clientWidth
-    canvas.height = container.clientHeight
+    const [w, h] = getCanvasTargetSize(canvas)
+    canvas.width = w
+    canvas.height = h
     
     // Initialiser la position de la grille pour qu'elle soit centrée (une seule fois au premier chargement)
     // La grille fait 4x la taille du canvas, donc on la décale de -1.5x pour la centrer
@@ -276,22 +301,67 @@ const handleExportRequest = async (e) => {
   const { mimeType = 'image/png', quality = 0.92 } = e.detail || {}
   try {
     await waitForDrawIdle()
-    hideGridForExport.value = true
-    await draw()
-    const canvas = canvasRef.value
-    if (!canvas) throw new Error('Canvas indisponible')
+    const tiles = mapStore.layers.tiles || []
+    const objects = mapStore.layers.objects || []
+    if (!tiles.length && !objects.length) {
+      throw new Error('Aucun élément sur la carte à capturer.')
+    }
+
+    const rawBounds = await computeWorldContentBounds()
+    if (!rawBounds) {
+      throw new Error('Impossible de calculer la zone de la carte (aucune image chargée).')
+    }
+
+    const b = expandBounds(rawBounds, EXPORT_MARGIN_PX)
+    const outW = Math.max(1, Math.ceil(b.maxX - b.minX))
+    const outH = Math.max(1, Math.ceil(b.maxY - b.minY))
+
+    const off = document.createElement('canvas')
+    off.width = outW
+    off.height = outH
+    const octx = off.getContext('2d')
+    if (!octx) throw new Error('Contexte 2D indisponible pour l’export.')
+
+    if (mimeType.includes('jpeg')) {
+      octx.fillStyle = '#ffffff'
+      octx.fillRect(0, 0, outW, outH)
+    }
+
+    octx.translate(-b.minX, -b.minY)
+
+    await Promise.all(tiles.map((t) => drawTileToContext(octx, t)))
+    await Promise.all(objects.map((o) => drawObjectToContext(octx, o)))
+
     const dataUrl = mimeType.includes('jpeg')
-      ? canvas.toDataURL('image/jpeg', quality)
-      : canvas.toDataURL(mimeType)
-    hideGridForExport.value = false
-    await draw()
-    window.dispatchEvent(new CustomEvent(CANVAS_EXPORT_RESPONSE, { detail: { dataUrl } }))
+      ? off.toDataURL('image/jpeg', quality)
+      : off.toDataURL(mimeType)
+
+    window.dispatchEvent(new CustomEvent(CANVAS_EXPORT_RESPONSE, { detail: { dataURL: dataUrl } }))
   } catch (err) {
-    hideGridForExport.value = false
-    await waitForDrawIdle()
-    await draw()
     window.dispatchEvent(new CustomEvent(CANVAS_EXPORT_RESPONSE, { detail: { error: err } }))
   }
+}
+
+function assetPathToSrc (path) {
+  const baseUrl = import.meta.env.BASE_URL || ''
+  if (path.startsWith('assets/') || path.startsWith('bgmapeditor_tiles/')) {
+    return `${baseUrl}${path}`
+  }
+  return `${baseUrl}assets/${path}`
+}
+
+/** Chemins alternatifs si les fichiers ont été renommés (webp, frame, etc.). */
+function alternateAssetPaths (assetPath) {
+  if (!assetPath || typeof assetPath !== 'string') return []
+  const a = assetPath.replace(/\\/g, '/')
+  const alts = new Set()
+  if (/\/r_0\.png$/i.test(a)) alts.add(a.replace(/\/r_0\.png$/i, '/r_0.webp'))
+  if (/\/r_0\.webp$/i.test(a)) alts.add(a.replace(/\/r_0\.webp$/i, '/r_0.png'))
+  if (/\/\d+[RV]\.png\/r_0\.(png|webp)$/i.test(a)) {
+    alts.add(a.replace(/(\/\d+[RV])\.png\//i, '$1.webp/'))
+  }
+  alts.delete(a)
+  return [...alts]
 }
 
 const loadImage = (assetPath) => {
@@ -301,86 +371,100 @@ const loadImage = (assetPath) => {
       return
     }
 
-    const img = new Image()
-    img.onload = () => {
-      // Store image with its dimensions
-      const imageData = {
-        image: img,
-        width: img.width,
-        height: img.height
+    const pathsToTry = [assetPath, ...alternateAssetPaths(assetPath)].filter(
+      (p, i, arr) => arr.indexOf(p) === i
+    )
+
+    const attempt = (index) => {
+      if (index >= pathsToTry.length) {
+        resolve(null)
+        return
       }
-      imageCache.set(assetPath, imageData)
-      resolve(imageData)
+      const path = pathsToTry[index]
+      const img = new Image()
+      img.onload = () => {
+        const imageData = {
+          image: img,
+          width: img.width,
+          height: img.height
+        }
+        imageCache.set(assetPath, imageData)
+        resolve(imageData)
+      }
+      img.onerror = () => attempt(index + 1)
+      img.src = assetPathToSrc(path)
     }
-    img.onerror = () => resolve(null)
-    // Try both /assets/ and /bgmapeditor_tiles/ paths
-    const baseUrl = import.meta.env.BASE_URL || ''
-    if (assetPath.startsWith('assets/') || assetPath.startsWith('bgmapeditor_tiles/')) {
-      img.src = `${baseUrl}${assetPath}`
-    } else {
-      img.src = `${baseUrl}assets/${assetPath}`
-    }
+    attempt(0)
   })
+}
+
+async function computeWorldContentBounds () {
+  const tiles = mapStore.layers.tiles || []
+  const objects = mapStore.layers.objects || []
+  const ts = mapStore.tileSize
+  const gx = mapStore.gridOffsetX
+  const gy = mapStore.gridOffsetY
+  const boxes = []
+  for (const tile of tiles) {
+    const imageData = await loadImage(tile.asset)
+    if (!imageData?.image) continue
+    const x = tile.x * ts + gx
+    const y = tile.y * ts + gy
+    boxes.push(boundsForImageOnGrid(x, y, imageData.width, imageData.height, tile.rotation || 0))
+  }
+  for (const obj of objects) {
+    const imageData = await loadImage(obj.asset)
+    if (!imageData?.image) continue
+    const x = obj.x * ts + gx
+    const y = obj.y * ts + gy
+    boxes.push(boundsForImageOnGrid(x, y, imageData.width, imageData.height, obj.rotation || 0))
+  }
+  if (!boxes.length) return null
+  return unionBounds(boxes)
+}
+
+async function drawTileToContext (c, tile) {
+  if (!c) return
+  const imageData = await loadImage(tile.asset)
+  if (imageData && imageData.image) {
+    c.save()
+    const img = imageData.image
+    const imgWidth = imageData.width
+    const imgHeight = imageData.height
+    const x = tile.x * mapStore.tileSize + mapStore.gridOffsetX
+    const y = tile.y * mapStore.tileSize + mapStore.gridOffsetY
+    c.translate(x + imgWidth / 2, y + imgHeight / 2)
+    c.rotate((tile.rotation * Math.PI) / 180)
+    c.drawImage(img, -imgWidth / 2, -imgHeight / 2, imgWidth, imgHeight)
+    c.restore()
+  }
+}
+
+async function drawObjectToContext (c, obj) {
+  if (!c) return
+  const imageData = await loadImage(obj.asset)
+  if (imageData && imageData.image) {
+    c.save()
+    const img = imageData.image
+    const imgWidth = imageData.width
+    const imgHeight = imageData.height
+    const x = obj.x * mapStore.tileSize + mapStore.gridOffsetX
+    const y = obj.y * mapStore.tileSize + mapStore.gridOffsetY
+    c.translate(x + imgWidth / 2, y + imgHeight / 2)
+    c.rotate((obj.rotation * Math.PI) / 180)
+    c.drawImage(img, -imgWidth / 2, -imgHeight / 2, imgWidth, imgHeight)
+    c.restore()
+  }
 }
 
 const drawTile = async (tile) => {
   if (!ctx.value) return
-
-  const imageData = await loadImage(tile.asset)
-  if (imageData && imageData.image) {
-    ctx.value.save()
-    // Use real image dimensions
-    const img = imageData.image
-    const imgWidth = imageData.width
-    const imgHeight = imageData.height
-    
-    // Positionner l'image pour que son coin supérieur gauche soit aligné avec la grille
-    // Le coin supérieur gauche de l'image est à (tile.x * tileSize + gridOffsetX, tile.y * tileSize + gridOffsetY)
-    const x = tile.x * mapStore.tileSize + mapStore.gridOffsetX
-    const y = tile.y * mapStore.tileSize + mapStore.gridOffsetY
-    
-    // Pour la rotation, on centre sur le centre de l'image
-    ctx.value.translate(x + imgWidth / 2, y + imgHeight / 2)
-    ctx.value.rotate((tile.rotation * Math.PI) / 180)
-    ctx.value.drawImage(
-      img,
-      -imgWidth / 2,
-      -imgHeight / 2,
-      imgWidth,
-      imgHeight
-    )
-    ctx.value.restore()
-  }
+  await drawTileToContext(ctx.value, tile)
 }
 
 const drawObject = async (obj) => {
   if (!ctx.value) return
-
-  const imageData = await loadImage(obj.asset)
-  if (imageData && imageData.image) {
-    ctx.value.save()
-    // Use real image dimensions
-    const img = imageData.image
-    const imgWidth = imageData.width
-    const imgHeight = imageData.height
-    
-    // Positionner l'image pour que son coin supérieur gauche soit aligné avec la grille
-    // Le coin supérieur gauche de l'image est à (obj.x * tileSize + gridOffsetX, obj.y * tileSize + gridOffsetY)
-    const x = obj.x * mapStore.tileSize + mapStore.gridOffsetX
-    const y = obj.y * mapStore.tileSize + mapStore.gridOffsetY
-    
-    // Pour la rotation, on centre sur le centre de l'image
-    ctx.value.translate(x + imgWidth / 2, y + imgHeight / 2)
-    ctx.value.rotate((obj.rotation * Math.PI) / 180)
-    ctx.value.drawImage(
-      img,
-      -imgWidth / 2,
-      -imgHeight / 2,
-      imgWidth,
-      imgHeight
-    )
-    ctx.value.restore()
-  }
+  await drawObjectToContext(ctx.value, obj)
 }
 
 const drawHover = () => {

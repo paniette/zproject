@@ -1,20 +1,27 @@
 /**
  * Export canvas utilitaire.
  *
- * L’en-tête peut demander un export "sans grille" si le canvas supporte un flux dédié.
- * Si non disponible, on fallback sur `canvas.toDataURL()`.
+ * `CanvasGrid` répond avec un PNG hors-écran (crop, transparence, sans grille).
+ * Pas de capture de secours sur le canvas visible (éviterait grille + fond blanc).
  */
 
 export const CANVAS_EXPORT_REQUEST = 'zproject:canvas-export-request'
 export const CANVAS_EXPORT_RESPONSE = 'zproject:canvas-export-response'
 
+/** Délai max : chargement images + crop peut prendre plusieurs secondes. */
+const EXPORT_RESPONSE_TIMEOUT_MS = 45000
+
 /**
- * Demande à `CanvasGrid` un export (ex. sans grille), sinon fallback.
+ * Demande à `CanvasGrid` un export sans grille.
  * @returns {Promise<string>} dataURL
  */
+
 export function requestCanvasExportWithoutGrid ({ mimeType = 'image/png', quality = 0.92 } = {}) {
   return new Promise((resolve, reject) => {
-    const canvas = document.querySelector('canvas')
+    const canvas =
+      document.querySelector('canvas.map-editor-canvas') ||
+      document.querySelector('.canvas-grid canvas') ||
+      document.querySelector('canvas')
     if (!canvas) {
       reject(new Error('Canvas non trouvé'))
       return
@@ -24,17 +31,27 @@ export function requestCanvasExportWithoutGrid ({ mimeType = 'image/png', qualit
     const timeout = setTimeout(() => {
       if (done) return
       done = true
-      // fallback
-      try {
-        resolve(canvas.toDataURL(mimeType, quality))
-      } catch (e) {
-        reject(e)
-      }
-    }, 900)
+      window.removeEventListener(CANVAS_EXPORT_RESPONSE, onResp)
+      // Ne pas appeler canvas.toDataURL() ici : ce serait la vue écran avec grille et fond blanc.
+      reject(
+        new Error(
+          'Export de la carte trop long ou le canvas n’a pas répondu. Réessayez ; si le problème persiste, rechargez la page.'
+        )
+      )
+    }, EXPORT_RESPONSE_TIMEOUT_MS)
 
     const onResp = (e) => {
       const detail = e?.detail || {}
-      const dataURL = detail.dataURL
+      if (detail.error) {
+        if (done) return
+        done = true
+        clearTimeout(timeout)
+        window.removeEventListener(CANVAS_EXPORT_RESPONSE, onResp)
+        const err = detail.error instanceof Error ? detail.error : new Error(String(detail.error?.message || detail.error))
+        reject(err)
+        return
+      }
+      const dataURL = detail.dataURL ?? detail.dataUrl
       if (!dataURL || typeof dataURL !== 'string') return
       if (done) return
       done = true

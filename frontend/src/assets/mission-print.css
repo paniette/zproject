@@ -1,35 +1,53 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@600&family=Lato&family=Source+Sans+3&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@600&family=Lato&family=Source+Sans+3&family=Ma+Shan+Zheng&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;600;700&display=swap');
 
-﻿/* Prévisualisation page mission (hors thème UI) */
+/* Prévisualisation page mission (hors thème UI) — variables par thème */
 
 .mission-page-preview[data-mission-theme='classic'] {
   --mp-title: "Creepster", fantasy;
   --mp-body: "Roboto", system-ui, sans-serif;
+  --mp-flavor: "Roboto", system-ui, sans-serif;
   --mp-bg: #f7f3e9;
   --mp-ink: #1a1208;
   --mp-accent: #8b2500;
+  --mp-quest: #8b2500;
 }
 
 .mission-page-preview[data-mission-theme='slate'] {
   --mp-title: "Bebas Neue", "Arial Narrow", sans-serif;
   --mp-body: "Source Sans 3", system-ui, sans-serif;
+  --mp-flavor: "Source Sans 3", system-ui, sans-serif;
   --mp-bg: #f1f5f9;
   --mp-ink: #0f172a;
   --mp-accent: #334155;
+  --mp-quest: #334155;
 }
 
 .mission-page-preview[data-mission-theme='necro'] {
   --mp-title: "Creepster", fantasy;
   --mp-body: "Roboto", system-ui, sans-serif;
+  --mp-flavor: "Roboto", system-ui, sans-serif;
   --mp-bg: #ecfccb;
   --mp-ink: #14532d;
   --mp-accent: #166534;
+  --mp-quest: #166534;
 }
 
 .mission-page-preview[data-mission-theme='abyss'] {
   --mp-title: "Cinzel", Georgia, serif;
   --mp-body: "Lato", system-ui, sans-serif;
+  --mp-flavor: "Lato", system-ui, sans-serif;
   --mp-bg: #e0e7ff;
   --mp-ink: #1e1b4b;
   --mp-accent: #4338ca;
+  --mp-quest: #4338ca;
+}
+
+.mission-page-preview[data-mission-theme='eternal'] {
+  --mp-title: "Oswald", "Arial Narrow", system-ui, sans-serif;
+  --mp-body: "Merriweather", Georgia, "Times New Roman", serif;
+  --mp-flavor: "Ma Shan Zheng", "KaiTi", "STKaiti", cursive;
+  --mp-bg: #ffffff;
+  --mp-ink: #2b1810;
+  --mp-accent: #9a1b0f;
+  --mp-quest: #1a4a6e;
 }

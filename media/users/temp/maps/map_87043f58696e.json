@@ -28,22 +28,38 @@
   "gridOffsetX": -1854,
   "gridOffsetY": -1398,
   "mission": {
-    "questCode": "",
-    "title": "",
-    "authors": [],
-    "difficulty": "",
-    "playerCount": "",
-    "estimatedDuration": "",
-    "synopsis": "",
-    "objectives": [],
-    "specialRules": [],
-    "tilesUsed": [],
+    "questCode": "fgdhgfh",
+    "title": "hgdfgh",
+    "authors": [
+      "hdfh"
+    ],
+    "difficulty": "hard",
+    "playerCount": "6 surv",
+    "estimatedDuration": "moyenne",
+    "synopsis": "sdgfgfsdgfsdgsdf",
+    "objectives": [
+      "gfdsgf",
+      "sdfgfsdgdfg",
+      "gfsdgf",
+      "gfsdgdf",
+      "g"
+    ],
+    "specialRules": [
+      "fgsdgds",
+      "sdfgfdsg",
+      "sdfgfgdf",
+      "sdgdssds"
+    ],
+    "tilesUsed": [
+      "12V",
+      "16R"
+    ],
     "pageTheme": "classic",
     "mapImageDataUrl": null
   },
   "metadata": {
     "created": "2026-04-20T18:50:35.398270",
-    "modified": "2026-04-20T18:50:35.398270",
+    "modified": "2026-04-20T20:05:51.846909",
     "author": "temp"
   },
   "id": "map_87043f58696e"

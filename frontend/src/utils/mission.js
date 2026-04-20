@@ -16,7 +16,7 @@ export function defaultMission () {
     objectives: [],
     specialRules: [],
     tilesUsed: [],
-    pageTheme: 'classic',
+    pageTheme: 'eternal',
     mapImageDataUrl: null
   }
 }
@@ -26,7 +26,7 @@ export function deriveTilesFromLayers (layers) {
   const codes = new Set()
   for (const t of tiles) {
     const asset = t.asset || ''
-    const m = asset.match(/(\d+[RV])\.png/i)
+    const m = asset.match(/(\d+[RV])\.(png|webp)/i)
     if (m) codes.add(m[1].toUpperCase())
   }
   return sortTileCodes(Array.from(codes))

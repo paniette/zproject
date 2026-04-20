@@ -4,41 +4,67 @@
     :data-mission-theme="pageThemeId"
     id="mission-print-root"
   >
-    <header class="mp-header">
-      <p v-if="mission.questCode" class="mp-quest-code">QUEST {{ mission.questCode }}</p>
-      <h1 class="mp-title">{{ displayTitle }}</h1>
-      <p class="mp-meta-line">
-        <template v-if="infoLine">{{ infoLine }}</template>
-        <template v-else>&nbsp;</template>
-      </p>
-      <p v-if="authorsLine" class="mp-authors">{{ authorsLine }}</p>
-    </header>
+    <div class="mp-sheet">
+      <div class="mp-sheet-inner">
+        <div class="mp-top-grid">
+          <div class="mp-col-intro">
+            <p v-if="authorsLine" class="mp-authors">{{ authorsLine }}</p>
+            <section v-if="mission.synopsis" class="mp-synopsis-block">
+              <p class="mp-synopsis mp-synopsis--dropcap">{{ mission.synopsis }}</p>
+            </section>
+          </div>
 
-    <section v-if="mission.synopsis" class="mp-block">
-      <p class="mp-synopsis">{{ mission.synopsis }}</p>
-    </section>
+          <div class="mp-col-rules">
+            <section v-if="tilesLine" class="mp-dalles">
+              <h2 class="mp-section-title">Dalles requises</h2>
+              <p class="mp-dalles-line">{{ tilesLine }}</p>
+            </section>
 
-    <section v-if="mission.objectives.length" class="mp-block">
-      <h2 class="mp-section-title">Objectifs</h2>
-      <ul class="mp-list">
-        <li v-for="(item, i) in mission.objectives" :key="'obj-' + i">{{ item }}</li>
-      </ul>
-    </section>
+            <section v-if="mission.objectives.length" class="mp-block">
+              <h2 class="mp-section-title">Objectifs</h2>
+              <ul class="mp-list">
+                <li v-for="(item, i) in mission.objectives" :key="'obj-' + i">{{ item }}</li>
+              </ul>
+            </section>
 
-    <section v-if="mission.specialRules.length" class="mp-block">
-      <h2 class="mp-section-title">Règles spéciales</h2>
-      <ul class="mp-list">
-        <li v-for="(item, i) in mission.specialRules" :key="'sr-' + i">{{ item }}</li>
-      </ul>
-    </section>
+            <section v-if="mission.specialRules.length" class="mp-block">
+              <h2 class="mp-section-title">Règles spéciales</h2>
+              <ul class="mp-list">
+                <li v-for="(item, i) in mission.specialRules" :key="'sr-' + i">{{ item }}</li>
+              </ul>
+            </section>
+          </div>
+        </div>
 
-    <section v-if="mission.mapImageDataUrl" class="mp-map-wrap">
-      <img :src="mission.mapImageDataUrl" alt="Carte" class="mp-map-img" />
-    </section>
+        <header class="mp-hero">
+          <p v-if="mission.questCode" class="mp-quest-code">QUÊTE {{ mission.questCode }}</p>
+          <h1 class="mp-title">{{ displayTitle }}</h1>
+          <p class="mp-meta-line">
+            <template v-if="infoLine">{{ infoLine }}</template>
+            <template v-else>&nbsp;</template>
+          </p>
+        </header>
 
-    <footer v-if="tilesLine" class="mp-footer">
-      <p><strong>Tuiles :</strong> {{ tilesLine }}</p>
-    </footer>
+        <div
+          class="mp-bottom-grid"
+          :class="{ 'mp-bottom-grid--map-only': !tilesUsed.length }"
+        >
+          <aside v-if="tilesUsed.length" class="mp-tiles-aside" aria-label="Tuiles">
+            <h3 class="mp-aside-title">Tuiles</h3>
+            <ul class="mp-tile-chips">
+              <li v-for="code in tilesUsed" :key="'chip-' + code">{{ code }}</li>
+            </ul>
+          </aside>
+
+          <div class="mp-map-col">
+            <section v-if="mission.mapImageDataUrl" class="mp-map-wrap">
+              <img :src="mission.mapImageDataUrl" alt="Carte de la mission" class="mp-map-img" />
+            </section>
+            <p v-else class="mp-map-placeholder">Aucune carte capturée — utilisez « Capturer la carte » dans le panneau de gauche.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -50,8 +76,13 @@ import { storeToRefs } from 'pinia'
 const mapStore = useMapStore()
 const { mission } = storeToRefs(mapStore)
 
-const pageThemeId = computed(() => (mission.value.pageTheme ? mission.value.pageTheme : 'classic'))
+const pageThemeId = computed(() => (mission.value.pageTheme ? mission.value.pageTheme : 'eternal'))
 const displayTitle = computed(() => (mission.value.title ? mission.value.title : 'Sans titre'))
+
+const tilesUsed = computed(() => {
+  const t = mission.value.tilesUsed
+  return Array.isArray(t) ? t : []
+})
 
 const infoLine = computed(() => {
   const m = mission.value
@@ -66,9 +97,8 @@ const authorsLine = computed(() => {
 })
 
 const tilesLine = computed(() => {
-  const t = mission.value.tilesUsed
-  if (!t || !t.length) return ''
-  return t.join(', ')
+  if (!tilesUsed.value.length) return ''
+  return tilesUsed.value.join(', ')
 })
 </script>
 
@@ -76,97 +106,284 @@ const tilesLine = computed(() => {
 @import url('../assets/mission-print.css');
 
 .mission-page-preview {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
   font-family: var(--mp-body);
   color: var(--mp-ink);
+}
+
+.mp-sheet {
+  width: min(100%, 210mm);
+  aspect-ratio: 210 / 297;
   background: var(--mp-bg);
-  padding: 1.5rem 1.75rem;
-  min-height: 100%;
-  box-sizing: border-box;
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.14);
   border-radius: 4px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
-.mp-header {
-  text-align: center;
-  margin-bottom: 1.25rem;
+.mp-sheet-inner {
+  flex: 1;
+  min-height: 0;
+  padding: clamp(10px, 3vw, 14mm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  overflow: auto;
 }
 
-.mp-quest-code {
-  font-family: var(--mp-body);
-  font-size: 0.85rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--mp-accent);
-  margin: 0 0 0.25rem;
+.mp-top-grid {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 42%);
+  gap: 0.65rem 1rem;
+  align-items: start;
 }
 
-.mp-title {
-  font-family: var(--mp-title);
-  font-size: 2rem;
-  font-weight: normal;
-  margin: 0 0 0.5rem;
-  line-height: 1.15;
-  color: var(--mp-accent);
+.mp-col-intro {
+  min-width: 0;
 }
 
-.mp-meta-line {
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  margin: 0;
+.mp-col-rules {
+  min-width: 0;
 }
 
 .mp-authors {
-  font-size: 0.95rem;
+  font-size: 0.82rem;
   font-style: italic;
-  margin: 0.85rem 0 0;
-  opacity: 0.9;
+  margin: 0 0 0.5rem;
+  opacity: 0.92;
 }
 
-.mp-block {
-  margin-bottom: 1.25rem;
+.mp-synopsis-block {
+  margin: 0;
 }
 
 .mp-synopsis {
   margin: 0;
-  line-height: 1.55;
+  font-family: var(--mp-flavor);
+  line-height: 1.5;
   white-space: pre-wrap;
+  font-size: 0.95rem;
+}
+
+.mp-synopsis--dropcap::first-letter {
+  float: left;
+  font-family: var(--mp-flavor);
+  font-size: 2.65rem;
+  line-height: 0.85;
+  padding-right: 0.12em;
+  margin-top: 0.06em;
+  color: var(--mp-accent);
+}
+
+.mp-dalles {
+  margin-bottom: 0.65rem;
+}
+
+.mp-dalles-line {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  font-weight: 600;
+}
+
+.mp-block {
+  margin-bottom: 0.55rem;
+}
+
+.mp-block:last-child {
+  margin-bottom: 0;
 }
 
 .mp-section-title {
   font-family: var(--mp-title);
-  font-size: 1.35rem;
-  font-weight: normal;
-  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0 0 0.28rem;
   color: var(--mp-accent);
+  letter-spacing: 0.02em;
 }
 
 .mp-list {
   margin: 0;
-  padding-left: 1.25rem;
-  line-height: 1.5;
+  padding-left: 1.1rem;
+  line-height: 1.42;
+  font-size: 0.86rem;
 }
 
 .mp-list li {
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.25rem;
+}
+
+.mp-hero {
+  flex-shrink: 0;
+  border-top: 1px solid color-mix(in srgb, var(--mp-ink) 18%, transparent);
+  padding-top: 0.55rem;
+  text-align: left;
+}
+
+.mp-quest-code {
+  font-family: var(--mp-title);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mp-quest);
+  margin: 0 0 0.15rem;
+}
+
+.mp-title {
+  font-family: var(--mp-title);
+  font-size: clamp(1.25rem, 2.8vw, 1.85rem);
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+  line-height: 1.12;
+  color: var(--mp-ink);
+  letter-spacing: 0.02em;
+}
+
+.mission-page-preview[data-mission-theme='eternal'] .mp-title {
+  text-transform: uppercase;
+}
+
+.mission-page-preview[data-mission-theme='classic'] .mp-title,
+.mission-page-preview[data-mission-theme='necro'] .mp-title {
+  color: var(--mp-accent);
+  font-weight: normal;
+}
+
+.mp-meta-line {
+  font-family: var(--mp-title);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0;
+  opacity: 0.92;
+}
+
+.mp-bottom-grid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(64px, 20%) 1fr;
+  gap: 0.5rem;
+  align-items: stretch;
+  margin-top: 0.15rem;
+}
+
+.mp-bottom-grid--map-only {
+  grid-template-columns: 1fr;
+}
+
+.mp-tiles-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.mp-aside-title {
+  font-family: var(--mp-title);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0;
+  color: var(--mp-accent);
+}
+
+.mp-tile-chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.mp-tile-chips li {
+  border: 1px solid color-mix(in srgb, var(--mp-ink) 28%, transparent);
+  padding: 3px 4px;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.mp-map-col {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .mp-map-wrap {
-  margin: 1rem 0;
-  text-align: center;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid color-mix(in srgb, var(--mp-ink) 22%, transparent);
+  border-radius: 2px;
+  overflow: hidden;
+  /* Fond page : la capture PNG est transparente hors tuiles/jetons */
+  background: var(--mp-bg);
 }
 
 .mp-map-img {
-  max-width: 100%;
-  height: auto;
-  border: 2px solid var(--mp-accent);
-  border-radius: 4px;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
-.mp-footer {
-  margin-top: 1rem;
-  font-size: 0.9rem;
-  border-top: 1px solid color-mix(in srgb, var(--mp-ink) 25%, transparent);
-  padding-top: 0.75rem;
+.mp-map-placeholder {
+  flex: 1;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  opacity: 0.65;
+  padding: 0.5rem;
+  border: 1px dashed color-mix(in srgb, var(--mp-ink) 25%, transparent);
+  border-radius: 2px;
+}
+
+@media print {
+  .mission-page-preview {
+    padding: 0;
+    display: block;
+  }
+
+  .mp-sheet {
+    width: 100%;
+    max-width: none;
+    aspect-ratio: auto;
+    min-height: 0;
+    box-shadow: none;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  .mp-sheet-inner {
+    overflow: visible;
+    padding: 10mm 12mm;
+    gap: 0.5rem;
+  }
+
+  .mp-map-placeholder {
+    min-height: 40mm;
+  }
 }
 </style>

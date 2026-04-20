@@ -6,6 +6,7 @@
       <label class="field">
         <span>Thème de la page (typo)</span>
         <select v-model="mission.pageTheme" class="input">
+          <option value="eternal">Empire (A4 blanc)</option>
           <option value="classic">Classique</option>
           <option value="slate">Ardoise</option>
           <option value="necro">Nécrose</option>
@@ -93,9 +94,10 @@ import MissionPagePreview from './MissionPagePreview.vue'
 const mapStore = useMapStore()
 const { mission } = storeToRefs(mapStore)
 
+/** Conserve espaces et retours à la ligne en cours de frappe (pas de trim par ligne). */
 function linesToArray (text) {
-  if (!text || !text.trim()) return []
-  return text.split(/\r?\n/).map((s) => s.trim()).filter(Boolean)
+  if (text == null || text === '') return []
+  return text.split(/\r?\n/)
 }
 
 function arrayToLines (arr) {
@@ -126,7 +128,10 @@ const specialRulesText = computed({
 const tilesText = computed({
   get: () => (mission.value.tilesUsed || []).join(', '),
   set: (v) => {
-    const parts = v.split(/[,;\s]+/).map((s) => s.trim().toUpperCase()).filter(Boolean)
+    const parts = String(v ?? '')
+      .split(/[,;]+/)
+      .map((s) => s.trim().toUpperCase())
+      .filter(Boolean)
     mapStore.patchMission({ tilesUsed: parts })
   }
 })
@@ -142,7 +147,11 @@ async function captureMap () {
     mapStore.patchMission({ mapImageDataUrl: dataUrl })
   } catch (e) {
     console.error(e)
-    alert('Impossible de capturer la carte (vérifiez que l\'onglet Carte a bien chargé le canvas).')
+    const msg = e?.message || ''
+    alert(
+      msg ||
+        'Impossible de capturer la carte (vérifiez que l’onglet Carte a bien chargé le canvas).'
+    )
   }
 }
 
@@ -158,7 +167,7 @@ watch(
   () => mission.value.pageTheme,
   (id) => {
     const el = document.getElementById('mission-print-root')
-    if (el) el.setAttribute('data-mission-theme', id || 'classic')
+    if (el) el.setAttribute('data-mission-theme', id || 'eternal')
   }
 )
 </script>
@@ -287,6 +296,11 @@ watch(
 }
 
 @media print {
+  @page {
+    size: A4;
+    margin: 10mm;
+  }
+
   .mission-form,
   .mission-form-title,
   .mission-preview-panel > h2 {
@@ -294,6 +308,8 @@ watch(
   }
   .mission-editor {
     display: block;
+    background: white;
+    color: black;
   }
   .mission-preview-panel {
     padding: 0;
@@ -301,6 +317,7 @@ watch(
   .preview-scroll {
     overflow: visible;
     background: none;
+    padding: 0;
   }
 }
 </style>

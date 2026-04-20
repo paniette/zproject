@@ -6,7 +6,7 @@
 const TILES_SEGMENT = '/01.tiles/'
 
 /**
- * Exemple : G-Zombicide-BP/01.tiles/39R.png/r_0.png → clé "G-Zombicide-BP|39"
+ * Exemple : G-Zombicide-BP/01.tiles/39R.png/r_0.png (ou .webp) → clé "G-Zombicide-BP|39"
  * @param {string} assetPath
  * @returns {string|null}
  */
@@ -14,7 +14,7 @@ export function zombicideTilePairKey (assetPath) {
   if (!assetPath || typeof assetPath !== 'string') return null
   const normalized = assetPath.replace(/\\/g, '/')
   if (!normalized.includes(TILES_SEGMENT)) return null
-  const m = normalized.match(/(\d+)[RV]\.png/i)
+  const m = normalized.match(/(\d+)[RV]\.(png|webp)/i)
   if (!m) return null
   const num = m[1]
   const idx = normalized.indexOf(TILES_SEGMENT)
