@@ -3,7 +3,12 @@
     <div class="header-content">
       <div class="header-left">
         <div class="logo">Zombicide Editor</div>
-        <span class="save-status" :class="{ dirty: mapStore.isUnsaved }" :title="saveStatusTitle">
+        <span
+          v-if="menuVis.saveStatus"
+          class="save-status"
+          :class="{ dirty: mapStore.isUnsaved }"
+          :title="saveStatusTitle"
+        >
           {{ mapStore.isUnsaved ? 'Modifié' : 'Enregistré' }}
         </span>
       </div>
@@ -90,8 +95,16 @@
           </button>
         </div>
 
-        <div class="nav-group">
-          <button type="button" class="header-btn" title="Exporter en image PNG/JPEG" @click="exportMap">Image</button>
+        <div v-if="menuVis.exportImage" class="nav-group">
+          <button
+            type="button"
+            class="header-btn header-btn-icon"
+            title="Export de la carte en PNG"
+            @click="exportMap"
+          >
+            <MenuGlyph name="exportImage" />
+            <span class="sr-only">Exporter la carte en PNG</span>
+          </button>
         </div>
 
         <div v-if="menuVis.uploadZip || menuVis.uploadElement" class="nav-group">
@@ -346,20 +359,23 @@ const saveMap = async () => {
   }
 }
 
+function mapNameToExportPngFilename () {
+  let raw = String(mapStore.mapName || '').trim()
+  if (!raw || raw === DEFAULT_MAP_NAME) raw = 'carte'
+  const ascii = raw.normalize('NFKD').replace(/[\u0300-\u036f]/g, '')
+  const slug = ascii.replace(/[^a-zA-Z0-9]+/g, '').slice(0, 120) || 'carte'
+  return `${slug}.png`
+}
+
 const exportMap = async () => {
-  const format = prompt('Format (png/jpeg):', 'png')
-  if (format === null) return
-  const fmt = (format || 'png').trim().toLowerCase()
-  const mime = fmt === 'jpg' || fmt === 'jpeg' ? 'image/jpeg' : 'image/png'
-  const quality = mime === 'image/jpeg' ? 0.95 : 0.92
+  const mime = 'image/png'
+  const quality = 0.92
   try {
     const dataURL = await requestCanvasExportWithoutGrid({ mimeType: mime, quality })
-    const ext = mime === 'image/jpeg' ? 'jpg' : 'png'
     const link = document.createElement('a')
-    link.download = `${mapStore.mapName || 'map'}_${new Date().toISOString().split('T')[0]}.${ext}`
+    link.download = mapNameToExportPngFilename()
     link.href = dataURL
     link.click()
-    alert('Export réussi!')
   } catch (e) {
     console.error(e)
     alert('Erreur export: ' + (e?.message || e))

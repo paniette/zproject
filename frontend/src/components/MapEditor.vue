@@ -3,22 +3,25 @@
     <div class="editor-container">
       <AssetPanel class="asset-panel" />
       <CanvasGrid class="canvas-grid" />
-      <PropertyPanel class="property-panel" />
+      <PropertyPanel v-if="menuVis.propertyPanel" class="property-panel" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import AssetPanel from './AssetPanel.vue'
 import CanvasGrid from './CanvasGrid.vue'
 import PropertyPanel from './PropertyPanel.vue'
 import { usePacksStore } from '@/stores/packsStore'
 import { useAssetsStore } from '@/stores/assetsStore'
+import { getEditorMenuVisibility } from '@/config/editorMenu'
 import api from '@/services/api'
 
 const packsStore = usePacksStore()
 const assetsStore = useAssetsStore()
+
+const menuVis = computed(() => getEditorMenuVisibility())
 
 const loadPacks = async () => {
   try {
