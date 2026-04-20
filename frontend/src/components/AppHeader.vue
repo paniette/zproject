@@ -106,7 +106,7 @@
     <MapVersionsModal :show="showVersionsModal" @close="showVersionsModal = false" />
     <SaveMapModal
       :show="showSaveModal"
-      :initial-name="mapStore.mapName"
+      :initial-name="saveModalInitialName"
       @close="showSaveModal = false"
       @submit="handleSaveNameSubmit"
     />
@@ -143,6 +143,8 @@ const showSaveModal = ref(false)
 const pendingSave = ref(false)
 
 const isUnsaved = ref(true)
+
+const DEFAULT_MAP_NAME = 'Nouvelle carte'
 
 const saveStatusTitle = computed(() =>
   mapStore.isUnsaved
@@ -278,9 +280,21 @@ onMounted(() => {
   }
 })
 
+const saveModalInitialName = computed(() => {
+  const name = String(mapStore.mapName || '').trim()
+  // "Nouvelle carte" est un placeholder : on préfère démarrer avec un champ vide
+  if (!mapStore.currentMapId && name === DEFAULT_MAP_NAME) return ''
+  return name
+})
+
 function ensureMapNameForSave () {
-  const hasName = !!(mapStore.mapName && String(mapStore.mapName).trim())
-  if (hasName) return true
+  const name = String(mapStore.mapName || '').trim()
+  const hasRealName =
+    name.length > 0 &&
+    // Tant que la carte n'a pas encore d'ID serveur, on considère "Nouvelle carte" comme "non nommé"
+    (mapStore.currentMapId || name !== DEFAULT_MAP_NAME)
+
+  if (hasRealName) return true
   showSaveModal.value = true
   pendingSave.value = true
   return false
