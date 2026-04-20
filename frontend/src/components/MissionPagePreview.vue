@@ -27,6 +27,13 @@
             <section v-if="tilesLine" class="mp-dalles">
               <h2 class="mp-section-title">Dalles requises</h2>
               <p class="mp-dalles-line">{{ tilesLine }}</p>
+              <ul
+                v-if="tileChipsLayout === 'rules'"
+                class="mp-tile-chips mp-tile-chips--in-column"
+                aria-label="Tuiles"
+              >
+                <li v-for="code in tilesUsed" :key="'chip-col-' + code">{{ code }}</li>
+              </ul>
             </section>
 
             <section v-if="mission.objectives.length" class="mp-block">
@@ -47,11 +54,18 @@
 
         <div
           class="mp-bottom-grid"
-          :class="{ 'mp-bottom-grid--map-only': !tilesUsed.length }"
+          :class="{
+            'mp-bottom-grid--map-only': !tilesUsed.length || tileChipsLayout !== 'aside',
+            'mp-bottom-grid--aside': tilesUsed.length && tileChipsLayout === 'aside'
+          }"
         >
-          <aside v-if="tilesUsed.length" class="mp-tiles-aside" aria-label="Tuiles">
+          <aside
+            v-if="tilesUsed.length && tileChipsLayout === 'aside'"
+            class="mp-tiles-aside"
+            aria-label="Tuiles"
+          >
             <h3 class="mp-aside-title">Tuiles</h3>
-            <ul class="mp-tile-chips">
+            <ul class="mp-tile-chips mp-tile-chips--aside">
               <li v-for="code in tilesUsed" :key="'chip-' + code">{{ code }}</li>
             </ul>
           </aside>
@@ -99,6 +113,31 @@ const authorsLine = computed(() => {
 const tilesLine = computed(() => {
   if (!tilesUsed.value.length) return ''
   return tilesUsed.value.join(', ')
+})
+
+/** Volume texte zone haute (synopsis, auteurs, dalles, listes) — heuristique mise en page tuiles. */
+const topRegionCharCount = computed(() => {
+  const m = mission.value
+  let n = (m.synopsis || '').length
+  n += authorsLine.value.length
+  n += tilesLine.value.length
+  n += (m.objectives || []).join('\n').length
+  n += (m.specialRules || []).join('\n').length
+  return n
+})
+
+/**
+ * aside : puces à gauche de la carte (mission légère).
+ * rules : carte pleine largeur en bas, puces sous « Dalles requises ».
+ * none : pas de puces (liste texte dalles seulement si tuiles).
+ */
+const tileChipsLayout = computed(() => {
+  const nTiles = tilesUsed.value.length
+  if (!nTiles) return 'none'
+  const chars = topRegionCharCount.value
+  if (nTiles > 12 || chars > 3000) return 'none'
+  if (nTiles > 6 || chars > 1100) return 'rules'
+  return 'aside'
 })
 
 /** Largeurs de colonnes grosso modo proportionnelles au volume de texte (unités `fr`). */
@@ -290,10 +329,14 @@ const topGridColumnsStyle = computed(() => {
   flex: 1;
   min-height: 0;
   display: grid;
-  grid-template-columns: minmax(64px, 20%) 1fr;
+  grid-template-columns: 1fr;
   gap: 0.5rem;
   align-items: stretch;
   margin-top: 0.15rem;
+}
+
+.mp-bottom-grid--aside {
+  grid-template-columns: minmax(min-content, min(12%, 22mm)) 1fr;
 }
 
 .mp-bottom-grid--map-only {
@@ -321,11 +364,22 @@ const topGridColumnsStyle = computed(() => {
   list-style: none;
   margin: 0;
   padding: 0;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.mp-tile-chips--aside {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4px;
-  font-size: 0.68rem;
-  font-weight: 700;
+}
+
+.mp-tile-chips--in-column {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  margin-top: 0.4rem;
+  font-size: 0.72rem;
 }
 
 .mp-tile-chips li {
@@ -333,6 +387,12 @@ const topGridColumnsStyle = computed(() => {
   padding: 3px 4px;
   text-align: center;
   line-height: 1.2;
+}
+
+.mp-tile-chips--in-column li {
+  flex: 0 0 auto;
+  min-width: 2.1em;
+  padding: 2px 5px;
 }
 
 .mp-map-col {
@@ -348,8 +408,6 @@ const topGridColumnsStyle = computed(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid color-mix(in srgb, var(--mp-ink) 22%, transparent);
-  border-radius: 2px;
   overflow: hidden;
   /* Fond page : la capture PNG est transparente hors tuiles/jetons */
   background: var(--mp-bg);
@@ -374,8 +432,6 @@ const topGridColumnsStyle = computed(() => {
   line-height: 1.4;
   opacity: 0.65;
   padding: 0.5rem;
-  border: 1px dashed color-mix(in srgb, var(--mp-ink) 25%, transparent);
-  border-radius: 2px;
 }
 
 @media print {
