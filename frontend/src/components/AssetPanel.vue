@@ -1,5 +1,5 @@
 <template>
-  <div class="asset-panel">
+  <div id="asset-panel-region" class="asset-panel">
     <div class="panel-header">
       <h3>Packs & Assets</h3>
     </div>
@@ -63,6 +63,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { usePacksStore } from '@/stores/packsStore'
 import { useAssetsStore } from '@/stores/assetsStore'
 import { useMapStore } from '@/stores/mapStore'
+import { useToolStore } from '@/stores/toolStore'
 import { config } from '@/config'
 import api from '@/services/api'
 import PackUploader from './PackUploader.vue'
@@ -71,6 +72,15 @@ import { collectUsedTilePairKeys, isTilePairLocked as tilePairLocked } from '@/u
 const packsStore = usePacksStore()
 const assetsStore = useAssetsStore()
 const mapStore = useMapStore()
+const toolStore = useToolStore()
+
+const COARSE_PLACE_MQ = '(max-width: 768px) and (pointer: coarse)'
+
+function maybeSwitchToPlaceTool () {
+  if (typeof window === 'undefined') return
+  if (!window.matchMedia(COARSE_PLACE_MQ).matches) return
+  toolStore.setTool('place')
+}
 
 const usedTilePairKeys = computed(() => collectUsedTilePairKeys(mapStore.layers.tiles))
 
@@ -208,6 +218,7 @@ const selectAsset = (asset) => {
   selectedAsset.value = asset
   // Dispatch event for CanvasGrid
   window.dispatchEvent(new CustomEvent('asset-selected', { detail: asset }))
+  maybeSwitchToPlaceTool()
 }
 
 const isSelected = (asset) => {

@@ -5,10 +5,12 @@
     <canvas
       ref="canvasRef"
       class="map-editor-canvas"
-      @mousedown="handleMouseDown"
-      @mousemove="handleMouseMove"
-      @mouseup="handleMouseUp"
+      @pointerdown="handlePointerDown"
+      @pointermove="handlePointerMove"
+      @pointerup="handlePointerUp"
+      @pointercancel="handlePointerCancel"
       @wheel="handleWheel"
+      @contextmenu.prevent
       :class="{ 'grab-cursor': isPanning || (!hoveredItem && !isDragging), 'grabbing-cursor': isDragging && isPanning, 'preview-canvas': mapStore.isPreviewMode }"
     ></canvas>
     <div class="canvas-controls">
@@ -65,6 +67,13 @@ const hoveredItem = ref(null)
 /** compound undo : une entrée pour tout un drag déplacement */
 const dragCompoundActive = ref(false)
 
+/** Contact multi-touch : zoom pincement */
+const activePointers = new Map()
+const activeGesturePointerId = ref(null)
+const isPinching = ref(false)
+let pinchInitialDistance = 1
+let pinchInitialZoom = 1
+
 const imageCache = new Map() // Store: { image: Image, width: number, height: number }
 const isDrawing = ref(false) // Flag to prevent concurrent draws
 const gridInitialized = ref(false) // Flag pour savoir si la grille a été initialisée
@@ -78,10 +87,61 @@ onMounted(() => {
     ctx.value = canvas.getContext('2d')
     resizeCanvas()
     draw()
+
+    canvas.addEventListener('dragover', (e) => {
+      e.preventDefault()
+    })
+
+    canvas.addEventListener('drop', (e) => {
+      e.preventDefault()
+      if (mapStore.isPreviewMode) return
+      const data = e.dataTransfer.getData('application/json')
+      if (data) {
+        const asset = JSON.parse(data)
+        selectedAsset.value = asset
+        const coords = getGridCoordinatesWithSnap(
+          e.clientX,
+          e.clientY,
+          canvas,
+          mapStore.tileSize,
+          zoom.value,
+          panX.value,
+          panY.value,
+          mapStore.gridOffsetX,
+          mapStore.gridOffsetY
+        )
+
+        let newItemId
+        if (asset.category === 'tiles' || asset.category === '01.tiles') {
+          if (isTilePairLocked(asset.path, asset.category, usedTilePairKeys.value)) {
+            return
+          }
+          mapStore.addTile(coords.x, coords.y, asset.path, 0)
+          newItemId = mapStore.layers.tiles[mapStore.layers.tiles.length - 1].id
+        } else {
+          mapStore.addObject({
+            type: asset.category,
+            asset: asset.path,
+            x: coords.x,
+            y: coords.y,
+            rotation: 0
+          })
+          newItemId = mapStore.layers.objects[mapStore.layers.objects.length - 1].id
+        }
+        toolStore.setTool('move')
+        toolStore.selectObject(newItemId)
+        draw()
+        updateCursor()
+      }
+    })
   }
 
   window.addEventListener('resize', resizeCanvas)
   window.addEventListener(CANVAS_EXPORT_REQUEST, handleExportRequest)
+
+  window.addEventListener('asset-selected', (e) => {
+    selectedAsset.value = e.detail
+  })
 })
 
 onUnmounted(() => {
@@ -468,182 +528,84 @@ const findItemAtWorldCoords = (worldX, worldY) => {
   return null
 }
 
-const handleMouseDown = (event) => {
-  if (event.button === 0) { // Left click
-    if (mapStore.isPreviewMode) {
-      isPanning.value = true
-      isDragging.value = true
-      dragStart.value = { x: event.clientX, y: event.clientY }
-      dragStartCoords.value = { x: mapStore.gridOffsetX, y: mapStore.gridOffsetY }
-      return
+const applyRightClickRotate = (clientX, clientY) => {
+  if (mapStore.isPreviewMode) return
+  const coords = getGridCoordinates(
+    clientX,
+    clientY,
+    canvasRef.value,
+    mapStore.tileSize,
+    zoom.value,
+    panX.value,
+    panY.value,
+    mapStore.gridOffsetX,
+    mapStore.gridOffsetY
+  )
+  const found = findItemAtCoords(coords)
+  if (found) {
+    if (found.type === 'object') {
+      mapStore.updateObject(found.item.id, { rotation: (found.item.rotation + 90) % 360 })
+    } else {
+      mapStore.updateTile(found.item.id, { rotation: (found.item.rotation + 90) % 360 })
     }
-    // Convertir en coordonnées monde pour détecter si on clique sur un élément (comme pour hover)
-    const rect = canvasRef.value.getBoundingClientRect()
-    const worldX = (event.clientX - rect.left - panX.value) / zoom.value
-    const worldY = (event.clientY - rect.top - panY.value) / zoom.value
-    
-    // Chercher un élément aux coordonnées monde (détecte toute la surface de l'image)
-    let found = findItemAtWorldCoords(worldX, worldY)
-    
-    // Si pas trouvé avec worldCoords, essayer avec hoveredItem
-    if (!found && hoveredItem.value) {
-      const obj = mapStore.layers.objects.find(o => o.id === hoveredItem.value)
-      const tile = obj ? null : mapStore.layers.tiles.find(t => t.id === hoveredItem.value)
-      if (obj || tile) {
-        found = { type: obj ? 'object' : 'tile', item: obj || tile }
-      }
-    }
-    
-    // Si toujours pas trouvé, utiliser les coordonnées de grille (pour placement)
-    const coords = getGridCoordinatesWithSnap(
-      event.clientX,
-      event.clientY,
-      canvasRef.value,
-      mapStore.tileSize,
-      zoom.value,
-      panX.value,
-      panY.value,
-      mapStore.gridOffsetX,
-      mapStore.gridOffsetY
-    )
-    if (!found) {
-      found = findItemAtCoords(coords)
-    }
-    
-    // Handle different tools
-    if (toolStore.activeTool === 'delete') {
-      if (found) {
-        if (found.type === 'object') {
-          mapStore.removeObject(found.item.id)
-        } else {
-          mapStore.removeTile(found.item.id)
-        }
-        toolStore.clearSelection()
-        hoveredItem.value = null
-        draw()
-      }
-      return
-    }
-    
-    if (toolStore.activeTool === 'rotate') {
-      if (found) {
-        // Sélectionner l'élément avant rotation
-        toolStore.selectObject(found.item.id)
-        if (found.type === 'object') {
-          mapStore.updateObject(found.item.id, { rotation: (found.item.rotation + 90) % 360 })
-        } else {
-          mapStore.updateTile(found.item.id, { rotation: (found.item.rotation + 90) % 360 })
-        }
-        draw()
-      }
-      return
-    }
-    
-    if (toolStore.activeTool === 'move') {
-      // Mode déplacer : uniquement pour éléments déjà placés
-      if (found) {
-        // Calculer l'offset du curseur par rapport à l'image (en coordonnées monde)
-        const imageData = imageCache.get(found.item.asset)
-        if (imageData) {
-          // Position de l'image en coordonnées monde (coin supérieur gauche)
-          const imageWorldX = found.item.x * mapStore.tileSize + mapStore.gridOffsetX
-          const imageWorldY = found.item.y * mapStore.tileSize + mapStore.gridOffsetY
-          
-          // Offset du curseur par rapport au coin supérieur gauche de l'image
-          dragOffset.value = {
-            x: worldX - imageWorldX,
-            y: worldY - imageWorldY
-          }
-        } else {
-          // Si l'image n'est pas encore chargée, utiliser un offset par défaut (centre)
-          dragOffset.value = { x: 0, y: 0 }
-        }
-        
-        // Sélectionner et commencer le drag (une entrée d'historique pour tout le déplacement)
-        mapStore.beginCompound()
-        dragCompoundActive.value = true
-        toolStore.selectObject(found.item.id)
-        draggedObject.value = found
-        dragStartCoords.value = { x: coords.x, y: coords.y }
-        isDragging.value = true
-        draw()
-        return
-      }
-      // Si pas d'élément trouvé en mode move : désélectionner et activer pan
-      toolStore.clearSelection()
-      hoveredItem.value = null
-      isPanning.value = true
-      isDragging.value = true
-      dragStart.value = { x: event.clientX, y: event.clientY }
-      dragStartCoords.value = { x: mapStore.gridOffsetX, y: mapStore.gridOffsetY }
-      updateCursor()
-      return
-    }
-    
-    if (toolStore.activeTool === 'place') {
-      // Mode placer : placer de nouveaux éléments si asset sélectionné
-      if (selectedAsset.value) {
-        let newItemId
-        if (selectedAsset.value.category === 'tiles' || selectedAsset.value.category === '01.tiles') {
-          if (isTilePairLocked(selectedAsset.value.path, selectedAsset.value.category, usedTilePairKeys.value)) {
-            return
-          }
-          mapStore.addTile(coords.x, coords.y, selectedAsset.value.path, 0)
-          newItemId = mapStore.layers.tiles[mapStore.layers.tiles.length - 1].id
-        } else {
-          mapStore.addObject({
-            type: selectedAsset.value.category,
-            asset: selectedAsset.value.path,
-            x: coords.x,
-            y: coords.y,
-            rotation: 0
-          })
-          newItemId = mapStore.layers.objects[mapStore.layers.objects.length - 1].id
-        }
-        // Sélectionner automatiquement le nouvel élément
-        toolStore.selectObject(newItemId)
-        draw()
-        return
-      }
-      // Si pas d'asset sélectionné en mode place : désélectionner et activer pan
-      toolStore.clearSelection()
-      hoveredItem.value = null
-      isPanning.value = true
-      isDragging.value = true
-      dragStart.value = { x: event.clientX, y: event.clientY }
-      dragStartCoords.value = { x: mapStore.gridOffsetX, y: mapStore.gridOffsetY }
-      updateCursor()
-      return
-    }
-    
-    // Pan mode: click on empty space (pas d'élément, pas d'asset)
-    // Désélectionner et activer le pan
-    toolStore.clearSelection()
-    hoveredItem.value = null
+    draw()
+  }
+}
+
+const applyPrimaryDown = (clientX, clientY) => {
+  if (mapStore.isPreviewMode) {
     isPanning.value = true
     isDragging.value = true
-    dragStart.value = { x: event.clientX, y: event.clientY }
+    dragStart.value = { x: clientX, y: clientY }
     dragStartCoords.value = { x: mapStore.gridOffsetX, y: mapStore.gridOffsetY }
-    updateCursor()
-  } else if (event.button === 2) { // Right click - rotate
-    if (mapStore.isPreviewMode) {
-      event.preventDefault()
-      return
+    return
+  }
+  const rect = canvasRef.value.getBoundingClientRect()
+  const worldX = (clientX - rect.left - panX.value) / zoom.value
+  const worldY = (clientY - rect.top - panY.value) / zoom.value
+
+  let found = findItemAtWorldCoords(worldX, worldY)
+
+  if (!found && hoveredItem.value) {
+    const obj = mapStore.layers.objects.find(o => o.id === hoveredItem.value)
+    const tile = obj ? null : mapStore.layers.tiles.find(t => t.id === hoveredItem.value)
+    if (obj || tile) {
+      found = { type: obj ? 'object' : 'tile', item: obj || tile }
     }
-    event.preventDefault()
-    const coords = getGridCoordinates(
-      event.clientX,
-      event.clientY,
-      canvasRef.value,
-      mapStore.tileSize,
-      zoom.value,
-      panX.value,
-      panY.value,
-      mapStore.gridOffsetX,
-      mapStore.gridOffsetY
-    )
-    const found = findItemAtCoords(coords)
+  }
+
+  const coords = getGridCoordinatesWithSnap(
+    clientX,
+    clientY,
+    canvasRef.value,
+    mapStore.tileSize,
+    zoom.value,
+    panX.value,
+    panY.value,
+    mapStore.gridOffsetX,
+    mapStore.gridOffsetY
+  )
+  if (!found) {
+    found = findItemAtCoords(coords)
+  }
+
+  if (toolStore.activeTool === 'delete') {
     if (found) {
+      if (found.type === 'object') {
+        mapStore.removeObject(found.item.id)
+      } else {
+        mapStore.removeTile(found.item.id)
+      }
+      toolStore.clearSelection()
+      hoveredItem.value = null
+      draw()
+    }
+    return
+  }
+
+  if (toolStore.activeTool === 'rotate') {
+    if (found) {
+      toolStore.selectObject(found.item.id)
       if (found.type === 'object') {
         mapStore.updateObject(found.item.id, { rotation: (found.item.rotation + 90) % 360 })
       } else {
@@ -651,13 +613,88 @@ const handleMouseDown = (event) => {
       }
       draw()
     }
+    return
   }
+
+  if (toolStore.activeTool === 'move') {
+    if (found) {
+      const imageData = imageCache.get(found.item.asset)
+      if (imageData) {
+        const imageWorldX = found.item.x * mapStore.tileSize + mapStore.gridOffsetX
+        const imageWorldY = found.item.y * mapStore.tileSize + mapStore.gridOffsetY
+        dragOffset.value = {
+          x: worldX - imageWorldX,
+          y: worldY - imageWorldY
+        }
+      } else {
+        dragOffset.value = { x: 0, y: 0 }
+      }
+
+      mapStore.beginCompound()
+      dragCompoundActive.value = true
+      toolStore.selectObject(found.item.id)
+      draggedObject.value = found
+      dragStartCoords.value = { x: coords.x, y: coords.y }
+      isDragging.value = true
+      draw()
+      return
+    }
+    toolStore.clearSelection()
+    hoveredItem.value = null
+    isPanning.value = true
+    isDragging.value = true
+    dragStart.value = { x: clientX, y: clientY }
+    dragStartCoords.value = { x: mapStore.gridOffsetX, y: mapStore.gridOffsetY }
+    updateCursor()
+    return
+  }
+
+  if (toolStore.activeTool === 'place') {
+    if (selectedAsset.value) {
+      let newItemId
+      if (selectedAsset.value.category === 'tiles' || selectedAsset.value.category === '01.tiles') {
+        if (isTilePairLocked(selectedAsset.value.path, selectedAsset.value.category, usedTilePairKeys.value)) {
+          return
+        }
+        mapStore.addTile(coords.x, coords.y, selectedAsset.value.path, 0)
+        newItemId = mapStore.layers.tiles[mapStore.layers.tiles.length - 1].id
+      } else {
+        mapStore.addObject({
+          type: selectedAsset.value.category,
+          asset: selectedAsset.value.path,
+          x: coords.x,
+          y: coords.y,
+          rotation: 0
+        })
+        newItemId = mapStore.layers.objects[mapStore.layers.objects.length - 1].id
+      }
+      toolStore.selectObject(newItemId)
+      draw()
+      return
+    }
+    toolStore.clearSelection()
+    hoveredItem.value = null
+    isPanning.value = true
+    isDragging.value = true
+    dragStart.value = { x: clientX, y: clientY }
+    dragStartCoords.value = { x: mapStore.gridOffsetX, y: mapStore.gridOffsetY }
+    updateCursor()
+    return
+  }
+
+  toolStore.clearSelection()
+  hoveredItem.value = null
+  isPanning.value = true
+  isDragging.value = true
+  dragStart.value = { x: clientX, y: clientY }
+  dragStartCoords.value = { x: mapStore.gridOffsetX, y: mapStore.gridOffsetY }
+  updateCursor()
 }
 
-const handleMouseMove = (event) => {
+const applyPrimaryMove = (clientX, clientY) => {
   if (mapStore.isPreviewMode && isDragging.value && isPanning.value) {
-    const deltaX = (event.clientX - dragStart.value.x) / zoom.value
-    const deltaY = (event.clientY - dragStart.value.y) / zoom.value
+    const deltaX = (clientX - dragStart.value.x) / zoom.value
+    const deltaY = (clientY - dragStart.value.y) / zoom.value
     mapStore.setGridOffset(
       dragStartCoords.value.x + deltaX,
       dragStartCoords.value.y + deltaY
@@ -667,30 +704,24 @@ const handleMouseMove = (event) => {
   }
   if (isDragging.value) {
     if (isPanning.value) {
-      // Pan the grid (déplacer grille + éléments)
-      const deltaX = (event.clientX - dragStart.value.x) / zoom.value
-      const deltaY = (event.clientY - dragStart.value.y) / zoom.value
+      const deltaX = (clientX - dragStart.value.x) / zoom.value
+      const deltaY = (clientY - dragStart.value.y) / zoom.value
       mapStore.setGridOffset(
         dragStartCoords.value.x + deltaX,
         dragStartCoords.value.y + deltaY
       )
       draw()
     } else if (draggedObject.value && toolStore.activeTool === 'move') {
-      // Move object - utiliser l'offset pour maintenir la position relative du curseur
       const rect = canvasRef.value.getBoundingClientRect()
-      // Convertir la position du curseur en coordonnées monde
-      const worldX = (event.clientX - rect.left - panX.value) / zoom.value
-      const worldY = (event.clientY - rect.top - panY.value) / zoom.value
-      
-      // Soustraire l'offset pour obtenir la position du coin supérieur gauche de l'image
+      const worldX = (clientX - rect.left - panX.value) / zoom.value
+      const worldY = (clientY - rect.top - panY.value) / zoom.value
+
       const imageWorldX = worldX - dragOffset.value.x
       const imageWorldY = worldY - dragOffset.value.y
-      
-      // Convertir en coordonnées de grille (snap)
+
       const gridX = Math.round((imageWorldX - mapStore.gridOffsetX) / mapStore.tileSize)
       const gridY = Math.round((imageWorldY - mapStore.gridOffsetY) / mapStore.tileSize)
-      
-      // Vérifier si la position a changé
+
       if (gridX !== dragStartCoords.value.x || gridY !== dragStartCoords.value.y) {
         if (draggedObject.value.type === 'object') {
           mapStore.updateObject(draggedObject.value.item.id, { x: gridX, y: gridY })
@@ -702,16 +733,13 @@ const handleMouseMove = (event) => {
       }
     }
   } else {
-    // Détecter élément survolé (si pas en train de drag/pan)
-    // Convertir les coordonnées écran en coordonnées monde pour vérifier toute la surface de l'image
     const rect = canvasRef.value.getBoundingClientRect()
-    const worldX = (event.clientX - rect.left - panX.value) / zoom.value
-    const worldY = (event.clientY - rect.top - panY.value) / zoom.value
-    
-    // Chercher un élément à ces coordonnées monde (vérifie toute la surface de l'image)
+    const worldX = (clientX - rect.left - panX.value) / zoom.value
+    const worldY = (clientY - rect.top - panY.value) / zoom.value
+
     const found = findItemAtWorldCoords(worldX, worldY)
     const newHoveredItem = found ? found.item.id : null
-    
+
     if (newHoveredItem !== hoveredItem.value) {
       hoveredItem.value = newHoveredItem
       updateCursor()
@@ -752,17 +780,122 @@ const updateCursor = () => {
   }
 }
 
-const handleMouseUp = (event) => {
-  if (event.button === 0) {
-    if (dragCompoundActive.value) {
-      mapStore.endCompound()
-      dragCompoundActive.value = false
-    }
-    isDragging.value = false
-    isPanning.value = false
-    draggedObject.value = null
-    updateCursor()
+const applyPrimaryUp = () => {
+  if (dragCompoundActive.value) {
+    mapStore.endCompound()
+    dragCompoundActive.value = false
   }
+  isDragging.value = false
+  isPanning.value = false
+  draggedObject.value = null
+  updateCursor()
+}
+
+function releaseGestureCapture () {
+  const canvas = canvasRef.value
+  const id = activeGesturePointerId.value
+  if (canvas && id != null) {
+    try {
+      if (canvas.hasPointerCapture(id)) canvas.releasePointerCapture(id)
+    } catch (_) {}
+  }
+  activeGesturePointerId.value = null
+}
+
+function endPinchMonoGesture () {
+  releaseGestureCapture()
+  if (dragCompoundActive.value) {
+    mapStore.endCompound()
+    dragCompoundActive.value = false
+  }
+  isDragging.value = false
+  isPanning.value = false
+  draggedObject.value = null
+  updateCursor()
+}
+
+function updatePinchZoomFromPointers () {
+  if (activePointers.size < 2) return
+  const pts = [...activePointers.values()]
+  const d = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y) || 1
+  const ratio = d / pinchInitialDistance
+  zoom.value = Math.max(0.1, Math.min(5, pinchInitialZoom * ratio))
+  draw()
+}
+
+const handlePointerDown = (e) => {
+  const canvas = canvasRef.value
+  if (!canvas) return
+
+  activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+  if (activePointers.size === 2) {
+    endPinchMonoGesture()
+    const pts = [...activePointers.values()]
+    pinchInitialDistance = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y) || 1
+    pinchInitialZoom = zoom.value
+    isPinching.value = true
+    e.preventDefault()
+    return
+  }
+
+  if (isPinching.value) {
+    e.preventDefault()
+    return
+  }
+
+  if (e.pointerType === 'mouse' && e.button === 2) {
+    applyRightClickRotate(e.clientX, e.clientY)
+    e.preventDefault()
+    return
+  }
+
+  if (e.button !== 0) return
+
+  applyPrimaryDown(e.clientX, e.clientY)
+
+  if (isDragging.value) {
+    activeGesturePointerId.value = e.pointerId
+    try {
+      canvas.setPointerCapture(e.pointerId)
+    } catch (_) {}
+  }
+  e.preventDefault()
+}
+
+const handlePointerMove = (e) => {
+  activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+  if (isPinching.value && activePointers.size >= 2) {
+    updatePinchZoomFromPointers()
+    e.preventDefault()
+    return
+  }
+
+  if (activeGesturePointerId.value != null && e.pointerId !== activeGesturePointerId.value) {
+    return
+  }
+
+  applyPrimaryMove(e.clientX, e.clientY)
+  if (isDragging.value) e.preventDefault()
+}
+
+const handlePointerUp = (e) => {
+  activePointers.delete(e.pointerId)
+
+  if (isPinching.value && activePointers.size < 2) {
+    isPinching.value = false
+  }
+
+  const gestureId = activeGesturePointerId.value
+  if (gestureId != null && e.pointerId === gestureId) {
+    releaseGestureCapture()
+    applyPrimaryUp()
+  }
+}
+
+const handlePointerCancel = (e) => {
+  handlePointerUp(e)
 }
 
 const handleWheel = (event) => {
@@ -790,64 +923,6 @@ const resetZoom = () => {
   draw()
 }
 
-// Handle drag and drop from AssetPanel and asset selection
-onMounted(() => {
-  const canvas = canvasRef.value
-  if (canvas) {
-    canvas.addEventListener('dragover', (e) => {
-      e.preventDefault()
-    })
-
-    canvas.addEventListener('drop', (e) => {
-      e.preventDefault()
-      if (mapStore.isPreviewMode) return
-      const data = e.dataTransfer.getData('application/json')
-      if (data) {
-        const asset = JSON.parse(data)
-        selectedAsset.value = asset
-        const coords = getGridCoordinatesWithSnap(
-          e.clientX,
-          e.clientY,
-          canvas,
-          mapStore.tileSize,
-          zoom.value,
-          panX.value,
-          panY.value,
-          mapStore.gridOffsetX,
-          mapStore.gridOffsetY
-        )
-        
-        let newItemId
-        if (asset.category === 'tiles' || asset.category === '01.tiles') {
-          if (isTilePairLocked(asset.path, asset.category, usedTilePairKeys.value)) {
-            return
-          }
-          mapStore.addTile(coords.x, coords.y, asset.path, 0)
-          newItemId = mapStore.layers.tiles[mapStore.layers.tiles.length - 1].id
-        } else {
-          mapStore.addObject({
-            type: asset.category,
-            asset: asset.path,
-            x: coords.x,
-            y: coords.y,
-            rotation: 0
-          })
-          newItemId = mapStore.layers.objects[mapStore.layers.objects.length - 1].id
-        }
-        // Drop depuis la liste : repasser en mode déplacer (ex. après rotation / suppression)
-        toolStore.setTool('move')
-        toolStore.selectObject(newItemId)
-        draw()
-        updateCursor()
-      }
-    })
-  }
-  
-  // Listen for asset selection from AssetPanel
-  window.addEventListener('asset-selected', (e) => {
-    selectedAsset.value = e.detail
-  })
-})
 </script>
 
 <style scoped>
@@ -862,6 +937,7 @@ onMounted(() => {
 canvas {
   display: block;
   cursor: default;
+  touch-action: none;
 }
 
 canvas.grab-cursor {
@@ -926,5 +1002,28 @@ canvas.grabbing-cursor {
   color: white;
   margin-left: 5px;
   font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .canvas-controls {
+    top: max(8px, env(safe-area-inset-top, 0px));
+    right: max(8px, env(safe-area-inset-right, 0px));
+    flex-wrap: wrap;
+    max-width: min(200px, calc(100vw - 16px));
+  }
+
+  .canvas-controls button {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 8px 12px;
+    font-size: 16px;
+  }
+
+  .zoom-level {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 4px;
+    text-align: center;
+  }
 }
 </style>

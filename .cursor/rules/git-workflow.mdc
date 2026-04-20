@@ -1,0 +1,24 @@
+---
+description: Pas de commit/push sans ordre explicite ; proposition PR/commit en fin de tâche
+alwaysApply: true
+---
+
+# Flux Git (zproject)
+
+## Commit et push
+
+- **Ne jamais** exécuter `git commit`, `git push`, `gh pr create`, merge, ni autre action Git destructive (reset, force-push, etc.) **sans instruction explicite** de l’utilisateur pour cette action.
+- Les modifications restent en **working tree** (ou branche locale) jusqu’à ce que l’utilisateur demande de valider dans Git.
+
+## Fin de tâche
+
+- Quand une série de changements semble **aboutie** et prête à être intégrée, **ne pas** commit/push tout seul.
+- **En fin de message**, proposer clairement quelque chose comme :
+  - souhaitez-vous que je fasse un **commit** (et éventuellement **push**) sur la branche actuelle ;
+  - ou une **pull request** ;
+  - ou rien pour l’instant afin que vous **testiez** d’abord.
+- Mentionner si la branche n’est pas `main` et qu’un retour sur `main` pourra passer par merge / PR selon leur choix.
+
+## Rappel
+
+- L’utilisateur préfère en général **tester avant** commit ; respecter ce rythme par défaut.

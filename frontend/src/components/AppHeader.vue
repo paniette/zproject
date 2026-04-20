@@ -367,15 +367,47 @@ function mapNameToExportPngFilename () {
   return `${slug}.png`
 }
 
+function isCoarseOrMobileUa () {
+  if (typeof window === 'undefined') return false
+  if (window.matchMedia('(pointer: coarse)').matches) return true
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent || '')
+}
+
 const exportMap = async () => {
   const mime = 'image/png'
   const quality = 0.92
   try {
     const dataURL = await requestCanvasExportWithoutGrid({ mimeType: mime, quality })
+    const filename = mapNameToExportPngFilename()
+
+    if (isCoarseOrMobileUa()) {
+      const blob = await (await fetch(dataURL)).blob()
+      try {
+        const file = new File([blob], filename, { type: 'image/png' })
+        if (typeof navigator !== 'undefined' && navigator.share && typeof navigator.canShare === 'function' && navigator.canShare({ files: [file] })) {
+          await navigator.share({ files: [file], title: filename })
+          return
+        }
+      } catch (shareErr) {
+        if (shareErr && shareErr.name === 'AbortError') return
+        console.warn('Partage PNG indisponible', shareErr)
+      }
+      const blobUrl = URL.createObjectURL(blob)
+      const w = window.open(blobUrl, '_blank', 'noopener,noreferrer')
+      if (w) {
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 120000)
+        return
+      }
+      URL.revokeObjectURL(blobUrl)
+    }
+
     const link = document.createElement('a')
-    link.download = mapNameToExportPngFilename()
+    link.download = filename
     link.href = dataURL
+    link.style.display = 'none'
+    document.body.appendChild(link)
     link.click()
+    document.body.removeChild(link)
   } catch (e) {
     console.error(e)
     alert('Erreur export: ' + (e?.message || e))
@@ -522,5 +554,67 @@ const exportMap = async () => {
   align-items: center;
   justify-content: center;
   min-width: 2.25rem;
+}
+
+@media (max-width: 768px) {
+  .app-header {
+    height: auto;
+    min-height: 52px;
+    padding: 8px 12px;
+    padding-left: max(12px, env(safe-area-inset-left, 0px));
+    padding-right: max(12px, env(safe-area-inset-right, 0px));
+    padding-top: max(8px, env(safe-area-inset-top, 0px));
+  }
+
+  .header-content {
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .header-left {
+    flex-wrap: wrap;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .logo {
+    font-size: 1.35rem;
+    line-height: 1.2;
+  }
+
+  .header-nav {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 6px 4px;
+  }
+
+  .header-nav > .nav-group:not(:first-child) {
+    padding-left: 8px;
+    margin-left: 2px;
+  }
+
+  .header-btn {
+    padding: 10px 12px;
+    min-height: 44px;
+    font-size: 13px;
+  }
+
+  .header-btn-icon {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px;
+  }
+
+  .nav-tab {
+    padding: 10px 12px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .save-status {
+    font-size: 11px;
+  }
 }
 </style>
