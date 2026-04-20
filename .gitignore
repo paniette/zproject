@@ -31,3 +31,5 @@ __pycache__/
 # Documentation (markdown files)
 *.md
 !README.md
+# Skills agent Cursor (dérogation au filtre *.md)
+!.cursor/skills/**/*.md

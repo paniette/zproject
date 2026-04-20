@@ -4,6 +4,21 @@
 
 Contexte technique détaillé (architecture, canvas, **mode statique sans Django**, fichiers pivots) : [`docs/CONTEXT.md`](docs/CONTEXT.md). Collaboration temps réel (hors périmètre court terme) : [`docs/COLLABORATION.md`](docs/COLLABORATION.md).
 
+## Démarrage rapide (mode complet : frontend + backend)
+
+En développement avec l’**API Django**, il faut **deux terminaux** ouverts en parallèle à la racine du dépôt (`zproject/`).
+
+| Rôle | Répertoire | Commande | URL |
+|------|--------------|----------|-----|
+| **Frontend** (Vite + Vue) | `frontend/` | `npm install` une fois, puis `npm run dev` | [http://localhost:5173](http://localhost:5173) |
+| **Backend** (Django) | `backend/` | `pip install -r ../requirements.txt` une fois, puis `python manage.py runserver` | [http://127.0.0.1:8000](http://127.0.0.1:8000) |
+
+Le fichier [`frontend/vite.config.js`](frontend/vite.config.js) configure un **proxy** : depuis le port **5173**, les requêtes vers `/api` (et chemins médias utiles) sont envoyées vers **8000**. Ouvre l’éditeur dans le navigateur sur **5173** pour le mode complet.
+
+Sous **Windows PowerShell**, enchaîne les commandes avec `;` si besoin, par exemple : `cd frontend; npm run dev`.
+
+Pour le **mode statique** (sans Django), un seul `npm run dev` ou un build statique suffit ; voir [`docs/CONTEXT.md`](docs/CONTEXT.md) et [`README_STATIC.md`](README_STATIC.md).
+
 ## Fonctionnalités
 
 ### Carte & canvas
@@ -24,7 +39,7 @@ Contexte technique détaillé (architecture, canvas, **mode statique sans Django
 ### Exports & sauvegarde
 
 - **Sauvegarde / chargement** des cartes en **JSON** (API Django ou mode statique via `localStorage`)
-- **Export image** (PNG/JPEG) depuis le canvas
+- **Export image** (PNG depuis le canvas, nom de fichier dérivé du nom de carte)
 - **Export fichier JSON** du scénario (téléchargement)
 - **Export XML** simplifié (interop / archivage)
 
@@ -69,16 +84,18 @@ Contexte technique détaillé (architecture, canvas, **mode statique sans Django
 └── requirements.txt      # Dépendances Python
 ```
 
-## Installation
+## Installation (première fois)
 
 ### Backend (Django)
 
 ```bash
 cd backend
 pip install -r ../requirements.txt
-python manage.py migrate  # Pas de migrations nécessaires (pas de BD)
+python manage.py migrate  # si nécessaire selon ton environnement
 python manage.py runserver
 ```
+
+Le serveur API écoute par défaut sur **http://127.0.0.1:8000**.
 
 ### Frontend (Vue.js)
 
@@ -88,7 +105,7 @@ npm install
 npm run dev
 ```
 
-L’application sera accessible sur http://localhost:5173
+L’interface de développement est sur **http://localhost:5173** (avec proxy vers l’API si le backend tourne, voir section *Démarrage rapide* ci-dessus).
 
 ## Utilisation
 
