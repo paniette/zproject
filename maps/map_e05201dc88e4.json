@@ -1,0 +1,142 @@
+{
+  "name": "MixBlackWhite",
+  "pack": null,
+  "grid": {
+    "width": 10,
+    "height": 10,
+    "tileSize": 10
+  },
+  "layers": {
+    "tiles": [
+      {
+        "id": "tile_1776606930129_8h7rcyw5y",
+        "x": 297,
+        "y": 201,
+        "asset": "G-Zombicide-BP/01.tiles/37R.png/r_0.png",
+        "rotation": 0
+      },
+      {
+        "id": "tile_1776607523776_kjzcsctml",
+        "x": 322,
+        "y": 201,
+        "asset": "G-Zombicide-BP/01.tiles/37V.png/r_0.png",
+        "rotation": 270
+      },
+      {
+        "id": "tile_1776607542876_q9bbb29rd",
+        "x": 247,
+        "y": 201,
+        "asset": "G-Zombicide-BP/01.tiles/1V.png/r_0.png",
+        "rotation": 180
+      },
+      {
+        "id": "tile_1776607716830_yi2qsamu9",
+        "x": 272,
+        "y": 176,
+        "asset": "G-Zombicide-BP/01.tiles/29R.png/r_0.png",
+        "rotation": 90
+      },
+      {
+        "id": "tile_1776607718290_j90tapo89",
+        "x": 272,
+        "y": 201,
+        "asset": "G-Zombicide-BP/01.tiles/28R.png/r_0.png",
+        "rotation": 270
+      },
+      {
+        "id": "tile_1776607799422_56r2m8pbo",
+        "x": 247,
+        "y": 176,
+        "asset": "G-Zombicide-BP/01.tiles/6V.png/r_0.png",
+        "rotation": 0
+      },
+      {
+        "id": "tile_1776607887482_cz9ojxorb",
+        "x": 297,
+        "y": 176,
+        "asset": "G-Zombicide-BP/01.tiles/29V.png/r_0.png",
+        "rotation": 0
+      },
+      {
+        "id": "tile_1776608074434_y5zdi8d9r",
+        "x": 322,
+        "y": 176,
+        "asset": "G-Zombicide-BP/01.tiles/32V.png/r_0.png",
+        "rotation": 0
+      }
+    ],
+    "objects": [
+      {
+        "type": "04.other tokens",
+        "asset": "G-Zombicide-BP/04.other tokens/Corruption.png/r_0.png",
+        "x": 330,
+        "y": 218,
+        "rotation": 270,
+        "id": "obj_1776606936136_c33ubu423"
+      },
+      {
+        "type": "04.other tokens",
+        "asset": "G-Zombicide-BP/04.other tokens/Gardes.png/r_0.png",
+        "x": 284,
+        "y": 177,
+        "rotation": 0,
+        "id": "obj_1776607496082_srfbxnfnn"
+      },
+      {
+        "type": "04.other tokens",
+        "asset": "G-Zombicide-BP/04.other tokens/StatueChi.png/r_0.png",
+        "x": 332,
+        "y": 185,
+        "rotation": 0,
+        "id": "obj_1776607570168_r31o6p527"
+      },
+      {
+        "type": "05.zombies",
+        "asset": "G-Zombicide-BP/05.zombies/Zomb-Fatty.png/r_0.png",
+        "x": 308,
+        "y": 203,
+        "rotation": 0,
+        "id": "obj_1776607586208_j3cwmsat6"
+      },
+      {
+        "type": "02.doors",
+        "asset": "G-Zombicide-BP/02.doors/Door-Closed-Blue.png/r_0.png",
+        "x": 303,
+        "y": 203,
+        "rotation": 270,
+        "id": "obj_1776607595930_ud1ghmuqp"
+      },
+      {
+        "type": "02.doors",
+        "asset": "G-Zombicide-BP/02.doors/Door-Closed-Green.png/r_0.png",
+        "x": 313,
+        "y": 204,
+        "rotation": 90,
+        "id": "obj_1776607598852_x5naax6qq"
+      }
+    ]
+  },
+  "gridOffsetX": -2217.92861172788,
+  "gridOffsetY": -1447.0658307196848,
+  "mission": {
+    "questCode": "",
+    "title": "",
+    "authors": [],
+    "difficulty": "",
+    "playerCount": "",
+    "estimatedDuration": "",
+    "synopsis": "",
+    "objectives": [],
+    "specialRules": [],
+    "tilesUsed": [],
+    "pageTheme": "classic",
+    "mapImageDataUrl": null
+  },
+  "metadata": {
+    "created": "2026-04-19T16:18:46.865566",
+    "modified": "2026-04-19T16:18:46.865566",
+    "author": "Cyril"
+  },
+  "id": "map_e05201dc88e4"
+}
+
