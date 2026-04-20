@@ -42,6 +42,7 @@
             <span class="sr-only">Rétablir</span>
           </button>
           <button
+            v-if="menuVis.preview"
             type="button"
             class="header-btn"
             :class="{ active: mapStore.isPreviewMode }"

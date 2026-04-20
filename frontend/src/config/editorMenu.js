@@ -1,7 +1,7 @@
 import { config } from '@/config'
 
 /**
- * Visibilité des contrôles « avancés » du menu (JSON, XML, Versions, Thème, Utilisateur, uploads).
+ * Visibilité des contrôles « avancés » du menu (JSON, XML, Versions, Aperçu, Thème, Utilisateur, uploads).
  *
  * - **Dev local** : laissez tout à `true` (ou `USE_MINIMAL_MENU` à `false`).
  * - **Production** : passez les entrées à `false`, ou activez `USE_MINIMAL_MENU` / la variable d’environnement.
@@ -12,11 +12,12 @@ import { config } from '@/config'
  * sans modifier ce fichier.
  */
 
-export const USE_MINIMAL_MENU = false
+export const USE_MINIMAL_MENU = true
 
 export const editorMenuVisibility = {
   themeSelector: true,
   userSelector: true,
+  preview: true,
   exportJson: true,
   exportXml: true,
   versions: true,
@@ -31,6 +32,7 @@ export function getEditorMenuVisibility () {
     ? {
         themeSelector: false,
         userSelector: false,
+        preview: false,
         exportJson: false,
         exportXml: false,
         versions: false,
