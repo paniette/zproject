@@ -3,13 +3,6 @@
     <div class="header-content">
       <div class="header-left">
         <div class="logo">Zombicide Editor</div>
-        <input
-          v-model="mapNameInput"
-          @blur="updateMapName"
-          @keyup.enter="updateMapName"
-          class="map-name-input"
-          :placeholder="mapNamePlaceholder"
-        />
       </div>
       <nav class="header-nav">
         <ThemeSelector />
@@ -28,6 +21,12 @@
     <MapLoader :show="showMapLoader" @close="closeMapLoader" @load="handleMapLoad" />
     <PackZipUploader v-if="showPackZipUploader" @close="closePackZipUploader" />
     <PackUploader v-if="showPackUploader" @close="closePackUploader" />
+    <SaveMapModal
+      :show="showSaveModal"
+      :initial-name="mapStore.mapName"
+      @close="showSaveModal = false"
+      @submit="handleSaveNameSubmit"
+    />
   </header>
 </template>
 
@@ -38,6 +37,7 @@ import UserSelector from './UserSelector.vue'
 import MapLoader from './MapLoader.vue'
 import PackZipUploader from './PackZipUploader.vue'
 import PackUploader from './PackUploader.vue'
+import SaveMapModal from './SaveMapModal.vue'
 import { useMapStore } from '@/stores/mapStore'
 import { useUserStore } from '@/stores/userStore'
 import { config } from '@/config'
@@ -49,22 +49,10 @@ const userStore = useUserStore()
 const showMapLoader = ref(false)
 const showPackZipUploader = ref(false)
 const showPackUploader = ref(false)
+const showSaveModal = ref(false)
+const pendingSave = ref(false)
 
-const mapNameInput = ref('')
 const isUnsaved = ref(true)
-
-const mapNamePlaceholder = computed(() => {
-  if (isUnsaved.value && !mapStore.currentMapId) {
-    return 'untitled/unsaved'
-  }
-  return mapStore.mapName || 'untitled'
-})
-
-watch(() => mapStore.mapName, (newName) => {
-  if (newName) {
-    mapNameInput.value = newName
-  }
-})
 
 watch(() => mapStore.currentMapId, (newId) => {
   if (newId) {
@@ -73,12 +61,6 @@ watch(() => mapStore.currentMapId, (newId) => {
     isUnsaved.value = true
   }
 })
-
-const updateMapName = () => {
-  if (mapNameInput.value.trim()) {
-    mapStore.mapName = mapNameInput.value.trim()
-  }
-}
 
 const openPackUploader = () => {
   showPackUploader.value = true
@@ -106,19 +88,15 @@ const closePackZipUploader = () => {
 
 const handleMapLoad = (mapData) => {
   mapStore.loadMap(mapData)
-  mapNameInput.value = mapData.name || 'untitled'
   isUnsaved.value = false
   closeMapLoader()
 }
 
 // Keyboard shortcut for save
 onMounted(() => {
-  // Initialize map name input
   if (mapStore.mapName && mapStore.currentMapId) {
-    mapNameInput.value = mapStore.mapName
     isUnsaved.value = false
   } else {
-    mapNameInput.value = ''
     isUnsaved.value = true
   }
   
@@ -135,20 +113,26 @@ onMounted(() => {
   }
 })
 
+function ensureMapNameForSave () {
+  const hasName = !!(mapStore.mapName && String(mapStore.mapName).trim())
+  if (hasName) return true
+  showSaveModal.value = true
+  pendingSave.value = true
+  return false
+}
+
+async function handleSaveNameSubmit (name) {
+  mapStore.mapName = String(name).trim()
+  showSaveModal.value = false
+  if (pendingSave.value) {
+    pendingSave.value = false
+    await saveMap()
+  }
+}
+
 const saveMap = async () => {
   try {
-    // Use name from input field
-    if (mapNameInput.value.trim()) {
-      mapStore.mapName = mapNameInput.value.trim()
-    }
-    
-    // If new map and no name, ask for name
-    if (!mapStore.currentMapId && !mapStore.mapName) {
-      const name = prompt('Nom de la carte:', 'untitled')
-      if (!name) return
-      mapStore.mapName = name
-      mapNameInput.value = name
-    }
+    if (!ensureMapNameForSave()) return
     
     const mapData = {
       name: mapStore.mapName,
@@ -177,7 +161,6 @@ const saveMap = async () => {
       isUnsaved.value = false // Remove unsaved status after first save
       mapStore.isUnsaved = false
     }
-    mapNameInput.value = mapStore.mapName
     alert('Carte sauvegardée avec succès!' + (config.staticMode ? ' (sauvegardée localement)' : ''))
   } catch (error) {
     console.error('Error saving map:', error)
