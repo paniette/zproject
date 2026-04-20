@@ -6,7 +6,16 @@
   >
     <div class="mp-sheet">
       <div class="mp-sheet-inner">
-        <div class="mp-top-grid">
+        <header class="mp-hero">
+          <p v-if="mission.questCode" class="mp-quest-code">QUÊTE {{ mission.questCode }}</p>
+          <h1 class="mp-title">{{ displayTitle }}</h1>
+          <p class="mp-meta-line">
+            <template v-if="infoLine">{{ infoLine }}</template>
+            <template v-else>&nbsp;</template>
+          </p>
+        </header>
+
+        <div class="mp-top-grid" :style="topGridColumnsStyle">
           <div class="mp-col-intro">
             <p v-if="authorsLine" class="mp-authors">{{ authorsLine }}</p>
             <section v-if="mission.synopsis" class="mp-synopsis-block">
@@ -35,15 +44,6 @@
             </section>
           </div>
         </div>
-
-        <header class="mp-hero">
-          <p v-if="mission.questCode" class="mp-quest-code">QUÊTE {{ mission.questCode }}</p>
-          <h1 class="mp-title">{{ displayTitle }}</h1>
-          <p class="mp-meta-line">
-            <template v-if="infoLine">{{ infoLine }}</template>
-            <template v-else>&nbsp;</template>
-          </p>
-        </header>
 
         <div
           class="mp-bottom-grid"
@@ -100,6 +100,22 @@ const tilesLine = computed(() => {
   if (!tilesUsed.value.length) return ''
   return tilesUsed.value.join(', ')
 })
+
+/** Largeurs de colonnes grosso modo proportionnelles au volume de texte (unités `fr`). */
+const topGridColumnsStyle = computed(() => {
+  const m = mission.value
+  const introChars =
+    (m.synopsis || '').length + (authorsLine.value ? authorsLine.value.length : 0)
+  let rulesChars = tilesLine.value.length
+  rulesChars += (m.objectives || []).join('\n').length
+  rulesChars += (m.specialRules || []).join('\n').length
+  if (tilesLine.value) rulesChars += 24
+  if ((m.objectives || []).length) rulesChars += 20
+  if ((m.specialRules || []).length) rulesChars += 28
+  const a = Math.max(12, introChars)
+  const b = Math.max(12, rulesChars)
+  return { gridTemplateColumns: `${a}fr ${b}fr` }
+})
 </script>
 
 <style scoped>
@@ -140,7 +156,8 @@ const tilesLine = computed(() => {
 
 .mp-top-grid {
   display: grid;
-  grid-template-columns: 1fr minmax(0, 42%);
+  /* gridTemplateColumns défini en inline selon le volume synopsis / colonne droite */
+  grid-template-columns: 1fr 1fr;
   gap: 0.65rem 1rem;
   align-items: start;
 }
@@ -223,9 +240,10 @@ const tilesLine = computed(() => {
 
 .mp-hero {
   flex-shrink: 0;
-  border-top: 1px solid color-mix(in srgb, var(--mp-ink) 18%, transparent);
-  padding-top: 0.55rem;
+  margin: 0 0 0.35rem;
+  padding: 0 0 0.55rem;
   text-align: left;
+  border-bottom: 1px solid color-mix(in srgb, var(--mp-ink) 18%, transparent);
 }
 
 .mp-quest-code {

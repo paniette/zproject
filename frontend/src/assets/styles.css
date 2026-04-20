@@ -119,3 +119,55 @@ h1, h2, h3, h4, h5, h6 {
 button {
   font-family: 'Roboto', sans-serif;
 }
+
+/* Impression / PDF : uniquement le contenu utile (feuille mission, etc.), pas le chrome de l’éditeur */
+@media print {
+  @page {
+    size: A4;
+    margin: 10mm;
+  }
+
+  body {
+    overflow: visible !important;
+    background: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  #app {
+    width: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    display: block !important;
+  }
+
+  .app-header {
+    display: none !important;
+  }
+
+  .editor-layout {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  .editor-stack {
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  .editor-main {
+    position: static !important;
+    inset: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+}

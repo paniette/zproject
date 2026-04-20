@@ -296,11 +296,6 @@ watch(
 }
 
 @media print {
-  @page {
-    size: A4;
-    margin: 10mm;
-  }
-
   .mission-form,
   .mission-form-title,
   .mission-preview-panel > h2 {
