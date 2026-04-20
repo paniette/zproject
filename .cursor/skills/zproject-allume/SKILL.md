@@ -2,8 +2,8 @@
 name: zproject-allume
 description: >-
   Démarre le serveur de dev Vue/Vite (frontend) et Django (backend) du projet zproject.
-  À appliquer lorsque l’utilisateur dit allume le projet, démarre le projet, lance le projet,
-  démarre zproject, ou demande explicitement les deux serveurs (npm run dev + runserver).
+  À appliquer lorsque l’utilisateur dit allume le projet, et ensuite tu allumes, démarre le projet,
+  lance le projet, démarre zproject, ou demande explicitement les deux serveurs (npm run dev + runserver).
 ---
 
 # Allumer le projet zproject
@@ -11,6 +11,7 @@ description: >-
 ## Quand appliquer cette skill
 
 - Formulations du type : **« allume le projet »**, **« démarre le projet »**, **« lance le projet »**, **« lance le front et le back »**, **« démarre zproject »**, etc., pour ce dépôt (éditeur Zombicide / `zproject`).
+- **« Et ensuite, tu allumes »** (ou variantes du même ordre) signifie **la même chose** que « allume le projet » : lancer front + back. Ce n’est **pas** une seconde étape différente après une autre action — c’est une reformulation / rappel du même démarrage.
 
 ## Comportement attendu
 
@@ -26,7 +27,6 @@ description: >-
 4. **Informer l’utilisateur** des URL habituelles :
    - Frontend : `http://localhost:5173`
    - API Django : `http://127.0.0.1:8000` (le proxy Vite du frontend pointe `/api` vers ce serveur en dev).
-5. **Ensuite** : poursuivre le reste de la demande utilisateur (vérification, autre tâche, etc.) — ne pas considérer que la conversation s’arrête après le démarrage des serveurs.
 
 ## Prérequis (si échec au lancement)
 
