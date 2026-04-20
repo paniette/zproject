@@ -95,7 +95,7 @@
           </button>
         </div>
 
-        <div v-if="menuVis.exportImage" class="nav-group">
+        <div class="nav-group">
           <button
             type="button"
             class="header-btn header-btn-icon"
