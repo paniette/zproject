@@ -1,15 +1,15 @@
 <template>
-  <div class="toolbar">
+  <div class="toolbar" :class="{ 'toolbar-preview': mapStore.isPreviewMode }">
     <div class="tool-group">
       <button
         v-for="tool in tools"
         :key="tool.id"
         :class="['tool-btn', { active: toolStore.activeTool === tool.id }]"
+        :disabled="mapStore.isPreviewMode"
         @click="toolStore.setTool(tool.id)"
         :title="tool.label"
       >
-        <span class="tool-icon">{{ tool.icon }}</span>
-        <span class="tool-label">{{ tool.label }}</span>
+        <span class="tool-icon" aria-hidden="true">{{ tool.icon }}</span>
       </button>
     </div>
   </div>
@@ -17,8 +17,10 @@
 
 <script setup>
 import { useToolStore } from '@/stores/toolStore'
+import { useMapStore } from '@/stores/mapStore'
 
 const toolStore = useToolStore()
+const mapStore = useMapStore()
 
 const tools = [
   { id: 'place', label: 'Placer', icon: '📍' },
@@ -29,6 +31,11 @@ const tools = [
 </script>
 
 <style scoped>
+.toolbar-preview {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
 .toolbar {
   position: absolute;
   top: 10px;
@@ -47,11 +54,10 @@ const tools = [
 }
 
 .tool-btn {
-  display: flex;
-  flex-direction: column;
+  display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 8px 12px;
+  justify-content: center;
+  padding: 8px 10px;
   background: var(--brown-medium);
   color: white;
   border: 1px solid var(--brown-light);
@@ -59,7 +65,7 @@ const tools = [
   cursor: pointer;
   font-size: 12px;
   transition: all 0.2s;
-  min-width: 60px;
+  min-width: 2.5rem;
 }
 
 .tool-btn:hover {
@@ -75,11 +81,7 @@ const tools = [
 }
 
 .tool-icon {
-  font-size: 18px;
-}
-
-.tool-label {
-  font-size: 10px;
-  font-weight: 500;
+  font-size: 1.35rem;
+  line-height: 1;
 }
 </style>

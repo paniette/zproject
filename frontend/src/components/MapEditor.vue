@@ -4,6 +4,7 @@
     <div class="editor-container">
       <AssetPanel class="asset-panel" />
       <CanvasGrid class="canvas-grid" />
+      <PropertyPanel class="property-panel" />
     </div>
   </div>
 </template>
@@ -13,6 +14,7 @@ import { onMounted } from 'vue'
 import AppHeader from './AppHeader.vue'
 import AssetPanel from './AssetPanel.vue'
 import CanvasGrid from './CanvasGrid.vue'
+import PropertyPanel from './PropertyPanel.vue'
 import { usePacksStore } from '@/stores/packsStore'
 import { useAssetsStore } from '@/stores/assetsStore'
 import api from '@/services/api'
@@ -67,8 +69,12 @@ onMounted(async () => {
 
 .canvas-grid {
   flex: 1;
-  width: 75%;
+  min-width: 0;
   overflow: hidden;
+}
+
+.property-panel {
+  flex-shrink: 0;
 }
 
 @media (max-width: 768px) {

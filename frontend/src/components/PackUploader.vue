@@ -21,13 +21,27 @@
         </div>
 
         <div class="form-group">
-          <label for="asset-kind">Type (préréglage BP)</label>
+          <label for="asset-kind">Type (préréglage)</label>
           <select id="asset-kind" v-model="assetKind" class="full-width">
             <option v-for="opt in assetKindOptions" :key="opt.value" :value="opt.value">
               {{ opt.label }} ({{ opt.w }}×{{ opt.h }} px)
             </option>
           </select>
-          <p class="hint">Change le type pour pré-remplir largeur et hauteur ; tu peux les modifier ensuite.</p>
+          <p class="hint">La liste ou les mini-boutons ci-dessous pré-remplissent largeur et hauteur ; tu peux les ajuster à la main.</p>
+          <div class="preset-row" role="group" aria-label="Préréglages de taille discrets">
+            <span class="preset-hint" title="Un clic applique la taille dans les champs">Tailles courantes</span>
+            <button
+              v-for="opt in assetKindOptions"
+              :key="'p-' + opt.value"
+              type="button"
+              class="preset-chip"
+              :class="{ active: assetKind === opt.value }"
+              :title="opt.tooltip"
+              @click="applyKindFromOption(opt)"
+            >
+              {{ opt.shortLabel }}
+            </button>
+          </div>
         </div>
 
         <div class="form-group">
@@ -105,11 +119,40 @@
 import { ref, onMounted, computed, watch } from 'vue'
 import api from '@/services/api'
 
-/** Références mesurées G-Zombicide-BP : tuile 1R, spawn Spawn-Blue, objectif type PIZZA */
+/** Tailles courantes pour upload assisté (issue #10) — tooltips sur les mini-boutons */
 const assetKindOptions = [
-  { value: 'tile', label: 'Tuile', w: 250, h: 250 },
-  { value: 'spawn', label: 'Spawn', w: 52, h: 26 },
-  { value: 'objective', label: 'Objectif', w: 40, h: 40 }
+  {
+    value: 'tile',
+    label: 'Tuile',
+    shortLabel: '250²',
+    w: 250,
+    h: 250,
+    tooltip: 'Tuile : 250×250 px'
+  },
+  {
+    value: 'pop',
+    label: 'Point de pop',
+    shortLabel: '56×26',
+    w: 56,
+    h: 26,
+    tooltip: 'Point de pop (spawn) : 56×26 px'
+  },
+  {
+    value: 'character',
+    label: 'Personnage',
+    shortLabel: '30×50',
+    w: 30,
+    h: 50,
+    tooltip: 'Personnage / figurine : 30×50 px'
+  },
+  {
+    value: 'token',
+    label: 'Jeton',
+    shortLabel: '35²',
+    w: 35,
+    h: 35,
+    tooltip: 'Jeton : 35×35 px'
+  }
 ]
 
 const props = defineProps({
@@ -143,9 +186,9 @@ const contextualPackTitle = computed(() => {
 })
 
 const fileInputRef = ref(null)
-const assetKind = ref('objective')
-const targetW = ref(40)
-const targetH = ref(40)
+const assetKind = ref('token')
+const targetW = ref(35)
+const targetH = ref(35)
 const assetName = ref('')
 const category = ref('')
 const packName = ref('')
@@ -161,6 +204,11 @@ function applyKindDimensions() {
     targetW.value = o.w
     targetH.value = o.h
   }
+}
+
+function applyKindFromOption(opt) {
+  assetKind.value = opt.value
+  applyKindDimensions()
 }
 
 watch(assetKind, applyKindDimensions)
@@ -201,8 +249,12 @@ function suggestKindForCategory(cat) {
   if (!cat) return
   if (cat.includes('01.tiles') || cat === '01.tiles') {
     assetKind.value = 'tile'
+  } else if (cat.includes('05.') || cat.toLowerCase().includes('zombie') || cat.toLowerCase().includes('figure')) {
+    assetKind.value = 'character'
+  } else if (cat.toLowerCase().includes('spawn') || cat.toLowerCase().includes('pop')) {
+    assetKind.value = 'pop'
   } else {
-    assetKind.value = 'objective'
+    assetKind.value = 'token'
   }
   applyKindDimensions()
 }
@@ -230,8 +282,8 @@ function clampDim(n, fallback) {
 }
 
 const targetDimensions = computed(() => ({
-  w: clampDim(targetW.value, 40),
-  h: clampDim(targetH.value, 40)
+  w: clampDim(targetW.value, 35),
+  h: clampDim(targetH.value, 35)
 }))
 
 onMounted(async () => {
@@ -285,9 +337,9 @@ const uploadAsset = async () => {
     window.dispatchEvent(new CustomEvent('pack-assets-updated', { detail: { packId: pid } }))
 
     assetName.value = ''
-    assetKind.value = 'objective'
-    targetW.value = 40
-    targetH.value = 40
+    assetKind.value = 'token'
+    targetW.value = 35
+    targetH.value = 35
     selectedFile.value = null
     previewImage.value = null
     if (fileInputRef.value) {
@@ -480,5 +532,43 @@ const uploadAsset = async () => {
   display: flex;
   flex-direction: column;
   gap: 4px;
+}
+
+.preset-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.preset-hint {
+  font-size: 0.65rem;
+  opacity: 0.55;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-right: 2px;
+}
+
+.preset-chip {
+  font-size: 0.65rem;
+  line-height: 1.2;
+  padding: 3px 7px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.92);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.preset-chip:hover {
+  border-color: var(--primary-color);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.preset-chip.active {
+  border-color: var(--primary-color);
+  background: color-mix(in srgb, var(--primary-color) 22%, transparent);
 }
 </style>
