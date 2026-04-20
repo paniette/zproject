@@ -20,8 +20,12 @@
                 v-for="asset in getAssets(pack.id, category)"
                 :key="asset.path"
                 class="asset-item"
-                :class="{ selected: isSelected(asset) }"
-                draggable="true"
+                :class="{
+                  selected: isSelected(asset),
+                  'asset-locked': isTilePairLocked(asset)
+                }"
+                :draggable="!isTilePairLocked(asset)"
+                :title="isTilePairLocked(asset) ? 'Cette tuile (recto ou verso) est déjà sur la carte' : ''"
                 @dragstart="handleDragStart($event, asset)"
                 @click="selectAsset(asset)"
               >
@@ -58,12 +62,21 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { usePacksStore } from '@/stores/packsStore'
 import { useAssetsStore } from '@/stores/assetsStore'
+import { useMapStore } from '@/stores/mapStore'
 import { config } from '@/config'
 import api from '@/services/api'
 import PackUploader from './PackUploader.vue'
+import { collectUsedTilePairKeys, isTilePairLocked as tilePairLocked } from '@/utils/tilePairs'
 
 const packsStore = usePacksStore()
 const assetsStore = useAssetsStore()
+const mapStore = useMapStore()
+
+const usedTilePairKeys = computed(() => collectUsedTilePairKeys(mapStore.layers.tiles))
+
+function isTilePairLocked (asset) {
+  return tilePairLocked(asset.path, asset.category, usedTilePairKeys.value)
+}
 
 const openPacks = ref(new Set())
 const openCategories = ref(new Map())
@@ -98,12 +111,18 @@ const onPackAssetsUpdated = (e) => {
   if (packId) refetchPackAssets(packId)
 }
 
+const onAssetSelectedExternal = (e) => {
+  if (e.detail == null) selectedAsset.value = null
+}
+
 onMounted(() => {
   window.addEventListener('pack-assets-updated', onPackAssetsUpdated)
+  window.addEventListener('asset-selected', onAssetSelectedExternal)
 })
 
 onUnmounted(() => {
   window.removeEventListener('pack-assets-updated', onPackAssetsUpdated)
+  window.removeEventListener('asset-selected', onAssetSelectedExternal)
 })
 
 const togglePack = async (packId) => {
@@ -175,12 +194,17 @@ const getAssetThumbnail = (asset) => {
 const selectedAsset = ref(null)
 
 const handleDragStart = (event, asset) => {
+  if (isTilePairLocked(asset)) {
+    event.preventDefault()
+    return
+  }
   event.dataTransfer.setData('application/json', JSON.stringify(asset))
   event.dataTransfer.effectAllowed = 'copy'
   selectedAsset.value = asset
 }
 
 const selectAsset = (asset) => {
+  if (isTilePairLocked(asset)) return
   selectedAsset.value = asset
   // Dispatch event for CanvasGrid
   window.dispatchEvent(new CustomEvent('asset-selected', { detail: asset }))
@@ -318,6 +342,19 @@ const isSelected = (asset) => {
   border-color: var(--primary-color);
   background: var(--glow-soft);
   box-shadow: 0 0 8px var(--glow-strong);
+}
+
+.asset-item.asset-locked {
+  opacity: 0.42;
+  cursor: not-allowed;
+  filter: grayscale(0.5);
+  pointer-events: auto;
+}
+
+.asset-item.asset-locked:hover {
+  transform: none;
+  border-color: var(--brown-light);
+  box-shadow: none;
 }
 
 .asset-item:active {

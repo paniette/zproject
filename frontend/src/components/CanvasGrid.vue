@@ -21,15 +21,19 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useMapStore } from '@/stores/mapStore'
 import { useToolStore } from '@/stores/toolStore'
 import { renderGrid, getGridCoordinates, getGridCoordinatesWithSnap } from '@/services/canvasRenderer'
 import { CANVAS_EXPORT_REQUEST, CANVAS_EXPORT_RESPONSE } from '@/services/canvasExport'
+import { collectUsedTilePairKeys, isTilePairLocked } from '@/utils/tilePairs'
 import Toolbar from './Toolbar.vue'
 
 const mapStore = useMapStore()
 const toolStore = useToolStore()
+
+const usedTilePairKeys = computed(() => collectUsedTilePairKeys(mapStore.layers.tiles))
+
 const canvasRef = ref(null)
 const ctx = ref(null)
 
@@ -40,6 +44,20 @@ const isDragging = ref(false)
 const isPanning = ref(false)
 const dragStart = ref({ x: 0, y: 0 })
 const selectedAsset = ref(null)
+
+watch(
+  () => mapStore.layers.tiles,
+  () => {
+    const a = selectedAsset.value
+    if (!a) return
+    if (isTilePairLocked(a.path, a.category, usedTilePairKeys.value)) {
+      selectedAsset.value = null
+      window.dispatchEvent(new CustomEvent('asset-selected', { detail: null }))
+    }
+  },
+  { deep: true }
+)
+
 const draggedObject = ref(null)
 const dragStartCoords = ref({ x: 0, y: 0 })
 const dragOffset = ref({ x: 0, y: 0 }) // Offset du curseur par rapport à l'image au début du drag
@@ -567,6 +585,9 @@ const handleMouseDown = (event) => {
       if (selectedAsset.value) {
         let newItemId
         if (selectedAsset.value.category === 'tiles' || selectedAsset.value.category === '01.tiles') {
+          if (isTilePairLocked(selectedAsset.value.path, selectedAsset.value.category, usedTilePairKeys.value)) {
+            return
+          }
           mapStore.addTile(coords.x, coords.y, selectedAsset.value.path, 0)
           newItemId = mapStore.layers.tiles[mapStore.layers.tiles.length - 1].id
         } else {
@@ -798,6 +819,9 @@ onMounted(() => {
         
         let newItemId
         if (asset.category === 'tiles' || asset.category === '01.tiles') {
+          if (isTilePairLocked(asset.path, asset.category, usedTilePairKeys.value)) {
+            return
+          }
           mapStore.addTile(coords.x, coords.y, asset.path, 0)
           newItemId = mapStore.layers.tiles[mapStore.layers.tiles.length - 1].id
         } else {
