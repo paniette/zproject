@@ -193,6 +193,15 @@ const topGridColumnsStyle = computed(() => {
   overflow: auto;
 }
 
+/* Sur mobile, la feuille A4 est plus haute que l'écran → c'est le conteneur externe
+   (.preview-scroll) qui doit scroller. On neutralise le scroll interne pour que
+   les événements touch remontent correctement. */
+@media (max-width: 768px) {
+  .mp-sheet-inner {
+    overflow: hidden;
+  }
+}
+
 .mp-top-grid {
   display: grid;
   /* gridTemplateColumns défini en inline selon le volume synopsis / colonne droite */

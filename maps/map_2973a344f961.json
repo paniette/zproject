@@ -287,7 +287,7 @@
     "difficulty": "HARD",
     "playerCount": "6 survivants",
     "estimatedDuration": "180min",
-    "synopsis": "Notre amis s'est fait enfermé dans un cagibi, il va falloir aller le sauver. On a enfin une chance de butter tout ces zombies d'un coup: un sort magique détruisant les zones d'apparition est présent mais nécéssite qu'on soit 6 donc il va falloir libérer notre pote pour déclencher le osrt. Par contre une fois ça fait, faudra nettoyer les zombies pour être sûr qu'il n'y en ait plus, mais ça, ça va nous faire plaisir :)",
+    "synopsis": "Notre amis s'est fait enfermé dans un cagibi, il va falloir aller le sauver. On a enfin une chance de butter tous ces zombies d'un coup: un sort magique détruisant les zones d'apparitions est présent mais nécéssite qu'on soit 6 donc il va falloir libérer notre pote pour déclencher le sort. Par contre une fois ça fait, faudra nettoyer les zombies pour être sûr qu'il n'y en ait plus, mais ça, ça va nous faire plaisir :)\nCette fois, c'est la fin pour vous les zombies ! On va gagner sur la vermine ! Et bon débaras bande de nazes !",
     "objectives": [
       "trouver l'objectif bleu et vert",
       "ouvrez la porte simultanément avec les clés bleu et verte lors du même tour pour libérer le perso. (pas besoin de lancé de dé, 1 ation par personne)",
@@ -299,7 +299,8 @@
       "Lorsqu'une porte est ouverte, on spawn comme pour black plague : on n'execute pas les cartes siège zombies et le necro est celui de black plague.",
       "Le personnage prisonnier commence a 15xp lors de sa libération (sans arme)",
       "Pour les autre pop, on se comporte comme White death.",
-      "On utilise Shi et statues, mais pas de balèze prétoriens."
+      "On utilise Shi et statues, mais pas de balèze prétoriens.",
+      "Chaque objectif rapport une arme de crypte."
     ],
     "tilesUsed": [
       "1V",
@@ -316,7 +317,7 @@
   },
   "metadata": {
     "created": "2026-04-20T20:20:47.965953",
-    "modified": "2026-04-20T20:56:25.361659",
+    "modified": "2026-04-21T23:36:40.792730",
     "author": "temp"
   },
   "id": "map_2973a344f961"

@@ -290,6 +290,7 @@ watch(
   flex: 1;
   min-height: 0;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
   padding: 8px;
   background: rgba(0, 0, 0, 0.25);
   border-radius: 6px;

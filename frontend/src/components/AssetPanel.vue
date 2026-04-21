@@ -74,11 +74,11 @@ const assetsStore = useAssetsStore()
 const mapStore = useMapStore()
 const toolStore = useToolStore()
 
-const COARSE_PLACE_MQ = '(max-width: 768px) and (pointer: coarse)'
-
 function maybeSwitchToPlaceTool () {
   if (typeof window === 'undefined') return
-  if (!window.matchMedia(COARSE_PLACE_MQ).matches) return
+  // Sur tout appareil tactile (pointer: coarse), activer l'outil Placer dès qu'un asset est sélectionné,
+  // quelle que soit la largeur de l'écran (le paysage sur grand téléphone dépasse 768px).
+  if (!window.matchMedia('(pointer: coarse)').matches) return
   toolStore.setTool('place')
 }
 
