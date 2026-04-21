@@ -4,15 +4,25 @@
  */
 
 const TILES_SEGMENT = '/01.tiles/'
+const TILE_CATEGORIES = new Set(['tiles', '01.tiles'])
+
+function normalizePathForTilePair (assetPath) {
+  if (!assetPath || typeof assetPath !== 'string') return ''
+  let p = assetPath.replace(/\\/g, '/')
+  while (p.startsWith('./')) p = p.slice(2)
+  if (p.startsWith('assets/')) p = p.slice('assets/'.length)
+  if (p.startsWith('bgmapeditor_tiles/')) p = p.slice('bgmapeditor_tiles/'.length)
+  return p
+}
 
 /**
- * Exemple : G-Zombicide-BP/01.tiles/39R.png/r_0.png (ou .webp) → clé "G-Zombicide-BP|39"
+ * Ex. `G-Zombicide-BP/01.tiles/39R.png` → `G-Zombicide-BP|39`
  * @param {string} assetPath
  * @returns {string|null}
  */
 export function zombicideTilePairKey (assetPath) {
   if (!assetPath || typeof assetPath !== 'string') return null
-  const normalized = assetPath.replace(/\\/g, '/')
+  const normalized = normalizePathForTilePair(assetPath)
   if (!normalized.includes(TILES_SEGMENT)) return null
   const m = normalized.match(/(\d+)[RV]\.(png|webp)/i)
   if (!m) return null
@@ -35,11 +45,9 @@ export function collectUsedTilePairKeys (tiles) {
   return set
 }
 
-const TILE_CATEGORIES = new Set(['tiles', '01.tiles'])
-
 /**
  * @param {string} assetPath
- * @param {string} category
+ * @param {string} category — toujours présent (injecté par api.js en statique comme en Django)
  * @param {Set<string>} usedKeys
  */
 export function isTilePairLocked (assetPath, category, usedKeys) {

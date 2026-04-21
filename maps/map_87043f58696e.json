@@ -1,0 +1,66 @@
+{
+  "name": "mission",
+  "pack": null,
+  "grid": {
+    "width": 10,
+    "height": 10,
+    "tileSize": 10
+  },
+  "layers": {
+    "tiles": [
+      {
+        "id": "tile_1776703818841_vk891h76n",
+        "x": 206,
+        "y": 159,
+        "asset": "G-Zombicide-B2-GH/01.tiles/12V.png",
+        "rotation": 0
+      },
+      {
+        "id": "tile_1776703821230_rfn7lhnld",
+        "x": 231,
+        "y": 159,
+        "asset": "G-Zombicide-B2-GH/01.tiles/16R.png",
+        "rotation": 0
+      }
+    ],
+    "objects": []
+  },
+  "gridOffsetX": -1854,
+  "gridOffsetY": -1398,
+  "mission": {
+    "questCode": "fgdhgfh",
+    "title": "hgdfgh",
+    "authors": [
+      "hdfh"
+    ],
+    "difficulty": "hard",
+    "playerCount": "6 surv",
+    "estimatedDuration": "moyenne",
+    "synopsis": "sdgfgfsdgfsdgsdf",
+    "objectives": [
+      "gfdsgf",
+      "sdfgfsdgdfg",
+      "gfsdgf",
+      "gfsdgdf",
+      "g"
+    ],
+    "specialRules": [
+      "fgsdgds",
+      "sdfgfdsg",
+      "sdfgfgdf",
+      "sdgdssds"
+    ],
+    "tilesUsed": [
+      "12V",
+      "16R"
+    ],
+    "pageTheme": "classic",
+    "mapImageDataUrl": null
+  },
+  "metadata": {
+    "created": "2026-04-20T18:50:35.398270",
+    "modified": "2026-04-20T20:05:51.846909",
+    "author": "temp"
+  },
+  "id": "map_87043f58696e"
+}

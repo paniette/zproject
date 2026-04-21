@@ -264,15 +264,13 @@ const draw = async () => {
     )
   }
 
-  // Draw tiles - wait for all to complete
-  await Promise.all(
-    mapStore.layers.tiles.map(tile => drawTile(tile))
-  )
-
-  // Draw objects - wait for all to complete
-  await Promise.all(
-    mapStore.layers.objects.map(obj => drawObject(obj))
-  )
+  // Dessin séquentiel = ordre Z stable (dernier = au-dessus), aligné avec le hit-test au survol
+  for (const tile of mapStore.layers.tiles) {
+    await drawTile(tile)
+  }
+  for (const obj of mapStore.layers.objects) {
+    await drawObject(obj)
+  }
 
   // Draw hover highlight (before selection)
   if (hoveredItem.value && hoveredItem.value !== toolStore.selectedObject) {
@@ -329,8 +327,8 @@ const handleExportRequest = async (e) => {
 
     octx.translate(-b.minX, -b.minY)
 
-    await Promise.all(tiles.map((t) => drawTileToContext(octx, t)))
-    await Promise.all(objects.map((o) => drawObjectToContext(octx, o)))
+    for (const t of tiles) await drawTileToContext(octx, t)
+    for (const o of objects) await drawObjectToContext(octx, o)
 
     const dataUrl = mimeType.includes('jpeg')
       ? off.toDataURL('image/jpeg', quality)
@@ -557,58 +555,56 @@ const drawSelection = () => {
 
 // Helper to find object/tile at grid coordinates (for placement)
 const findItemAtCoords = (coords) => {
-  // Check objects first (they're on top)
-  const obj = mapStore.layers.objects.find(
-    o => o.x === coords.x && o.y === coords.y
-  )
-  if (obj) return { type: 'object', item: obj }
-  
-  // Then check tiles
-  const tile = mapStore.layers.tiles.find(
-    t => t.x === coords.x && t.y === coords.y
-  )
-  if (tile) return { type: 'tile', item: tile }
-  
+  // Dernier de la liste = au-dessus (même principe que le hit-test monde)
+  let topObj = null
+  for (const o of mapStore.layers.objects) {
+    if (o.x === coords.x && o.y === coords.y) topObj = o
+  }
+  if (topObj) return { type: 'object', item: topObj }
+
+  let topTile = null
+  for (const t of mapStore.layers.tiles) {
+    if (t.x === coords.x && t.y === coords.y) topTile = t
+  }
+  if (topTile) return { type: 'tile', item: topTile }
+
   return null
+}
+
+/** Boîte monde pour le survol : taille réelle si l'image est en cache, sinon une cellule (évite de cibler la tuile du dessous pendant le chargement). */
+function worldBoundsForItemHit (item) {
+  const ts = mapStore.tileSize
+  const gx = mapStore.gridOffsetX
+  const gy = mapStore.gridOffsetY
+  const x = item.x * ts + gx
+  const y = item.y * ts + gy
+  const imageData = imageCache.get(item.asset)
+  const w = imageData?.width ?? ts
+  const h = imageData?.height ?? ts
+  return { x, y, w, h }
+}
+
+function pointInWorldBounds (worldX, worldY, b) {
+  return worldX >= b.x && worldX <= b.x + b.w && worldY >= b.y && worldY <= b.y + b.h
 }
 
 // Helper to find object/tile at world pixel coordinates (for hover detection)
 const findItemAtWorldCoords = (worldX, worldY) => {
-  // Check all objects and tiles to see if the point is within their bounds
-  // Check objects first (they're on top)
+  // Objets au-dessus de toutes les tuiles ; au sein d'une couche, le dernier élément = au-dessus
+  let topObj = null
   for (const obj of mapStore.layers.objects) {
-    const imageData = imageCache.get(obj.asset)
-    if (!imageData) continue
-    
-    const imgWidth = imageData.width
-    const imgHeight = imageData.height
-    // Coin supérieur gauche de l'image (aligné avec grille)
-    const x = obj.x * mapStore.tileSize + mapStore.gridOffsetX
-    const y = obj.y * mapStore.tileSize + mapStore.gridOffsetY
-    
-    // Check if point is within image bounds (simplified - doesn't account for rotation yet)
-    if (worldX >= x && worldX <= x + imgWidth && worldY >= y && worldY <= y + imgHeight) {
-      return { type: 'object', item: obj }
-    }
+    const b = worldBoundsForItemHit(obj)
+    if (pointInWorldBounds(worldX, worldY, b)) topObj = obj
   }
-  
-  // Then check tiles
+  if (topObj) return { type: 'object', item: topObj }
+
+  let topTile = null
   for (const tile of mapStore.layers.tiles) {
-    const imageData = imageCache.get(tile.asset)
-    if (!imageData) continue
-    
-    const imgWidth = imageData.width
-    const imgHeight = imageData.height
-    // Coin supérieur gauche de l'image (aligné avec grille)
-    const x = tile.x * mapStore.tileSize + mapStore.gridOffsetX
-    const y = tile.y * mapStore.tileSize + mapStore.gridOffsetY
-    
-    // Check if point is within image bounds (simplified - doesn't account for rotation yet)
-    if (worldX >= x && worldX <= x + imgWidth && worldY >= y && worldY <= y + imgHeight) {
-      return { type: 'tile', item: tile }
-    }
+    const b = worldBoundsForItemHit(tile)
+    if (pointInWorldBounds(worldX, worldY, b)) topTile = tile
   }
-  
+  if (topTile) return { type: 'tile', item: topTile }
+
   return null
 }
 

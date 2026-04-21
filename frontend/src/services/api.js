@@ -71,7 +71,13 @@ export default {
     if (config.staticMode) {
       const index = await loadStaticPacksIndex()
       const pack = index.packs.find(p => p.id === packId)
-      return { data: pack?.assets || {} }
+      if (!pack?.assets) return { data: {} }
+      // Injecter `category` sur chaque asset comme le fait l'API Django (views.py PackAssetsView)
+      const data = {}
+      for (const [cat, assets] of Object.entries(pack.assets)) {
+        data[cat] = assets.map(a => ({ ...a, category: cat }))
+      }
+      return { data }
     }
     return api.get(`/packs/${packId}/assets/`)
   },

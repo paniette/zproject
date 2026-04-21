@@ -1,0 +1,43 @@
+{
+  "name": "Nouvelle carte",
+  "pack": null,
+  "grid": {
+    "width": 10,
+    "height": 10,
+    "tileSize": 10
+  },
+  "layers": {
+    "tiles": [
+      {
+        "id": "tile_1776697677743_kv85xi9va",
+        "x": 221,
+        "y": 164,
+        "asset": "G-Zombicide-BP/01.tiles/26R.png/r_0.png",
+        "rotation": 0
+      }
+    ],
+    "objects": []
+  },
+  "gridOffsetX": -1854,
+  "gridOffsetY": -1398,
+  "mission": {
+    "questCode": "",
+    "title": "",
+    "authors": [],
+    "difficulty": "",
+    "playerCount": "",
+    "estimatedDuration": "",
+    "synopsis": "",
+    "objectives": [],
+    "specialRules": [],
+    "tilesUsed": [],
+    "pageTheme": "classic",
+    "mapImageDataUrl": null
+  },
+  "metadata": {
+    "created": "2026-04-20T17:08:00.330235",
+    "modified": "2026-04-20T17:08:00.330235",
+    "author": "temp"
+  },
+  "id": "map_33fc8cbea9d5"
+}
