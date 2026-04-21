@@ -25,15 +25,28 @@
 
           <div class="mp-col-rules">
             <section v-if="tilesLine" class="mp-dalles">
-              <h2 class="mp-section-title">Dalles requises</h2>
-              <p class="mp-dalles-line">{{ tilesLine }}</p>
-              <ul
-                v-if="tileChipsLayout === 'rules'"
-                class="mp-tile-chips mp-tile-chips--in-column"
-                aria-label="Tuiles"
-              >
-                <li v-for="code in tilesUsed" :key="'chip-col-' + code">{{ code }}</li>
-              </ul>
+              <div class="mp-dalles-left">
+                <h2 class="mp-section-title">Dalles requises</h2>
+                <p class="mp-dalles-line">{{ tilesLine }}</p>
+                <!-- Chips de repli : seulement si pas de tuiles posées sur la carte -->
+                <ul
+                  v-if="tileChipsLayout === 'rules' && !tileGridLayout"
+                  class="mp-tile-chips mp-tile-chips--in-column"
+                  aria-label="Tuiles"
+                >
+                  <li v-for="code in tilesUsed" :key="'chip-col-' + code">{{ code }}</li>
+                </ul>
+              </div>
+              <div v-if="tileGridLayout" class="mp-tile-layout-preview" aria-label="Placement des tuiles">
+                <div v-for="r in tileGridLayout.rows" :key="r" class="mp-tlp-row">
+                  <span
+                    v-for="c in tileGridLayout.cols"
+                    :key="c"
+                    class="mp-tlp-cell"
+                    :class="{ 'mp-tlp-cell--on': tileGridLayout.slotCodes.has(`${c-1},${r-1}`) }"
+                  >{{ tileGridLayout.slotCodes.get(`${c-1},${r-1}`) ?? '' }}</span>
+                </div>
+              </div>
             </section>
 
             <section v-if="mission.objectives.length" class="mp-block">
@@ -89,6 +102,47 @@ import { storeToRefs } from 'pinia'
 
 const mapStore = useMapStore()
 const { mission } = storeToRefs(mapStore)
+
+function mathGcd(a, b) {
+  while (b) { [a, b] = [b, a % b] }
+  return a
+}
+
+/**
+ * Calcule le pas régulier entre tuiles (en cellules de grille) depuis les coordonnées du store.
+ * Retourne un objet { slots, cols, rows } pour le rendu de la mini-grille de placement,
+ * ou null si aucune tuile n'est posée.
+ */
+const tileGridLayout = computed(() => {
+  const tiles = mapStore.layers.tiles
+  if (!tiles || tiles.length === 0) return null
+
+  const xs = [...new Set(tiles.map(t => t.x))].sort((a, b) => a - b)
+  const ys = [...new Set(tiles.map(t => t.y))].sort((a, b) => a - b)
+
+  let stepX = 0
+  for (let i = 1; i < xs.length; i++) stepX = mathGcd(stepX, xs[i] - xs[i - 1])
+  let stepY = 0
+  for (let i = 1; i < ys.length; i++) stepY = mathGcd(stepY, ys[i] - ys[i - 1])
+
+  const step = mathGcd(stepX || stepY || 25, stepY || stepX || 25) || 25
+  const minX = xs[0]
+  const minY = ys[0]
+
+  // Map slot-key → code lisible (ex. "37R", "1V")
+  const slotCodes = new Map()
+  for (const t of tiles) {
+    const col = Math.round((t.x - minX) / step)
+    const row = Math.round((t.y - minY) / step)
+    const m = t.asset.match(/(\d+[RV])\.(?:png|webp)/i)
+    slotCodes.set(`${col},${row}`, m ? m[1].toUpperCase() : '?')
+  }
+
+  const cols = Math.round((xs[xs.length - 1] - minX) / step) + 1
+  const rows = Math.round((ys[ys.length - 1] - minY) / step) + 1
+
+  return { slotCodes, cols, rows }
+})
 
 const pageThemeId = computed(() => (mission.value.pageTheme ? mission.value.pageTheme : 'eternal'))
 const displayTitle = computed(() => (mission.value.title ? mission.value.title : 'Sans titre'))
@@ -249,6 +303,49 @@ const topGridColumnsStyle = computed(() => {
 
 .mp-dalles {
   margin-bottom: 0.65rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.mp-dalles-left {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Mini-grille de placement des tuiles */
+.mp-tile-layout-preview {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-top: 0.15rem;
+}
+
+.mp-tlp-row {
+  display: flex;
+  gap: 3px;
+}
+
+.mp-tlp-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 2px;
+  border: 1px solid color-mix(in srgb, var(--mp-ink) 20%, transparent);
+  box-sizing: border-box;
+  font-size: 0.58rem;
+  font-weight: 700;
+  line-height: 1;
+  color: transparent; /* cellule vide : pas de texte visible */
+}
+
+.mp-tlp-cell--on {
+  background: color-mix(in srgb, var(--mp-accent) 12%, transparent);
+  border-color: color-mix(in srgb, var(--mp-accent) 80%, var(--mp-ink) 20%);
+  color: var(--mp-ink);
 }
 
 .mp-dalles-line {
