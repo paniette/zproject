@@ -115,8 +115,11 @@ export default {
           allMaps.push(localMap)
         }
       }
-      
-      return { data: { maps: allMaps } }
+
+      const suppressed = localStorageService.getSuppressedStaticMapIds(username)
+      const visible = allMaps.filter((m) => !suppressed.has(m.id))
+
+      return { data: { maps: visible } }
     }
     return api.get(`/users/${username}/maps/`)
   },
@@ -166,8 +169,12 @@ export default {
   async deleteMap(username, mapId) {
     if (config.staticMode) {
       const { localStorageService } = await import('./localStorage')
-      const deleted = localStorageService.deleteMap(username, mapId)
-      return { status: deleted ? 204 : 404 }
+      if (localStorageService.deleteMap(username, mapId)) {
+        return { status: 204 }
+      }
+      // Carte uniquement sur le CDN/FTP (maps/*.json) : on la retire de la liste côté navigateur
+      localStorageService.suppressStaticMapListing(username, mapId)
+      return { status: 204 }
     }
     return api.delete(`/users/${username}/maps/${mapId}/`)
   },

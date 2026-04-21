@@ -5,8 +5,41 @@
 
 const STORAGE_KEY_PREFIX = 'zombicide_maps_'
 const MAPS_LIST_KEY = 'zombicide_maps_list'
+/** Cartes servies uniquement par fichiers statiques : masquées localement après « Supprimer » */
+const SUPPRESSED_STATIC_MAPS_KEY = 'zombicide_static_maps_suppressed'
+
+function readSuppressedByUser () {
+  try {
+    return JSON.parse(localStorage.getItem(SUPPRESSED_STATIC_MAPS_KEY) || '{}')
+  } catch {
+    return {}
+  }
+}
+
+function writeSuppressedByUser (obj) {
+  localStorage.setItem(SUPPRESSED_STATIC_MAPS_KEY, JSON.stringify(obj))
+}
 
 export const localStorageService = {
+  /**
+   * IDs des cartes « statiques » (JSON sur le serveur) masquées pour cet utilisateur dans le modal Charger.
+   */
+  getSuppressedStaticMapIds (username) {
+    const byUser = readSuppressedByUser()
+    const ids = byUser[username]
+    return Array.isArray(ids) ? new Set(ids) : new Set()
+  },
+
+  /**
+   * Masque une carte qui n’existe que dans l’index /maps/*.json (impossible d’effacer le fichier sur le FTP).
+   */
+  suppressStaticMapListing (username, mapId) {
+    const byUser = readSuppressedByUser()
+    if (!byUser[username]) byUser[username] = []
+    if (!byUser[username].includes(mapId)) byUser[username].push(mapId)
+    writeSuppressedByUser(byUser)
+  },
+
   /**
    * Get all maps for a user
    */
