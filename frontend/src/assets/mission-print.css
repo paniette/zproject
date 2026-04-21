@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@600&family=Lato&family=Source+Sans+3&family=Ma+Shan+Zheng&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@600;700&family=IM+Fell+English:ital@0;1&family=UnifrakturMaguntia&family=Lato&family=Source+Sans+3&family=Ma+Shan+Zheng&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;600;700&display=swap');
 
 /* Prévisualisation page mission (hors thème UI) — variables par thème */
 
@@ -40,6 +40,53 @@
   --mp-ink: #1e1b4b;
   --mp-accent: #4338ca;
   --mp-quest: #4338ca;
+}
+
+/* ── Médiéval – parchemin chaud, rouge bordeaux, gothique ─────────────────── */
+.mission-page-preview[data-mission-theme='medieval'] {
+  --mp-title: "Cinzel", Georgia, serif;
+  --mp-body:  "IM Fell English", Georgia, serif;
+  --mp-flavor: "UnifrakturMaguntia", "IM Fell English", Georgia, serif;
+  --mp-bg:    #f0e3c2;
+  --mp-ink:   #1b0a00;
+  --mp-accent: #7d1618;
+  --mp-quest:  #7d1618;
+}
+
+/* Section headings : petites capitales forcées + espacement lettres pour le rendu Cinzel */
+.mission-page-preview[data-mission-theme='medieval'] .mp-section-title {
+  font-variant: small-caps;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+
+/* Titre principal : gothique médiéval rouge */
+.mission-page-preview[data-mission-theme='medieval'] .mp-title {
+  font-family: "UnifrakturMaguntia", fantasy;
+  font-weight: 400; /* UnifrakturMaguntia n'a qu'un seul grammage */
+  color: var(--mp-accent);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+/* Drop cap gothique (premier paragraphe du synopsis) */
+.mission-page-preview[data-mission-theme='medieval'] .mp-synopsis--dropcap::first-letter {
+  font-family: "UnifrakturMaguntia", fantasy;
+  font-size: 3.4rem;
+  line-height: 0.78;
+  padding-right: 0.1em;
+  margin-top: 0.04em;
+}
+
+/* Séparateur sous le héros : ligne en bordeaux */
+.mission-page-preview[data-mission-theme='medieval'] .mp-hero {
+  border-bottom-color: color-mix(in srgb, #7d1618 35%, transparent);
+}
+
+/* Fond légèrement teinté sur les cases de tuiles (grille placement) */
+.mission-page-preview[data-mission-theme='medieval'] .mp-tlp-cell--on {
+  background: color-mix(in srgb, #7d1618 14%, #f0e3c2);
+  border-color: color-mix(in srgb, #7d1618 65%, transparent);
 }
 
 .mission-page-preview[data-mission-theme='eternal'] {

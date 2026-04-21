@@ -421,6 +421,14 @@ const topGridColumnsStyle = computed(() => {
   font-weight: normal;
 }
 
+.mission-page-preview[data-mission-theme='medieval'] .mp-title {
+  font-family: "UnifrakturMaguntia", fantasy;
+  font-weight: 400;
+  color: var(--mp-accent);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
 .mp-meta-line {
   font-family: var(--mp-title);
   font-size: 0.72rem;

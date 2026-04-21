@@ -7,6 +7,7 @@
         <span>Thème de la page (typo)</span>
         <select v-model="mission.pageTheme" class="input">
           <option value="eternal">Empire (A4 blanc)</option>
+          <option value="medieval">Médiéval (parchemin)</option>
           <option value="classic">Classique</option>
           <option value="slate">Ardoise</option>
           <option value="necro">Nécrose</option>
