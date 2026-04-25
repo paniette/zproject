@@ -15,8 +15,9 @@ export function defaultMission () {
     synopsis: '',
     objectives: [],
     specialRules: [],
+    materialRequired: '',
     tilesUsed: [],
-    pageTheme: 'eternal',
+    pageTheme: 'medieval',
     mapImageDataUrl: null
   }
 }
@@ -47,6 +48,7 @@ export function mergeMissionFromPayload (raw) {
   return {
     ...base,
     ...raw,
+    materialRequired: (typeof raw.materialRequired === 'string') ? raw.materialRequired : '',
     authors: Array.isArray(raw.authors) ? [...raw.authors] : [],
     objectives: Array.isArray(raw.objectives) ? [...raw.objectives] : [],
     specialRules: Array.isArray(raw.specialRules) ? [...raw.specialRules] : [],

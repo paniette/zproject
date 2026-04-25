@@ -1,5 +1,54 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@600;700&family=IM+Fell+English:ital@0;1&family=UnifrakturMaguntia&family=Lato&family=Source+Sans+3&family=Ma+Shan+Zheng&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;600;700&display=swap');
 
+/* Algo FY Black – utilisée dans les PDFs Zombicide officiels (FONTYOU / Black[Foundry]).
+   Police commerciale ; le fichier W01 est servi ici via CDN onlinewebfonts pour usage local/dev. */
+@font-face {
+  font-family: "Algo FY Black";
+  src: url("https://db.onlinewebfonts.com/t/0063d814390439fff78619d11b8a4910.woff2") format("woff2"),
+       url("https://db.onlinewebfonts.com/t/0063d814390439fff78619d11b8a4910.woff") format("woff"),
+       url("https://db.onlinewebfonts.com/t/0063d814390439fff78619d11b8a4910.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Alias observé dans certains exports PDF : "Algo-ZF-Black" */
+@font-face {
+  font-family: "Algo-ZF-Black";
+  src: url("https://db.onlinewebfonts.com/t/0063d814390439fff78619d11b8a4910.woff2") format("woff2"),
+       url("https://db.onlinewebfonts.com/t/0063d814390439fff78619d11b8a4910.woff") format("woff"),
+       url("https://db.onlinewebfonts.com/t/0063d814390439fff78619d11b8a4910.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Arek Latin Regular (ArekLatn-Rg) – Rosetta Type Foundry / Khajag Apelian.
+   Police commerciale utilisée pour le corps de texte dans les PDFs Zombicide.
+   Télécharger la version d'essai sur https://rosettatype.com/ArekLatin (bouton "Free trial fonts")
+   et déposer les fichiers dans frontend/public/fonts/ :
+     → ArekLatn-Rg.woff2  (ou .woff, .otf)
+   Fallback : IM Fell English (déjà chargée via Google Fonts). */
+@font-face {
+  font-family: "Arek Latin";
+  src: url("/fonts/ArekLatn-Rg.woff2") format("woff2"),
+       url("/fonts/ArekLatn-Rg.woff") format("woff"),
+       url("/fonts/ArekLatn-Rg.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Arek Latin";
+  src: url("/fonts/ArekLatn-It.woff2") format("woff2"),
+       url("/fonts/ArekLatn-It.woff") format("woff"),
+       url("/fonts/ArekLatn-It.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
 /* Prévisualisation page mission (hors thème UI) — variables par thème */
 
 .mission-page-preview[data-mission-theme='classic'] {
@@ -10,6 +59,8 @@
   --mp-ink: #1a1208;
   --mp-accent: #8b2500;
   --mp-quest: #8b2500;
+  --mp-heading: var(--mp-accent);
+  --mp-dropcap: var(--mp-accent);
 }
 
 .mission-page-preview[data-mission-theme='slate'] {
@@ -20,6 +71,8 @@
   --mp-ink: #0f172a;
   --mp-accent: #334155;
   --mp-quest: #334155;
+  --mp-heading: var(--mp-accent);
+  --mp-dropcap: var(--mp-accent);
 }
 
 .mission-page-preview[data-mission-theme='necro'] {
@@ -30,6 +83,8 @@
   --mp-ink: #14532d;
   --mp-accent: #166534;
   --mp-quest: #166534;
+  --mp-heading: var(--mp-accent);
+  --mp-dropcap: var(--mp-accent);
 }
 
 .mission-page-preview[data-mission-theme='abyss'] {
@@ -40,17 +95,21 @@
   --mp-ink: #1e1b4b;
   --mp-accent: #4338ca;
   --mp-quest: #4338ca;
+  --mp-heading: var(--mp-accent);
+  --mp-dropcap: var(--mp-accent);
 }
 
 /* ── Médiéval – parchemin chaud, rouge bordeaux, gothique ─────────────────── */
 .mission-page-preview[data-mission-theme='medieval'] {
-  --mp-title: "Cinzel", Georgia, serif;
-  --mp-body:  "IM Fell English", Georgia, serif;
+  --mp-title: "Algo FY Black", "Cinzel", Georgia, serif;
+  --mp-body:  "Arek Latin", "IM Fell English", Georgia, serif;
   --mp-flavor: "UnifrakturMaguntia", "IM Fell English", Georgia, serif;
-  --mp-bg:    #f0e3c2;
-  --mp-ink:   #1b0a00;
-  --mp-accent: #7d1618;
-  --mp-quest:  #7d1618;
+  --mp-bg:    #f1efe2;
+  --mp-ink:   #000000;
+  --mp-accent: #7d1618; /* rouge dropcap */
+  --mp-quest:  #196aa9; /* bleu code quête */
+  --mp-heading: #573c27; /* marron titres */
+  --mp-dropcap: #c1212b; /* première lettre synopsis rouge */
 }
 
 /* Section headings : petites capitales forcées + espacement lettres pour le rendu Cinzel */
@@ -60,13 +119,30 @@
   font-weight: 700;
 }
 
+/* (Dalles requises n'est plus un titre, voir `.mp-dalles-label/.mp-dalles-value` dans le composant) */
+
 /* Titre principal : gothique médiéval rouge */
 .mission-page-preview[data-mission-theme='medieval'] .mp-title {
   font-family: "UnifrakturMaguntia", fantasy;
   font-weight: 400; /* UnifrakturMaguntia n'a qu'un seul grammage */
-  color: var(--mp-accent);
+  color: var(--mp-heading);
   letter-spacing: 0.03em;
   text-transform: uppercase;
+}
+
+.mission-page-preview[data-mission-theme='medieval'] .mp-dalles-left {
+  margin-top: 1rem;
+}
+/* Légère compaction typographique (medieval) */
+.mission-page-preview[data-mission-theme='medieval'] .mp-dalles-line {
+  
+  font-size: 0.8rem;
+  line-height: 1.30;
+}
+
+.mission-page-preview[data-mission-theme='medieval'] .mp-list {
+  font-size: 0.80rem;
+  line-height: 1.30;
 }
 
 /* Drop cap gothique (premier paragraphe du synopsis) */
@@ -76,6 +152,12 @@
   line-height: 0.78;
   padding-right: 0.1em;
   margin-top: 0.04em;
+  color: var(--mp-dropcap);
+}
+
+/* spacing synopsis : légère compaction pour éviter les veuves/orphelines sur une ligne (medieval) */
+.mission-page-preview[data-mission-theme='medieval'] .mp-synopsis {
+  line-height: 1.42; 
 }
 
 /* Séparateur sous le héros : ligne en bordeaux */
@@ -83,10 +165,22 @@
   border-bottom-color: color-mix(in srgb, #7d1618 35%, transparent);
 }
 
-/* Fond légèrement teinté sur les cases de tuiles (grille placement) */
+/* "Dalles dessinées" (mini-grille placement) : sans bordures, texte ton-sur-ton fond */
+.mission-page-preview[data-mission-theme='medieval'] .mp-tlp-cell {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 0;
+  font-family: "Algo-ZF-Black", "Algo FY Black", var(--mp-title);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.86rem;
+  line-height: 1;
+}
+
 .mission-page-preview[data-mission-theme='medieval'] .mp-tlp-cell--on {
-  background: color-mix(in srgb, #7d1618 14%, #f0e3c2);
-  border-color: color-mix(in srgb, #7d1618 65%, transparent);
+  background: #bfab9a;
+  color: var(--mp-bg);
 }
 
 .mission-page-preview[data-mission-theme='eternal'] {
@@ -97,4 +191,6 @@
   --mp-ink: #2b1810;
   --mp-accent: #9a1b0f;
   --mp-quest: #1a4a6e;
+  --mp-heading: var(--mp-accent);
+  --mp-dropcap: var(--mp-accent);
 }

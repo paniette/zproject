@@ -26,8 +26,14 @@
           <div class="mp-col-rules">
             <section v-if="tilesLine" class="mp-dalles">
               <div class="mp-dalles-left">
-                <h2 class="mp-section-title">Dalles requises</h2>
-                <p class="mp-dalles-line">{{ tilesLine }}</p>
+                <p class="mp-dalles-line">
+                  <span class="mp-dalles-label">Dalles requises :</span>
+                  <span class="mp-dalles-value">{{ tilesLine }}</span>
+                </p>
+                <p v-if="mission.materialRequired" class="mp-dalles-line">
+                  <span class="mp-dalles-label">Matériel :</span>
+                  <span class="mp-dalles-value">{{ mission.materialRequired }}</span>
+                </p>
                 <!-- Chips de repli : seulement si pas de tuiles posées sur la carte -->
                 <ul
                   v-if="tileChipsLayout === 'rules' && !tileGridLayout"
@@ -144,7 +150,7 @@ const tileGridLayout = computed(() => {
   return { slotCodes, cols, rows }
 })
 
-const pageThemeId = computed(() => (mission.value.pageTheme ? mission.value.pageTheme : 'eternal'))
+const pageThemeId = computed(() => (mission.value.pageTheme ? mission.value.pageTheme : 'medieval'))
 const displayTitle = computed(() => (mission.value.title ? mission.value.title : 'Sans titre'))
 
 const tilesUsed = computed(() => {
@@ -292,7 +298,7 @@ const topGridColumnsStyle = computed(() => {
   line-height: 0.85;
   padding-right: 0.12em;
   margin-top: 0.06em;
-  color: var(--mp-accent);
+  color: var(--mp-dropcap, var(--mp-accent));
 }
 
 .mp-dalles {
@@ -349,6 +355,16 @@ const topGridColumnsStyle = computed(() => {
   font-weight: 600;
 }
 
+.mp-dalles-label {
+  font-family: var(--mp-body);
+  font-weight: 400;
+}
+
+.mp-dalles-value {
+  font-family: var(--mp-body);
+  font-weight: 800;
+}
+
 .mp-block {
   margin-bottom: 0.55rem;
 }
@@ -362,7 +378,7 @@ const topGridColumnsStyle = computed(() => {
   font-size: 1.05rem;
   font-weight: 600;
   margin: 0 0 0.28rem;
-  color: var(--mp-accent);
+  color: var(--mp-heading, var(--mp-accent));
   letter-spacing: 0.02em;
 }
 
@@ -416,11 +432,12 @@ const topGridColumnsStyle = computed(() => {
 }
 
 .mission-page-preview[data-mission-theme='medieval'] .mp-title {
-  font-family: "UnifrakturMaguntia", fantasy;
-  font-weight: 400;
-  color: var(--mp-accent);
-  letter-spacing: 0.03em;
+  font-family: "Algo FY Black", "Cinzel", Georgia, serif;
+  font-weight: 900;
+  color: var(--mp-heading);
+  letter-spacing: 0.04em;
   text-transform: uppercase;
+  font-size: clamp(1.55rem, 3.4vw, 2.25rem);
 }
 
 .mp-meta-line {
@@ -465,7 +482,7 @@ const topGridColumnsStyle = computed(() => {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   margin: 0;
-  color: var(--mp-accent);
+  color: var(--mp-heading, var(--mp-accent));
 }
 
 .mp-tile-chips {

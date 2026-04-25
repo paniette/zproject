@@ -60,6 +60,16 @@
         <textarea v-model="specialRulesText" class="input textarea" rows="8"></textarea>
       </label>
 
+      <label class="field">
+        <span>Matériel requis</span>
+        <input
+          v-model="mission.materialRequired"
+          type="text"
+          class="input"
+          placeholder="Zombicide: White Death"
+        />
+      </label>
+
       <div class="field">
         <span>Tuiles utilisées</span>
         <div class="tiles-row">
