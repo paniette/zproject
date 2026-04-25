@@ -111,6 +111,7 @@
   --mp-quest:  #196aa9; /* bleu code quête */
   --mp-heading: #573c27; /* marron titres */
   --mp-dropcap: #c1212b; /* première lettre synopsis rouge */
+  --mp-vignette: rgba(68, 32, 6, 0.32); /* fondu bords : marron foncé chaud */
 }
 
 /* ── Effets de fond — indépendants du thème ─────────────────────────────────── */
@@ -141,6 +142,14 @@
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='800'%3E%3Cfilter id='ck'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.025 0.018' numOctaves='6' seed='12' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='5' intercept='-3'/%3E%3CfeFuncG type='linear' slope='5' intercept='-3'/%3E%3CfeFuncB type='linear' slope='5' intercept='-3'/%3E%3CfeFuncA type='linear' slope='0.38' intercept='0'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='600' height='800' filter='url(%23ck)'/%3E%3C/svg%3E"),
     radial-gradient(ellipse at 50% 48%, transparent 30%, rgba(90, 50, 10, 0.18) 100%);
   background-size: 600px 800px, 100% 100%;
+  background-color: var(--mp-bg);
+}
+
+/* Désert : lac asséché (fissures naturelles) – SVG dédié dans /public. */
+.mission-page-preview[data-page-effect='desert'] .mp-sheet {
+  background-image:
+    url("/fx-desert.svg");
+  background-size: 100% 100%;
   background-color: var(--mp-bg);
 }
 

@@ -23,6 +23,7 @@
           <option value="tache">Taché</option>
           <option value="sable">Sable</option>
           <option value="froisse">Froissé</option>
+          <option value="desert">Désert</option>
         </select>
       </label>
 

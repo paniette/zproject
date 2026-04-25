@@ -38,7 +38,7 @@
                 </span>
               </div>
               <div class="mp-ts-chevrons" aria-hidden="true">
-                <span v-for="i in 9" :key="i">C</span>
+                <span v-for="i in 8" :key="i">C</span>
               </div>
             </div>
           </div>
@@ -102,7 +102,7 @@
                 </span>
               </div>
               <div class="mp-ts-chevrons" aria-hidden="true">
-                <span v-for="i in 9" :key="i">C</span>
+                <span v-for="i in 8" :key="i">C</span>
               </div>
             </div>
           </div>
@@ -349,7 +349,11 @@ const topGridColumnsStyle = computed(() => {
   width: min(100%, 210mm);
   aspect-ratio: 210 / 297;
   background: var(--mp-bg);
-  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.14);
+  box-shadow:
+    0 2px 14px rgba(0, 0, 0, 0.14),
+    inset 28px 0 80px -12px var(--mp-vignette, rgba(0, 0, 0, 0.35)),
+    inset -28px 0 80px -12px var(--mp-vignette, rgba(0, 0, 0, 0.35)),
+    inset 0 -28px 80px -12px var(--mp-vignette, rgba(0, 0, 0, 0.35));
   border-radius: 4px;
   box-sizing: border-box;
   overflow: hidden;
@@ -663,7 +667,7 @@ const topGridColumnsStyle = computed(() => {
 .mp-ts-chevrons span {
   font-family: "Heorot", "Arial Black", Impact, sans-serif;
   font-weight: 900;
-  font-size: 34px;
+  font-size: 40px;
   line-height: 1;
   color: var(--mp-bg);
   display: inline-block;
