@@ -6,23 +6,43 @@
   >
     <div class="mp-sheet">
       <div class="mp-sheet-inner">
-        <header class="mp-hero">
-          <p v-if="mission.questCode" class="mp-quest-code">QUÊTE {{ mission.questCode }}</p>
-          <h1 class="mp-title">{{ displayTitle }}</h1>
-          <p class="mp-meta-line">
-            <template v-if="infoLine">{{ infoLine }}</template>
-            <template v-else>&nbsp;</template>
-          </p>
-        </header>
-
         <div class="mp-top-grid" :style="topGridColumnsStyle">
+          <!-- Colonne gauche : hero inline + auteurs + synopsis + encart jetons si placement=intro -->
           <div class="mp-col-intro">
+            <div class="mp-hero-inline">
+              <hr class="mp-rule-top" />
+              <p v-if="mission.questCode" class="mp-quest-code">QUÊTE {{ mission.questCode }}</p>
+              <h1 class="mp-title">{{ displayTitle }}</h1>
+              <hr class="mp-rule-bottom" />
+              <p class="mp-meta-line">
+                <template v-if="infoLine">{{ infoLine }}</template>
+                <template v-else>&nbsp;</template>
+              </p>
+            </div>
+
             <p v-if="authorsLine" class="mp-authors">{{ authorsLine }}</p>
             <section v-if="mission.synopsis" class="mp-synopsis-block">
               <p class="mp-synopsis mp-synopsis--dropcap">{{ mission.synopsis }}</p>
             </section>
+
+            <div
+              v-if="tokenSummaryItems.length && tokenSummaryPlacement === 'intro'"
+              class="mp-token-summary"
+              aria-label="Matériel nécessaire"
+            >
+              <div v-for="item in tokenSummaryItems" :key="item.key" class="mp-ts-item" :data-key="item.key">
+                <img :src="assetToUrl(item.asset)" :alt="item.label" class="mp-ts-img" />
+                <span class="mp-ts-label">
+                  <span v-if="item.count > 1" class="mp-ts-count">{{ item.count }}x </span>{{ pluralizeLabel(item.label, item.count) }}
+                </span>
+              </div>
+              <div class="mp-ts-chevrons" aria-hidden="true">
+                <span v-for="i in 9" :key="i">C</span>
+              </div>
+            </div>
           </div>
 
+          <!-- Colonne droite : dalles + objectifs + règles + encart jetons si placement=rules -->
           <div class="mp-col-rules">
             <section v-if="tilesLine" class="mp-dalles">
               <div class="mp-dalles-left">
@@ -68,6 +88,22 @@
                 <li v-for="(item, i) in mission.specialRules" :key="'sr-' + i">{{ item }}</li>
               </ul>
             </section>
+
+            <div
+              v-if="tokenSummaryItems.length && tokenSummaryPlacement === 'rules'"
+              class="mp-token-summary"
+              aria-label="Matériel nécessaire"
+            >
+              <div v-for="item in tokenSummaryItems" :key="item.key" class="mp-ts-item" :data-key="item.key">
+                <img :src="assetToUrl(item.asset)" :alt="item.label" class="mp-ts-img" />
+                <span class="mp-ts-label">
+                  <span v-if="item.count > 1" class="mp-ts-count">{{ item.count }}x </span>{{ pluralizeLabel(item.label, item.count) }}
+                </span>
+              </div>
+              <div class="mp-ts-chevrons" aria-hidden="true">
+                <span v-for="i in 9" :key="i">C</span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -105,6 +141,30 @@
 import { computed } from 'vue'
 import { useMapStore } from '@/stores/mapStore'
 import { storeToRefs } from 'pinia'
+import {
+  EXCLUDED_CATEGORIES,
+  EXCLUDED_NAME_PATTERNS,
+  MERGED_GROUPS,
+  INCLUDED_NAME_PATTERNS,
+  LABEL_OVERRIDES,
+} from '@/config/tokenSummary'
+
+const BASE_URL = import.meta.env.BASE_URL || ''
+
+function assetToUrl (path) {
+  if (!path) return ''
+  if (path.startsWith('bgmapeditor_tiles/') || path.startsWith('assets/')) {
+    return `${BASE_URL}${path}`
+  }
+  return `${BASE_URL}assets/${path}`
+}
+
+function pluralizeLabel (label, count) {
+  if (count <= 1) return label
+  const s = String(label || '')
+  if (!s) return s
+  return /s$/i.test(s) ? s : `${s}s`
+}
 
 const mapStore = useMapStore()
 const { mission } = storeToRefs(mapStore)
@@ -186,6 +246,56 @@ const topRegionCharCount = computed(() => {
   return n
 })
 
+/** Longueur brute de chaque colonne pour décider le placement de l'encart jetons. */
+const colChars = computed(() => {
+  const m = mission.value
+  const intro = (m.synopsis || '').length + authorsLine.value.length
+  const rules =
+    tilesLine.value.length +
+    (m.objectives || []).join('\n').length +
+    (m.specialRules || []).join('\n').length
+  return { intro, rules }
+})
+
+/** Liste des jetons à afficher dans l'encart résumé. */
+const tokenSummaryItems = computed(() => {
+  const objects = mapStore.layers?.objects || []
+  const map = {}
+  for (const obj of objects) {
+    if (EXCLUDED_CATEGORIES.includes(obj.type)) continue
+    const rawPath = obj.asset || ''
+    // Extraire le vrai nom de fichier (ignorer les segments r_0.png, r_90.png…)
+    const parts = rawPath.split('/')
+    let filename = ''
+    for (let i = parts.length - 1; i >= 0; i--) {
+      const p = parts[i]
+      if (!/^r_\d+\.(?:png|webp)$/i.test(p) && /\.(?:png|webp|jpg)$/i.test(p)) {
+        filename = p.replace(/\.(?:png|webp|jpg)$/i, '')
+        break
+      }
+    }
+    if (!filename) continue
+    if (EXCLUDED_NAME_PATTERNS.some(p => p.test(filename))) continue
+    if (INCLUDED_NAME_PATTERNS.length && !INCLUDED_NAME_PATTERNS.some(p => p.test(filename))) continue
+    const group = MERGED_GROUPS.find(g => g.pattern.test(filename))
+    const key = group ? group.key : filename
+    const override = LABEL_OVERRIDES.find(o => o.pattern.test(filename))
+    const label = override ? override.label : (group ? group.label : filename.replace(/-/g, ' '))
+    // Image: préférer la vignette quand l'asset est dans un dossier de rotations (.../Nom.png/r_0.png)
+    const thumbAsset = rawPath
+      .replace(/\/r_\d+\.(?:png|webp)$/i, '/r_thumb.png')
+      .replace(/\/r_\d+\.jpg$/i, '/r_thumb.jpg')
+    if (!map[key]) map[key] = { key, label, asset: thumbAsset, count: 0 }
+    map[key].count++
+  }
+  return Object.values(map).sort((a, b) => a.label.localeCompare(b.label))
+})
+
+/** Colonne d'accueil de l'encart : intro (gauche) si synopsis court, rules (droite) sinon. */
+const tokenSummaryPlacement = computed(() =>
+  colChars.value.intro <= colChars.value.rules ? 'intro' : 'rules'
+)
+
 /**
  * aside : puces à gauche de la carte (mission légère).
  * rules : carte pleine largeur en bas, puces sous « Dalles requises ».
@@ -203,17 +313,15 @@ const tileChipsLayout = computed(() => {
 /** Largeurs de colonnes grosso modo proportionnelles au volume de texte (unités `fr`). */
 const topGridColumnsStyle = computed(() => {
   const m = mission.value
-  const introChars =
-    (m.synopsis || '').length + (authorsLine.value ? authorsLine.value.length : 0)
-  let rulesChars = tilesLine.value.length
-  rulesChars += (m.objectives || []).join('\n').length
-  rulesChars += (m.specialRules || []).join('\n').length
+  let rulesChars = colChars.value.rules
   if (tilesLine.value) rulesChars += 24
   if ((m.objectives || []).length) rulesChars += 20
   if ((m.specialRules || []).length) rulesChars += 28
-  const a = Math.max(12, introChars)
+  const a = Math.max(12, colChars.value.intro)
   const b = Math.max(12, rulesChars)
-  return { gridTemplateColumns: `${a}fr ${b}fr` }
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v))
+  const ratio = clamp(a / b, 0.92, 1.08)
+  return { gridTemplateColumns: `${ratio}fr 1fr` }
 })
 </script>
 
@@ -393,12 +501,15 @@ const topGridColumnsStyle = computed(() => {
   margin-bottom: 0.25rem;
 }
 
-.mp-hero {
-  flex-shrink: 0;
-  margin: 0 0 0.35rem;
-  padding: 0 0 0.55rem;
-  text-align: left;
-  border-bottom: 1px solid color-mix(in srgb, var(--mp-ink) 18%, transparent);
+.mp-hero-inline {
+  margin-bottom: 0.5rem;
+}
+
+.mp-rule-top,
+.mp-rule-bottom {
+  border: none;
+  border-top: 1px solid color-mix(in srgb, var(--mp-ink) 22%, transparent);
+  margin: 0.3rem 0;
 }
 
 .mp-quest-code {
@@ -518,6 +629,80 @@ const topGridColumnsStyle = computed(() => {
   flex: 0 0 auto;
   min-width: 2.1em;
   padding: 2px 5px;
+}
+
+/* ── Encart résumé des jetons ─────────────────────────────────────────────── */
+.mp-token-summary {
+  background: #bfab9a;
+  border-radius: 3px;
+  padding: 0.4rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
+  gap: 0.3rem;
+  margin-top: 0.45rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Chevrons en bas — rangée de "C" rotatés 90° */
+.mp-ts-chevrons {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 4px 2px;
+  overflow: hidden;
+}
+
+.mp-ts-chevrons span {
+  font-family: "Heorot", "Arial Black", Impact, sans-serif;
+  font-weight: 900;
+  font-size: 34px;
+  line-height: 1;
+  color: var(--mp-bg);
+  display: inline-block;
+  transform: rotate(270deg);
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.mp-ts-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.mp-ts-img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+
+.mp-ts-item[data-key='Objective'] .mp-ts-img {
+  transform: scale(0.6);
+  transform-origin: center;
+}
+
+.mp-ts-item[data-key^='Door'] .mp-ts-img {
+  transform: scale(0.6);
+  transform-origin: center;
+}
+
+.mp-ts-item[data-key='VaultDoor'] .mp-ts-img {
+  transform: scale(0.6);
+  transform-origin: center;
+}
+
+.mp-ts-label {
+  font-family: var(--mp-body);
+  font-size: 0.6rem;
+  line-height: 1.2;
+  margin-top: 0.12rem;
+}
+
+.mp-ts-count {
+  font-weight: 700;
 }
 
 .mp-map-col {
