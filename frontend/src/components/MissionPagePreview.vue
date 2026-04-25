@@ -244,16 +244,10 @@ const topGridColumnsStyle = computed(() => {
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
-  overflow: auto;
-}
-
-/* Sur mobile, la feuille A4 est plus haute que l'écran → c'est le conteneur externe
-   (.preview-scroll) qui doit scroller. On neutralise le scroll interne pour que
-   les événements touch remontent correctement. */
-@media (max-width: 768px) {
-  .mp-sheet-inner {
-    overflow: hidden;
-  }
+  /* overflow: hidden sur tous les écrans : le scroll est géré par .preview-scroll (externe).
+     Cela évite que .mp-sheet-inner intercepte les events touch sur mobile (quel que soit la
+     largeur de l'écran, y compris les grands téléphones en paysage > 768px). */
+  overflow: hidden;
 }
 
 .mp-top-grid {

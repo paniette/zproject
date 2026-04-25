@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, watch, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import AppHeader from './AppHeader.vue'
 import MapEditor from './MapEditor.vue'
@@ -17,6 +17,14 @@ import MissionEditor from './MissionEditor.vue'
 
 const route = useRoute()
 const isMap = computed(() => route.name === 'MapEditor')
+
+// Quand on revient sur l'onglet Carte, forcer un resize du canvas
+// (il peut avoir été initialisé avec des dimensions nulles si la vue Mission était active au démarrage).
+watch(isMap, (nowMap) => {
+  if (nowMap) {
+    nextTick(() => window.dispatchEvent(new Event('resize')))
+  }
+})
 </script>
 
 <style scoped>

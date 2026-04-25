@@ -10,24 +10,6 @@
       }
     },
     {
-      "id": "map_e06e625834ff",
-      "name": "Tortues",
-      "metadata": {
-        "created": "2026-04-20T20:07:16.453152",
-        "modified": "2026-04-20T20:07:16.453152",
-        "author": "temp"
-      }
-    },
-    {
-      "id": "map_87043f58696e",
-      "name": "mission",
-      "metadata": {
-        "created": "2026-04-20T18:50:35.398270",
-        "modified": "2026-04-20T20:05:51.846909",
-        "author": "temp"
-      }
-    },
-    {
       "id": "map_33fc8cbea9d5",
       "name": "Nouvelle carte",
       "metadata": {
@@ -46,5 +28,5 @@
       }
     }
   ],
-  "generated_at": "2026-04-22T00:01:35.448562"
+  "generated_at": "2026-04-22T00:15:45.218242"
 }
