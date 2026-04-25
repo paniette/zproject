@@ -330,6 +330,20 @@ const handleExportRequest = async (e) => {
     for (const t of tiles) await drawTileToContext(octx, t)
     for (const o of objects) await drawObjectToContext(octx, o)
 
+    // Pour PNG : forcer chaque pixel à alpha 0 ou 255 (binaire).
+    // Élimine la semi-transparence résiduelle des images (antialiasing, halos)
+    // sans altérer les couleurs — le fond vide reste transparent.
+    if (!mimeType.includes('jpeg')) {
+      const imgData = octx.getImageData(0, 0, outW, outH)
+      const d = imgData.data
+      for (let i = 3; i < d.length; i += 4) {
+        d[i] = d[i] > 10 ? 255 : 0
+      }
+      // Pas de translation active sur octx lors du putImageData (coordonnées absolues)
+      octx.setTransform(1, 0, 0, 1, 0, 0)
+      octx.putImageData(imgData, 0, 0)
+    }
+
     const dataUrl = mimeType.includes('jpeg')
       ? off.toDataURL('image/jpeg', quality)
       : off.toDataURL(mimeType)

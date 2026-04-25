@@ -18,6 +18,8 @@ export function defaultMission () {
     materialRequired: '',
     tilesUsed: [],
     pageTheme: 'medieval',
+    pageEffect: 'grain',
+    footerLabel: 'QUÊTE - ZOMBICIDE',
     mapImageDataUrl: null
   }
 }
@@ -49,6 +51,7 @@ export function mergeMissionFromPayload (raw) {
     ...base,
     ...raw,
     materialRequired: (typeof raw.materialRequired === 'string') ? raw.materialRequired : '',
+    pageEffect: (typeof raw.pageEffect === 'string') ? raw.pageEffect : 'grain',
     authors: Array.isArray(raw.authors) ? [...raw.authors] : [],
     objectives: Array.isArray(raw.objectives) ? [...raw.objectives] : [],
     specialRules: Array.isArray(raw.specialRules) ? [...raw.specialRules] : [],

@@ -16,6 +16,17 @@
       </label>
 
       <label class="field">
+        <span>Effet de fond</span>
+        <select v-model="mission.pageEffect" class="input">
+          <option value="none">Aucun</option>
+          <option value="grain">Grain</option>
+          <option value="tache">Taché</option>
+          <option value="sable">Sable</option>
+          <option value="froisse">Froissé</option>
+        </select>
+      </label>
+
+      <label class="field">
         <span>Code quête (ex. B61)</span>
         <input v-model="mission.questCode" type="text" class="input" placeholder="B61" />
       </label>
@@ -67,6 +78,16 @@
           type="text"
           class="input"
           placeholder="Zombicide: White Death"
+        />
+      </label>
+
+      <label class="field">
+        <span>Libellé bas de page (droite)</span>
+        <input
+          v-model="mission.footerLabel"
+          type="text"
+          class="input"
+          placeholder="QUÊTE - ZOMBICIDE"
         />
       </label>
 

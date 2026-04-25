@@ -113,6 +113,46 @@
   --mp-dropcap: #c1212b; /* première lettre synopsis rouge */
 }
 
+/* ── Effets de fond — indépendants du thème ─────────────────────────────────── */
+
+/* Grain : bruit fractalNoise fin, tuilé, + vignette chaleureuse */
+.mission-page-preview[data-page-effect='grain'] .mp-sheet {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.68 0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23g)' opacity='0.45'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 50% 48%, transparent 35%, rgba(100, 58, 14, 0.22) 100%),
+    linear-gradient(to bottom, rgba(130, 80, 20, 0.1) 0%, transparent 15%, transparent 85%, rgba(100, 55, 10, 0.14) 100%);
+  background-size: 250px 250px, 100% 100%, 100% 100%;
+  background-color: var(--mp-bg);
+}
+
+/* Froissé v2 : dérivée directionnelle — turbulence décalée - turbulence originale
+   → seules les "arêtes montantes" apparaissent (lumière accrochant un pli de papier).
+   Fond quasi intact, fines lignes sépia obliques le long des plis. */
+.mission-page-preview[data-page-effect='froisse'] .mp-sheet {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='600'%3E%3Cfilter id='fo'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.025' numOctaves='4' seed='12' result='t' stitchTiles='stitch'/%3E%3CfeOffset dx='3' dy='3' in='t' result='s'/%3E%3CfeComposite in='s' in2='t' operator='arithmetic' k1='0' k2='1' k3='-1' k4='0'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='4' intercept='-2.8'/%3E%3CfeFuncG type='linear' slope='4' intercept='-2.8'/%3E%3CfeFuncB type='linear' slope='4' intercept='-2.8'/%3E%3C/feComponentTransfer%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.68 0 0 0 0 0.68 0 0 0 0 0.68 1.8 0 0 0 -1.25'/%3E%3C/filter%3E%3Crect width='400' height='600' filter='url(%23fo)'/%3E%3C/svg%3E");
+  background-size: 400px 600px;
+  background-color: var(--mp-bg);
+}
+
+/* Sable : grandes zones sombres étalées (turbulence basse fréquence + fort contraste) */
+.mission-page-preview[data-page-effect='sable'] .mp-sheet {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='800'%3E%3Cfilter id='ck'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.025 0.018' numOctaves='6' seed='12' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='5' intercept='-3'/%3E%3CfeFuncG type='linear' slope='5' intercept='-3'/%3E%3CfeFuncB type='linear' slope='5' intercept='-3'/%3E%3CfeFuncA type='linear' slope='0.38' intercept='0'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='600' height='800' filter='url(%23ck)'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 50% 48%, transparent 30%, rgba(90, 50, 10, 0.18) 100%);
+  background-size: 600px 800px, 100% 100%;
+  background-color: var(--mp-bg);
+}
+
+/* Taché : turbulence → seuillage → inversion RGB → dilate → alpha brun sépia
+   Le fond devient transparent, les "anciens patches clairs" deviennent les taches sombres */
+.mission-page-preview[data-page-effect='tache'] .mp-sheet {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='800'%3E%3Cfilter id='lc'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.018 0.01' numOctaves='7' seed='33' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='20' intercept='-9'/%3E%3CfeFuncG type='linear' slope='20' intercept='-9'/%3E%3CfeFuncB type='linear' slope='20' intercept='-9'/%3E%3C/feComponentTransfer%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='-1' intercept='1'/%3E%3CfeFuncG type='linear' slope='-1' intercept='1'/%3E%3CfeFuncB type='linear' slope='-1' intercept='1'/%3E%3C/feComponentTransfer%3E%3CfeMorphology operator='dilate' radius='1'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.35 0 0 0 0 0.18 0 0 0 0 0.08 -2 0 0 0 0.35'/%3E%3C/filter%3E%3Crect width='600' height='800' filter='url(%23lc)'/%3E%3C/svg%3E");
+  background-size: 600px 800px;
+  background-color: var(--mp-bg);
+}
+
 /* Section headings : petites capitales forcées + espacement lettres pour le rendu Cinzel */
 .mission-page-preview[data-mission-theme='medieval'] .mp-section-title {
   font-variant: small-caps;
@@ -126,6 +166,15 @@
 .mission-page-preview[data-mission-theme='medieval'] .mp-title {
   font-family: "UnifrakturMaguntia", fantasy;
   font-weight: 400; /* UnifrakturMaguntia n'a qu'un seul grammage */
+  color: var(--mp-heading);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+/* Footer label : même traitement gothique que le titre principal (médiéval) */
+.mission-page-preview[data-mission-theme='medieval'] .mp-footer-label {
+  font-family: "UnifrakturMaguntia", fantasy;
+  font-weight: 400;
   color: var(--mp-heading);
   letter-spacing: 0.03em;
   text-transform: uppercase;

@@ -2,6 +2,7 @@
   <div
     class="mission-page-preview"
     :data-mission-theme="pageThemeId"
+    :data-page-effect="mission.pageEffect || 'none'"
     id="mission-print-root"
   >
     <div class="mp-sheet">
@@ -131,6 +132,11 @@
             </section>
             <p v-else class="mp-map-placeholder">Aucune carte capturée — utilisez « Capturer la carte » dans le panneau de gauche.</p>
           </div>
+        </div>
+
+        <div class="mp-footer-bar">
+          <span class="mp-footer-url">z.paniette.fr</span>
+          <span class="mp-footer-label">{{ mission.footerLabel || 'QUÊTE - ZOMBICIDE' }}</span>
         </div>
       </div>
     </div>
@@ -548,7 +554,7 @@ const topGridColumnsStyle = computed(() => {
   color: var(--mp-heading);
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  font-size: clamp(1.55rem, 3.4vw, 2.25rem);
+  font-size: clamp(1.85rem, 4vw, 2.75rem);
 }
 
 .mp-meta-line {
@@ -719,8 +725,7 @@ const topGridColumnsStyle = computed(() => {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  /* Fond page : la capture PNG est transparente hors tuiles/jetons */
-  background: var(--mp-bg);
+  background: transparent;
 }
 
 .mp-map-img {
@@ -742,6 +747,51 @@ const topGridColumnsStyle = computed(() => {
   line-height: 1.4;
   opacity: 0.65;
   padding: 0.5rem;
+}
+
+.mp-footer-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-top: 0.25rem;
+  border-top: 1px solid color-mix(in srgb, var(--mp-ink) 15%, transparent);
+  flex-shrink: 0;
+}
+
+.mp-footer-url {
+  font-family: var(--mp-body);
+  font-size: 0.82rem;
+  color: var(--mp-ink);
+  opacity: 0.5;
+  line-height: 1;
+}
+
+.mp-footer-label {
+  font-family: var(--mp-title);
+  font-size: clamp(1.25rem, 2.8vw, 1.85rem);
+  font-weight: 700;
+  color: var(--mp-ink);
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+}
+
+.mission-page-preview[data-mission-theme='eternal'] .mp-footer-label {
+  text-transform: uppercase;
+}
+
+.mission-page-preview[data-mission-theme='classic'] .mp-footer-label,
+.mission-page-preview[data-mission-theme='necro'] .mp-footer-label {
+  color: var(--mp-accent);
+  font-weight: normal;
+}
+
+.mission-page-preview[data-mission-theme='medieval'] .mp-footer-label {
+  font-family: "Algo FY Black", "Cinzel", Georgia, serif;
+  font-weight: 900;
+  color: var(--mp-heading);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: clamp(1.85rem, 4vw, 2.75rem);
 }
 
 @media print {
