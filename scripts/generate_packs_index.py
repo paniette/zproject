@@ -23,6 +23,47 @@ django.setup()
 from api.parsers.asset_indexer import AssetIndexer
 from api.parsers.pack_parser import PackParser
 
+def infer_game_type(pack_id: str) -> str:
+    """
+    Infère le type de jeu (Modern/Fantasy/Western/Sci‑Fi/Classic/Night) depuis l'id du pack.
+    Source des catégories : https://www.zombicide.com/fr/mapeditor-zombicide/
+    """
+    pid = (pack_id or "").upper()
+
+    # Modern (2nd edition + extensions)
+    if pid.endswith("-A5-2E") or pid.endswith("-A6-ZC") or pid.endswith("-A7-FH"):
+        return "modern"
+
+    # Sci‑Fi (Invader)
+    if pid.startswith("G-ZOMBICIDE-IV"):
+        return "scifi"
+
+    # Night Of The Living Dead
+    # Le pack présent dans ce repo est `G-Zombicide-D1-LD` (Living Dead) : ne pas le classer en Western.
+    if pid.startswith("E1_") or "NIGHT" in pid or pid.endswith("-LD") or "-LD" in pid or "LIVING" in pid:
+        return "night"
+
+    # Western (Undead or Alive)
+    if pid.startswith("G-ZOMBICIDE-D1") or pid.startswith("D1_") or "UNDEAD" in pid:
+        return "western"
+
+    # Fantasy (BP/WD/EE/TMNT, etc.)
+    if pid.startswith("G-ZOMBICIDE-BP") or pid.startswith("G-ZOMBICIDE-WD") or pid.startswith("G-ZOMBICIDE-EE") or pid.startswith("G-ZOMBICIDE-TMNT"):
+        return "fantasy"
+
+    # Zombicide (Classic) : extensions/classiques
+    if pid.startswith("G-ZOMBICIDE-PO") or pid.startswith("G-ZOMBICIDE-RM") or pid.startswith("G-ZOMBICIDE-TCM") or pid.startswith("G-ZOMBICIDE-AN"):
+        return "classic"
+    # Base classique (G-Zombicide) + autres packs non matchés ci-dessus
+    if pid == "G-ZOMBICIDE":
+        return "classic"
+
+    # Fallback raisonnable
+    # Si ça commence par G-Zombicide mais n'a matché aucun mode dédié, c'est très probablement Classic.
+    if pid.startswith("G-ZOMBICIDE"):
+        return "classic"
+    return "fantasy"
+
 def generate_packs_index():
     """Generate a static JSON file with all packs and their assets"""
     
@@ -55,6 +96,7 @@ def generate_packs_index():
             "name": pack.get('name', pack['id']),
             "image": pack.get('image'),
             "align": pack.get('align', 25),
+            "gameType": infer_game_type(pack['id']),
             "assets": assets
         }
         

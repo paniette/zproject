@@ -1,10 +1,1352 @@
 {
   "packs": [
     {
+      "id": "G-Zombicide",
+      "name": "Zombicide S01",
+      "image": "guillotine.png",
+      "align": 25,
+      "gameType": "classic",
+      "assets": {
+        "01.tiles": [
+          {
+            "name": "Dalle A Recto.JPG",
+            "path": "G-Zombicide/01.tiles/Dalle A Recto.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Dalle A Verso.JPG"
+          },
+          {
+            "name": "Dalle A Verso.JPG",
+            "path": "G-Zombicide/01.tiles/Dalle A Verso.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Dalle A Recto.JPG"
+          },
+          {
+            "name": "Dalle B Recto.JPG",
+            "path": "G-Zombicide/01.tiles/Dalle B Recto.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Dalle B Verso.JPG"
+          },
+          {
+            "name": "Dalle B Verso.JPG",
+            "path": "G-Zombicide/01.tiles/Dalle B Verso.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Dalle B Recto.JPG"
+          },
+          {
+            "name": "Dalle C Recto.JPG",
+            "path": "G-Zombicide/01.tiles/Dalle C Recto.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Dalle C Verso.JPG"
+          },
+          {
+            "name": "Dalle C Verso.JPG",
+            "path": "G-Zombicide/01.tiles/Dalle C Verso.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Dalle C Recto.JPG"
+          },
+          {
+            "name": "Dalle D Recto.JPG",
+            "path": "G-Zombicide/01.tiles/Dalle D Recto.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Dalle D Verso.JPG"
+          },
+          {
+            "name": "Dalle D Verso.JPG",
+            "path": "G-Zombicide/01.tiles/Dalle D Verso.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Dalle D Recto.JPG"
+          },
+          {
+            "name": "Dalle E Recto.JPG",
+            "path": "G-Zombicide/01.tiles/Dalle E Recto.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Dalle E Verso.JPG"
+          },
+          {
+            "name": "Dalle E Verso.JPG",
+            "path": "G-Zombicide/01.tiles/Dalle E Verso.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Dalle E Recto.JPG"
+          },
+          {
+            "name": "Dalle F Recto.JPG",
+            "path": "G-Zombicide/01.tiles/Dalle F Recto.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Dalle F Verso.JPG"
+          },
+          {
+            "name": "Dalle F Verso.JPG",
+            "path": "G-Zombicide/01.tiles/Dalle F Verso.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Dalle F Recto.JPG"
+          },
+          {
+            "name": "Dalle G Recto.JPG",
+            "path": "G-Zombicide/01.tiles/Dalle G Recto.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Dalle G Verso.JPG"
+          },
+          {
+            "name": "Dalle G Verso.JPG",
+            "path": "G-Zombicide/01.tiles/Dalle G Verso.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Dalle G Recto.JPG"
+          },
+          {
+            "name": "Dalle H Recto.JPG",
+            "path": "G-Zombicide/01.tiles/Dalle H Recto.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Dalle H Verso.JPG"
+          },
+          {
+            "name": "Dalle H Verso.JPG",
+            "path": "G-Zombicide/01.tiles/Dalle H Verso.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Dalle H Recto.JPG"
+          },
+          {
+            "name": "Dalle I Recto.JPG",
+            "path": "G-Zombicide/01.tiles/Dalle I Recto.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Dalle I Verso.JPG"
+          },
+          {
+            "name": "Dalle I Verso.JPG",
+            "path": "G-Zombicide/01.tiles/Dalle I Verso.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Dalle I Recto.JPG"
+          }
+        ],
+        "02.doors": [
+          {
+            "name": "closed door token blue.jpg",
+            "path": "G-Zombicide/02.doors/closed door token blue.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "open door token blue.JPG"
+          },
+          {
+            "name": "closed door token Green.jpg",
+            "path": "G-Zombicide/02.doors/closed door token Green.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "open door token green.JPG"
+          },
+          {
+            "name": "closed door token red.jpg",
+            "path": "G-Zombicide/02.doors/closed door token red.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 10,
+            "pair": "open door token Red.jpg"
+          },
+          {
+            "name": "open door token blue.JPG",
+            "path": "G-Zombicide/02.doors/open door token blue.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "closed door token blue.jpg"
+          },
+          {
+            "name": "open door token green.JPG",
+            "path": "G-Zombicide/02.doors/open door token green.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "closed door token Green.jpg"
+          },
+          {
+            "name": "open door token Red.jpg",
+            "path": "G-Zombicide/02.doors/open door token Red.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 10,
+            "pair": "closed door token red.jpg"
+          }
+        ],
+        "03.cars": [
+          {
+            "name": "pimp mobile token.jpg",
+            "path": "G-Zombicide/03.cars/pimp mobile token.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 4,
+            "pair": "police car token.jpg"
+          },
+          {
+            "name": "police car token.jpg",
+            "path": "G-Zombicide/03.cars/police car token.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 4,
+            "pair": "pimp mobile token.jpg"
+          }
+        ],
+        "04.other tokens": [
+          {
+            "name": "exit token.jpg",
+            "path": "G-Zombicide/04.other tokens/exit token.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "Noise Token.png",
+            "path": "G-Zombicide/04.other tokens/Noise Token.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 18,
+            "pair": null
+          },
+          {
+            "name": "objective token blue.jpg",
+            "path": "G-Zombicide/04.other tokens/objective token blue.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "objective token red.JPG"
+          },
+          {
+            "name": "objective token green.JPG",
+            "path": "G-Zombicide/04.other tokens/objective token green.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "objective token red.JPG"
+          },
+          {
+            "name": "objective token red.JPG",
+            "path": "G-Zombicide/04.other tokens/objective token red.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 10,
+            "pair": "objective token green.JPG"
+          },
+          {
+            "name": "spawn token blue.jpg",
+            "path": "G-Zombicide/04.other tokens/spawn token blue.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "spawn token.jpg",
+            "path": "G-Zombicide/04.other tokens/spawn token.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 5,
+            "pair": null
+          },
+          {
+            "name": "start token.jpg",
+            "path": "G-Zombicide/04.other tokens/start token.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "G-Zombicide-A5-2E",
+      "name": "Zombicide 2E",
+      "image": "guillotine.png",
+      "align": 25,
+      "gameType": "modern",
+      "assets": {
+        "01.tiles": [
+          {
+            "name": "1R.png",
+            "path": "G-Zombicide-A5-2E/01.tiles/1R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "1V.png"
+          },
+          {
+            "name": "1V.png",
+            "path": "G-Zombicide-A5-2E/01.tiles/1V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "1R.png"
+          },
+          {
+            "name": "2R.png",
+            "path": "G-Zombicide-A5-2E/01.tiles/2R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "2V.png"
+          },
+          {
+            "name": "2V.png",
+            "path": "G-Zombicide-A5-2E/01.tiles/2V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "2R.png"
+          },
+          {
+            "name": "3R.png",
+            "path": "G-Zombicide-A5-2E/01.tiles/3R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "3V.png"
+          },
+          {
+            "name": "3V.png",
+            "path": "G-Zombicide-A5-2E/01.tiles/3V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "3R.png"
+          },
+          {
+            "name": "4R.png",
+            "path": "G-Zombicide-A5-2E/01.tiles/4R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "4V.png"
+          },
+          {
+            "name": "4V.png",
+            "path": "G-Zombicide-A5-2E/01.tiles/4V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "4R.png"
+          },
+          {
+            "name": "5R.png",
+            "path": "G-Zombicide-A5-2E/01.tiles/5R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "5V.png"
+          },
+          {
+            "name": "5V.png",
+            "path": "G-Zombicide-A5-2E/01.tiles/5V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "5R.png"
+          },
+          {
+            "name": "6R.png",
+            "path": "G-Zombicide-A5-2E/01.tiles/6R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "6V.png"
+          },
+          {
+            "name": "6V.png",
+            "path": "G-Zombicide-A5-2E/01.tiles/6V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "6R.png"
+          },
+          {
+            "name": "7R.png",
+            "path": "G-Zombicide-A5-2E/01.tiles/7R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "7V.png"
+          },
+          {
+            "name": "7V.png",
+            "path": "G-Zombicide-A5-2E/01.tiles/7V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "7R.png"
+          },
+          {
+            "name": "8R.png",
+            "path": "G-Zombicide-A5-2E/01.tiles/8R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "8V.png"
+          },
+          {
+            "name": "8V.png",
+            "path": "G-Zombicide-A5-2E/01.tiles/8V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "8R.png"
+          },
+          {
+            "name": "9R.png",
+            "path": "G-Zombicide-A5-2E/01.tiles/9R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "9V.png"
+          },
+          {
+            "name": "9V.png",
+            "path": "G-Zombicide-A5-2E/01.tiles/9V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "9R.png"
+          }
+        ],
+        "02.doors": [
+          {
+            "name": "Door-Closed-Blue.png",
+            "path": "G-Zombicide-A5-2E/02.doors/Door-Closed-Blue.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Open-Blue.png"
+          },
+          {
+            "name": "Door-Closed-Green.png",
+            "path": "G-Zombicide-A5-2E/02.doors/Door-Closed-Green.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Open_Green.png"
+          },
+          {
+            "name": "Door-Closed-Red.png",
+            "path": "G-Zombicide-A5-2E/02.doors/Door-Closed-Red.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 9,
+            "pair": "Door-Open-Red.png"
+          },
+          {
+            "name": "Door-Open-Blue.png",
+            "path": "G-Zombicide-A5-2E/02.doors/Door-Open-Blue.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Closed-Blue.png"
+          },
+          {
+            "name": "Door-Open-Red.png",
+            "path": "G-Zombicide-A5-2E/02.doors/Door-Open-Red.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 9,
+            "pair": "Door-Closed-Red.png"
+          },
+          {
+            "name": "Door-Open_Green.png",
+            "path": "G-Zombicide-A5-2E/02.doors/Door-Open_Green.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Closed-Green.png"
+          }
+        ],
+        "04.other tokens": [
+          {
+            "name": "Car-PimpMobile.png",
+            "path": "G-Zombicide-A5-2E/04.other tokens/Car-PimpMobile.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 3,
+            "pair": "Car-PoliceCar.png"
+          },
+          {
+            "name": "Car-PoliceCar.png",
+            "path": "G-Zombicide-A5-2E/04.other tokens/Car-PoliceCar.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 3,
+            "pair": "Car-PimpMobile.png"
+          },
+          {
+            "name": "Exit.png",
+            "path": "G-Zombicide-A5-2E/04.other tokens/Exit.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "Noise Token.png",
+            "path": "G-Zombicide-A5-2E/04.other tokens/Noise Token.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Objective-Blue.png",
+            "path": "G-Zombicide-A5-2E/04.other tokens/Objective-Blue.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Objective-Red.png"
+          },
+          {
+            "name": "Objective-Green.png",
+            "path": "G-Zombicide-A5-2E/04.other tokens/Objective-Green.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Objective-Red.png"
+          },
+          {
+            "name": "Objective-Red.png",
+            "path": "G-Zombicide-A5-2E/04.other tokens/Objective-Red.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 11,
+            "pair": "Objective-Green.png"
+          },
+          {
+            "name": "Pimweapon Crate.png",
+            "path": "G-Zombicide-A5-2E/04.other tokens/Pimweapon Crate.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 12,
+            "pair": null
+          },
+          {
+            "name": "Spawn-Blue.png",
+            "path": "G-Zombicide-A5-2E/04.other tokens/Spawn-Blue.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Spawn-Red.png"
+          },
+          {
+            "name": "Spawn-Green.png",
+            "path": "G-Zombicide-A5-2E/04.other tokens/Spawn-Green.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Spawn-Red.png"
+          },
+          {
+            "name": "Spawn-Red.png",
+            "path": "G-Zombicide-A5-2E/04.other tokens/Spawn-Red.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 7,
+            "pair": "Spawn-Green.png"
+          },
+          {
+            "name": "Spawn-StartingSpawn.png",
+            "path": "G-Zombicide-A5-2E/04.other tokens/Spawn-StartingSpawn.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "Survivor Starting Zone.png",
+            "path": "G-Zombicide-A5-2E/04.other tokens/Survivor Starting Zone.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          }
+        ],
+        "05.zombies": [
+          {
+            "name": "Zombie-Abomination.png",
+            "path": "G-Zombicide-A5-2E/05.zombies/Zombie-Abomination.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Zombie-Fatty.png",
+            "path": "G-Zombicide-A5-2E/05.zombies/Zombie-Fatty.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Zombie-Runner.png",
+            "path": "G-Zombicide-A5-2E/05.zombies/Zombie-Runner.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Zombie-Walker.png",
+            "path": "G-Zombicide-A5-2E/05.zombies/Zombie-Walker.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "G-Zombicide-A6-ZC",
+      "name": "Zombicide: ZC Washington",
+      "image": "guillotine.png",
+      "align": 25,
+      "gameType": "modern",
+      "assets": {
+        "01.tiles": [
+          {
+            "name": "10R.png",
+            "path": "G-Zombicide-A6-ZC/01.tiles/10R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "10V.png"
+          },
+          {
+            "name": "10V.png",
+            "path": "G-Zombicide-A6-ZC/01.tiles/10V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "10R.png"
+          },
+          {
+            "name": "11R.png",
+            "path": "G-Zombicide-A6-ZC/01.tiles/11R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "11V.png"
+          },
+          {
+            "name": "11V.png",
+            "path": "G-Zombicide-A6-ZC/01.tiles/11V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "11R.png"
+          },
+          {
+            "name": "12R.png",
+            "path": "G-Zombicide-A6-ZC/01.tiles/12R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "12V.png"
+          },
+          {
+            "name": "12V.png",
+            "path": "G-Zombicide-A6-ZC/01.tiles/12V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "12R.png"
+          },
+          {
+            "name": "13R.png",
+            "path": "G-Zombicide-A6-ZC/01.tiles/13R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "13V.png"
+          },
+          {
+            "name": "13V.png",
+            "path": "G-Zombicide-A6-ZC/01.tiles/13V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "13R.png"
+          },
+          {
+            "name": "14R.png",
+            "path": "G-Zombicide-A6-ZC/01.tiles/14R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "14V.png"
+          },
+          {
+            "name": "14V.png",
+            "path": "G-Zombicide-A6-ZC/01.tiles/14V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "14R.png"
+          },
+          {
+            "name": "15R.png",
+            "path": "G-Zombicide-A6-ZC/01.tiles/15R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "15V.png"
+          },
+          {
+            "name": "15V.png",
+            "path": "G-Zombicide-A6-ZC/01.tiles/15V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "15R.png"
+          }
+        ],
+        "04.1.objectives": [
+          {
+            "name": "ObjectiveCard1.png",
+            "path": "G-Zombicide-A6-ZC/04.1.objectives/ObjectiveCard1.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard10.png",
+            "path": "G-Zombicide-A6-ZC/04.1.objectives/ObjectiveCard10.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard11.png",
+            "path": "G-Zombicide-A6-ZC/04.1.objectives/ObjectiveCard11.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard12.png",
+            "path": "G-Zombicide-A6-ZC/04.1.objectives/ObjectiveCard12.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard13.png",
+            "path": "G-Zombicide-A6-ZC/04.1.objectives/ObjectiveCard13.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard14.png",
+            "path": "G-Zombicide-A6-ZC/04.1.objectives/ObjectiveCard14.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard15.png",
+            "path": "G-Zombicide-A6-ZC/04.1.objectives/ObjectiveCard15.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard16.png",
+            "path": "G-Zombicide-A6-ZC/04.1.objectives/ObjectiveCard16.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard17.png",
+            "path": "G-Zombicide-A6-ZC/04.1.objectives/ObjectiveCard17.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard18.png",
+            "path": "G-Zombicide-A6-ZC/04.1.objectives/ObjectiveCard18.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard19.png",
+            "path": "G-Zombicide-A6-ZC/04.1.objectives/ObjectiveCard19.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard2.png",
+            "path": "G-Zombicide-A6-ZC/04.1.objectives/ObjectiveCard2.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard20.png",
+            "path": "G-Zombicide-A6-ZC/04.1.objectives/ObjectiveCard20.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard21.png",
+            "path": "G-Zombicide-A6-ZC/04.1.objectives/ObjectiveCard21.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard3.png",
+            "path": "G-Zombicide-A6-ZC/04.1.objectives/ObjectiveCard3.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard4.png",
+            "path": "G-Zombicide-A6-ZC/04.1.objectives/ObjectiveCard4.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard5.png",
+            "path": "G-Zombicide-A6-ZC/04.1.objectives/ObjectiveCard5.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard6.png",
+            "path": "G-Zombicide-A6-ZC/04.1.objectives/ObjectiveCard6.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard7.png",
+            "path": "G-Zombicide-A6-ZC/04.1.objectives/ObjectiveCard7.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard8.png",
+            "path": "G-Zombicide-A6-ZC/04.1.objectives/ObjectiveCard8.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard9.png",
+            "path": "G-Zombicide-A6-ZC/04.1.objectives/ObjectiveCard9.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          }
+        ],
+        "04.other tokens": [
+          {
+            "name": "Car-Humvee.png",
+            "path": "G-Zombicide-A6-ZC/04.other tokens/Car-Humvee.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Token-LightBeam.png",
+            "path": "G-Zombicide-A6-ZC/04.other tokens/Token-LightBeam.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          }
+        ],
+        "05.1.survivors": [
+          {
+            "name": "Survivor-Taylor.png",
+            "path": "G-Zombicide-A6-ZC/05.1.survivors/Survivor-Taylor.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Survivor-TheSuit.png",
+            "path": "G-Zombicide-A6-ZC/05.1.survivors/Survivor-TheSuit.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "G-Zombicide-A7-FH",
+      "name": "Zombicide 2E: Fort Hendrix",
+      "image": "guillotine.png",
+      "align": 25,
+      "gameType": "modern",
+      "assets": {
+        "01.tiles": [
+          {
+            "name": "16R.png",
+            "path": "G-Zombicide-A7-FH/01.tiles/16R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "16V.png"
+          },
+          {
+            "name": "16V.png",
+            "path": "G-Zombicide-A7-FH/01.tiles/16V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "16R.png"
+          },
+          {
+            "name": "17R.png",
+            "path": "G-Zombicide-A7-FH/01.tiles/17R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "17V.png"
+          },
+          {
+            "name": "17V.png",
+            "path": "G-Zombicide-A7-FH/01.tiles/17V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "17R.png"
+          },
+          {
+            "name": "18R.png",
+            "path": "G-Zombicide-A7-FH/01.tiles/18R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "18V.png"
+          },
+          {
+            "name": "18V.png",
+            "path": "G-Zombicide-A7-FH/01.tiles/18V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "18R.png"
+          },
+          {
+            "name": "19R.png",
+            "path": "G-Zombicide-A7-FH/01.tiles/19R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "19V.png"
+          },
+          {
+            "name": "19V.png",
+            "path": "G-Zombicide-A7-FH/01.tiles/19V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "19R.png"
+          },
+          {
+            "name": "20R.png",
+            "path": "G-Zombicide-A7-FH/01.tiles/20R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "20V.png"
+          },
+          {
+            "name": "20V.png",
+            "path": "G-Zombicide-A7-FH/01.tiles/20V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "20R.png"
+          },
+          {
+            "name": "21R.png",
+            "path": "G-Zombicide-A7-FH/01.tiles/21R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "21V.png"
+          },
+          {
+            "name": "21V.png",
+            "path": "G-Zombicide-A7-FH/01.tiles/21V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": "21R.png"
+          }
+        ],
+        "02.doors": [
+          {
+            "name": "Door-Closed-Red.png",
+            "path": "G-Zombicide-A7-FH/02.doors/Door-Closed-Red.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Door-Open-Red.png",
+            "path": "G-Zombicide-A7-FH/02.doors/Door-Open-Red.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          }
+        ],
+        "04.1.objectives": [
+          {
+            "name": "ObjectiveCard1.png",
+            "path": "G-Zombicide-A7-FH/04.1.objectives/ObjectiveCard1.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard10.png",
+            "path": "G-Zombicide-A7-FH/04.1.objectives/ObjectiveCard10.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard11.png",
+            "path": "G-Zombicide-A7-FH/04.1.objectives/ObjectiveCard11.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard12.png",
+            "path": "G-Zombicide-A7-FH/04.1.objectives/ObjectiveCard12.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard13.png",
+            "path": "G-Zombicide-A7-FH/04.1.objectives/ObjectiveCard13.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard14.png",
+            "path": "G-Zombicide-A7-FH/04.1.objectives/ObjectiveCard14.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard15.png",
+            "path": "G-Zombicide-A7-FH/04.1.objectives/ObjectiveCard15.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard16.png",
+            "path": "G-Zombicide-A7-FH/04.1.objectives/ObjectiveCard16.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard17.png",
+            "path": "G-Zombicide-A7-FH/04.1.objectives/ObjectiveCard17.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard18.png",
+            "path": "G-Zombicide-A7-FH/04.1.objectives/ObjectiveCard18.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard19.png",
+            "path": "G-Zombicide-A7-FH/04.1.objectives/ObjectiveCard19.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard2.png",
+            "path": "G-Zombicide-A7-FH/04.1.objectives/ObjectiveCard2.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard20.png",
+            "path": "G-Zombicide-A7-FH/04.1.objectives/ObjectiveCard20.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard21.png",
+            "path": "G-Zombicide-A7-FH/04.1.objectives/ObjectiveCard21.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard3.png",
+            "path": "G-Zombicide-A7-FH/04.1.objectives/ObjectiveCard3.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard4.png",
+            "path": "G-Zombicide-A7-FH/04.1.objectives/ObjectiveCard4.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard5.png",
+            "path": "G-Zombicide-A7-FH/04.1.objectives/ObjectiveCard5.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard6.png",
+            "path": "G-Zombicide-A7-FH/04.1.objectives/ObjectiveCard6.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard7.png",
+            "path": "G-Zombicide-A7-FH/04.1.objectives/ObjectiveCard7.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard8.png",
+            "path": "G-Zombicide-A7-FH/04.1.objectives/ObjectiveCard8.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "ObjectiveCard9.png",
+            "path": "G-Zombicide-A7-FH/04.1.objectives/ObjectiveCard9.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          }
+        ],
+        "04.other tokens": [
+          {
+            "name": "Token-LightBeam.png",
+            "path": "G-Zombicide-A7-FH/04.other tokens/Token-LightBeam.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          }
+        ],
+        "05.1.survivors": [
+          {
+            "name": "Survivor-Penny.png",
+            "path": "G-Zombicide-A7-FH/05.1.survivors/Survivor-Penny.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          }
+        ],
+        "05.zombies": [
+          {
+            "name": "Zombie-Shooter.png",
+            "path": "G-Zombicide-A7-FH/05.zombies/Zombie-Shooter.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "G-Zombicide-AN",
+      "name": "Zombicide Extension: Angry Neighbors",
+      "image": "guillotine.png",
+      "align": 25,
+      "gameType": "classic",
+      "assets": {
+        "01.tiles": [
+          {
+            "name": "10R.png",
+            "path": "G-Zombicide-AN/01.tiles/10R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "10V.png"
+          },
+          {
+            "name": "10V.png",
+            "path": "G-Zombicide-AN/01.tiles/10V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "10R.png"
+          },
+          {
+            "name": "11R.png",
+            "path": "G-Zombicide-AN/01.tiles/11R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "11V.png"
+          },
+          {
+            "name": "11V.png",
+            "path": "G-Zombicide-AN/01.tiles/11V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "11R.png"
+          },
+          {
+            "name": "12R.png",
+            "path": "G-Zombicide-AN/01.tiles/12R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "12V.png"
+          },
+          {
+            "name": "12V.png",
+            "path": "G-Zombicide-AN/01.tiles/12V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "12R.png"
+          }
+        ],
+        "04.other tokens": [
+          {
+            "name": "Companion Token.png",
+            "path": "G-Zombicide-AN/04.other tokens/Companion Token.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 8,
+            "pair": null
+          }
+        ]
+      }
+    },
+    {
       "id": "G-Zombicide-BP",
       "name": "Zombicide Black Plague",
       "image": "guillotine.png",
       "align": 25,
+      "gameType": "fantasy",
       "assets": {
         "01.tiles": [
           {
@@ -507,10 +1849,268 @@
       }
     },
     {
+      "id": "G-Zombicide-D1-LD",
+      "name": "Zombicide Night of the Living Dead",
+      "image": "guillotine.png",
+      "align": 25,
+      "gameType": "night",
+      "assets": {
+        "01.tiles": [
+          {
+            "name": "1R.png",
+            "path": "G-Zombicide-D1-LD/01.tiles/1R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "1V.png"
+          },
+          {
+            "name": "1V.png",
+            "path": "G-Zombicide-D1-LD/01.tiles/1V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "1R.png"
+          },
+          {
+            "name": "2R.png",
+            "path": "G-Zombicide-D1-LD/01.tiles/2R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "2V.png"
+          },
+          {
+            "name": "2V.png",
+            "path": "G-Zombicide-D1-LD/01.tiles/2V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "2R.png"
+          },
+          {
+            "name": "3R.png",
+            "path": "G-Zombicide-D1-LD/01.tiles/3R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "3V.png"
+          },
+          {
+            "name": "3V.png",
+            "path": "G-Zombicide-D1-LD/01.tiles/3V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "3R.png"
+          },
+          {
+            "name": "4R.png",
+            "path": "G-Zombicide-D1-LD/01.tiles/4R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "4V.png"
+          },
+          {
+            "name": "4V.png",
+            "path": "G-Zombicide-D1-LD/01.tiles/4V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "4R.png"
+          },
+          {
+            "name": "5R.png",
+            "path": "G-Zombicide-D1-LD/01.tiles/5R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "5V.png"
+          },
+          {
+            "name": "5V.png",
+            "path": "G-Zombicide-D1-LD/01.tiles/5V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "5R.png"
+          },
+          {
+            "name": "6R.png",
+            "path": "G-Zombicide-D1-LD/01.tiles/6R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "6V.png"
+          },
+          {
+            "name": "6V.png",
+            "path": "G-Zombicide-D1-LD/01.tiles/6V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "6R.png"
+          }
+        ],
+        "02.doors": [
+          {
+            "name": "Barricade-CLOSE.png",
+            "path": "G-Zombicide-D1-LD/02.doors/Barricade-CLOSE.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Barricade-OPEN.png",
+            "path": "G-Zombicide-D1-LD/02.doors/Barricade-OPEN.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Door-Closed.png",
+            "path": "G-Zombicide-D1-LD/02.doors/Door-Closed.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Door-Open.png",
+            "path": "G-Zombicide-D1-LD/02.doors/Door-Open.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          }
+        ],
+        "04.other tokens": [
+          {
+            "name": "Car-BenPickUp.png",
+            "path": "G-Zombicide-D1-LD/04.other tokens/Car-BenPickUp.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Car-JohnnysCar.png",
+            "path": "G-Zombicide-D1-LD/04.other tokens/Car-JohnnysCar.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Spawn-GREEN.png",
+            "path": "G-Zombicide-D1-LD/04.other tokens/Spawn-GREEN.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Spawn-RED.png",
+            "path": "G-Zombicide-D1-LD/04.other tokens/Spawn-RED.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Spawn-VIOLET.png",
+            "path": "G-Zombicide-D1-LD/04.other tokens/Spawn-VIOLET.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Spawn-WHITE.png",
+            "path": "G-Zombicide-D1-LD/04.other tokens/Spawn-WHITE.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Spawn-YELLOW.png",
+            "path": "G-Zombicide-D1-LD/04.other tokens/Spawn-YELLOW.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Stairway-CLOSE.png",
+            "path": "G-Zombicide-D1-LD/04.other tokens/Stairway-CLOSE.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Stairway-DOWN.png",
+            "path": "G-Zombicide-D1-LD/04.other tokens/Stairway-DOWN.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Starting-Zone.png",
+            "path": "G-Zombicide-D1-LD/04.other tokens/Starting-Zone.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          }
+        ],
+        "05.zombies": [
+          {
+            "name": "Ghoul-Breaker.png",
+            "path": "G-Zombicide-D1-LD/05.zombies/Ghoul-Breaker.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Ghoul-Fatty.png",
+            "path": "G-Zombicide-D1-LD/05.zombies/Ghoul-Fatty.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Ghoul-Relative.png",
+            "path": "G-Zombicide-D1-LD/05.zombies/Ghoul-Relative.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Ghoul-Walker.png",
+            "path": "G-Zombicide-D1-LD/05.zombies/Ghoul-Walker.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          }
+        ]
+      }
+    },
+    {
       "id": "G-Zombicide-EE",
       "name": "Zombicide Eternal Empire",
       "image": "guillotine.png",
       "align": 25,
+      "gameType": "fantasy",
       "assets": {
         "01.tiles": [
           {
@@ -620,17 +2220,2298 @@
         ],
         "04.other tokens": [
           {
-            "name": "StatueChi.png",
-            "path": "G-Zombicide-EE/04.other tokens/StatueChi.png/r_0.png",
-            "thumbnail": "G-Zombicide-EE/04.other tokens/StatueChi.png/r_thumb.png",
+            "name": "StatueShi.png",
+            "path": "G-Zombicide-EE/04.other tokens/StatueShi.png/r_0.png",
+            "thumbnail": "G-Zombicide-EE/04.other tokens/StatueShi.png/r_thumb.png",
             "rotations": {
-              "0": "G-Zombicide-EE/04.other tokens/StatueChi.png/r_0.png",
-              "90": "G-Zombicide-EE/04.other tokens/StatueChi.png/r_90.png",
-              "180": "G-Zombicide-EE/04.other tokens/StatueChi.png/r_180.png",
-              "270": "G-Zombicide-EE/04.other tokens/StatueChi.png/r_270.png"
+              "0": "G-Zombicide-EE/04.other tokens/StatueShi.png/r_0.png",
+              "90": "G-Zombicide-EE/04.other tokens/StatueShi.png/r_90.png",
+              "180": "G-Zombicide-EE/04.other tokens/StatueShi.png/r_180.png",
+              "270": "G-Zombicide-EE/04.other tokens/StatueShi.png/r_270.png"
             },
             "max": null,
             "pair": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "G-Zombicide-IV",
+      "name": "Zombicide Invaders",
+      "image": "guillotine.png",
+      "align": 25,
+      "gameType": "scifi",
+      "assets": {
+        "01.tiles": [
+          {
+            "name": "1R.png",
+            "path": "G-Zombicide-IV/01.tiles/1R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "1V.png"
+          },
+          {
+            "name": "1V.png",
+            "path": "G-Zombicide-IV/01.tiles/1V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "1R.png"
+          },
+          {
+            "name": "2R.png",
+            "path": "G-Zombicide-IV/01.tiles/2R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "2V.png"
+          },
+          {
+            "name": "2V.png",
+            "path": "G-Zombicide-IV/01.tiles/2V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "2R.png"
+          },
+          {
+            "name": "3R.png",
+            "path": "G-Zombicide-IV/01.tiles/3R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "3V.png"
+          },
+          {
+            "name": "3V.png",
+            "path": "G-Zombicide-IV/01.tiles/3V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "3R.png"
+          },
+          {
+            "name": "4R.png",
+            "path": "G-Zombicide-IV/01.tiles/4R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "4V.png"
+          },
+          {
+            "name": "4V.png",
+            "path": "G-Zombicide-IV/01.tiles/4V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "4R.png"
+          },
+          {
+            "name": "5R.png",
+            "path": "G-Zombicide-IV/01.tiles/5R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "5V.png"
+          },
+          {
+            "name": "5V.png",
+            "path": "G-Zombicide-IV/01.tiles/5V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "5R.png"
+          },
+          {
+            "name": "6R.png",
+            "path": "G-Zombicide-IV/01.tiles/6R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "6V.png"
+          },
+          {
+            "name": "6V.png",
+            "path": "G-Zombicide-IV/01.tiles/6V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "6R.png"
+          },
+          {
+            "name": "7R.png",
+            "path": "G-Zombicide-IV/01.tiles/7R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "7V.png"
+          },
+          {
+            "name": "7V.png",
+            "path": "G-Zombicide-IV/01.tiles/7V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "7R.png"
+          },
+          {
+            "name": "8R.png",
+            "path": "G-Zombicide-IV/01.tiles/8R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "8V.png"
+          },
+          {
+            "name": "8V.png",
+            "path": "G-Zombicide-IV/01.tiles/8V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "8R.png"
+          },
+          {
+            "name": "9R.png",
+            "path": "G-Zombicide-IV/01.tiles/9R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "9V.png"
+          },
+          {
+            "name": "9V.png",
+            "path": "G-Zombicide-IV/01.tiles/9V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "9R.png"
+          }
+        ],
+        "02.doors": [
+          {
+            "name": "Door-Closed-Green.png",
+            "path": "G-Zombicide-IV/02.doors/Door-Closed-Green.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Open-Green.png"
+          },
+          {
+            "name": "Door-Closed-Neutral.png",
+            "path": "G-Zombicide-IV/02.doors/Door-Closed-Neutral.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 5,
+            "pair": "Door-Open-Neutral.png"
+          },
+          {
+            "name": "Door-Closed-Violet.png",
+            "path": "G-Zombicide-IV/02.doors/Door-Closed-Violet.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Open-Violet.png"
+          },
+          {
+            "name": "Door-Open-Green.png",
+            "path": "G-Zombicide-IV/02.doors/Door-Open-Green.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Closed-Green.png"
+          },
+          {
+            "name": "Door-Open-Neutral.png",
+            "path": "G-Zombicide-IV/02.doors/Door-Open-Neutral.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 5,
+            "pair": "Door-Closed-Neutral.png"
+          },
+          {
+            "name": "Door-Open-Violet.png",
+            "path": "G-Zombicide-IV/02.doors/Door-Open-Violet.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Closed-Violet.png"
+          }
+        ],
+        "03.zombies": [
+          {
+            "name": "Zombie-Abomination.png",
+            "path": "G-Zombicide-IV/03.zombies/Zombie-Abomination.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Zombie-Hunter.png",
+            "path": "G-Zombicide-IV/03.zombies/Zombie-Hunter.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Zombie-Tank.png",
+            "path": "G-Zombicide-IV/03.zombies/Zombie-Tank.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Zombie-Worker.png",
+            "path": "G-Zombicide-IV/03.zombies/Zombie-Worker.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          }
+        ],
+        "04.other tokens": [
+          {
+            "name": "Exit.png",
+            "path": "G-Zombicide-IV/04.other tokens/Exit.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "Machine-Bot.png",
+            "path": "G-Zombicide-IV/04.other tokens/Machine-Bot.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Machine-Sentry Gun.png",
+            "path": "G-Zombicide-IV/04.other tokens/Machine-Sentry Gun.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Mold-Active.png",
+            "path": "G-Zombicide-IV/04.other tokens/Mold-Active.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 15,
+            "pair": "Mold-Inactive.png"
+          },
+          {
+            "name": "Mold-Inactive.png",
+            "path": "G-Zombicide-IV/04.other tokens/Mold-Inactive.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 15,
+            "pair": "Mold-Active.png"
+          },
+          {
+            "name": "Noise.png",
+            "path": "G-Zombicide-IV/04.other tokens/Noise.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 18,
+            "pair": null
+          },
+          {
+            "name": "Objective-Blue.png",
+            "path": "G-Zombicide-IV/04.other tokens/Objective-Blue.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Objective-Red.png"
+          },
+          {
+            "name": "Objective-Green.png",
+            "path": "G-Zombicide-IV/04.other tokens/Objective-Green.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Objective-Red.png"
+          },
+          {
+            "name": "Objective-Red.png",
+            "path": "G-Zombicide-IV/04.other tokens/Objective-Red.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 14,
+            "pair": "Objective-White.png:1"
+          },
+          {
+            "name": "Objective-Violet.png",
+            "path": "G-Zombicide-IV/04.other tokens/Objective-Violet.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Objective-Red.png"
+          },
+          {
+            "name": "Objective-White.png",
+            "path": "G-Zombicide-IV/04.other tokens/Objective-White.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "Spawn-Green.png",
+            "path": "G-Zombicide-IV/04.other tokens/Spawn-Green.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Spawn-Red.png"
+          },
+          {
+            "name": "Spawn-Red.png",
+            "path": "G-Zombicide-IV/04.other tokens/Spawn-Red.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 6,
+            "pair": "Spawn-Violet.png"
+          },
+          {
+            "name": "Spawn-Violet.png",
+            "path": "G-Zombicide-IV/04.other tokens/Spawn-Violet.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Spawn-Red.png"
+          },
+          {
+            "name": "start token.jpg",
+            "path": "G-Zombicide-IV/04.other tokens/start token.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "Token-Machine-Activation.png",
+            "path": "G-Zombicide-IV/04.other tokens/Token-Machine-Activation.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 2,
+            "pair": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "G-Zombicide-IV-C2-BO",
+      "name": "Zombicide: Black Ops",
+      "image": "guillotine.png",
+      "align": 25,
+      "gameType": "scifi",
+      "assets": {
+        "01.tiles": [
+          {
+            "name": "19R.png",
+            "path": "G-Zombicide-IV-C2-BO/01.tiles/19R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "19V.png"
+          },
+          {
+            "name": "19V.png",
+            "path": "G-Zombicide-IV-C2-BO/01.tiles/19V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "19R.png"
+          },
+          {
+            "name": "20R.png",
+            "path": "G-Zombicide-IV-C2-BO/01.tiles/20R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "20V.png"
+          },
+          {
+            "name": "20V.png",
+            "path": "G-Zombicide-IV-C2-BO/01.tiles/20V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "20R.png"
+          },
+          {
+            "name": "21R.png",
+            "path": "G-Zombicide-IV-C2-BO/01.tiles/21R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "21V.png"
+          },
+          {
+            "name": "21V.png",
+            "path": "G-Zombicide-IV-C2-BO/01.tiles/21V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "21R.png"
+          }
+        ],
+        "02.doors": [
+          {
+            "name": "Door-Closed-Blue.png",
+            "path": "G-Zombicide-IV-C2-BO/02.doors/Door-Closed-Blue.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Closed-white.png"
+          },
+          {
+            "name": "Door-Closed-white.png",
+            "path": "G-Zombicide-IV-C2-BO/02.doors/Door-Closed-white.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Closed-Blue.png"
+          },
+          {
+            "name": "Door-Open-Blue.png",
+            "path": "G-Zombicide-IV-C2-BO/02.doors/Door-Open-Blue.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Open-white.png"
+          },
+          {
+            "name": "Door-Open-white.png",
+            "path": "G-Zombicide-IV-C2-BO/02.doors/Door-Open-white.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Open-Blue.png"
+          }
+        ],
+        "03.zombies": [
+          {
+            "name": "Zombie-JuggernautAbomination.png",
+            "path": "G-Zombicide-IV-C2-BO/03.zombies/Zombie-JuggernautAbomination.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          }
+        ],
+        "04.other tokens": [
+          {
+            "name": "Machine-Bot.png",
+            "path": "G-Zombicide-IV-C2-BO/04.other tokens/Machine-Bot.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Machine-Sentry Gun.png",
+            "path": "G-Zombicide-IV-C2-BO/04.other tokens/Machine-Sentry Gun.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Mold-Active.png",
+            "path": "G-Zombicide-IV-C2-BO/04.other tokens/Mold-Active.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 5,
+            "pair": "Mold-Inactive.png"
+          },
+          {
+            "name": "Mold-Inactive.png",
+            "path": "G-Zombicide-IV-C2-BO/04.other tokens/Mold-Inactive.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 5,
+            "pair": "Mold-Active.png"
+          },
+          {
+            "name": "Noise.png",
+            "path": "G-Zombicide-IV-C2-BO/04.other tokens/Noise.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 12,
+            "pair": null
+          },
+          {
+            "name": "Spawn-Blue.png",
+            "path": "G-Zombicide-IV-C2-BO/04.other tokens/Spawn-Blue.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Spawn-Red.png"
+          },
+          {
+            "name": "Spawn-Red.png",
+            "path": "G-Zombicide-IV-C2-BO/04.other tokens/Spawn-Red.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 5,
+            "pair": "Spawn-White.png"
+          },
+          {
+            "name": "Spawn-White.png",
+            "path": "G-Zombicide-IV-C2-BO/04.other tokens/Spawn-White.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Spawn-Red.png"
+          },
+          {
+            "name": "Token-Machine-Activation.png",
+            "path": "G-Zombicide-IV-C2-BO/04.other tokens/Token-Machine-Activation.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 2,
+            "pair": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "G-Zombicide-IV-C3-DS",
+      "name": "Zombicide: Dark Side",
+      "image": "guillotine.png",
+      "align": 25,
+      "gameType": "scifi",
+      "assets": {
+        "01.tiles": [
+          {
+            "name": "10R.png",
+            "path": "G-Zombicide-IV-C3-DS/01.tiles/10R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "10V.png"
+          },
+          {
+            "name": "10V.png",
+            "path": "G-Zombicide-IV-C3-DS/01.tiles/10V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "10R.png"
+          },
+          {
+            "name": "11R.png",
+            "path": "G-Zombicide-IV-C3-DS/01.tiles/11R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "11V.png"
+          },
+          {
+            "name": "11V.png",
+            "path": "G-Zombicide-IV-C3-DS/01.tiles/11V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "11R.png"
+          },
+          {
+            "name": "12R.png",
+            "path": "G-Zombicide-IV-C3-DS/01.tiles/12R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "12V.png"
+          },
+          {
+            "name": "12V.png",
+            "path": "G-Zombicide-IV-C3-DS/01.tiles/12V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "12R.png"
+          },
+          {
+            "name": "13R.png",
+            "path": "G-Zombicide-IV-C3-DS/01.tiles/13R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "13V.png"
+          },
+          {
+            "name": "13V.png",
+            "path": "G-Zombicide-IV-C3-DS/01.tiles/13V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "13R.png"
+          },
+          {
+            "name": "14R.png",
+            "path": "G-Zombicide-IV-C3-DS/01.tiles/14R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "14V.png"
+          },
+          {
+            "name": "14V.png",
+            "path": "G-Zombicide-IV-C3-DS/01.tiles/14V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "14R.png"
+          },
+          {
+            "name": "15R.png",
+            "path": "G-Zombicide-IV-C3-DS/01.tiles/15R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "15V.png"
+          },
+          {
+            "name": "15V.png",
+            "path": "G-Zombicide-IV-C3-DS/01.tiles/15V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "15R.png"
+          },
+          {
+            "name": "16R.png",
+            "path": "G-Zombicide-IV-C3-DS/01.tiles/16R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "16V.png"
+          },
+          {
+            "name": "16V.png",
+            "path": "G-Zombicide-IV-C3-DS/01.tiles/16V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "16R.png"
+          },
+          {
+            "name": "17R.png",
+            "path": "G-Zombicide-IV-C3-DS/01.tiles/17R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "17V.png"
+          },
+          {
+            "name": "17V.png",
+            "path": "G-Zombicide-IV-C3-DS/01.tiles/17V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "17R.png"
+          },
+          {
+            "name": "18R.png",
+            "path": "G-Zombicide-IV-C3-DS/01.tiles/18R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "18V.png"
+          },
+          {
+            "name": "18V.png",
+            "path": "G-Zombicide-IV-C3-DS/01.tiles/18V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "18R.png"
+          }
+        ],
+        "02.doors": [
+          {
+            "name": "Door-Closed-Green.png",
+            "path": "G-Zombicide-IV-C3-DS/02.doors/Door-Closed-Green.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Open-Green.png"
+          },
+          {
+            "name": "Door-Closed-Neutral.png",
+            "path": "G-Zombicide-IV-C3-DS/02.doors/Door-Closed-Neutral.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 5,
+            "pair": "Door-Open-Neutral.png"
+          },
+          {
+            "name": "Door-Closed-Pink.png",
+            "path": "G-Zombicide-IV-C3-DS/02.doors/Door-Closed-Pink.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Open-Pink.png"
+          },
+          {
+            "name": "Door-Closed-Violet.png",
+            "path": "G-Zombicide-IV-C3-DS/02.doors/Door-Closed-Violet.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Open-Violet.png"
+          },
+          {
+            "name": "Door-Closed-Yellow.png",
+            "path": "G-Zombicide-IV-C3-DS/02.doors/Door-Closed-Yellow.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Open-Yellow.png"
+          },
+          {
+            "name": "Door-Open-Green.png",
+            "path": "G-Zombicide-IV-C3-DS/02.doors/Door-Open-Green.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Closed-Green.png"
+          },
+          {
+            "name": "Door-Open-Neutral.png",
+            "path": "G-Zombicide-IV-C3-DS/02.doors/Door-Open-Neutral.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 5,
+            "pair": "Door-Closed-Neutral.png"
+          },
+          {
+            "name": "Door-Open-Pink.png",
+            "path": "G-Zombicide-IV-C3-DS/02.doors/Door-Open-Pink.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Closed-Pink.png"
+          },
+          {
+            "name": "Door-Open-Violet.png",
+            "path": "G-Zombicide-IV-C3-DS/02.doors/Door-Open-Violet.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Closed-Violet.png"
+          },
+          {
+            "name": "Door-Open-Yellow.png",
+            "path": "G-Zombicide-IV-C3-DS/02.doors/Door-Open-Yellow.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Closed-Yellow.png"
+          }
+        ],
+        "03.zombies": [
+          {
+            "name": "Zombie-DrillerAbomination.png",
+            "path": "G-Zombicide-IV-C3-DS/03.zombies/Zombie-DrillerAbomination.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Zombie-DrillerHunter.png",
+            "path": "G-Zombicide-IV-C3-DS/03.zombies/Zombie-DrillerHunter.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Zombie-DrillerTank.png",
+            "path": "G-Zombicide-IV-C3-DS/03.zombies/Zombie-DrillerTank.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Zombie-DrillerWorker.png",
+            "path": "G-Zombicide-IV-C3-DS/03.zombies/Zombie-DrillerWorker.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          }
+        ],
+        "04.other tokens": [
+          {
+            "name": "Exit.png",
+            "path": "G-Zombicide-IV-C3-DS/04.other tokens/Exit.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "Machine-Bot.png",
+            "path": "G-Zombicide-IV-C3-DS/04.other tokens/Machine-Bot.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Machine-Sentry Gun.png",
+            "path": "G-Zombicide-IV-C3-DS/04.other tokens/Machine-Sentry Gun.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Noise.png",
+            "path": "G-Zombicide-IV-C3-DS/04.other tokens/Noise.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 18,
+            "pair": null
+          },
+          {
+            "name": "Objective-Blue.png",
+            "path": "G-Zombicide-IV-C3-DS/04.other tokens/Objective-Blue.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Objective-Red.png"
+          },
+          {
+            "name": "Objective-Green.png",
+            "path": "G-Zombicide-IV-C3-DS/04.other tokens/Objective-Green.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Objective-Red.png"
+          },
+          {
+            "name": "Objective-Pink.png",
+            "path": "G-Zombicide-IV-C3-DS/04.other tokens/Objective-Pink.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "Objective-Prototype weapon.png",
+            "path": "G-Zombicide-IV-C3-DS/04.other tokens/Objective-Prototype weapon.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 4,
+            "pair": null
+          },
+          {
+            "name": "Objective-Red.png",
+            "path": "G-Zombicide-IV-C3-DS/04.other tokens/Objective-Red.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 14,
+            "pair": "Objective-Pink.png:1"
+          },
+          {
+            "name": "Objective-Violet.png",
+            "path": "G-Zombicide-IV-C3-DS/04.other tokens/Objective-Violet.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Objective-Red.png"
+          },
+          {
+            "name": "Objective-Yellow.png",
+            "path": "G-Zombicide-IV-C3-DS/04.other tokens/Objective-Yellow.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Pit-Filled.png",
+            "path": "G-Zombicide-IV-C3-DS/04.other tokens/Pit-Filled.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 15,
+            "pair": "Pit-Open.png"
+          },
+          {
+            "name": "Pit-Open.png",
+            "path": "G-Zombicide-IV-C3-DS/04.other tokens/Pit-Open.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 15,
+            "pair": "Pit-Filled.png"
+          },
+          {
+            "name": "Spawn-Green.png",
+            "path": "G-Zombicide-IV-C3-DS/04.other tokens/Spawn-Green.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Spawn-Red.png"
+          },
+          {
+            "name": "Spawn-Pink.png",
+            "path": "G-Zombicide-IV-C3-DS/04.other tokens/Spawn-Pink.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "Spawn-Red.png",
+            "path": "G-Zombicide-IV-C3-DS/04.other tokens/Spawn-Red.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 6,
+            "pair": "Spawn-Violet.png"
+          },
+          {
+            "name": "Spawn-Violet.png",
+            "path": "G-Zombicide-IV-C3-DS/04.other tokens/Spawn-Violet.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Spawn-Red.png"
+          },
+          {
+            "name": "Spawn-Yellow.png",
+            "path": "G-Zombicide-IV-C3-DS/04.other tokens/Spawn-Yellow.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "start token.jpg",
+            "path": "G-Zombicide-IV-C3-DS/04.other tokens/start token.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "Token-Machine-Activation.png",
+            "path": "G-Zombicide-IV-C3-DS/04.other tokens/Token-Machine-Activation.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 2,
+            "pair": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "G-Zombicide-IV-C4-OP",
+      "name": "Zombicide: Operation Persephone",
+      "image": "guillotine.png",
+      "align": 25,
+      "gameType": "scifi",
+      "assets": {
+        "03.characters": [
+          {
+            "name": "Companion.png",
+            "path": "G-Zombicide-IV-C4-OP/03.characters/Companion.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Zombie-DrillerBlitzer.png",
+            "path": "G-Zombicide-IV-C4-OP/03.characters/Zombie-DrillerBlitzer.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "G-Zombicide-PO",
+      "name": "Zombicide S02: Prison Outbreak",
+      "image": "guillotine.png",
+      "align": 25,
+      "gameType": "classic",
+      "assets": {
+        "01.tiles": [
+          {
+            "name": "A1.png",
+            "path": "G-Zombicide-PO/01.tiles/A1.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "A2.png"
+          },
+          {
+            "name": "A2.png",
+            "path": "G-Zombicide-PO/01.tiles/A2.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "A1.png"
+          },
+          {
+            "name": "B1.png",
+            "path": "G-Zombicide-PO/01.tiles/B1.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "B2.png"
+          },
+          {
+            "name": "B2.png",
+            "path": "G-Zombicide-PO/01.tiles/B2.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "B1.png"
+          },
+          {
+            "name": "C1.png",
+            "path": "G-Zombicide-PO/01.tiles/C1.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "C2.png"
+          },
+          {
+            "name": "C2.png",
+            "path": "G-Zombicide-PO/01.tiles/C2.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "C1.png"
+          },
+          {
+            "name": "D1.png",
+            "path": "G-Zombicide-PO/01.tiles/D1.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "D2.png"
+          },
+          {
+            "name": "D2.png",
+            "path": "G-Zombicide-PO/01.tiles/D2.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "D1.png"
+          },
+          {
+            "name": "E1.png",
+            "path": "G-Zombicide-PO/01.tiles/E1.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "E2.png"
+          },
+          {
+            "name": "E2.png",
+            "path": "G-Zombicide-PO/01.tiles/E2.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "E1.png"
+          },
+          {
+            "name": "F1.png",
+            "path": "G-Zombicide-PO/01.tiles/F1.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "F2.png"
+          },
+          {
+            "name": "F2.png",
+            "path": "G-Zombicide-PO/01.tiles/F2.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "F1.png"
+          },
+          {
+            "name": "G1.png",
+            "path": "G-Zombicide-PO/01.tiles/G1.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "G2.png"
+          },
+          {
+            "name": "G2.png",
+            "path": "G-Zombicide-PO/01.tiles/G2.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "G1.png"
+          },
+          {
+            "name": "H1.png",
+            "path": "G-Zombicide-PO/01.tiles/H1.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "H2.png"
+          },
+          {
+            "name": "H2.png",
+            "path": "G-Zombicide-PO/01.tiles/H2.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "H1.png"
+          },
+          {
+            "name": "I1.png",
+            "path": "G-Zombicide-PO/01.tiles/I1.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "I2.png"
+          },
+          {
+            "name": "I2.png",
+            "path": "G-Zombicide-PO/01.tiles/I2.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "I1.png"
+          }
+        ],
+        "02.doors": [
+          {
+            "name": "Cell-Door-Violet-closed.png",
+            "path": "G-Zombicide-PO/02.doors/Cell-Door-Violet-closed.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 8,
+            "pair": "Cell-Door-Violet-Open.png"
+          },
+          {
+            "name": "Cell-Door-Violet-Open.png",
+            "path": "G-Zombicide-PO/02.doors/Cell-Door-Violet-Open.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 8,
+            "pair": "Cell-Door-Violet-closed.png"
+          },
+          {
+            "name": "Cell-Door-White-Closed.png",
+            "path": "G-Zombicide-PO/02.doors/Cell-Door-White-Closed.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 8,
+            "pair": "Cell-Door-White-Open.png"
+          },
+          {
+            "name": "Cell-Door-White-Open.png",
+            "path": "G-Zombicide-PO/02.doors/Cell-Door-White-Open.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 8,
+            "pair": "Cell-Door-White-Closed.png"
+          },
+          {
+            "name": "closed door token blue.jpg",
+            "path": "G-Zombicide-PO/02.doors/closed door token blue.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "open door token blue.JPG"
+          },
+          {
+            "name": "closed door token Green.jpg",
+            "path": "G-Zombicide-PO/02.doors/closed door token Green.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "open door token green.JPG"
+          },
+          {
+            "name": "closed door token red.jpg",
+            "path": "G-Zombicide-PO/02.doors/closed door token red.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 9,
+            "pair": "open door token Red.jpg"
+          },
+          {
+            "name": "Door-Violet-Closed.png",
+            "path": "G-Zombicide-PO/02.doors/Door-Violet-Closed.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Violet-Open.png"
+          },
+          {
+            "name": "Door-Violet-Open.png",
+            "path": "G-Zombicide-PO/02.doors/Door-Violet-Open.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Violet-Closed.png"
+          },
+          {
+            "name": "Door-White-Closed.png",
+            "path": "G-Zombicide-PO/02.doors/Door-White-Closed.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-White-Open.png"
+          },
+          {
+            "name": "Door-White-Open.png",
+            "path": "G-Zombicide-PO/02.doors/Door-White-Open.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-White-Closed.png"
+          },
+          {
+            "name": "Door-Yellow-Closed.png",
+            "path": "G-Zombicide-PO/02.doors/Door-Yellow-Closed.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Yellow-Open.png"
+          },
+          {
+            "name": "Door-Yellow-Open.png",
+            "path": "G-Zombicide-PO/02.doors/Door-Yellow-Open.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Yellow-Closed.png"
+          },
+          {
+            "name": "open door token blue.JPG",
+            "path": "G-Zombicide-PO/02.doors/open door token blue.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "closed door token blue.jpg"
+          },
+          {
+            "name": "open door token green.JPG",
+            "path": "G-Zombicide-PO/02.doors/open door token green.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "closed door token Green.jpg"
+          },
+          {
+            "name": "open door token Red.jpg",
+            "path": "G-Zombicide-PO/02.doors/open door token Red.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 9,
+            "pair": "closed door token red.jpg"
+          },
+          {
+            "name": "Prison-Main-Entry-Door-Standard-Closed.png",
+            "path": "G-Zombicide-PO/02.doors/Prison-Main-Entry-Door-Standard-Closed.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 2,
+            "pair": "Prison-Main-entry-Door-Standard-open.png"
+          },
+          {
+            "name": "Prison-Main-entry-Door-Standard-open.png",
+            "path": "G-Zombicide-PO/02.doors/Prison-Main-entry-Door-Standard-open.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 2,
+            "pair": "Prison-Main-Entry-Door-Standard-Closed.png"
+          },
+          {
+            "name": "Prison-Main-entry-Door-Violet-Closed.png",
+            "path": "G-Zombicide-PO/02.doors/Prison-Main-entry-Door-Violet-Closed.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Prison-Main-Entry-Door-Violet-Open.png"
+          },
+          {
+            "name": "Prison-Main-Entry-Door-Violet-Open.png",
+            "path": "G-Zombicide-PO/02.doors/Prison-Main-Entry-Door-Violet-Open.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Prison-Main-entry-Door-Violet-Closed.png"
+          },
+          {
+            "name": "Prison-Main-Entry-Door-White-Closed.png",
+            "path": "G-Zombicide-PO/02.doors/Prison-Main-Entry-Door-White-Closed.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Prison-Main-Entry-Door-White-Open.png"
+          },
+          {
+            "name": "Prison-Main-Entry-Door-White-Open.png",
+            "path": "G-Zombicide-PO/02.doors/Prison-Main-Entry-Door-White-Open.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Prison-Main-Entry-Door-White-Closed.png"
+          },
+          {
+            "name": "Rotating-Security-Gate-Recto-L.png",
+            "path": "G-Zombicide-PO/02.doors/Rotating-Security-Gate-Recto-L.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Rotating-Security-Gate-Verso-H.png"
+          },
+          {
+            "name": "Rotating-Security-Gate-Verso-H.png",
+            "path": "G-Zombicide-PO/02.doors/Rotating-Security-Gate-Verso-H.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Rotating-Security-Gate-Recto-L.png"
+          }
+        ],
+        "03.cars": [
+          {
+            "name": "Hippiemobile.png",
+            "path": "G-Zombicide-PO/03.cars/Hippiemobile.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "police car token-b.jpg"
+          },
+          {
+            "name": "Muscle-Car.png",
+            "path": "G-Zombicide-PO/03.cars/Muscle-Car.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "pimp mobile token.jpg"
+          },
+          {
+            "name": "pimp mobile token-b.jpg",
+            "path": "G-Zombicide-PO/03.cars/pimp mobile token-b.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Taxi-b.png"
+          },
+          {
+            "name": "pimp mobile token.jpg",
+            "path": "G-Zombicide-PO/03.cars/pimp mobile token.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Muscle-Car.png"
+          },
+          {
+            "name": "police car token-b.jpg",
+            "path": "G-Zombicide-PO/03.cars/police car token-b.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Hippiemobile.png"
+          },
+          {
+            "name": "police car token.jpg",
+            "path": "G-Zombicide-PO/03.cars/police car token.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Taxi.png"
+          },
+          {
+            "name": "Taxi-b.png",
+            "path": "G-Zombicide-PO/03.cars/Taxi-b.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "pimp mobile token-b.jpg"
+          },
+          {
+            "name": "Taxi.png",
+            "path": "G-Zombicide-PO/03.cars/Taxi.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "police car token.jpg"
+          }
+        ],
+        "04.other tokens": [
+          {
+            "name": "exit token.jpg",
+            "path": "G-Zombicide-PO/04.other tokens/exit token.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "Noise Token.png",
+            "path": "G-Zombicide-PO/04.other tokens/Noise Token.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 18,
+            "pair": null
+          },
+          {
+            "name": "objective token blue.jpg",
+            "path": "G-Zombicide-PO/04.other tokens/objective token blue.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "objective token red.JPG"
+          },
+          {
+            "name": "objective token green.JPG",
+            "path": "G-Zombicide-PO/04.other tokens/objective token green.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "objective token red.JPG"
+          },
+          {
+            "name": "objective token red.JPG",
+            "path": "G-Zombicide-PO/04.other tokens/objective token red.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 13,
+            "pair": "Objective-Yellow.png"
+          },
+          {
+            "name": "Objective-Violet.png",
+            "path": "G-Zombicide-PO/04.other tokens/Objective-Violet.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "objective token red.JPG"
+          },
+          {
+            "name": "Objective-White.png",
+            "path": "G-Zombicide-PO/04.other tokens/Objective-White.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "objective token red.JPG"
+          },
+          {
+            "name": "Objective-Yellow.png",
+            "path": "G-Zombicide-PO/04.other tokens/Objective-Yellow.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "objective token red.JPG"
+          },
+          {
+            "name": "Observation Tower-Recto.png",
+            "path": "G-Zombicide-PO/04.other tokens/Observation Tower-Recto.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 2,
+            "pair": "Observation Tower-Verso.png"
+          },
+          {
+            "name": "Observation Tower-Verso.png",
+            "path": "G-Zombicide-PO/04.other tokens/Observation Tower-Verso.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 2,
+            "pair": "Observation Tower-Recto.png"
+          },
+          {
+            "name": "spawn token blue.jpg",
+            "path": "G-Zombicide-PO/04.other tokens/spawn token blue.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "spawn token.jpg"
+          },
+          {
+            "name": "spawn token.jpg",
+            "path": "G-Zombicide-PO/04.other tokens/spawn token.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 6,
+            "pair": "spawn token blue.jpg"
+          },
+          {
+            "name": "Spawn-Green.png",
+            "path": "G-Zombicide-PO/04.other tokens/Spawn-Green.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "spawn token.jpg"
+          },
+          {
+            "name": "Spawn-Violet.png",
+            "path": "G-Zombicide-PO/04.other tokens/Spawn-Violet.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "spawn token.jpg"
+          },
+          {
+            "name": "Spawn-White.png",
+            "path": "G-Zombicide-PO/04.other tokens/Spawn-White.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "spawn token.jpg"
+          },
+          {
+            "name": "Spawn-Yellow.png",
+            "path": "G-Zombicide-PO/04.other tokens/Spawn-Yellow.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "spawn token.jpg"
+          },
+          {
+            "name": "start token.jpg",
+            "path": "G-Zombicide-PO/04.other tokens/start token.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "Switch-Violet.png",
+            "path": "G-Zombicide-PO/04.other tokens/Switch-Violet.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "Switch-White.png",
+            "path": "G-Zombicide-PO/04.other tokens/Switch-White.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "Switch-Yellow.png",
+            "path": "G-Zombicide-PO/04.other tokens/Switch-Yellow.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "Torn-Barbwire.png",
+            "path": "G-Zombicide-PO/04.other tokens/Torn-Barbwire.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 2,
+            "pair": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "G-Zombicide-RM",
+      "name": "Zombicide S03: Rue Morgue",
+      "image": "guillotine.png",
+      "align": 25,
+      "gameType": "classic",
+      "assets": {
+        "01.tiles": [
+          {
+            "name": "1R.png",
+            "path": "G-Zombicide-RM/01.tiles/1R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "1V.png"
+          },
+          {
+            "name": "1V.png",
+            "path": "G-Zombicide-RM/01.tiles/1V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "1R.png"
+          },
+          {
+            "name": "2R.png",
+            "path": "G-Zombicide-RM/01.tiles/2R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "2V.png"
+          },
+          {
+            "name": "2V.png",
+            "path": "G-Zombicide-RM/01.tiles/2V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "2R.png"
+          },
+          {
+            "name": "3R.png",
+            "path": "G-Zombicide-RM/01.tiles/3R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "3V.png"
+          },
+          {
+            "name": "3V.png",
+            "path": "G-Zombicide-RM/01.tiles/3V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "3R.png"
+          },
+          {
+            "name": "4R.png",
+            "path": "G-Zombicide-RM/01.tiles/4R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "4V.png"
+          },
+          {
+            "name": "4V.png",
+            "path": "G-Zombicide-RM/01.tiles/4V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "4R.png"
+          },
+          {
+            "name": "5R.png",
+            "path": "G-Zombicide-RM/01.tiles/5R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "5V.png"
+          },
+          {
+            "name": "5V.png",
+            "path": "G-Zombicide-RM/01.tiles/5V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "5R.png"
+          },
+          {
+            "name": "6R.png",
+            "path": "G-Zombicide-RM/01.tiles/6R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "6V.png"
+          },
+          {
+            "name": "6V.png",
+            "path": "G-Zombicide-RM/01.tiles/6V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "6R.png"
+          },
+          {
+            "name": "7R.png",
+            "path": "G-Zombicide-RM/01.tiles/7R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "7V.png"
+          },
+          {
+            "name": "7V.png",
+            "path": "G-Zombicide-RM/01.tiles/7V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "7R.png"
+          },
+          {
+            "name": "8R.png",
+            "path": "G-Zombicide-RM/01.tiles/8R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "8V.png"
+          },
+          {
+            "name": "8V.png",
+            "path": "G-Zombicide-RM/01.tiles/8V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "8R.png"
+          },
+          {
+            "name": "9R.png",
+            "path": "G-Zombicide-RM/01.tiles/9R.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "9V.png"
+          },
+          {
+            "name": "9V.png",
+            "path": "G-Zombicide-RM/01.tiles/9V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "9R.png"
+          }
+        ],
+        "02.doors": [
+          {
+            "name": "Door-Blue-Closed.JPG",
+            "path": "G-Zombicide-RM/02.doors/Door-Blue-Closed.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Blue-Open.JPG"
+          },
+          {
+            "name": "Door-Blue-Open.JPG",
+            "path": "G-Zombicide-RM/02.doors/Door-Blue-Open.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Blue-Closed.JPG"
+          },
+          {
+            "name": "Door-Pink-Closed.png",
+            "path": "G-Zombicide-RM/02.doors/Door-Pink-Closed.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Pink-Open.png"
+          },
+          {
+            "name": "Door-Pink-Open.png",
+            "path": "G-Zombicide-RM/02.doors/Door-Pink-Open.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Door-Pink-Closed.png"
+          },
+          {
+            "name": "Door-Red-Closed.JPG",
+            "path": "G-Zombicide-RM/02.doors/Door-Red-Closed.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 9,
+            "pair": "Door-Red-Open.JPG"
+          },
+          {
+            "name": "Door-Red-Open.JPG",
+            "path": "G-Zombicide-RM/02.doors/Door-Red-Open.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 9,
+            "pair": "Door-Red-Closed.JPG"
+          }
+        ],
+        "03.vehicles": [
+          {
+            "name": "Helicopter-Crashed.png",
+            "path": "G-Zombicide-RM/03.vehicles/Helicopter-Crashed.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Helicopter.png"
+          },
+          {
+            "name": "Helicopter.png",
+            "path": "G-Zombicide-RM/03.vehicles/Helicopter.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Helicopter-Crashed.png"
+          }
+        ],
+        "03B.tents": [
+          {
+            "name": "Tente-R1.png",
+            "path": "G-Zombicide-RM/03B.tents/Tente-R1.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Tente-V.png"
+          },
+          {
+            "name": "Tente-R2.png",
+            "path": "G-Zombicide-RM/03B.tents/Tente-R2.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Tente-V.png"
+          },
+          {
+            "name": "Tente-R3.png",
+            "path": "G-Zombicide-RM/03B.tents/Tente-R3.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Tente-V.png"
+          },
+          {
+            "name": "Tente-R4.png",
+            "path": "G-Zombicide-RM/03B.tents/Tente-R4.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Tente-V.png"
+          },
+          {
+            "name": "Tente-R5.png",
+            "path": "G-Zombicide-RM/03B.tents/Tente-R5.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Tente-V.png"
+          },
+          {
+            "name": "Tente-R6.png",
+            "path": "G-Zombicide-RM/03B.tents/Tente-R6.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Tente-V.png"
+          },
+          {
+            "name": "Tente-Rb1.png",
+            "path": "G-Zombicide-RM/03B.tents/Tente-Rb1.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Tente-V.png"
+          },
+          {
+            "name": "Tente-Rb2.png",
+            "path": "G-Zombicide-RM/03B.tents/Tente-Rb2.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Tente-V.png"
+          },
+          {
+            "name": "Tente-Rb3.png",
+            "path": "G-Zombicide-RM/03B.tents/Tente-Rb3.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Tente-V.png"
+          },
+          {
+            "name": "Tente-Rb5.png",
+            "path": "G-Zombicide-RM/03B.tents/Tente-Rb5.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Tente-V.png"
+          },
+          {
+            "name": "Tente-Rb6.png",
+            "path": "G-Zombicide-RM/03B.tents/Tente-Rb6.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Tente-V.png"
+          },
+          {
+            "name": "Tente-V.png",
+            "path": "G-Zombicide-RM/03B.tents/Tente-V.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 11,
+            "pair": "Tente-Rb6.png"
+          }
+        ],
+        "04.other tokens": [
+          {
+            "name": "EVENT-TRIG-OFF.png",
+            "path": "G-Zombicide-RM/04.other tokens/EVENT-TRIG-OFF.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 6,
+            "pair": "EVENT-TRIG-ON.png"
+          },
+          {
+            "name": "EVENT-TRIG-ON.png",
+            "path": "G-Zombicide-RM/04.other tokens/EVENT-TRIG-ON.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 6,
+            "pair": "EVENT-TRIG-OFF.png"
+          },
+          {
+            "name": "exit token.jpg",
+            "path": "G-Zombicide-RM/04.other tokens/exit token.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "HELI-STAIRS.png",
+            "path": "G-Zombicide-RM/04.other tokens/HELI-STAIRS.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "Locator-1.png",
+            "path": "G-Zombicide-RM/04.other tokens/Locator-1.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "Locator-2.png",
+            "path": "G-Zombicide-RM/04.other tokens/Locator-2.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "Locator-3.png",
+            "path": "G-Zombicide-RM/04.other tokens/Locator-3.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "Locator-4.png",
+            "path": "G-Zombicide-RM/04.other tokens/Locator-4.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "Locator-5.png",
+            "path": "G-Zombicide-RM/04.other tokens/Locator-5.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "Locator-6.png",
+            "path": "G-Zombicide-RM/04.other tokens/Locator-6.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          },
+          {
+            "name": "Noise Token.png",
+            "path": "G-Zombicide-RM/04.other tokens/Noise Token.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 24,
+            "pair": null
+          },
+          {
+            "name": "objective token blue.jpg",
+            "path": "G-Zombicide-RM/04.other tokens/objective token blue.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "objective token red.JPG"
+          },
+          {
+            "name": "objective token red.JPG",
+            "path": "G-Zombicide-RM/04.other tokens/objective token red.JPG",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 10,
+            "pair": "objective token blue.jpg"
+          },
+          {
+            "name": "objective-Pink.png",
+            "path": "G-Zombicide-RM/04.other tokens/objective-Pink.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "objective token red.JPG"
+          },
+          {
+            "name": "spawn token blue.jpg",
+            "path": "G-Zombicide-RM/04.other tokens/spawn token blue.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "spawn token.jpg"
+          },
+          {
+            "name": "spawn token.jpg",
+            "path": "G-Zombicide-RM/04.other tokens/spawn token.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 6,
+            "pair": "spawn token blue.jpg"
+          },
+          {
+            "name": "spawn-Pink.png",
+            "path": "G-Zombicide-RM/04.other tokens/spawn-Pink.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "spawn token.jpg"
+          },
+          {
+            "name": "start token.jpg",
+            "path": "G-Zombicide-RM/04.other tokens/start token.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "G-Zombicide-TCM",
+      "name": "Zombicide Extension: Toxic City Mall",
+      "image": "guillotine.png",
+      "align": 25,
+      "gameType": "classic",
+      "assets": {
+        "01.tiles": [
+          {
+            "name": "A1M8M.png",
+            "path": "G-Zombicide-TCM/01.tiles/A1M8M.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "A8M1M.png"
+          },
+          {
+            "name": "A8M1M.png",
+            "path": "G-Zombicide-TCM/01.tiles/A8M1M.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "A1M8M.png"
+          },
+          {
+            "name": "B2M7M.png",
+            "path": "G-Zombicide-TCM/01.tiles/B2M7M.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "B7M2M.png"
+          },
+          {
+            "name": "B7M2M.png",
+            "path": "G-Zombicide-TCM/01.tiles/B7M2M.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "B2M7M.png"
+          },
+          {
+            "name": "C3M6M.png",
+            "path": "G-Zombicide-TCM/01.tiles/C3M6M.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "C6M3M.png"
+          },
+          {
+            "name": "C6M3M.png",
+            "path": "G-Zombicide-TCM/01.tiles/C6M3M.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "C3M6M.png"
+          },
+          {
+            "name": "D4M5M.png",
+            "path": "G-Zombicide-TCM/01.tiles/D4M5M.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "D5M4M.png"
+          },
+          {
+            "name": "D5M4M.png",
+            "path": "G-Zombicide-TCM/01.tiles/D5M4M.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "D4M5M.png"
+          }
+        ],
+        "02.doors": [
+          {
+            "name": "Mall-Door-Closed.png",
+            "path": "G-Zombicide-TCM/02.doors/Mall-Door-Closed.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 16,
+            "pair": "Mall-Door-Open.png"
+          },
+          {
+            "name": "Mall-Door-Open.png",
+            "path": "G-Zombicide-TCM/02.doors/Mall-Door-Open.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 16,
+            "pair": "Mall-Door-Closed.png"
+          },
+          {
+            "name": "Mall-Double-Door-Blue-Closed.png",
+            "path": "G-Zombicide-TCM/02.doors/Mall-Double-Door-Blue-Closed.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Mall-Double-Door-Blue-Open.png"
+          },
+          {
+            "name": "Mall-Double-Door-Blue-Open.png",
+            "path": "G-Zombicide-TCM/02.doors/Mall-Double-Door-Blue-Open.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "Mall-Double-Door-Blue-Closed.png"
+          },
+          {
+            "name": "Mall-Double-Door-Standard-Closed.png",
+            "path": "G-Zombicide-TCM/02.doors/Mall-Double-Door-Standard-Closed.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 4,
+            "pair": "Mall-Double-Door-Standard-Open.png"
+          },
+          {
+            "name": "Mall-Double-Door-Standard-Open.png",
+            "path": "G-Zombicide-TCM/02.doors/Mall-Double-Door-Standard-Open.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 4,
+            "pair": "Mall-Double-Door-Standard-Closed.png"
+          }
+        ],
+        "04.other tokens": [
+          {
+            "name": "Barricade-complete.png",
+            "path": "G-Zombicide-TCM/04.other tokens/Barricade-complete.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 4,
+            "pair": "Barricade-incomplete.png"
+          },
+          {
+            "name": "Barricade-incomplete.png",
+            "path": "G-Zombicide-TCM/04.other tokens/Barricade-incomplete.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 4,
+            "pair": "Barricade-complete.png"
+          },
+          {
+            "name": "Rubble-large-flame.png",
+            "path": "G-Zombicide-TCM/04.other tokens/Rubble-large-flame.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 2,
+            "pair": "Rubble-large.png"
+          },
+          {
+            "name": "Rubble-large.png",
+            "path": "G-Zombicide-TCM/04.other tokens/Rubble-large.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 2,
+            "pair": "Rubble-large-flame.png"
+          },
+          {
+            "name": "Rubble-small-flame.png",
+            "path": "G-Zombicide-TCM/04.other tokens/Rubble-small-flame.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 4,
+            "pair": "Rubble-small.png"
+          },
+          {
+            "name": "Rubble-small.png",
+            "path": "G-Zombicide-TCM/04.other tokens/Rubble-small.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 4,
+            "pair": "Rubble-small-flame.png"
+          },
+          {
+            "name": "spawn token.jpg",
+            "path": "G-Zombicide-TCM/04.other tokens/spawn token.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 4,
+            "pair": "Zomb-Spawn-Yellow.png"
+          },
+          {
+            "name": "start token.jpg",
+            "path": "G-Zombicide-TCM/04.other tokens/start token.jpg",
+            "thumbnail": null,
+            "rotations": {},
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Zomb-Spawn-Green.png",
+            "path": "G-Zombicide-TCM/04.other tokens/Zomb-Spawn-Green.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "spawn token.jpg"
+          },
+          {
+            "name": "Zomb-Spawn-Violet.png",
+            "path": "G-Zombicide-TCM/04.other tokens/Zomb-Spawn-Violet.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "spawn token.jpg"
+          },
+          {
+            "name": "Zomb-Spawn-White.png",
+            "path": "G-Zombicide-TCM/04.other tokens/Zomb-Spawn-White.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "spawn token.jpg"
+          },
+          {
+            "name": "Zomb-Spawn-Yellow.png",
+            "path": "G-Zombicide-TCM/04.other tokens/Zomb-Spawn-Yellow.png",
+            "thumbnail": null,
+            "rotations": {},
+            "max": 1,
+            "pair": "spawn token.jpg"
           }
         ]
       }
@@ -640,6 +4521,7 @@
       "name": "Zombicide Ninja Turtles",
       "image": "guillotine.png",
       "align": 25,
+      "gameType": "fantasy",
       "assets": {
         "01.tiles": [
           {
@@ -749,14 +4631,14 @@
         ],
         "04.other tokens": [
           {
-            "name": "PIZZA.png",
-            "path": "G-Zombicide-TMNT/04.other tokens/PIZZA.png/r_0.png",
-            "thumbnail": "G-Zombicide-TMNT/04.other tokens/PIZZA.png/r_thumb.png",
+            "name": "Pizza.png",
+            "path": "G-Zombicide-TMNT/04.other tokens/Pizza.png/r_0.png",
+            "thumbnail": "G-Zombicide-TMNT/04.other tokens/Pizza.png/r_thumb.png",
             "rotations": {
-              "0": "G-Zombicide-TMNT/04.other tokens/PIZZA.png/r_0.png",
-              "90": "G-Zombicide-TMNT/04.other tokens/PIZZA.png/r_90.png",
-              "180": "G-Zombicide-TMNT/04.other tokens/PIZZA.png/r_180.png",
-              "270": "G-Zombicide-TMNT/04.other tokens/PIZZA.png/r_270.png"
+              "0": "G-Zombicide-TMNT/04.other tokens/Pizza.png/r_0.png",
+              "90": "G-Zombicide-TMNT/04.other tokens/Pizza.png/r_90.png",
+              "180": "G-Zombicide-TMNT/04.other tokens/Pizza.png/r_180.png",
+              "270": "G-Zombicide-TMNT/04.other tokens/Pizza.png/r_270.png"
             },
             "max": null,
             "pair": null
@@ -769,6 +4651,7 @@
       "name": "Zombicide White Death",
       "image": "guillotine.png",
       "align": 25,
+      "gameType": "fantasy",
       "assets": {
         "01.tiles": [
           {
@@ -1008,14 +4891,14 @@
         ],
         "04.other tokens": [
           {
-            "name": "CHAUDRON.png",
-            "path": "G-Zombicide-WD/04.other tokens/CHAUDRON.png/r_0.png",
-            "thumbnail": "G-Zombicide-WD/04.other tokens/CHAUDRON.png/r_thumb.png",
+            "name": "Chaudron.png",
+            "path": "G-Zombicide-WD/04.other tokens/Chaudron.png/r_0.png",
+            "thumbnail": "G-Zombicide-WD/04.other tokens/Chaudron.png/r_thumb.png",
             "rotations": {
-              "0": "G-Zombicide-WD/04.other tokens/CHAUDRON.png/r_0.png",
-              "90": "G-Zombicide-WD/04.other tokens/CHAUDRON.png/r_90.png",
-              "180": "G-Zombicide-WD/04.other tokens/CHAUDRON.png/r_180.png",
-              "270": "G-Zombicide-WD/04.other tokens/CHAUDRON.png/r_270.png"
+              "0": "G-Zombicide-WD/04.other tokens/Chaudron.png/r_0.png",
+              "90": "G-Zombicide-WD/04.other tokens/Chaudron.png/r_90.png",
+              "180": "G-Zombicide-WD/04.other tokens/Chaudron.png/r_180.png",
+              "270": "G-Zombicide-WD/04.other tokens/Chaudron.png/r_270.png"
             },
             "max": null,
             "pair": null
@@ -1034,14 +4917,14 @@
             "pair": null
           },
           {
-            "name": "ECHELLE.png",
-            "path": "G-Zombicide-WD/04.other tokens/ECHELLE.png/r_0.png",
-            "thumbnail": "G-Zombicide-WD/04.other tokens/ECHELLE.png/r_thumb.png",
+            "name": "exit.png",
+            "path": "G-Zombicide-WD/04.other tokens/exit.png/r_0.png",
+            "thumbnail": "G-Zombicide-WD/04.other tokens/exit.png/r_thumb.png",
             "rotations": {
-              "0": "G-Zombicide-WD/04.other tokens/ECHELLE.png/r_0.png",
-              "90": "G-Zombicide-WD/04.other tokens/ECHELLE.png/r_90.png",
-              "180": "G-Zombicide-WD/04.other tokens/ECHELLE.png/r_180.png",
-              "270": "G-Zombicide-WD/04.other tokens/ECHELLE.png/r_270.png"
+              "0": "G-Zombicide-WD/04.other tokens/exit.png/r_0.png",
+              "90": "G-Zombicide-WD/04.other tokens/exit.png/r_90.png",
+              "180": "G-Zombicide-WD/04.other tokens/exit.png/r_180.png",
+              "270": "G-Zombicide-WD/04.other tokens/exit.png/r_270.png"
             },
             "max": null,
             "pair": null
@@ -1060,53 +4943,146 @@
             "pair": null
           },
           {
-            "name": "PIZZA.png",
-            "path": "G-Zombicide-WD/04.other tokens/PIZZA.png/r_0.png",
-            "thumbnail": "G-Zombicide-WD/04.other tokens/PIZZA.png/r_thumb.png",
+            "name": "ladder.png",
+            "path": "G-Zombicide-WD/04.other tokens/ladder.png/r_0.png",
+            "thumbnail": "G-Zombicide-WD/04.other tokens/ladder.png/r_thumb.png",
             "rotations": {
-              "0": "G-Zombicide-WD/04.other tokens/PIZZA.png/r_0.png",
-              "90": "G-Zombicide-WD/04.other tokens/PIZZA.png/r_90.png",
-              "180": "G-Zombicide-WD/04.other tokens/PIZZA.png/r_180.png",
-              "270": "G-Zombicide-WD/04.other tokens/PIZZA.png/r_270.png"
+              "0": "G-Zombicide-WD/04.other tokens/ladder.png/r_0.png",
+              "90": "G-Zombicide-WD/04.other tokens/ladder.png/r_90.png",
+              "180": "G-Zombicide-WD/04.other tokens/ladder.png/r_180.png",
+              "270": "G-Zombicide-WD/04.other tokens/ladder.png/r_270.png"
             },
             "max": null,
             "pair": null
           },
           {
-            "name": "POPSUP.png",
-            "path": "G-Zombicide-WD/04.other tokens/POPSUP.png/r_0.png",
-            "thumbnail": "G-Zombicide-WD/04.other tokens/POPSUP.png/r_thumb.png",
+            "name": "objectiveBlue.png",
+            "path": "G-Zombicide-WD/04.other tokens/objectiveBlue.png/r_0.png",
+            "thumbnail": "G-Zombicide-WD/04.other tokens/objectiveBlue.png/r_thumb.png",
             "rotations": {
-              "0": "G-Zombicide-WD/04.other tokens/POPSUP.png/r_0.png",
-              "90": "G-Zombicide-WD/04.other tokens/POPSUP.png/r_90.png",
-              "180": "G-Zombicide-WD/04.other tokens/POPSUP.png/r_180.png",
-              "270": "G-Zombicide-WD/04.other tokens/POPSUP.png/r_270.png"
+              "0": "G-Zombicide-WD/04.other tokens/objectiveBlue.png/r_0.png",
+              "90": "G-Zombicide-WD/04.other tokens/objectiveBlue.png/r_90.png",
+              "180": "G-Zombicide-WD/04.other tokens/objectiveBlue.png/r_180.png",
+              "270": "G-Zombicide-WD/04.other tokens/objectiveBlue.png/r_270.png"
             },
             "max": null,
             "pair": null
           },
           {
-            "name": "SIGNAL.png",
-            "path": "G-Zombicide-WD/04.other tokens/SIGNAL.png/r_0.png",
-            "thumbnail": "G-Zombicide-WD/04.other tokens/SIGNAL.png/r_thumb.png",
+            "name": "objectiveGreen.png",
+            "path": "G-Zombicide-WD/04.other tokens/objectiveGreen.png/r_0.png",
+            "thumbnail": "G-Zombicide-WD/04.other tokens/objectiveGreen.png/r_thumb.png",
             "rotations": {
-              "0": "G-Zombicide-WD/04.other tokens/SIGNAL.png/r_0.png",
-              "90": "G-Zombicide-WD/04.other tokens/SIGNAL.png/r_90.png",
-              "180": "G-Zombicide-WD/04.other tokens/SIGNAL.png/r_180.png",
-              "270": "G-Zombicide-WD/04.other tokens/SIGNAL.png/r_270.png"
+              "0": "G-Zombicide-WD/04.other tokens/objectiveGreen.png/r_0.png",
+              "90": "G-Zombicide-WD/04.other tokens/objectiveGreen.png/r_90.png",
+              "180": "G-Zombicide-WD/04.other tokens/objectiveGreen.png/r_180.png",
+              "270": "G-Zombicide-WD/04.other tokens/objectiveGreen.png/r_270.png"
             },
             "max": null,
             "pair": null
           },
           {
-            "name": "StatueChi.png",
-            "path": "G-Zombicide-WD/04.other tokens/StatueChi.png/r_0.png",
-            "thumbnail": "G-Zombicide-WD/04.other tokens/StatueChi.png/r_thumb.png",
+            "name": "objectiveRed.png",
+            "path": "G-Zombicide-WD/04.other tokens/objectiveRed.png/r_0.png",
+            "thumbnail": "G-Zombicide-WD/04.other tokens/objectiveRed.png/r_thumb.png",
             "rotations": {
-              "0": "G-Zombicide-WD/04.other tokens/StatueChi.png/r_0.png",
-              "90": "G-Zombicide-WD/04.other tokens/StatueChi.png/r_90.png",
-              "180": "G-Zombicide-WD/04.other tokens/StatueChi.png/r_180.png",
-              "270": "G-Zombicide-WD/04.other tokens/StatueChi.png/r_270.png"
+              "0": "G-Zombicide-WD/04.other tokens/objectiveRed.png/r_0.png",
+              "90": "G-Zombicide-WD/04.other tokens/objectiveRed.png/r_90.png",
+              "180": "G-Zombicide-WD/04.other tokens/objectiveRed.png/r_180.png",
+              "270": "G-Zombicide-WD/04.other tokens/objectiveRed.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Signal.png",
+            "path": "G-Zombicide-WD/04.other tokens/Signal.png/r_0.png",
+            "thumbnail": "G-Zombicide-WD/04.other tokens/Signal.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-WD/04.other tokens/Signal.png/r_0.png",
+              "90": "G-Zombicide-WD/04.other tokens/Signal.png/r_90.png",
+              "180": "G-Zombicide-WD/04.other tokens/Signal.png/r_180.png",
+              "270": "G-Zombicide-WD/04.other tokens/Signal.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Spawn1.png",
+            "path": "G-Zombicide-WD/04.other tokens/Spawn1.png/r_0.png",
+            "thumbnail": "G-Zombicide-WD/04.other tokens/Spawn1.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-WD/04.other tokens/Spawn1.png/r_0.png",
+              "90": "G-Zombicide-WD/04.other tokens/Spawn1.png/r_90.png",
+              "180": "G-Zombicide-WD/04.other tokens/Spawn1.png/r_180.png",
+              "270": "G-Zombicide-WD/04.other tokens/Spawn1.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Spawn2.png",
+            "path": "G-Zombicide-WD/04.other tokens/Spawn2.png/r_0.png",
+            "thumbnail": "G-Zombicide-WD/04.other tokens/Spawn2.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-WD/04.other tokens/Spawn2.png/r_0.png",
+              "90": "G-Zombicide-WD/04.other tokens/Spawn2.png/r_90.png",
+              "180": "G-Zombicide-WD/04.other tokens/Spawn2.png/r_180.png",
+              "270": "G-Zombicide-WD/04.other tokens/Spawn2.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Spawn3.png",
+            "path": "G-Zombicide-WD/04.other tokens/Spawn3.png/r_0.png",
+            "thumbnail": "G-Zombicide-WD/04.other tokens/Spawn3.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-WD/04.other tokens/Spawn3.png/r_0.png",
+              "90": "G-Zombicide-WD/04.other tokens/Spawn3.png/r_90.png",
+              "180": "G-Zombicide-WD/04.other tokens/Spawn3.png/r_180.png",
+              "270": "G-Zombicide-WD/04.other tokens/Spawn3.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "Spawn5.png",
+            "path": "G-Zombicide-WD/04.other tokens/Spawn5.png/r_0.png",
+            "thumbnail": "G-Zombicide-WD/04.other tokens/Spawn5.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-WD/04.other tokens/Spawn5.png/r_0.png",
+              "90": "G-Zombicide-WD/04.other tokens/Spawn5.png/r_90.png",
+              "180": "G-Zombicide-WD/04.other tokens/Spawn5.png/r_180.png",
+              "270": "G-Zombicide-WD/04.other tokens/Spawn5.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          }
+        ],
+        "05.zombies": [
+          {
+            "name": "Brute.png",
+            "path": "G-Zombicide-WD/05.zombies/Brute.png/r_0.png",
+            "thumbnail": "G-Zombicide-WD/05.zombies/Brute.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-WD/05.zombies/Brute.png/r_0.png",
+              "90": "G-Zombicide-WD/05.zombies/Brute.png/r_90.png",
+              "180": "G-Zombicide-WD/05.zombies/Brute.png/r_180.png",
+              "270": "G-Zombicide-WD/05.zombies/Brute.png/r_270.png"
+            },
+            "max": null,
+            "pair": null
+          },
+          {
+            "name": "walker.png",
+            "path": "G-Zombicide-WD/05.zombies/walker.png/r_0.png",
+            "thumbnail": "G-Zombicide-WD/05.zombies/walker.png/r_thumb.png",
+            "rotations": {
+              "0": "G-Zombicide-WD/05.zombies/walker.png/r_0.png",
+              "90": "G-Zombicide-WD/05.zombies/walker.png/r_90.png",
+              "180": "G-Zombicide-WD/05.zombies/walker.png/r_180.png",
+              "270": "G-Zombicide-WD/05.zombies/walker.png/r_270.png"
             },
             "max": null,
             "pair": null
@@ -1115,5 +5091,5 @@
       }
     }
   ],
-  "generated_at": "2026-04-25T19:27:10.799245"
+  "generated_at": "2026-04-27T10:35:28.333036"
 }

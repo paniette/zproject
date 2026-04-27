@@ -51,7 +51,8 @@ export default {
           id: pack.id,
           name: pack.name,
           image: pack.image,
-          align: pack.align
+          align: pack.align,
+          gameType: pack.gameType
         }))
       }
     }

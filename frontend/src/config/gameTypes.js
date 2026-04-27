@@ -53,3 +53,9 @@ export function getPackGameType (packId, mapOverride) {
   return m?.[packId] || DEFAULT_PACK_GAME_TYPE[packId] || 'fantasy'
 }
 
+export function getPackGameTypeFromPack (pack, mapOverride) {
+  const pid = pack?.id
+  const m = mapOverride || loadPackGameTypeMap()
+  return m?.[pid] || pack?.gameType || DEFAULT_PACK_GAME_TYPE[pid] || 'fantasy'
+}
+

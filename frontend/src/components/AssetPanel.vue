@@ -81,7 +81,7 @@ import { config } from '@/config'
 import api from '@/services/api'
 import PackUploader from './PackUploader.vue'
 import { collectUsedTilePairKeys, isTilePairLocked as tilePairLocked } from '@/utils/tilePairs'
-import { GAME_TYPES, loadPackGameTypeMap, getPackGameType } from '@/config/gameTypes'
+import { GAME_TYPES, loadPackGameTypeMap, getPackGameTypeFromPack } from '@/config/gameTypes'
 
 const packsStore = usePacksStore()
 const assetsStore = useAssetsStore()
@@ -112,7 +112,7 @@ const packGameTypeMap = ref(loadPackGameTypeMap())
 const filteredPacks = computed(() => {
   const list = packs.value || []
   if (selectedGameType.value === 'all') return list
-  return list.filter((p) => getPackGameType(p.id, packGameTypeMap.value) === selectedGameType.value)
+  return list.filter((p) => getPackGameTypeFromPack(p, packGameTypeMap.value) === selectedGameType.value)
 })
 
 const inlineUploaderOpen = ref(false)
