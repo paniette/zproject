@@ -2,9 +2,22 @@
   <div id="asset-panel-region" class="asset-panel">
     <div class="panel-header">
       <h3>Packs & Assets</h3>
+      <div class="game-type-filter" role="group" aria-label="Filtrer par type de jeu">
+        <button
+          v-for="t in GAME_TYPES"
+          :key="t.id"
+          type="button"
+          class="gt-btn"
+          :class="{ active: selectedGameType === t.id }"
+          :title="t.label"
+          @click="selectedGameType = t.id"
+        >
+          {{ t.label }}
+        </button>
+      </div>
     </div>
     <div class="packs-list">
-      <div v-for="pack in packs" :key="pack.id" class="pack-item">
+      <div v-for="pack in filteredPacks" :key="pack.id" class="pack-item">
         <div class="pack-header" @click="togglePack(pack.id)">
           <span class="pack-icon">{{ isPackOpen(pack.id) ? '▼' : '▶' }}</span>
           <span class="pack-name">{{ pack.name }}</span>
@@ -68,6 +81,7 @@ import { config } from '@/config'
 import api from '@/services/api'
 import PackUploader from './PackUploader.vue'
 import { collectUsedTilePairKeys, isTilePairLocked as tilePairLocked } from '@/utils/tilePairs'
+import { GAME_TYPES, loadPackGameTypeMap, getPackGameType } from '@/config/gameTypes'
 
 const packsStore = usePacksStore()
 const assetsStore = useAssetsStore()
@@ -92,6 +106,14 @@ const openPacks = ref(new Set())
 const openCategories = ref(new Map())
 
 const packs = computed(() => packsStore.packs)
+const selectedGameType = ref('all')
+const packGameTypeMap = ref(loadPackGameTypeMap())
+
+const filteredPacks = computed(() => {
+  const list = packs.value || []
+  if (selectedGameType.value === 'all') return list
+  return list.filter((p) => getPackGameType(p.id, packGameTypeMap.value) === selectedGameType.value)
+})
 
 const inlineUploaderOpen = ref(false)
 const inlineUpload = ref({ packId: '', category: '' })
@@ -121,17 +143,23 @@ const onPackAssetsUpdated = (e) => {
   if (packId) refetchPackAssets(packId)
 }
 
+const onPackGameTypeUpdated = () => {
+  packGameTypeMap.value = loadPackGameTypeMap()
+}
+
 const onAssetSelectedExternal = (e) => {
   if (e.detail == null) selectedAsset.value = null
 }
 
 onMounted(() => {
   window.addEventListener('pack-assets-updated', onPackAssetsUpdated)
+  window.addEventListener('pack-game-type-updated', onPackGameTypeUpdated)
   window.addEventListener('asset-selected', onAssetSelectedExternal)
 })
 
 onUnmounted(() => {
   window.removeEventListener('pack-assets-updated', onPackAssetsUpdated)
+  window.removeEventListener('pack-game-type-updated', onPackGameTypeUpdated)
   window.removeEventListener('asset-selected', onAssetSelectedExternal)
 })
 
@@ -247,6 +275,36 @@ const isSelected = (asset) => {
   font-size: 1.2rem;
   font-family: 'Creepster', cursive;
   color: var(--primary-color);
+}
+
+.game-type-filter {
+  margin-top: 10px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.gt-btn {
+  width: 44px;
+  height: 34px;
+  padding: 0;
+  border-radius: 6px;
+  border: 1px solid color-mix(in srgb, var(--primary-color) 55%, #000);
+  background: rgba(0, 0, 0, 0.22);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.gt-btn.active {
+  background: color-mix(in srgb, var(--primary-color) 35%, #000);
+  border-color: var(--primary-color);
 }
 
 .packs-list {

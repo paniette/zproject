@@ -13,6 +13,15 @@
           Fichier sélectionné: {{ zipFileName }}
         </div>
       </div>
+
+      <div class="form-group">
+        <label>Type de jeu</label>
+        <select v-model="gameType" class="full-width">
+          <option v-for="t in GAME_TYPES" :key="'gt-' + t.id" :value="t.id" :disabled="t.id === 'all'">
+            {{ t.label }}
+          </option>
+        </select>
+      </div>
       
       <div class="form-group">
         <label>
@@ -47,6 +56,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import api from '@/services/api'
+import { GAME_TYPES, loadPackGameTypeMap, savePackGameTypeMap } from '@/config/gameTypes'
 
 const props = defineProps({
   show: {
@@ -64,6 +74,7 @@ const close = () => {
 const selectedFile = ref(null)
 const zipFileName = ref('')
 const replaceExisting = ref(false)
+const gameType = ref('fantasy')
 const uploading = ref(false)
 const uploadProgress = ref(0)
 const uploadedPacks = ref([])
@@ -102,6 +113,18 @@ const uploadZip = async () => {
     
     clearInterval(progressInterval)
     alert('Pack uploadé avec succès!')
+
+    // Associer les packs récemment uploadés au type choisi (persisté côté navigateur)
+    try {
+      const created = response?.data
+      const packId = created?.id || created?.packId
+      if (packId) {
+        const map = loadPackGameTypeMap()
+        map[packId] = gameType.value || map[packId] || 'fantasy'
+        savePackGameTypeMap(map)
+        window.dispatchEvent(new CustomEvent('pack-game-type-updated', { detail: { packId } }))
+      }
+    } catch (_) {}
     
     // Reset and reload packs
     selectedFile.value = null
@@ -217,6 +240,10 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   gap: 5px;
+}
+
+.full-width {
+  width: 100%;
 }
 
 .form-group label {

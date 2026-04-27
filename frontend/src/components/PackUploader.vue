@@ -81,6 +81,12 @@
           <div class="form-group contextual-info">
             <label>Pack</label>
             <p class="readonly-field">{{ contextualPackTitle }}</p>
+            <label>Type de jeu</label>
+            <select v-model="gameType" class="full-width">
+              <option v-for="t in GAME_TYPES" :key="'gt-' + t.id" :value="t.id" :disabled="t.id === 'all'">
+                {{ t.label }}
+              </option>
+            </select>
             <label>Catégorie</label>
             <p class="readonly-field">{{ category }}</p>
           </div>
@@ -92,6 +98,15 @@
               <option value="">Sélectionner un pack</option>
               <option v-for="pack in availablePacks" :key="pack.id" :value="pack.id">
                 {{ pack.name }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Type de jeu</label>
+            <select v-model="gameType" class="full-width">
+              <option v-for="t in GAME_TYPES" :key="'gt-' + t.id" :value="t.id" :disabled="t.id === 'all'">
+                {{ t.label }}
               </option>
             </select>
           </div>
@@ -118,6 +133,7 @@
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue'
 import api from '@/services/api'
+import { GAME_TYPES, loadPackGameTypeMap, savePackGameTypeMap, getPackGameType } from '@/config/gameTypes'
 
 /** Tailles courantes pour upload assisté (issue #10) — tooltips sur les mini-boutons */
 const assetKindOptions = [
@@ -192,6 +208,7 @@ const targetH = ref(35)
 const assetName = ref('')
 const category = ref('')
 const packName = ref('')
+const gameType = ref('fantasy')
 const selectedFile = ref(null)
 const previewImage = ref(null)
 const uploading = ref(false)
@@ -264,6 +281,7 @@ const syncContextualFields = () => {
     packName.value = props.packId
     category.value = props.categoryPreset
     suggestKindForCategory(props.categoryPreset)
+    gameType.value = getPackGameType(packName.value, loadPackGameTypeMap())
   }
 }
 
@@ -333,8 +351,15 @@ const uploadAsset = async () => {
     alert('Asset uploadé avec succès!')
 
     const pid = packName.value
+
+    // Persister l'association pack -> type de jeu côté navigateur
+    const map = loadPackGameTypeMap()
+    map[pid] = gameType.value || map[pid] || 'fantasy'
+    savePackGameTypeMap(map)
+
     emit('uploaded', { packId: pid })
     window.dispatchEvent(new CustomEvent('pack-assets-updated', { detail: { packId: pid } }))
+    window.dispatchEvent(new CustomEvent('pack-game-type-updated', { detail: { packId: pid } }))
 
     assetName.value = ''
     assetKind.value = 'token'
