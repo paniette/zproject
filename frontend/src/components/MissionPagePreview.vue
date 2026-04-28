@@ -699,6 +699,13 @@ const topGridColumnsStyle = computed(() => {
   transform-origin: center;
 }
 
+.mp-ts-item[data-key='Signal'] .mp-ts-img,
+.mp-ts-item[data-key='Ladder'] .mp-ts-img,
+.mp-ts-item[data-key='Cauldron'] .mp-ts-img {
+  transform: scale(0.6);
+  transform-origin: center;
+}
+
 .mp-ts-item[data-key='VaultDoor'] .mp-ts-img {
   transform: scale(0.6);
   transform-origin: center;

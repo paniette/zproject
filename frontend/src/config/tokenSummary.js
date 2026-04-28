@@ -30,6 +30,10 @@ export const MERGED_GROUPS = [
   { pattern: /^vault/i,      key: 'Vault',     label: 'Crypte' },
   { pattern: /^spawn/i,      key: 'Spawn',     label: 'Apparition' },
   { pattern: /^zone.?invasion/i, key: 'Invasion', label: 'Apparition' },
+  // Éléments à afficher « petit » comme les portes dans l'encart
+  { pattern: /^(signal)/i, key: 'Signal', label: 'Signal' },
+  { pattern: /^(ladder|echelle|échelle)/i, key: 'Ladder', label: 'Échelle' },
+  { pattern: /^(chaudron|cauldron)/i, key: 'Cauldron', label: 'Chaudron' },
 ]
 
 /** Libellés personnalisés (sans fusion de clé). Le premier match gagne. */
@@ -47,17 +51,5 @@ export const LABEL_OVERRIDES = [
  * Mettre [] pour tout afficher (hors exclusions).
  */
 export const INCLUDED_NAME_PATTERNS = [
-  /^objective/i,
-  /^(guard|garde|gardes)/i,
-  /^corruption/i,
-  /^statue.?chi/i,
-  /^pizza/i,
-  /^beacon/i,
-  /^magic-dome/i,
-  /^vault/i,
-  /^door/i,
-  /^spawn/i,
-  /^zone.?invasion/i,
-  /^invasion/i,
-  /^signal/i,
+  // Mode blacklist : laisser vide pour tout inclure (hors EXCLUDED_*).
 ]
