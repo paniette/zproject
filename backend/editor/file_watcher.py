@@ -12,6 +12,7 @@ class PackChangeHandler(FileSystemEventHandler):
     """Handle file system events for pack changes"""
     
     def __init__(self, callback=None):
+        """callback : fonction optionnelle appelée à chaque événement fichier."""
         self.callback = callback
         super().__init__()
     
@@ -42,6 +43,7 @@ class PackFileWatcher:
     """Watch for changes in bgmapeditor_tiles directory"""
     
     def __init__(self):
+        """Observer inactif jusqu'à start() ; callbacks listés dans callbacks."""
         self.observer = None
         self.watching = False
         self.callbacks = []

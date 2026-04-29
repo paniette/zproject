@@ -2,7 +2,7 @@
 
 Éditeur de cartes Zombicide compatible avec les packs du Mapeditor Windows.
 
-Contexte technique détaillé (architecture, canvas, **mode statique sans Django**, fichiers pivots) : [`docs/CONTEXT.md`](docs/CONTEXT.md). Collaboration temps réel (hors périmètre court terme) : [`docs/COLLABORATION.md`](docs/COLLABORATION.md).
+Contexte technique détaillé (architecture, canvas, **mode statique sans Django**, fichiers pivots) : [`docs/CONTEXT.md`](docs/CONTEXT.md). Collaboration temps réel (hors périmètre court terme) : [`docs/COLLABORATION.md`](docs/COLLABORATION.md). **Backend Django** (routes `/api/`, arborescence modules, symboles) : [`docs/BACKEND_REFERENCE.md`](docs/BACKEND_REFERENCE.md).
 
 ## Démarrage rapide (mode complet : frontend + backend)
 
@@ -17,7 +17,7 @@ Le fichier [`frontend/vite.config.js`](frontend/vite.config.js) configure un **p
 
 Sous **Windows PowerShell**, enchaîne les commandes avec `;` si besoin, par exemple : `cd frontend; npm run dev`.
 
-Pour le **mode statique** (sans Django), un seul `npm run dev` ou un build statique suffit ; voir [`docs/CONTEXT.md`](docs/CONTEXT.md) et [`README_STATIC.md`](README_STATIC.md).
+Pour le **mode statique** (sans Django), un seul `npm run dev` ou un build statique suffit ; voir [`docs/CONTEXT.md`](docs/CONTEXT.md) et [`docs/README_STATIC.md`](docs/README_STATIC.md).
 
 ## Fonctionnalités
 
@@ -48,6 +48,7 @@ Pour le **mode statique** (sans Django), un seul `npm run dev` ou un build stati
 - Import de packs **ZIP** compatibles Mapeditor (nécessite le backend)
 - **Utilisateurs temporaires** et sélection d’utilisateur pour les dossiers de cartes
 - **Upload** d’assets personnalisés et de packs ZIP (masqué en mode statique)
+- **Type de jeu** des packs (filtre dans le panneau Packs & Assets) : persistance **`gameType=`** dans le **`cfg` racine** de chaque pack, lue par le parseur Python et reprise dans **`packs-index.json`** en build statique ; détail dans [`docs/CONTEXT.md`](docs/CONTEXT.md) (sous-section *Type de jeu* dans *Format des packs*).
 - Détection / indexation des packs (y compris répertoires type `bgmapeditor_tiles/` ou médias Django)
 
 ### Interface
@@ -67,9 +68,9 @@ Pour le **mode statique** (sans Django), un seul `npm run dev` ou un build stati
 
 ```
 .
-├── backend/              # Django backend
+├── backend/              # Django — détail : docs/BACKEND_REFERENCE.md
 │   ├── zombicide_editor/ # Configuration Django
-│   ├── api/              # API REST
+│   ├── api/              # API REST + parsers
 │   ├── editor/           # Logique métier (maps, users, packs)
 │   └── manage.py
 ├── frontend/             # Vue.js frontend
@@ -79,7 +80,7 @@ Pour le **mode statique** (sans Django), un seul `npm run dev` ou un build stati
 │   │   ├── services/     # Services API
 │   │   └── utils/        # Utilitaires
 │   └── package.json
-├── docs/                 # CONTEXT, COLLABORATION, etc.
+├── docs/                 # CONTEXT, BACKEND_REFERENCE, guides (README_STATIC, déploiement, …)
 ├── bgmapeditor_tiles/    # Packs Zombicide (décompressés)
 └── requirements.txt      # Dépendances Python
 ```
@@ -96,6 +97,8 @@ python manage.py runserver
 ```
 
 Le serveur API écoute par défaut sur **http://127.0.0.1:8000**.
+
+Pour régénérer la liste des symboles Python dans la doc backend : `python scripts/generate_backend_doc.py --write` (voir [`docs/BACKEND_REFERENCE.md`](docs/BACKEND_REFERENCE.md)).
 
 ### Frontend (Vue.js)
 

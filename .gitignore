@@ -28,8 +28,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Documentation (markdown files)
-*.md
-!README.md
+docs/HTPASSWD_GENERATE.md
 # Skills agent Cursor (dérogation au filtre *.md)
 !.cursor/skills/**/*.md

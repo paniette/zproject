@@ -53,7 +53,10 @@ def _get_pack_game_type(pack):
         pass
     return _load_pack_game_types_from_static_index().get(pack.get('id'))
 
+
 class PackListView(APIView):
+    """Liste les packs disponibles (ré-indexation à chaque requête)."""
+
     def get(self, request):
         """List all available packs"""
         try:
@@ -84,7 +87,10 @@ class PackListView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
+
 class PackDetailView(APIView):
+    """Détail d'un pack : nom, image, align, type de jeu, liste des catégories."""
+
     def get(self, request, pack_id):
         """Get details of a specific pack"""
         try:
@@ -111,7 +117,10 @@ class PackDetailView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
+
 class PackAssetsView(APIView):
+    """Assets d'un pack groupés par catégorie (chemins, miniatures, rotations)."""
+
     def get(self, request, pack_id):
         """Get assets for a specific pack, organized by category"""
         try:
@@ -145,8 +154,12 @@ class PackAssetsView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
+
 class AssetView(APIView):
+    """Sert un fichier image (PNG) depuis ASSETS_DIR ou BG_MAPEDITOR_TILES_DIR."""
+
     def get(self, request, asset_path):
+        """Stream binaire d'une image pack / tuile."""
         # Handle paths that already include directory name
         if asset_path.startswith('assets/'):
             asset_path = asset_path[7:]  # Remove 'assets/' prefix
@@ -165,7 +178,10 @@ class AssetView(APIView):
             return FileResponse(open(full_path, 'rb'), content_type='image/png')
         raise Http404(f"Asset not found: {asset_path}")
 
+
 class UserListView(APIView):
+    """Utilisateurs « temporaires » (dossiers sous USERS_DIR)."""
+
     def get(self, request):
         """List all temporary users"""
         try:
@@ -199,7 +215,10 @@ class UserListView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
+
 class UserMapsView(APIView):
+    """CRUD de liste : cartes JSON d'un utilisateur donné."""
+
     def get(self, request, username):
         """List all maps for a user"""
         try:
@@ -232,7 +251,10 @@ class UserMapsView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
+
 class MapDetailView(APIView):
+    """Lecture, mise à jour et suppression d'une carte JSON par id."""
+
     def get(self, request, username, map_id):
         """Get a specific map"""
         try:
@@ -283,7 +305,10 @@ class MapDetailView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
+
 class PublicMapsView(APIView):
+    """Agrège toutes les cartes de tous les utilisateurs (aperçu / galerie)."""
+
     def get(self, request):
         """List all public maps (from all users)"""
         try:
@@ -296,8 +321,11 @@ class PublicMapsView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
+
 @method_decorator(csrf_exempt, name='dispatch')
 class CustomPackUploadView(APIView):
+    """Upload d'image personnalisée : redimensionnement, rotations, entrée cfg."""
+
     def post(self, request):
         """Upload and normalize a custom asset"""
         try:
@@ -346,7 +374,10 @@ class CustomPackUploadView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
+
 class CustomPackListView(APIView):
+    """Liste les packs du répertoire `packs/custom` (métadonnées via PackParser)."""
+
     def get(self, request):
         """List custom packs"""
         try:
@@ -379,8 +410,11 @@ class CustomPackListView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
+
 @method_decorator(csrf_exempt, name='dispatch')
 class PackZipUploadView(APIView):
+    """Import d'un pack ZIP Mapeditor vers ASSETS_DIR (validation structure)."""
+
     def post(self, request):
         """Upload and extract a ZIP pack"""
         try:
@@ -413,7 +447,10 @@ class PackZipUploadView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
+
 class UploadedPackListView(APIView):
+    """Liste les dossiers-pack présents sous le répertoire médias « assets »."""
+
     def get(self, request):
         """List uploaded packs"""
         try:
@@ -426,7 +463,10 @@ class UploadedPackListView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
+
 class UploadedPackDeleteView(APIView):
+    """Supprime un pack uploadé (dossier sous ASSETS_DIR) par identifiant."""
+
     def delete(self, request, pack_id):
         """Delete an uploaded pack from assets directory"""
         try:

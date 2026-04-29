@@ -23,6 +23,7 @@ def sanitize_asset_name(name):
 
 
 def sanitize_path_segment(seg, field_name):
+    """Valide un segment de chemin (pack, catégorie) contre traversal et caractères dangereux."""
     if not seg or not str(seg).strip():
         raise ValueError(f'{field_name} is required')
     s = str(seg).strip()
@@ -35,6 +36,7 @@ class PackUploader:
     """Handle upload and normalization of custom pack assets"""
     
     def __init__(self, pack_name):
+        """pack_name : id dossier pack sous ASSETS_DIR (créé si besoin)."""
         self.pack_name = sanitize_path_segment(pack_name, 'pack_name')
         # Create packs in /assets/ directory (unified location)
         self.pack_dir = Path(settings.ASSETS_DIR) / self.pack_name

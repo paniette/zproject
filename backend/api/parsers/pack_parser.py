@@ -45,6 +45,7 @@ class PackParser:
     """Parse Mapeditor pack structure and cfg files"""
     
     def __init__(self, pack_dir):
+        """pack_dir : chemin dossier racine du pack (contient au minimum cfg ou catégories)."""
         self.pack_dir = Path(pack_dir)
         self.pack_id = self.pack_dir.name
         # Determine base directory for relative paths
@@ -192,26 +193,6 @@ class PackParser:
                 rel_path = rot_file.relative_to(self.base_dir)
                 rotations[angle] = str(rel_path).replace('\\', '/')
         return rotations
-    
-    def _find_thumbnail(self, image_path):
-        """Find thumbnail for an asset"""
-        base_path = image_path.parent / image_path.stem
-        thumb_file = base_path / 'r_thumb.png'
-        if thumb_file.exists():
-            # Normalize path to use forward slashes for URLs
-            rel_path = thumb_file.relative_to(self.base_dir)
-            return str(rel_path).replace('\\', '/')
-        
-        # Check in subdirectory
-        asset_dir = image_path.parent / image_path.stem
-        if asset_dir.is_dir():
-            thumb_file = asset_dir / 'r_thumb.png'
-            if thumb_file.exists():
-                # Normalize path to use forward slashes for URLs
-                rel_path = thumb_file.relative_to(self.base_dir)
-                return str(rel_path).replace('\\', '/')
-        
-        return None
     
     def _find_thumbnail(self, image_path):
         """Find thumbnail for an asset"""
