@@ -100,6 +100,7 @@ const uploadZip = async () => {
     const formData = new FormData()
     formData.append('zip_file', selectedFile.value)
     formData.append('replace_existing', replaceExisting.value)
+    formData.append('game_type', gameType.value)
     
     // Simulate progress (in real app, use axios progress event)
     const progressInterval = setInterval(() => {

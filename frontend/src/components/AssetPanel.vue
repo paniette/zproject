@@ -2,7 +2,12 @@
   <div id="asset-panel-region" class="asset-panel">
     <div class="panel-header">
       <h3>Packs & Assets</h3>
-      <div class="game-type-filter" role="group" aria-label="Filtrer par type de jeu">
+      <div
+        class="game-type-filter"
+        :class="{ 'has-selection': selectedGameType !== 'all' }"
+        role="group"
+        aria-label="Filtrer par type de jeu"
+      >
         <button
           v-for="t in GAME_TYPES"
           :key="t.id"
@@ -12,7 +17,11 @@
           :title="t.label"
           @click="selectedGameType = t.id"
         >
-          {{ t.label }}
+          <span v-if="t.id === 'all'">{{ t.label }}</span>
+          <template v-else>
+            <img class="gt-icon" :src="getGameTypeIcon(t.id)" :alt="t.label" />
+            <span class="sr-only">{{ t.label }}</span>
+          </template>
         </button>
       </div>
     </div>
@@ -82,11 +91,29 @@ import api from '@/services/api'
 import PackUploader from './PackUploader.vue'
 import { collectUsedTilePairKeys, isTilePairLocked as tilePairLocked } from '@/utils/tilePairs'
 import { GAME_TYPES, loadPackGameTypeMap, getPackGameTypeFromPack } from '@/config/gameTypes'
+import iconClassic from '@/assets/images/menu-setting-classic.jpg'
+import iconModern from '@/assets/images/menu-setting-modern.jpg'
+import iconFantasy from '@/assets/images/menu-setting-fantasy.jpg'
+import iconWestern from '@/assets/images/menu-setting-western.jpg'
+import iconScifi from '@/assets/images/menu-setting-scifi.jpg'
+import iconNight from '@/assets/images/menu-setting-night.jpg'
 
 const packsStore = usePacksStore()
 const assetsStore = useAssetsStore()
 const mapStore = useMapStore()
 const toolStore = useToolStore()
+
+function getGameTypeIcon (gameTypeId) {
+  const iconById = {
+    classic: iconClassic,
+    modern: iconModern,
+    fantasy: iconFantasy,
+    western: iconWestern,
+    scifi: iconScifi,
+    night: iconNight
+  }
+  return iconById[gameTypeId] || ''
+}
 
 function maybeSwitchToPlaceTool () {
   if (typeof window === 'undefined') return
@@ -263,6 +290,18 @@ const isSelected = (asset) => {
   border-right: 2px solid var(--primary-color);
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .panel-header {
   padding: 15px;
   background: var(--brown-dark);
@@ -282,14 +321,15 @@ const isSelected = (asset) => {
   display: flex;
   gap: 6px;
   flex-wrap: nowrap;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  padding: 6px 0;
+  overflow: visible;
+  align-items: center;
 }
 
 .gt-btn {
-  width: 44px;
-  height: 34px;
+  width: auto;
+  height: 44px;
   padding: 0;
   border-radius: 6px;
   border: 1px solid color-mix(in srgb, var(--primary-color) 55%, #000);
@@ -299,12 +339,70 @@ const isSelected = (asset) => {
   font-weight: 700;
   line-height: 1;
   cursor: pointer;
-  flex: 0 0 auto;
+  flex: 1 1 0;
+  min-width: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: transform 140ms ease, background-color 140ms ease, border-color 140ms ease;
+  transform-origin: center;
 }
 
 .gt-btn.active {
   background: color-mix(in srgb, var(--primary-color) 35%, #000);
   border-color: var(--primary-color);
+}
+
+.game-type-filter.has-selection .gt-btn {
+  transform: scale(0.92);
+}
+
+.game-type-filter.has-selection .gt-btn.active {
+  transform: scale(1.12);
+}
+
+.game-type-filter.has-selection .gt-btn:not(.active):hover {
+  transform: scale(0.96);
+}
+
+.game-type-filter:not(.has-selection):has(.gt-btn:hover) .gt-btn {
+  transform: scale(0.92);
+}
+
+.game-type-filter:not(.has-selection):has(.gt-btn:hover) .gt-btn:hover {
+  transform: scale(1.12);
+}
+
+.game-type-filter:not(.has-selection) .gt-btn:hover {
+  transform: scale(1.12);
+}
+
+.gt-btn:active {
+  transform: scale(1.10);
+}
+
+.gt-icon {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  image-rendering: auto;
+}
+
+@media (max-width: 520px) {
+  .game-type-filter {
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .gt-btn {
+    flex: 0 0 auto;
+    width: 54px;
+    min-width: 54px;
+  }
 }
 
 .packs-list {

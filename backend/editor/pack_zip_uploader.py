@@ -17,7 +17,7 @@ class PackZipUploader:
     ALLOWED_EXTENSIONS = {'.png', '.jpg', '.jpeg', '.cfg', '.txt', '.licence', '.license'}
     
     @staticmethod
-    def upload_and_extract(zip_file, destination='assets', replace_existing=False):
+    def upload_and_extract(zip_file, destination='assets', replace_existing=False, game_type=None):
         """Upload and extract a ZIP pack"""
         # Validate file size
         zip_file.seek(0, os.SEEK_END)
@@ -97,6 +97,10 @@ class PackZipUploader:
                 if final_pack_dir.exists():
                     shutil.rmtree(final_pack_dir)
                 raise ValueError(f"Invalid pack structure: {str(e)}")
+
+            if game_type:
+                from editor.pack_meta import write_pack_game_type
+                write_pack_game_type(pack_name, game_type)
             
             return {
                 'id': pack_name,

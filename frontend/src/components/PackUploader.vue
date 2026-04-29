@@ -346,6 +346,7 @@ const uploadAsset = async () => {
     formData.append('target_height', String(h))
     formData.append('category', category.value)
     formData.append('pack_name', packName.value)
+    formData.append('game_type', gameType.value)
 
     await api.uploadCustomPack(formData)
     alert('Asset uploadé avec succès!')

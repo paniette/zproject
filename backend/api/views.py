@@ -6,8 +6,52 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 import os
+import json
+from functools import lru_cache
 from .parsers.asset_indexer import AssetIndexer
 from .serializers import PackSerializer
+
+
+@lru_cache(maxsize=1)
+def _load_pack_game_types_from_static_index():
+    """
+    Source de vérité partagée avec le build statique: `packs-index.json`.
+    Retourne un dict { packId: gameType }.
+    """
+    try:
+        index_path = settings.BASE_DIR / 'packs-index.json'
+        if not index_path.exists():
+            return {}
+        with open(index_path, 'r', encoding='utf-8') as f:
+            data = json.load(f) or {}
+        packs = data.get('packs') or []
+        if not isinstance(packs, list):
+            return {}
+        m = {}
+        for p in packs:
+            if not isinstance(p, dict):
+                continue
+            pid = p.get('id')
+            gt = p.get('gameType')
+            if isinstance(pid, str) and isinstance(gt, str) and pid and gt:
+                m[pid] = gt
+        return m
+    except Exception:
+        return {}
+
+
+def _get_pack_game_type(pack):
+    """
+    Résout le type de jeu d'un pack.
+    Priorité: info du pack (si un jour l'indexeur le fournit) puis mapping du static index.
+    """
+    try:
+        gt = pack.get('gameType')
+        if isinstance(gt, str) and gt:
+            return gt
+    except Exception:
+        pass
+    return _load_pack_game_types_from_static_index().get(pack.get('id'))
 
 class PackListView(APIView):
     def get(self, request):
@@ -30,7 +74,8 @@ class PackListView(APIView):
                     'id': pack['id'],
                     'name': pack['name'],
                     'image': pack.get('image'),
-                    'align': pack.get('align', 25)
+                    'align': pack.get('align', 25),
+                    'gameType': _get_pack_game_type(pack)
                 })
             return Response(pack_data, status=status.HTTP_200_OK)
         except Exception as e:
@@ -57,6 +102,7 @@ class PackDetailView(APIView):
                 'name': pack['name'],
                 'image': pack.get('image'),
                 'align': pack.get('align', 25),
+                'gameType': _get_pack_game_type(pack),
                 'categories': list(pack['categories'].keys())
             }, status=status.HTTP_200_OK)
         except Exception as e:
@@ -264,6 +310,7 @@ class CustomPackUploadView(APIView):
             tw = request.data.get('target_width')
             th = request.data.get('target_height')
             target_size = request.data.get('target_size', 32)
+            game_type = request.POST.get('game_type') or request.data.get('game_type')
 
             if not image_file or not asset_name:
                 return Response(
@@ -287,6 +334,10 @@ class CustomPackUploadView(APIView):
                     category,
                     target_size=int(target_size),
                 )
+
+            if game_type:
+                from editor.pack_meta import write_pack_game_type
+                write_pack_game_type(pack_name, game_type)
             
             return Response(result, status=status.HTTP_201_CREATED)
         except Exception as e:
@@ -338,6 +389,7 @@ class PackZipUploadView(APIView):
             zip_file = request.FILES.get('zip_file')
             destination = request.data.get('destination', 'uploaded')
             replace_existing = request.data.get('replace_existing', False)
+            game_type = request.POST.get('game_type') or request.data.get('game_type')
             
             if not zip_file:
                 return Response(
@@ -345,7 +397,9 @@ class PackZipUploadView(APIView):
                     status=status.HTTP_400_BAD_REQUEST
                 )
             
-            result = PackZipUploader.upload_and_extract(zip_file, destination, replace_existing)
+            result = PackZipUploader.upload_and_extract(
+                zip_file, destination, replace_existing, game_type=game_type
+            )
             
             return Response(result, status=status.HTTP_201_CREATED)
         except ValueError as e:

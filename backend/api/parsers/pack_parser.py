@@ -1,10 +1,13 @@
 """
 Parser for Zombicide Mapeditor pack files (cfg format)
 """
+import json
 import os
 import re
 from pathlib import Path
 from django.conf import settings
+
+from .editor_game_types import normalize_editor_game_type
 
 
 def get_base_dir(pack_dir):
@@ -64,6 +67,27 @@ class PackParser:
             pack_info['name'] = root_data.get('name', self.pack_id)
             pack_info['image'] = root_data.get('image', 'guillotine.png')
             pack_info['align'] = int(root_data.get('align', 25))
+            # Type de jeu : clé optionnelle dans le cfg racine (ex. gameType=fantasy)
+            for _key in ('gameType', 'game_type'):
+                raw_gt = root_data.get(_key)
+                gt = normalize_editor_game_type(raw_gt)
+                if gt:
+                    pack_info['gameType'] = gt
+                    break
+
+        # Legacy : meta JSON seulement si le cfg ne définit pas encore le type
+        if 'gameType' not in pack_info:
+            meta_path = self.pack_dir / 'editor_pack_meta.json'
+            if meta_path.exists():
+                try:
+                    with open(meta_path, encoding='utf-8') as mf:
+                        meta = json.load(mf)
+                    gt = meta.get('gameType') if isinstance(meta, dict) else None
+                    gt = normalize_editor_game_type(gt)
+                    if gt:
+                        pack_info['gameType'] = gt
+                except Exception:
+                    pass
         
         # Find and parse category directories
         for item in self.pack_dir.iterdir():
@@ -263,48 +287,3 @@ class PackParser:
                 pairs_dict[file2] = file1
         
         return pairs_dict
-
-
-class AssetIndexer:
-    """Index all packs in bgmapeditor_tiles directory"""
-    
-    @staticmethod
-    def index_all_packs():
-        """Index all packs in the bgmapeditor_tiles directory"""
-        packs = []
-        tiles_dir = Path(settings.BG_MAPEDITOR_TILES_DIR)
-        
-        if not tiles_dir.exists():
-            return packs
-        
-        for item in tiles_dir.iterdir():
-            if item.is_dir() and not item.name.startswith('.'):
-                # Check if it looks like a pack directory
-                if item.name.startswith('G-Zombicide-') or (item / 'cfg').exists():
-                    try:
-                        parser = PackParser(item)
-                        pack_info = parser.parse_pack()
-                        packs.append(pack_info)
-                    except Exception as e:
-                        print(f"Error indexing pack {item.name}: {e}")
-        
-        return packs
-    
-    @staticmethod
-    def get_pack_assets(pack_id):
-        """Get assets for a specific pack"""
-        tiles_dir = Path(settings.BG_MAPEDITOR_TILES_DIR)
-        pack_dir = tiles_dir / pack_id
-        
-        if not pack_dir.exists():
-            return {}
-        
-        parser = PackParser(pack_dir)
-        pack_info = parser.parse_pack()
-        
-        # Return assets organized by category
-        assets_by_category = {}
-        for category_name, category_data in pack_info['categories'].items():
-            assets_by_category[category_name] = category_data['assets']
-        
-        return assets_by_category
