@@ -49,6 +49,10 @@ const isDragging = ref(false)
 const isPanning = ref(false)
 const dragStart = ref({ x: 0, y: 0 })
 const selectedAsset = ref(null)
+const externalDragAsset = ref(null)
+const externalDragCoords = ref(null)
+const isExternalDraggingOverCanvas = ref(false)
+const activeDraggedAsset = ref(null)
 
 watch(
   () => mapStore.layers.tiles,
@@ -83,6 +87,171 @@ const gridInitialized = ref(false) // Flag pour savoir si la grille a été init
 /** Si true, le prochain draw n'affiche pas les lignes de grille (export PNG / capture mission). */
 const hideGridForExport = ref(false)
 
+const emitAssetDragOverMap = (isOverMap) => {
+  window.dispatchEvent(new CustomEvent('asset-drag-over-map', { detail: !!isOverMap }))
+}
+
+const getDraggedAsset = (dataTransfer) => {
+  const payload = dataTransfer?.getData('application/json')
+  if (!payload) return null
+  try {
+    const parsed = JSON.parse(payload)
+    if (!parsed?.path || !parsed?.category) return null
+    return parsed
+  } catch (_) {
+    return null
+  }
+}
+
+const clearExternalDragPreview = ({ redraw = true } = {}) => {
+  const hadPreview = isExternalDraggingOverCanvas.value || externalDragAsset.value || externalDragCoords.value
+  if (isExternalDraggingOverCanvas.value) {
+    emitAssetDragOverMap(false)
+  }
+  isExternalDraggingOverCanvas.value = false
+  externalDragAsset.value = null
+  externalDragCoords.value = null
+  if (hadPreview && redraw) draw()
+}
+
+const isInsideCanvas = (clientX, clientY) => {
+  const canvas = canvasRef.value
+  if (!canvas) return false
+  const rect = canvas.getBoundingClientRect()
+  return (
+    clientX >= rect.left &&
+    clientX <= rect.right &&
+    clientY >= rect.top &&
+    clientY <= rect.bottom
+  )
+}
+
+const updateExternalDragPreview = (clientX, clientY, dataTransfer) => {
+  if (!canvasRef.value || mapStore.isPreviewMode) return
+  const asset = getDraggedAsset(dataTransfer) || activeDraggedAsset.value
+  if (!asset) {
+    clearExternalDragPreview()
+    return
+  }
+  const coords = getGridCoordinatesWithSnap(
+    clientX,
+    clientY,
+    canvasRef.value,
+    mapStore.tileSize,
+    zoom.value,
+    panX.value,
+    panY.value,
+    mapStore.gridOffsetX,
+    mapStore.gridOffsetY
+  )
+  const sameAsset = externalDragAsset.value?.path === asset.path
+  const sameCoords = externalDragCoords.value?.x === coords.x && externalDragCoords.value?.y === coords.y
+  const sameState = isExternalDraggingOverCanvas.value && sameAsset && sameCoords
+  if (sameState) return
+  externalDragAsset.value = asset
+  externalDragCoords.value = coords
+  if (!isExternalDraggingOverCanvas.value) {
+    emitAssetDragOverMap(true)
+  }
+  isExternalDraggingOverCanvas.value = true
+  draw()
+}
+
+const placeAssetAtCoords = (asset, coords) => {
+  let newItemId
+  if (asset.category === 'tiles' || asset.category === '01.tiles') {
+    if (isTilePairLocked(asset.path, asset.category, usedTilePairKeys.value)) {
+      return null
+    }
+    mapStore.addTile(coords.x, coords.y, asset.path, 0)
+    newItemId = mapStore.layers.tiles[mapStore.layers.tiles.length - 1].id
+  } else {
+    mapStore.addObject({
+      type: asset.category,
+      asset: asset.path,
+      x: coords.x,
+      y: coords.y,
+      rotation: 0
+    })
+    newItemId = mapStore.layers.objects[mapStore.layers.objects.length - 1].id
+  }
+  return newItemId
+}
+
+const handleCanvasDragEnter = (e) => {
+  e.preventDefault()
+  updateExternalDragPreview(e.clientX, e.clientY, e.dataTransfer)
+}
+
+const handleCanvasDragOver = (e) => {
+  e.preventDefault()
+  if (e.dataTransfer) e.dataTransfer.dropEffect = 'copy'
+  updateExternalDragPreview(e.clientX, e.clientY, e.dataTransfer)
+}
+
+const handleCanvasDragLeave = (e) => {
+  const canvas = canvasRef.value
+  if (!canvas) return
+  // Sur dragleave, relatedTarget est souvent null: on valide avec les coordonnées curseur.
+  const rect = canvas.getBoundingClientRect()
+  const inside =
+    e.clientX >= rect.left &&
+    e.clientX <= rect.right &&
+    e.clientY >= rect.top &&
+    e.clientY <= rect.bottom
+  if (!inside) clearExternalDragPreview()
+}
+
+const handleCanvasDrop = (e) => {
+  e.preventDefault()
+  if (mapStore.isPreviewMode) return
+  const asset = getDraggedAsset(e.dataTransfer) || externalDragAsset.value || activeDraggedAsset.value
+  if (!asset || !canvasRef.value) {
+    clearExternalDragPreview()
+    return
+  }
+  selectedAsset.value = asset
+  const coords = getGridCoordinatesWithSnap(
+    e.clientX,
+    e.clientY,
+    canvasRef.value,
+    mapStore.tileSize,
+    zoom.value,
+    panX.value,
+    panY.value,
+    mapStore.gridOffsetX,
+    mapStore.gridOffsetY
+  )
+  const newItemId = placeAssetAtCoords(asset, coords)
+  clearExternalDragPreview({ redraw: false })
+  if (!newItemId) {
+    draw()
+    return
+  }
+  toolStore.setTool('move')
+  toolStore.selectObject(newItemId)
+  draw()
+  updateCursor()
+}
+
+const handleAssetDragEnd = () => {
+  activeDraggedAsset.value = null
+  clearExternalDragPreview()
+}
+
+const handleAssetDragStart = (e) => {
+  activeDraggedAsset.value = e.detail || null
+}
+
+const handleWindowDragOver = (e) => {
+  if (!activeDraggedAsset.value || mapStore.isPreviewMode) return
+  if (isInsideCanvas(e.clientX, e.clientY)) {
+    updateExternalDragPreview(e.clientX, e.clientY, e.dataTransfer)
+  } else if (isExternalDraggingOverCanvas.value) {
+    clearExternalDragPreview()
+  }
+}
+
 
 onMounted(() => {
   const canvas = canvasRef.value
@@ -91,65 +260,34 @@ onMounted(() => {
     resizeCanvas()
     draw()
 
-    canvas.addEventListener('dragover', (e) => {
-      e.preventDefault()
-    })
-
-    canvas.addEventListener('drop', (e) => {
-      e.preventDefault()
-      if (mapStore.isPreviewMode) return
-      const data = e.dataTransfer.getData('application/json')
-      if (data) {
-        const asset = JSON.parse(data)
-        selectedAsset.value = asset
-        const coords = getGridCoordinatesWithSnap(
-          e.clientX,
-          e.clientY,
-          canvas,
-          mapStore.tileSize,
-          zoom.value,
-          panX.value,
-          panY.value,
-          mapStore.gridOffsetX,
-          mapStore.gridOffsetY
-        )
-
-        let newItemId
-        if (asset.category === 'tiles' || asset.category === '01.tiles') {
-          if (isTilePairLocked(asset.path, asset.category, usedTilePairKeys.value)) {
-            return
-          }
-          mapStore.addTile(coords.x, coords.y, asset.path, 0)
-          newItemId = mapStore.layers.tiles[mapStore.layers.tiles.length - 1].id
-        } else {
-          mapStore.addObject({
-            type: asset.category,
-            asset: asset.path,
-            x: coords.x,
-            y: coords.y,
-            rotation: 0
-          })
-          newItemId = mapStore.layers.objects[mapStore.layers.objects.length - 1].id
-        }
-        toolStore.setTool('move')
-        toolStore.selectObject(newItemId)
-        draw()
-        updateCursor()
-      }
-    })
+    canvas.addEventListener('dragenter', handleCanvasDragEnter)
+    canvas.addEventListener('dragover', handleCanvasDragOver)
+    canvas.addEventListener('dragleave', handleCanvasDragLeave)
+    canvas.addEventListener('drop', handleCanvasDrop)
   }
 
   window.addEventListener('resize', resizeCanvas)
   window.addEventListener(CANVAS_EXPORT_REQUEST, handleExportRequest)
-
-  window.addEventListener('asset-selected', (e) => {
-    selectedAsset.value = e.detail
-  })
+  window.addEventListener('asset-selected', onAssetSelected)
+  window.addEventListener('asset-drag-start', handleAssetDragStart)
+  window.addEventListener('asset-drag-end', handleAssetDragEnd)
+  window.addEventListener('dragover', handleWindowDragOver)
 })
 
 onUnmounted(() => {
+  const canvas = canvasRef.value
+  if (canvas) {
+    canvas.removeEventListener('dragenter', handleCanvasDragEnter)
+    canvas.removeEventListener('dragover', handleCanvasDragOver)
+    canvas.removeEventListener('dragleave', handleCanvasDragLeave)
+    canvas.removeEventListener('drop', handleCanvasDrop)
+  }
   window.removeEventListener('resize', resizeCanvas)
   window.removeEventListener(CANVAS_EXPORT_REQUEST, handleExportRequest)
+  window.removeEventListener('asset-selected', onAssetSelected)
+  window.removeEventListener('asset-drag-start', handleAssetDragStart)
+  window.removeEventListener('asset-drag-end', handleAssetDragEnd)
+  window.removeEventListener('dragover', handleWindowDragOver)
 })
 
 watch(() => mapStore.layers, () => {
@@ -270,6 +408,10 @@ const draw = async () => {
   }
   for (const obj of mapStore.layers.objects) {
     await drawObject(obj)
+  }
+
+  if (isExternalDraggingOverCanvas.value && externalDragAsset.value && externalDragCoords.value) {
+    await drawExternalDragPreview()
   }
 
   // Draw hover highlight (before selection)
@@ -477,6 +619,37 @@ const drawTile = async (tile) => {
 const drawObject = async (obj) => {
   if (!ctx.value) return
   await drawObjectToContext(ctx.value, obj)
+}
+
+const drawExternalDragPreview = async () => {
+  if (!ctx.value || !externalDragAsset.value || !externalDragCoords.value) return
+  const coords = externalDragCoords.value
+  const imageData = await loadImage(externalDragAsset.value.path)
+  ctx.value.save()
+  const zoomFactor = zoom.value || 1
+  const x = coords.x * mapStore.tileSize + mapStore.gridOffsetX
+  const y = coords.y * mapStore.tileSize + mapStore.gridOffsetY
+  ctx.value.globalAlpha = 0.55
+  if (imageData?.image) {
+    ctx.value.drawImage(imageData.image, x, y, imageData.width, imageData.height)
+    ctx.value.globalAlpha = 1
+    ctx.value.strokeStyle = 'rgba(76, 175, 80, 0.85)'
+    ctx.value.lineWidth = 2 / zoomFactor
+    ctx.value.strokeRect(x, y, imageData.width, imageData.height)
+  } else {
+    const size = mapStore.tileSize
+    ctx.value.fillStyle = 'rgba(76, 175, 80, 0.35)'
+    ctx.value.fillRect(x, y, size, size)
+    ctx.value.globalAlpha = 1
+    ctx.value.strokeStyle = 'rgba(76, 175, 80, 0.85)'
+    ctx.value.lineWidth = 2 / zoomFactor
+    ctx.value.strokeRect(x, y, size, size)
+  }
+  ctx.value.restore()
+}
+
+const onAssetSelected = (e) => {
+  selectedAsset.value = e.detail
 }
 
 const drawHover = () => {
@@ -745,23 +918,8 @@ const applyPrimaryDown = (clientX, clientY) => {
 
   if (toolStore.activeTool === 'place') {
     if (selectedAsset.value) {
-      let newItemId
-      if (selectedAsset.value.category === 'tiles' || selectedAsset.value.category === '01.tiles') {
-        if (isTilePairLocked(selectedAsset.value.path, selectedAsset.value.category, usedTilePairKeys.value)) {
-          return
-        }
-        mapStore.addTile(coords.x, coords.y, selectedAsset.value.path, 0)
-        newItemId = mapStore.layers.tiles[mapStore.layers.tiles.length - 1].id
-      } else {
-        mapStore.addObject({
-          type: selectedAsset.value.category,
-          asset: selectedAsset.value.path,
-          x: coords.x,
-          y: coords.y,
-          rotation: 0
-        })
-        newItemId = mapStore.layers.objects[mapStore.layers.objects.length - 1].id
-      }
+      const newItemId = placeAssetAtCoords(selectedAsset.value, coords)
+      if (!newItemId) return
       toolStore.selectObject(newItemId)
       draw()
       return

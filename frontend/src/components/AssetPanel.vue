@@ -49,9 +49,10 @@
                 :draggable="!isTilePairLocked(asset)"
                 :title="isTilePairLocked(asset) ? $t('assetPanel.tileAlreadyOnMap') : ''"
                 @dragstart="handleDragStart($event, asset)"
+                @dragend="handleDragEnd"
                 @click="selectAsset(asset)"
               >
-                <img :src="getAssetThumbnail(asset)" :alt="asset.name" class="asset-thumbnail" />
+                <img :src="getAssetThumbnail(asset)" :alt="asset.name" class="asset-thumbnail" draggable="false" />
                 <span class="asset-name">{{ asset.name }}</span>
               </div>
               <button
@@ -77,6 +78,15 @@
       @close="inlineUploaderOpen = false"
       @uploaded="onInlineUploaded"
     />
+    <div
+      v-if="dragCueVisible && dragCueAsset"
+      class="drag-start-cue"
+      :style="{ left: `${dragCuePosition.x}px`, top: `${dragCuePosition.y}px` }"
+      aria-hidden="true"
+    >
+      <img :src="getAssetThumbnail(dragCueAsset)" :alt="dragCueAsset.name" class="drag-start-cue-thumb" />
+      <span class="drag-start-cue-name">{{ dragCueAsset.name }}</span>
+    </div>
   </div>
 </template>
 
@@ -194,12 +204,20 @@ onMounted(() => {
   window.addEventListener('pack-assets-updated', onPackAssetsUpdated)
   window.addEventListener('pack-game-type-updated', onPackGameTypeUpdated)
   window.addEventListener('asset-selected', onAssetSelectedExternal)
+  window.addEventListener('asset-drag-over-map', handleAssetDragOverMap)
+  window.addEventListener('dragover', handleWindowDragOver)
+  window.addEventListener('drop', handleWindowDrop)
+  window.addEventListener('dragend', handleWindowDrop)
 })
 
 onUnmounted(() => {
   window.removeEventListener('pack-assets-updated', onPackAssetsUpdated)
   window.removeEventListener('pack-game-type-updated', onPackGameTypeUpdated)
   window.removeEventListener('asset-selected', onAssetSelectedExternal)
+  window.removeEventListener('asset-drag-over-map', handleAssetDragOverMap)
+  window.removeEventListener('dragover', handleWindowDragOver)
+  window.removeEventListener('drop', handleWindowDrop)
+  window.removeEventListener('dragend', handleWindowDrop)
 })
 
 const togglePack = async (packId) => {
@@ -269,6 +287,60 @@ const getAssetThumbnail = (asset) => {
 }
 
 const selectedAsset = ref(null)
+const dragCueVisible = ref(false)
+const dragCueAsset = ref(null)
+const dragCuePosition = ref({ x: 0, y: 0 })
+const isDraggingAsset = ref(false)
+const isDraggingOverMap = ref(false)
+let transparentDragImage = null
+
+const getTransparentDragImage = () => {
+  if (transparentDragImage) return transparentDragImage
+  const canvas = document.createElement('canvas')
+  canvas.width = 1
+  canvas.height = 1
+  transparentDragImage = canvas
+  return transparentDragImage
+}
+
+const setDragCuePosition = (clientX, clientY) => {
+  dragCuePosition.value = {
+    x: Math.round(clientX + 8),
+    y: Math.round(clientY + 8)
+  }
+}
+
+const updateDragCueVisibility = () => {
+  dragCueVisible.value = isDraggingAsset.value && !!dragCueAsset.value && !isDraggingOverMap.value
+}
+
+const showDragCue = (asset, clientX, clientY) => {
+  dragCueAsset.value = asset
+  isDraggingAsset.value = true
+  setDragCuePosition(clientX, clientY)
+  updateDragCueVisibility()
+}
+
+const hideDragCue = () => {
+  isDraggingAsset.value = false
+  isDraggingOverMap.value = false
+  dragCueVisible.value = false
+  dragCueAsset.value = null
+}
+
+const handleWindowDragOver = (event) => {
+  if (!isDraggingAsset.value) return
+  setDragCuePosition(event.clientX, event.clientY)
+}
+
+const handleWindowDrop = () => {
+  hideDragCue()
+}
+
+const handleAssetDragOverMap = (event) => {
+  isDraggingOverMap.value = !!event.detail
+  updateDragCueVisibility()
+}
 
 const handleDragStart = (event, asset) => {
   if (isTilePairLocked(asset)) {
@@ -276,8 +348,20 @@ const handleDragStart = (event, asset) => {
     return
   }
   event.dataTransfer.setData('application/json', JSON.stringify(asset))
+  event.dataTransfer.setData('text/plain', asset.path)
   event.dataTransfer.effectAllowed = 'copy'
+  if (event.dataTransfer.setDragImage) {
+    event.dataTransfer.setDragImage(getTransparentDragImage(), 0, 0)
+  }
   selectedAsset.value = asset
+  isDraggingOverMap.value = false
+  showDragCue(asset, event.clientX, event.clientY)
+  window.dispatchEvent(new CustomEvent('asset-drag-start', { detail: asset }))
+}
+
+const handleDragEnd = () => {
+  hideDragCue()
+  window.dispatchEvent(new CustomEvent('asset-drag-end'))
 }
 
 const selectAsset = (asset) => {
@@ -571,6 +655,8 @@ const isSelected = (asset) => {
   height: 60px;
   object-fit: contain;
   margin-bottom: 5px;
+  pointer-events: none;
+  user-select: none;
 }
 
 .asset-name {
@@ -580,5 +666,38 @@ const isSelected = (asset) => {
   max-width: 100%;
   color: var(--dark-color);
   font-weight: 500;
+}
+
+.drag-start-cue {
+  position: fixed;
+  z-index: 2000;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 260px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid color-mix(in srgb, var(--primary-color) 60%, #000);
+  background: rgba(20, 20, 20, 0.88);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+  user-select: none;
+}
+
+.drag-start-cue-thumb {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  flex: 0 0 auto;
+}
+
+.drag-start-cue-name {
+  display: inline-block;
+  font-size: 12px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
