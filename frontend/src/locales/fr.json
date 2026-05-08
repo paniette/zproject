@@ -220,6 +220,23 @@
     "defaultName": "Nouvelle carte",
     "versionLabel": "Sauvegarde"
   },
+  "donate": {
+    "buttonTitle": "Soutenir le projet",
+    "title": "Soutenir le projet",
+    "subtitle": "Zombicide Editor est gratuit & open-source",
+    "intro": "Avec votre soutien, nous pourrions passer d'une version statique à une vraie application complète :",
+    "feat1": "Backend dédié pour l'extraction automatique des assets et des packs",
+    "feat2": "Sauvegarde des cartes en ligne — plus de dépendance au localStorage Chrome",
+    "feat3": "Comptes utilisateurs avec authentification Google",
+    "feat4": "Galerie communautaire pour partager vos scénarios",
+    "perksTitle": "En soutenant le projet, vous pouvez aussi :",
+    "perk1": "Proposer des idées de fonctionnalités et influencer les priorités",
+    "perk2": "Accéder en avant-première aux nouvelles fonctionnalités",
+    "cta": "Faire un don via PayPal",
+    "qrAlt": "QR code PayPal pour faire un don",
+    "qrHint": "Scannez le QR code ou cliquez sur le bouton PayPal ci-dessous.",
+    "note": "Chaque contribution, même modeste, fait une vraie différence. Merci !"
+  },
   "lang": {
     "fr": "FR",
     "en": "EN",

@@ -220,6 +220,23 @@
     "defaultName": "New map",
     "versionLabel": "Save"
   },
+  "donate": {
+    "buttonTitle": "Support the project",
+    "title": "Support the project",
+    "subtitle": "Zombicide Editor is free & open-source",
+    "intro": "With your support, we could move from a static version to a full-featured app:",
+    "feat1": "Dedicated backend for automatic asset and pack extraction",
+    "feat2": "Online map saving — no more relying on Chrome localStorage",
+    "feat3": "User accounts with Google authentication",
+    "feat4": "Community gallery to share your scenarios",
+    "perksTitle": "By supporting the project, you can also:",
+    "perk1": "Suggest feature ideas and influence development priorities",
+    "perk2": "Get early access to new features",
+    "cta": "Donate via PayPal",
+    "qrAlt": "PayPal QR code for donations",
+    "qrHint": "Scan the QR code or click the PayPal button below.",
+    "note": "Every contribution, even a small one, makes a real difference. Thank you!"
+  },
   "lang": {
     "fr": "FR",
     "en": "EN",

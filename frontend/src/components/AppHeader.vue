@@ -124,12 +124,25 @@
           <button v-if="menuVis.uploadZip" type="button" class="header-btn" @click="openPackZipUploader">{{ $t('header.uploadZip') }}</button>
           <button v-if="menuVis.uploadElement" type="button" class="header-btn" @click="openPackUploader">{{ $t('header.uploadElement') }}</button>
         </div>
+
+        <div class="nav-group nav-group-donate">
+          <button
+            type="button"
+            class="header-btn header-btn-icon donate-btn-header"
+            :title="$t('donate.buttonTitle')"
+            @click="showDonateModal = true"
+          >
+            <MenuGlyph name="heart" class="donate-heart-glyph" />
+            <span class="sr-only">{{ $t('donate.buttonTitle') }}</span>
+          </button>
+        </div>
       </nav>
     </div>
     <MapLoader :show="showMapLoader" @close="closeMapLoader" @load="handleMapLoad" />
     <PackZipUploader v-if="showPackZipUploader" @close="closePackZipUploader" />
     <PackUploader v-if="showPackUploader" @close="closePackUploader" />
     <MapVersionsModal :show="showVersionsModal" @close="showVersionsModal = false" />
+    <DonateModal :show="showDonateModal" @close="showDonateModal = false" />
     <SaveMapModal
       :show="showSaveModal"
       :initial-name="saveModalInitialName"
@@ -152,6 +165,7 @@ import PackUploader from './PackUploader.vue'
 import MapVersionsModal from './MapVersionsModal.vue'
 import MenuGlyph from './MenuGlyph.vue'
 import SaveMapModal from './SaveMapModal.vue'
+import DonateModal from './DonateModal.vue'
 import { useMapStore } from '@/stores/mapStore'
 import { useUserStore } from '@/stores/userStore'
 import { config } from '@/config'
@@ -172,6 +186,7 @@ const showPackZipUploader = ref(false)
 const showPackUploader = ref(false)
 const showVersionsModal = ref(false)
 const showSaveModal = ref(false)
+const showDonateModal = ref(false)
 const pendingSave = ref(false)
 
 const isUnsaved = ref(true)
@@ -591,6 +606,28 @@ const exportMap = async () => {
 .lang-select option {
   background-color: #2a2a2a;
   color: #fff;
+}
+
+.nav-group-donate {
+  margin-left: 4px;
+}
+
+.donate-btn-header {
+  border-color: rgba(200, 80, 80, 0.35);
+  background: rgba(180, 50, 50, 0.12);
+  transition: all 0.2s;
+}
+
+.donate-btn-header:hover {
+  border-color: rgba(220, 80, 80, 0.7);
+  background: rgba(180, 50, 50, 0.28);
+  box-shadow: 0 0 10px rgba(200, 60, 60, 0.3);
+  transform: translateY(-2px);
+}
+
+.donate-heart-glyph {
+  color: #e05555;
+  filter: drop-shadow(0 0 4px rgba(220, 70, 70, 0.5));
 }
 
 @media (max-width: 768px) {

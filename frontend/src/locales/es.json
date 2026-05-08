@@ -220,6 +220,23 @@
     "defaultName": "Nuevo mapa",
     "versionLabel": "Guardar"
   },
+  "donate": {
+    "buttonTitle": "Apoyar el proyecto",
+    "title": "Apoyar el proyecto",
+    "subtitle": "Zombicide Editor es gratuito y open-source",
+    "intro": "Con tu apoyo, podríamos pasar de una versión estática a una aplicación completa:",
+    "feat1": "Backend dedicado para la extracción automática de assets y packs",
+    "feat2": "Guardado de mapas en línea — sin depender del localStorage de Chrome",
+    "feat3": "Cuentas de usuario con autenticación Google",
+    "feat4": "Galería comunitaria para compartir tus escenarios",
+    "perksTitle": "Al apoyar el proyecto, también puedes:",
+    "perk1": "Proponer ideas de funciones e influir en las prioridades de desarrollo",
+    "perk2": "Acceder antes a las nuevas funciones",
+    "cta": "Donar vía PayPal",
+    "qrAlt": "Código QR de PayPal para donar",
+    "qrHint": "Escanea el QR o haz clic en el botón de PayPal abajo.",
+    "note": "Cada contribución, por pequeña que sea, marca una diferencia real. ¡Gracias!"
+  },
   "lang": {
     "fr": "FR",
     "en": "EN",
