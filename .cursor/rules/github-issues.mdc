@@ -1,0 +1,9 @@
+---
+description: « Tâche » = issue GitHub paniette/zproject (pas de liste locale)
+alwaysApply: true
+---
+
+# Tâches = issues GitHub (zproject)
+
+- Quand l’utilisateur parle d’une **tâche** (y compris **tâche N** / **issue #N**), aller lire l’[issue correspondante](https://github.com/paniette/zproject/issues) sur GitHub — le détail n’est en général **pas** dupliqué dans le repo sous forme de liste de tâches.
+- Périmètre : **fiche GitHub** ; voir aussi [docs/CONTEXT.md](docs/CONTEXT.md), sous *Objectif*, section *Tâches (GitHub)*.
