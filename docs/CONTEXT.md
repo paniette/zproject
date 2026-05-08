@@ -18,10 +18,27 @@ Dans ce dépôt, lorsqu’on parle d’une **tâche** (souvent **tâche N** ou *
 
 | Couche | Technologies |
 |--------|----------------|
-| Frontend | Vue.js 3 (Composition API), Vite, Pinia |
+| Frontend | Vue.js 3 (Composition API), Vite, Pinia, **vue-i18n v9** |
 | Backend | Django, Django REST Framework, CORS |
 | Persistance | Fichiers JSON (ex. sous `media/users/`) |
 | Traitement images | Pillow (PIL) côté backend |
+
+---
+
+## Internationalisation (i18n)
+
+L'interface est traduite via **vue-i18n v9** (Composition API, `legacy: false`). Langues disponibles : français (par défaut), anglais, allemand, espagnol.
+
+| Élément | Rôle |
+|---------|------|
+| [`frontend/src/i18n.js`](frontend/src/i18n.js) | Instance globale `createI18n`. Détection automatique via `navigator.language` ; repli sur `fr`. Préférence persistée dans `localStorage` (`zproject_locale`). |
+| [`frontend/src/locales/`](frontend/src/locales/) | Fichiers JSON par langue : `fr.json`, `en.json`, `de.json`, `es.json`. |
+| [`frontend/src/locales/assetDictionary.js`](frontend/src/locales/assetDictionary.js) | Dictionnaire bilingue (FR/EN) des noms de fichiers d'assets et catégories de packs ; fonctions `translateAssetLabel`, `translateCategoryName`, `resolveLabel`. |
+| [`frontend/src/stores/langStore.js`](frontend/src/stores/langStore.js) | Store Pinia : `locale` (réactif), `setLocale(lang)`, `cycle()`. |
+
+**Règle pour les évolutions** : tout texte visible dans l'UI doit passer par `$t('clé')` dans le template ou `t('clé')` dans `<script setup>`. Ne jamais hardcoder de chaînes localisées dans les composants Vue. Toute nouvelle clé doit être ajoutée dans les **quatre** fichiers de locale.
+
+Le sélecteur de langue (menu maximal uniquement) est dans `AppHeader.vue`, contrôlé par `menuVis.langToggle` dans [`frontend/src/config/editorMenu.js`](frontend/src/config/editorMenu.js).
 
 ---
 

@@ -2,16 +2,14 @@
   <div v-if="show" class="overlay" @click.self="emit('close')">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="save-map-title">
       <div class="modal-header">
-        <h3 id="save-map-title">Nom de la carte</h3>
-        <button type="button" class="close-btn" aria-label="Fermer" @click="emit('close')">×</button>
+        <h3 id="save-map-title">{{ $t('saveModal.title') }}</h3>
+        <button type="button" class="close-btn" :aria-label="$t('common.close')" @click="emit('close')">×</button>
       </div>
 
       <div class="modal-body">
-        <p class="hint">
-          Premier enregistrement : donne un nom à la carte.
-        </p>
+        <p class="hint">{{ $t('saveModal.hint') }}</p>
 
-        <label for="map-name-input" class="label">Nom</label>
+        <label for="map-name-input" class="label">{{ $t('saveModal.label') }}</label>
         <input
           id="map-name-input"
           ref="inputRef"
@@ -19,7 +17,7 @@
           class="input"
           type="text"
           autocomplete="off"
-          placeholder="ex. Ma mission 01"
+          :placeholder="$t('saveModal.placeholder')"
           @keydown.enter.prevent="submit"
         />
 
@@ -27,8 +25,8 @@
       </div>
 
       <div class="modal-actions">
-        <button type="button" class="btn secondary" @click="emit('close')">Annuler</button>
-        <button type="button" class="btn primary" @click="submit">Enregistrer</button>
+        <button type="button" class="btn secondary" @click="emit('close')">{{ $t('saveModal.cancel') }}</button>
+        <button type="button" class="btn primary" @click="submit">{{ $t('saveModal.save') }}</button>
       </div>
     </div>
   </div>
@@ -36,6 +34,9 @@
 
 <script setup>
 import { ref, watch, nextTick } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const props = defineProps({
   show: { type: Boolean, default: false },
@@ -64,7 +65,7 @@ watch(
 function submit () {
   const name = (localName.value || '').trim()
   if (!name) {
-    error.value = 'Veuillez saisir un nom.'
+    error.value = t('saveModal.required')
     return
   }
   emit('submit', name)

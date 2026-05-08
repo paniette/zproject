@@ -1,12 +1,12 @@
 <template>
   <div id="asset-panel-region" class="asset-panel">
     <div class="panel-header">
-      <h3>Packs & Assets</h3>
+      <h3>{{ $t('assetPanel.title') }}</h3>
       <div
         class="game-type-filter"
         :class="{ 'has-selection': selectedGameType !== 'all' }"
         role="group"
-        aria-label="Filtrer par type de jeu"
+        :aria-label="$t('assetPanel.filterByGameType')"
       >
         <button
           v-for="t in GAME_TYPES"
@@ -35,7 +35,7 @@
           <div v-for="category in getCategories(pack.id)" :key="category" class="category-item">
             <div class="category-header" @click="toggleCategory(pack.id, category)">
               <span class="category-icon">{{ isCategoryOpen(pack.id, category) ? '▼' : '▶' }}</span>
-              <span class="category-name">{{ category }}</span>
+              <span class="category-name">{{ translateCategoryName(category, locale) }}</span>
             </div>
             <div v-if="isCategoryOpen(pack.id, category)" class="assets-grid">
               <div
@@ -47,7 +47,7 @@
                   'asset-locked': isTilePairLocked(asset)
                 }"
                 :draggable="!isTilePairLocked(asset)"
-                :title="isTilePairLocked(asset) ? 'Cette tuile (recto ou verso) est déjà sur la carte' : ''"
+                :title="isTilePairLocked(asset) ? $t('assetPanel.tileAlreadyOnMap') : ''"
                 @dragstart="handleDragStart($event, asset)"
                 @click="selectAsset(asset)"
               >
@@ -58,11 +58,11 @@
                 v-if="!config.staticMode"
                 type="button"
                 class="asset-item asset-item-add"
-                aria-label="Ajouter un asset personnalisé dans cette catégorie"
+                :aria-label="$t('assetPanel.addCustomAsset')"
                 @click.stop="openInlineUploader(pack.id, category)"
               >
                 <span class="asset-add-plus" aria-hidden="true">+</span>
-                <span class="asset-name">Ajouter</span>
+                <span class="asset-name">{{ $t('assetPanel.add') }}</span>
               </button>
             </div>
           </div>
@@ -82,6 +82,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { usePacksStore } from '@/stores/packsStore'
 import { useAssetsStore } from '@/stores/assetsStore'
 import { useMapStore } from '@/stores/mapStore'
@@ -92,6 +93,7 @@ import PackUploader from './PackUploader.vue'
 import { collectUsedTilePairKeys, isTilePairLocked as tilePairLocked } from '@/utils/tilePairs'
 import { GAME_TYPES, loadPackGameTypeMap, getPackGameTypeFromPack } from '@/config/gameTypes'
 import { useThemeStore } from '@/stores/themeStore'
+import { translateCategoryName } from '@/locales/assetDictionary'
 import iconClassic from '@/assets/images/menu-setting-classic.jpg'
 import iconModern from '@/assets/images/menu-setting-modern.jpg'
 import iconFantasy from '@/assets/images/menu-setting-fantasy.jpg'
@@ -99,6 +101,7 @@ import iconWestern from '@/assets/images/menu-setting-western.jpg'
 import iconScifi from '@/assets/images/menu-setting-scifi.jpg'
 import iconNight from '@/assets/images/menu-setting-night.jpg'
 
+const { locale } = useI18n()
 const packsStore = usePacksStore()
 const assetsStore = useAssetsStore()
 const mapStore = useMapStore()

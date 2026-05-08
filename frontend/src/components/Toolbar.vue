@@ -16,29 +16,32 @@
         type="button"
         class="tool-btn tool-btn-rotate-selection"
         :disabled="mapStore.isPreviewMode"
-        title="Pivoter la sélection (+90°, équivalent clic droit)"
+        :title="$t('toolbar.rotateSelection')"
         @click="rotateSelection"
       >
         <span class="tool-icon" aria-hidden="true">↻</span>
-        <span class="sr-only">Pivoter la sélection</span>
+        <span class="sr-only">{{ $t('toolbar.rotateSelectionSr') }}</span>
       </button>
     </div>
   </div>
 </template>
 
 <script setup>
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useToolStore } from '@/stores/toolStore'
 import { useMapStore } from '@/stores/mapStore'
 
+const { t } = useI18n()
 const toolStore = useToolStore()
 const mapStore = useMapStore()
 
-const tools = [
-  { id: 'place', label: 'Placer', icon: '📍' },
-  { id: 'move', label: 'Déplacer', icon: '↔️' },
-  { id: 'rotate', label: 'Rotater', icon: '🔄' },
-  { id: 'delete', label: 'Supprimer', icon: '🗑️' }
-]
+const tools = computed(() => [
+  { id: 'place', label: t('toolbar.place'), icon: '📍' },
+  { id: 'move', label: t('toolbar.move'), icon: '↔️' },
+  { id: 'rotate', label: t('toolbar.rotate'), icon: '🔄' },
+  { id: 'delete', label: t('toolbar.delete'), icon: '🗑️' }
+])
 
 function rotateSelection () {
   const id = toolStore.selectedObject

@@ -2,19 +2,17 @@
   <div v-if="show" class="overlay" @click.self="emit('close')">
     <div class="modal">
       <div class="modal-header">
-        <h3>Versions locales</h3>
-        <button type="button" class="close-btn" aria-label="Fermer" @click="emit('close')">×</button>
+        <h3>{{ $t('versionsModal.title') }}</h3>
+        <button type="button" class="close-btn" :aria-label="$t('common.close')" @click="emit('close')">×</button>
       </div>
-      <p class="hint">
-        Un instantané est ajouté après chaque sauvegarde réussie. La restauration remplace l’état courant (pensez à sauvegarder après si besoin).
-      </p>
+      <p class="hint">{{ $t('versionsModal.hint') }}</p>
       <ul v-if="entries.length" class="list">
         <li v-for="(e, i) in entries" :key="e.ts + '-' + i">
           <div class="meta">
             <span class="label">{{ e.label }}</span>
             <span class="ts">{{ formatTs(e.ts) }}</span>
           </div>
-          <button type="button" class="restore-btn" @click="onRestore(e)">Restaurer</button>
+          <button type="button" class="restore-btn" @click="onRestore(e)">{{ $t('versionsModal.restore') }}</button>
         </li>
       </ul>
       <p v-else class="empty">Aucune version enregistrée pour cette carte. Sauvegardez d’abord.</p>
@@ -24,8 +22,11 @@
 
 <script setup>
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { listVersions } from '@/services/mapVersions'
 import { useMapStore } from '@/stores/mapStore'
+
+const { t, locale } = useI18n()
 
 const props = defineProps({
   show: { type: Boolean, default: false }
@@ -43,7 +44,7 @@ const entries = computed(() => {
 
 function formatTs (ts) {
   try {
-    return new Date(ts).toLocaleString('fr-FR')
+    return new Date(ts).toLocaleString(locale.value === 'en' ? 'en-GB' : 'fr-FR')
   } catch {
     return String(ts)
   }
@@ -51,7 +52,7 @@ function formatTs (ts) {
 
 function onRestore (entry) {
   if (!entry?.data) return
-  if (!confirm('Remplacer la carte courante par cette version ?')) return
+  if (!confirm(t('versionsModal.restoreConfirm'))) return
   mapStore.loadMap(entry.data)
   mapStore.clearHistoryStacks()
   mapStore.isUnsaved = true

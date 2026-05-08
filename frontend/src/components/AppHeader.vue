@@ -9,14 +9,14 @@
           :class="{ dirty: mapStore.isUnsaved }"
           :title="saveStatusTitle"
         >
-          {{ mapStore.isUnsaved ? 'Modifié' : 'Enregistré' }}
+          {{ mapStore.isUnsaved ? $t('header.modified') : $t('header.saved') }}
         </span>
       </div>
       <nav class="header-nav">
         <div class="nav-group">
           <div class="editor-tabs">
-            <router-link to="/" class="nav-tab" active-class="nav-tab-active">Carte</router-link>
-            <router-link to="/mission" class="nav-tab" active-class="nav-tab-active">Mission</router-link>
+            <router-link to="/" class="nav-tab" active-class="nav-tab-active">{{ $t('header.tabMap') }}</router-link>
+            <router-link to="/mission" class="nav-tab" active-class="nav-tab-active">{{ $t('header.tabMission') }}</router-link>
           </div>
         </div>
 
@@ -25,44 +25,57 @@
           <UserSelector v-if="menuVis.userSelector" />
         </div>
 
+        <div v-if="menuVis.langToggle" class="nav-group">
+          <select
+            class="header-btn lang-select"
+            :value="langStore.locale"
+            :aria-label="'Langue / Language'"
+            @change="langStore.setLocale($event.target.value)"
+          >
+            <option v-for="loc in supportedLocales" :key="loc" :value="loc">
+              {{ $t('lang.' + loc) }}
+            </option>
+          </select>
+        </div>
+
         <div class="nav-group">
           <button
             type="button"
             class="header-btn header-btn-icon"
             :disabled="!mapStore.canUndo"
-            title="Annuler (Ctrl+Z)"
+            :title="$t('header.undoTitle')"
             @click="mapStore.undo()"
           >
             <MenuGlyph name="undo" />
-            <span class="sr-only">Annuler</span>
+            <span class="sr-only">{{ $t('header.undo') }}</span>
           </button>
           <button
             type="button"
             class="header-btn header-btn-icon"
             :disabled="!mapStore.canRedo"
-            title="Rétablir (Ctrl+Y)"
+            :title="$t('header.redoTitle')"
             @click="mapStore.redo()"
           >
             <MenuGlyph name="redo" />
-            <span class="sr-only">Rétablir</span>
+            <span class="sr-only">{{ $t('header.redo') }}</span>
           </button>
           <button
             v-if="menuVis.preview"
             type="button"
             class="header-btn"
             :class="{ active: mapStore.isPreviewMode }"
-            :title="mapStore.isPreviewMode ? 'Quitter l’aperçu' : 'Aperçu lecture seule'"
+            :title="mapStore.isPreviewMode ? $t('header.exitPreviewTitle') : $t('header.previewTitle')"
             @click="togglePreview"
           >
-            {{ mapStore.isPreviewMode ? 'Quitter aperçu' : 'Aperçu' }}
+            {{ mapStore.isPreviewMode ? $t('header.exitPreview') : $t('header.preview') }}
           </button>
-          <button type="button" class="header-btn header-btn-icon" title="Charger une carte" @click="openMapLoader">
+          <button type="button" class="header-btn header-btn-icon" :title="$t('header.loadMap')" @click="openMapLoader">
             <MenuGlyph name="load" />
-            <span class="sr-only">Charger</span>
+            <span class="sr-only">{{ $t('header.loadMap') }}</span>
           </button>
-          <button type="button" class="header-btn header-btn-icon" title="Sauvegarder (Ctrl+S)" @click="saveMap">
+          <button type="button" class="header-btn header-btn-icon" :title="$t('header.saveMap')" @click="saveMap">
             <MenuGlyph name="save" />
-            <span class="sr-only">Sauvegarder</span>
+            <span class="sr-only">{{ $t('header.saveMap') }}</span>
           </button>
         </div>
 
@@ -71,7 +84,7 @@
             v-if="menuVis.exportJson"
             type="button"
             class="header-btn"
-            title="Télécharger le scénario JSON"
+            :title="$t('header.exportJson')"
             @click="exportScenarioJson"
           >
             JSON
@@ -80,7 +93,7 @@
             v-if="menuVis.exportXml"
             type="button"
             class="header-btn"
-            title="Exporter en XML simplifié"
+            :title="$t('header.exportXml')"
             @click="exportScenarioXml"
           >
             XML
@@ -91,7 +104,7 @@
             class="header-btn"
             @click="showVersionsModal = true"
           >
-            Versions
+            {{ $t('header.versions') }}
           </button>
         </div>
 
@@ -99,17 +112,17 @@
           <button
             type="button"
             class="header-btn header-btn-icon"
-            title="Export de la carte en PNG"
+            :title="$t('header.exportPng')"
             @click="exportMap"
           >
             <MenuGlyph name="exportImage" />
-            <span class="sr-only">Exporter la carte en PNG</span>
+            <span class="sr-only">{{ $t('header.exportPngSr') }}</span>
           </button>
         </div>
 
         <div v-if="menuVis.uploadZip || menuVis.uploadElement" class="nav-group">
-          <button v-if="menuVis.uploadZip" type="button" class="header-btn" @click="openPackZipUploader">Upload Pack ZIP</button>
-          <button v-if="menuVis.uploadElement" type="button" class="header-btn" @click="openPackUploader">Upload Pack Element</button>
+          <button v-if="menuVis.uploadZip" type="button" class="header-btn" @click="openPackZipUploader">{{ $t('header.uploadZip') }}</button>
+          <button v-if="menuVis.uploadElement" type="button" class="header-btn" @click="openPackUploader">{{ $t('header.uploadElement') }}</button>
         </div>
       </nav>
     </div>
@@ -128,6 +141,9 @@
 
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useLangStore } from '@/stores/langStore'
+import { SUPPORTED_LOCALES } from '@/i18n'
 import ThemeSelector from './ThemeSelector.vue'
 import UserSelector from './UserSelector.vue'
 import MapLoader from './MapLoader.vue'
@@ -145,6 +161,9 @@ import { pushVersion } from '@/services/mapVersions'
 import { mapPayloadToXml } from '@/utils/mapExportXml'
 import { getEditorMenuVisibility } from '@/config/editorMenu'
 
+const { t } = useI18n()
+const langStore = useLangStore()
+const supportedLocales = SUPPORTED_LOCALES
 const mapStore = useMapStore()
 const userStore = useUserStore()
 
@@ -157,12 +176,10 @@ const pendingSave = ref(false)
 
 const isUnsaved = ref(true)
 
-const DEFAULT_MAP_NAME = 'Nouvelle carte'
-
 const saveStatusTitle = computed(() =>
   mapStore.isUnsaved
-    ? 'Modifications non sauvegardées sur le serveur (ou brouillon local)'
-    : 'Dernière sauvegarde reconnue pour cette session'
+    ? t('header.saveStatusUnsaved')
+    : t('header.saveStatusSaved')
 )
 
 const menuVis = computed(() => getEditorMenuVisibility())
@@ -295,17 +312,12 @@ onMounted(() => {
 
 const saveModalInitialName = computed(() => {
   const name = String(mapStore.mapName || '').trim()
-  // "Nouvelle carte" est un placeholder : on préfère démarrer avec un champ vide
-  if (!mapStore.currentMapId && name === DEFAULT_MAP_NAME) return ''
   return name
 })
 
 function ensureMapNameForSave () {
   const name = String(mapStore.mapName || '').trim()
-  const hasRealName =
-    name.length > 0 &&
-    // Tant que la carte n'a pas encore d'ID serveur, on considère "Nouvelle carte" comme "non nommé"
-    (mapStore.currentMapId || name !== DEFAULT_MAP_NAME)
+  const hasRealName = name.length > 0 && (mapStore.currentMapId || true)
 
   if (hasRealName) return true
   showSaveModal.value = true
@@ -348,20 +360,20 @@ const saveMap = async () => {
     mapStore.isUnsaved = false
     try {
       const snapshot = { ...buildMapPayload(), id: mapStore.currentMapId }
-      pushVersion(mapStore.currentMapId || 'draft', 'Sauvegarde', snapshot)
+      pushVersion(mapStore.currentMapId || 'draft', t('map.versionLabel'), snapshot)
     } catch (verErr) {
       console.warn('Version locale non enregistrée', verErr)
     }
-    alert('Carte sauvegardée avec succès!' + (config.staticMode ? ' (sauvegardée localement)' : ''))
+    alert(t('header.saveSuccess') + (config.staticMode ? t('header.saveSuccessLocal') : ''))
   } catch (error) {
     console.error('Error saving map:', error)
-    alert('Erreur lors de la sauvegarde: ' + (error.response?.data?.error || error.message))
+    alert(t('header.saveError', { msg: error.response?.data?.error || error.message }))
   }
 }
 
 function mapNameToExportPngFilename () {
   let raw = String(mapStore.mapName || '').trim()
-  if (!raw || raw === DEFAULT_MAP_NAME) raw = 'carte'
+  if (!raw) raw = 'carte'
   const ascii = raw.normalize('NFKD').replace(/[\u0300-\u036f]/g, '')
   const slug = ascii.replace(/[^a-zA-Z0-9]+/g, '').slice(0, 120) || 'carte'
   return `${slug}.png`
@@ -410,7 +422,7 @@ const exportMap = async () => {
     document.body.removeChild(link)
   } catch (e) {
     console.error(e)
-    alert('Erreur export: ' + (e?.message || e))
+    alert(t('header.exportError', { msg: e?.message || e }))
   }
 }
 </script>
@@ -554,6 +566,31 @@ const exportMap = async () => {
   align-items: center;
   justify-content: center;
   min-width: 2.25rem;
+}
+
+.lang-select {
+  min-width: 3.2rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  font-size: 13px;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  color: inherit;
+  padding: 2px 4px;
+  appearance: none;
+  -webkit-appearance: none;
+  text-align: center;
+}
+
+.lang-select:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.lang-select option {
+  background-color: #2a2a2a;
+  color: #fff;
 }
 
 @media (max-width: 768px) {

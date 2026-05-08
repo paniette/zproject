@@ -2,12 +2,12 @@
   <div v-if="show" class="map-loader-overlay" @click.self="close">
     <div class="map-loader-modal">
       <div class="modal-header">
-        <h2>Charger une carte</h2>
+        <h2>{{ $t('mapLoader.title') }}</h2>
         <button @click="close" class="close-btn">×</button>
       </div>
       <div class="modal-content">
         <div class="search-box">
-          <input v-model="searchQuery" type="text" placeholder="Rechercher..." />
+          <input v-model="searchQuery" type="text" :placeholder="$t('mapLoader.searchPlaceholder')" />
         </div>
         <div class="maps-list">
           <div
@@ -17,10 +17,10 @@
           >
             <div class="map-info" @click="loadMap(map)">
               <h3>{{ map.name }}</h3>
-              <p class="map-meta">Par {{ map.metadata?.author || 'temp' }}</p>
+              <p class="map-meta">{{ $t('common.by') }} {{ map.metadata?.author || $t('mapLoader.unknownAuthor') }}</p>
               <p class="map-date">{{ formatDate(map.metadata?.modified) }}</p>
             </div>
-            <button @click.stop="deleteMap(map)" class="delete-btn" title="Supprimer">🗑️</button>
+            <button @click.stop="deleteMap(map)" class="delete-btn" :title="$t('mapLoader.deleteTitle')">🗑️</button>
           </div>
         </div>
       </div>
@@ -30,10 +30,13 @@
 
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useMapStore } from '@/stores/mapStore'
 import { useUserStore } from '@/stores/userStore'
 import api from '@/services/api'
 import { formatDate } from '@/utils/mapUtils'
+
+const { t } = useI18n()
 
 const props = defineProps({
   show: Boolean
@@ -76,22 +79,21 @@ const loadMap = async (map) => {
     }
   } catch (error) {
     console.error('Error loading map:', error)
-    alert('Erreur lors du chargement de la carte')
+    alert(t('mapLoader.loadError'))
   }
 }
 
 const deleteMap = async (map) => {
-  if (!confirm(`Êtes-vous sûr de vouloir supprimer la carte "${map.name}" ?`)) {
+  if (!confirm(t('mapLoader.deleteConfirm', { name: map.name }))) {
     return
   }
   
   try {
     await api.deleteMap(userStore.currentUser, map.id)
-    // Recharger la liste des cartes
     await loadMaps()
   } catch (error) {
     console.error('Error deleting map:', error)
-    alert('Erreur lors de la suppression de la carte')
+    alert(t('mapLoader.deleteError'))
   }
 }
 

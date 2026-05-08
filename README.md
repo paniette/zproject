@@ -1,4 +1,4 @@
-# Zombicide Scenario Editor - Application Web
+﻿# Zombicide Scenario Editor - Application Web
 
 Éditeur de cartes Zombicide compatible avec les packs du Mapeditor Windows.
 
@@ -55,6 +55,7 @@ Pour le **mode statique** (sans Django), un seul `npm run dev` ou un build stati
 
 - **Thèmes** d’interface (liste déroulante, persistance, variables CSS)
 - Libellés et tooltips **Utilisateur** / **Thème** pour clarifier l’UI
+- **Multilingue** : interface disponible en français, anglais, allemand et espagnol via **[vue-i18n v9](https://vue-i18n.intlify.dev/)**. Détection automatique de la langue du navigateur ; préférence persistée dans `localStorage`. Sélecteur disponible dans le menu étendu.
 
 ### Mode statique (sans Django)
 

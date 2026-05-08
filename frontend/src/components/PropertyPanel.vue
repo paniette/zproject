@@ -1,34 +1,34 @@
 <template>
   <aside class="property-panel">
-    <h3 class="panel-title">Propriétés</h3>
-    <p v-if="mapStore.isPreviewMode" class="preview-hint">Aperçu actif — propriétés en lecture seule.</p>
+    <h3 class="panel-title">{{ $t('propertyPanel.title') }}</h3>
+    <p v-if="mapStore.isPreviewMode" class="preview-hint">{{ $t('propertyPanel.previewHint') }}</p>
     <div v-if="!selectionId" class="empty-state">
-      Sélectionnez une tuile ou un objet sur la carte pour éditer position, rotation et données.
+      {{ $t('propertyPanel.emptyState') }}
     </div>
     <div v-else-if="kind === 'tile' && tile" class="form">
-      <p class="badge">Tuile</p>
-      <label>Asset</label>
+      <p class="badge">{{ $t('propertyPanel.tile') }}</p>
+      <label>{{ $t('propertyPanel.asset') }}</label>
       <p class="readonly">{{ shortPath(tile.asset) }}</p>
-      <label for="pp-tx">X (grille)</label>
+      <label for="pp-tx">{{ $t('propertyPanel.xGrid') }}</label>
       <input id="pp-tx" v-model.number="localX" type="number" class="inp" :disabled="mapStore.isPreviewMode" @change="applyTile" />
-      <label for="pp-ty">Y (grille)</label>
+      <label for="pp-ty">{{ $t('propertyPanel.yGrid') }}</label>
       <input id="pp-ty" v-model.number="localY" type="number" class="inp" :disabled="mapStore.isPreviewMode" @change="applyTile" />
-      <label for="pp-tr">Rotation (°)</label>
+      <label for="pp-tr">{{ $t('propertyPanel.rotation') }}</label>
       <input id="pp-tr" v-model.number="localRot" type="number" class="inp" step="90" :disabled="mapStore.isPreviewMode" @change="applyTile" />
     </div>
     <div v-else-if="kind === 'object' && obj" class="form">
-      <p class="badge">Objet</p>
-      <label>Type</label>
+      <p class="badge">{{ $t('propertyPanel.object') }}</p>
+      <label>{{ $t('propertyPanel.type') }}</label>
       <p class="readonly">{{ obj.type }}</p>
-      <label>Asset</label>
+      <label>{{ $t('propertyPanel.asset') }}</label>
       <p class="readonly">{{ shortPath(obj.asset) }}</p>
-      <label for="pp-ox">X (grille)</label>
+      <label for="pp-ox">{{ $t('propertyPanel.xGrid') }}</label>
       <input id="pp-ox" v-model.number="localX" type="number" class="inp" :disabled="mapStore.isPreviewMode" @change="applyObject" />
-      <label for="pp-oy">Y (grille)</label>
+      <label for="pp-oy">{{ $t('propertyPanel.yGrid') }}</label>
       <input id="pp-oy" v-model.number="localY" type="number" class="inp" :disabled="mapStore.isPreviewMode" @change="applyObject" />
-      <label for="pp-or">Rotation (°)</label>
+      <label for="pp-or">{{ $t('propertyPanel.rotation') }}</label>
       <input id="pp-or" v-model.number="localRot" type="number" class="inp" step="90" :disabled="mapStore.isPreviewMode" @change="applyObject" />
-      <label for="pp-props">Propriétés (JSON)</label>
+      <label for="pp-props">{{ $t('propertyPanel.propsJson') }}</label>
       <textarea id="pp-props" v-model="propsJson" class="textarea" rows="5" spellcheck="false" :disabled="mapStore.isPreviewMode" @change="applyPropsJson" />
       <p v-if="propsError" class="error">{{ propsError }}</p>
     </div>
@@ -37,8 +37,11 @@
 
 <script setup>
 import { ref, watch, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useMapStore } from '@/stores/mapStore'
 import { useToolStore } from '@/stores/toolStore'
+
+const { t } = useI18n()
 
 const mapStore = useMapStore()
 const toolStore = useToolStore()
@@ -117,11 +120,11 @@ function applyPropsJson () {
   if (!obj.value) return
   try {
     const parsed = JSON.parse(propsJson.value || '{}')
-    if (typeof parsed !== 'object' || parsed === null) throw new Error('Le JSON doit être un objet')
+    if (typeof parsed !== 'object' || parsed === null) throw new Error(t('propertyPanel.jsonMustBeObject'))
     propsError.value = ''
     mapStore.updateObject(obj.value.id, { properties: parsed })
   } catch (e) {
-    propsError.value = e.message || 'JSON invalide'
+    propsError.value = e.message || t('propertyPanel.jsonInvalid')
   }
 }
 </script>

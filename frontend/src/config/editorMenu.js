@@ -25,7 +25,8 @@ export const editorMenuVisibility = {
   exportXml: true,
   versions: true,
   uploadZip: true,
-  uploadElement: true
+  uploadElement: true,
+  langToggle: true
 }
 
 export function getEditorMenuVisibility () {
@@ -42,7 +43,8 @@ export function getEditorMenuVisibility () {
         exportXml: false,
         versions: false,
         uploadZip: false,
-        uploadElement: false
+        uploadElement: false,
+        langToggle: false
       }
     : { ...editorMenuVisibility }
 

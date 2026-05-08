@@ -45,7 +45,7 @@ export const useMapStore = defineStore('map', {
     compoundDepth: 0,
     _historySuspended: false,
     currentMapId: null,
-    mapName: 'Nouvelle carte',
+    mapName: '',
     isUnsaved: true,
     gridOffsetX: 0,
     gridOffsetY: 0,
@@ -230,7 +230,7 @@ export const useMapStore = defineStore('map', {
       this.tileSize = mapData.grid.tileSize || 32
       this.layers = mapData.layers || { tiles: [], objects: [] }
       this.currentMapId = mapData.id || null
-      this.mapName = mapData.name || 'Nouvelle carte'
+      this.mapName = mapData.name || ''
       this.isUnsaved = false
       this.gridOffsetX = mapData.gridOffsetX || 0
       this.gridOffsetY = mapData.gridOffsetY || 0
@@ -257,7 +257,7 @@ export const useMapStore = defineStore('map', {
       this.layers = { tiles: [], objects: [] }
       this.selectedObject = null
       this.currentMapId = null
-      this.mapName = 'Nouvelle carte'
+      this.mapName = ''
       this.isUnsaved = true
       this.gridOffsetX = 0
       this.gridOffsetY = 0

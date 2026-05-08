@@ -2,12 +2,12 @@
   <div v-if="show" class="pack-uploader-overlay" @click.self="close">
     <div class="pack-uploader">
       <div class="modal-header">
-        <h3>Upload d'Asset Personnalisé</h3>
-        <button type="button" @click="close" class="close-btn" aria-label="Fermer">×</button>
+        <h3>{{ $t('packUploader.title') }}</h3>
+        <button type="button" @click="close" class="close-btn" :aria-label="$t('common.close')">×</button>
       </div>
       <form @submit.prevent="uploadAsset" class="upload-form">
         <div class="form-group">
-          <label>Fichier image</label>
+          <label>{{ $t('packUploader.fileImage') }}</label>
           <input
             ref="fileInputRef"
             type="file"
@@ -16,19 +16,19 @@
             required
           />
           <div v-if="previewImage" class="preview">
-            <img :src="previewImage" alt="Aperçu" />
+            <img :src="previewImage" :alt="$t('packUploader.imagePreview')" />
           </div>
         </div>
 
         <div class="form-group">
-          <label for="asset-kind">Type (préréglage)</label>
+          <label for="asset-kind">{{ $t('packUploader.typePreset') }}</label>
           <select id="asset-kind" v-model="assetKind" class="full-width">
             <option v-for="opt in assetKindOptions" :key="opt.value" :value="opt.value">
               {{ opt.label }} ({{ opt.w }}×{{ opt.h }} px)
             </option>
           </select>
-          <p class="hint">La liste ou les mini-boutons ci-dessous pré-remplissent largeur et hauteur ; tu peux les ajuster à la main.</p>
-          <div class="preset-row" role="group" aria-label="Préréglages de taille discrets">
+          <p class="hint">{{ $t('packUploader.presetHint') }}</p>
+          <div class="preset-row" role="group" :aria-label="$t('packUploader.commonSizes')">
             <span class="preset-hint" title="Un clic applique la taille dans les champs">Tailles courantes</span>
             <button
               v-for="opt in assetKindOptions"
@@ -45,10 +45,10 @@
         </div>
 
         <div class="form-group">
-          <label>Dimensions finales (utilisées pour l’upload)</label>
+          <label>{{ $t('packUploader.dimensions') }}</label>
           <div class="dim-inputs">
             <div>
-              <label for="target-w">Largeur (px)</label>
+              <label for="target-w">{{ $t('packUploader.width') }}</label>
               <input
                 id="target-w"
                 v-model.number="targetW"
@@ -59,7 +59,7 @@
               />
             </div>
             <div>
-              <label for="target-h">Hauteur (px)</label>
+              <label for="target-h">{{ $t('packUploader.height') }}</label>
               <input
                 id="target-h"
                 v-model.number="targetH"
@@ -73,29 +73,29 @@
         </div>
 
         <div class="form-group">
-          <label>Nom de l'asset</label>
-          <input v-model="assetName" type="text" required placeholder="ex. MonTuile.png" />
+          <label>{{ $t('packUploader.assetName') }}</label>
+          <input v-model="assetName" type="text" required :placeholder="$t('packUploader.assetNamePlaceholder')" />
         </div>
 
         <template v-if="isContextual">
           <div class="form-group contextual-info">
-            <label>Pack</label>
+            <label>{{ $t('packUploader.pack') }}</label>
             <p class="readonly-field">{{ contextualPackTitle }}</p>
-            <label>Type de jeu</label>
+            <label>{{ $t('packUploader.gameType') }}</label>
             <select v-model="gameType" class="full-width">
-              <option v-for="t in GAME_TYPES" :key="'gt-' + t.id" :value="t.id" :disabled="t.id === 'all'">
-                {{ t.label }}
+              <option v-for="gt in GAME_TYPES" :key="'gt-' + gt.id" :value="gt.id" :disabled="gt.id === 'all'">
+                {{ gt.label }}
               </option>
             </select>
-            <label>Catégorie</label>
+            <label>{{ $t('packUploader.category') }}</label>
             <p class="readonly-field">{{ category }}</p>
           </div>
         </template>
         <template v-else>
           <div class="form-group">
-            <label>Pack</label>
+            <label>{{ $t('packUploader.pack') }}</label>
             <select v-model="packName" @change="loadPackCategories" required>
-              <option value="">Sélectionner un pack</option>
+              <option value="">{{ $t('packUploader.selectPack') }}</option>
               <option v-for="pack in availablePacks" :key="pack.id" :value="pack.id">
                 {{ pack.name }}
               </option>
@@ -103,18 +103,18 @@
           </div>
 
           <div class="form-group">
-            <label>Type de jeu</label>
+            <label>{{ $t('packUploader.gameType') }}</label>
             <select v-model="gameType" class="full-width">
-              <option v-for="t in GAME_TYPES" :key="'gt-' + t.id" :value="t.id" :disabled="t.id === 'all'">
-                {{ t.label }}
+              <option v-for="gt in GAME_TYPES" :key="'gt-' + gt.id" :value="gt.id" :disabled="gt.id === 'all'">
+                {{ gt.label }}
               </option>
             </select>
           </div>
 
           <div class="form-group">
-            <label>Catégorie</label>
+            <label>{{ $t('packUploader.category') }}</label>
             <select v-model="category" :disabled="!packName || categories.length === 0" required>
-              <option value="">Sélectionner une catégorie</option>
+              <option value="">{{ $t('packUploader.selectCategory') }}</option>
               <option v-for="cat in categories" :key="cat" :value="cat">
                 {{ cat }}
               </option>
@@ -123,7 +123,7 @@
         </template>
 
         <button type="submit" :disabled="uploading || !packName || !category" class="submit-btn">
-          {{ uploading ? 'Upload en cours...' : 'Upload et Normaliser' }}
+          {{ uploading ? $t('packUploader.uploading') : $t('packUploader.submit') }}
         </button>
       </form>
     </div>
@@ -132,44 +132,18 @@
 
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import api from '@/services/api'
 import { GAME_TYPES, loadPackGameTypeMap, savePackGameTypeMap, getPackGameType } from '@/config/gameTypes'
 
-/** Tailles courantes pour upload assisté (issue #10) — tooltips sur les mini-boutons */
-const assetKindOptions = [
-  {
-    value: 'tile',
-    label: 'Tuile',
-    shortLabel: '250²',
-    w: 250,
-    h: 250,
-    tooltip: 'Tuile : 250×250 px'
-  },
-  {
-    value: 'pop',
-    label: 'Point de pop',
-    shortLabel: '56×26',
-    w: 56,
-    h: 26,
-    tooltip: 'Point de pop (spawn) : 56×26 px'
-  },
-  {
-    value: 'character',
-    label: 'Personnage',
-    shortLabel: '30×50',
-    w: 30,
-    h: 50,
-    tooltip: 'Personnage / figurine : 30×50 px'
-  },
-  {
-    value: 'token',
-    label: 'Jeton',
-    shortLabel: '35²',
-    w: 35,
-    h: 35,
-    tooltip: 'Jeton : 35×35 px'
-  }
-]
+const { t } = useI18n()
+
+const assetKindOptions = computed(() => [
+  { value: 'tile',      label: t('packUploader.kinds.tile'),      shortLabel: '250²',  w: 250, h: 250, tooltip: t('packUploader.kinds.tileTooltip') },
+  { value: 'pop',       label: t('packUploader.kinds.pop'),       shortLabel: '56×26', w: 56,  h: 26,  tooltip: t('packUploader.kinds.popTooltip') },
+  { value: 'character', label: t('packUploader.kinds.character'), shortLabel: '30×50', w: 30,  h: 50,  tooltip: t('packUploader.kinds.characterTooltip') },
+  { value: 'token',     label: t('packUploader.kinds.token'),     shortLabel: '35²',   w: 35,  h: 35,  tooltip: t('packUploader.kinds.tokenTooltip') },
+])
 
 const props = defineProps({
   show: {
@@ -216,7 +190,7 @@ const availablePacks = ref([])
 const categories = ref([])
 
 function applyKindDimensions() {
-  const o = assetKindOptions.find((x) => x.value === assetKind.value)
+  const o = assetKindOptions.value.find((x) => x.value === assetKind.value)
   if (o) {
     targetW.value = o.w
     targetH.value = o.h
@@ -326,12 +300,12 @@ const handleFileSelect = (event) => {
 
 const uploadAsset = async () => {
   if (!selectedFile.value) {
-    alert('Veuillez sélectionner un fichier')
+    alert(t('packUploader.missingFile'))
     return
   }
 
   if (!packName.value || !category.value) {
-    alert('Veuillez sélectionner un pack et une catégorie')
+    alert(t('packUploader.missingPackCategory'))
     return
   }
 
@@ -349,7 +323,7 @@ const uploadAsset = async () => {
     formData.append('game_type', gameType.value)
 
     await api.uploadCustomPack(formData)
-    alert('Asset uploadé avec succès!')
+    alert(t('packUploader.success'))
 
     const pid = packName.value
 
@@ -382,7 +356,7 @@ const uploadAsset = async () => {
     window.dispatchEvent(new CustomEvent('packs-refresh'))
   } catch (error) {
     console.error('Error uploading asset:', error)
-    alert("Erreur lors de l'upload: " + (error.response?.data?.error || error.message))
+    alert(t('packUploader.error', { msg: error.response?.data?.error || error.message }))
   } finally {
     uploading.value = false
   }

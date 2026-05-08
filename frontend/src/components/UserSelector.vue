@@ -1,14 +1,14 @@
 <template>
   <div
     class="user-selector"
-    title="Les cartes sauvegardées et chargées sont celles de cet utilisateur (profil de travail)."
+    :title="$t('userSelector.title')"
   >
-    <label for="user-select" class="user-label">Utilisateur</label>
+    <label for="user-select" class="user-label">{{ $t('userSelector.label') }}</label>
     <select
       id="user-select"
       v-model="selectedUser"
       class="user-select"
-      aria-label="Choisir l'utilisateur actif pour les cartes"
+      :aria-label="$t('userSelector.ariaLabel')"
       @change="changeUser"
     >
       <option v-for="user in availableUsers" :key="user" :value="user">

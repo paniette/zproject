@@ -2,23 +2,23 @@
   <div v-if="show" class="pack-zip-uploader-overlay" @click.self="close">
     <div class="pack-zip-uploader">
     <div class="modal-header">
-      <h3>Upload de Pack ZIP</h3>
+      <h3>{{ $t('packZipUploader.title') }}</h3>
       <button @click="close" class="close-btn">×</button>
     </div>
     <form @submit.prevent="uploadZip" class="upload-form">
       <div class="form-group">
-        <label>Fichier ZIP</label>
+        <label>{{ $t('packZipUploader.fileZip') }}</label>
         <input type="file" @change="handleFileSelect" accept=".zip" required />
         <div v-if="zipFileName" class="file-info">
-          Fichier sélectionné: {{ zipFileName }}
+          {{ $t('packZipUploader.fileSelected', { name: zipFileName }) }}
         </div>
       </div>
 
       <div class="form-group">
-        <label>Type de jeu</label>
+        <label>{{ $t('packZipUploader.gameType') }}</label>
         <select v-model="gameType" class="full-width">
-          <option v-for="t in GAME_TYPES" :key="'gt-' + t.id" :value="t.id" :disabled="t.id === 'all'">
-            {{ t.label }}
+          <option v-for="gt in GAME_TYPES" :key="'gt-' + gt.id" :value="gt.id" :disabled="gt.id === 'all'">
+            {{ gt.label }}
           </option>
         </select>
       </div>
@@ -26,7 +26,7 @@
       <div class="form-group">
         <label>
           <input v-model="replaceExisting" type="checkbox" />
-          Remplacer si existe déjà
+          {{ $t('packZipUploader.replaceExisting') }}
         </label>
       </div>
       
@@ -36,16 +36,16 @@
       </div>
       
       <button type="submit" :disabled="uploading" class="submit-btn">
-        {{ uploading ? 'Upload en cours...' : 'Upload et Extraire' }}
+        {{ uploading ? $t('packZipUploader.uploading') : $t('packZipUploader.submit') }}
       </button>
     </form>
     
     <div v-if="uploadedPacks.length > 0" class="uploaded-packs">
-      <h4>Packs uploadés récemment</h4>
+      <h4>{{ $t('packZipUploader.recentPacks') }}</h4>
       <ul>
         <li v-for="pack in uploadedPacks" :key="pack.id">
           <span class="pack-name">{{ pack.name }}</span>
-          <button @click="deletePack(pack.id)" class="delete-btn">Supprimer</button>
+          <button @click="deletePack(pack.id)" class="delete-btn">{{ $t('packZipUploader.delete') }}</button>
         </li>
       </ul>
     </div>
@@ -55,8 +55,11 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import api from '@/services/api'
 import { GAME_TYPES, loadPackGameTypeMap, savePackGameTypeMap } from '@/config/gameTypes'
+
+const { t } = useI18n()
 
 const props = defineProps({
   show: {
@@ -89,7 +92,7 @@ const handleFileSelect = (event) => {
 
 const uploadZip = async () => {
   if (!selectedFile.value) {
-    alert('Veuillez sélectionner un fichier ZIP')
+    alert(t('packZipUploader.missingZip'))
     return
   }
   
@@ -113,7 +116,7 @@ const uploadZip = async () => {
     uploadProgress.value = 100
     
     clearInterval(progressInterval)
-    alert('Pack uploadé avec succès!')
+    alert(t('packZipUploader.success'))
 
     // Associer les packs récemment uploadés au type choisi (persisté côté navigateur)
     try {
@@ -137,7 +140,7 @@ const uploadZip = async () => {
     window.dispatchEvent(new CustomEvent('packs-refresh'))
   } catch (error) {
     console.error('Error uploading ZIP:', error)
-    alert('Erreur lors de l\'upload: ' + (error.response?.data?.error || error.message))
+    alert(t('packZipUploader.error', { msg: error.response?.data?.error || error.message }))
     uploadProgress.value = 0
   } finally {
     uploading.value = false
@@ -154,17 +157,17 @@ const loadUploadedPacks = async () => {
 }
 
 const deletePack = async (packId) => {
-  if (!confirm(`Supprimer le pack ${packId}?`)) {
+  if (!confirm(t('packZipUploader.deleteConfirm', { packId }))) {
     return
   }
   
   try {
     await api.delete(`/packs/uploaded/${packId}/`)
     loadUploadedPacks()
-    alert('Pack supprimé')
+    alert(t('packZipUploader.deleteSuccess'))
   } catch (error) {
     console.error('Error deleting pack:', error)
-    alert('Erreur lors de la suppression')
+    alert(t('packZipUploader.deleteError'))
   }
 }
 

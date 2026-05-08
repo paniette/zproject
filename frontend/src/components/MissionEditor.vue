@@ -1,52 +1,52 @@
 <template>
   <div class="mission-editor">
     <div class="mission-form">
-      <h2 class="mission-form-title">Données de la mission</h2>
+      <h2 class="mission-form-title">{{ $t('missionEditor.title') }}</h2>
 
       <div class="field">
-        <span>Série / Thème</span>
+        <span>{{ $t('missionEditor.series') }}</span>
         <div
           class="game-type-filter"
           :class="{ 'has-selection': themeStore.activeTheme !== '' }"
           role="group"
-          aria-label="Choisir la série Zombicide"
+          :aria-label="$t('missionEditor.seriesAriaLabel')"
         >
           <button
-            v-for="t in gameTypes"
+            v-for="gt in gameTypes"
             :key="t.id"
             type="button"
             class="gt-btn"
-            :class="{ active: themeStore.activeTheme === t.id }"
-            :title="t.label"
-            @click="themeStore.setTheme(t.id)"
+            :class="{ active: themeStore.activeTheme === gt.id }"
+            :title="gt.label"
+            @click="themeStore.setTheme(gt.id)"
           >
-            <img class="gt-icon" :src="getGameTypeIcon(t.id)" :alt="t.label" />
-            <span class="sr-only">{{ t.label }}</span>
+            <img class="gt-icon" :src="getGameTypeIcon(gt.id)" :alt="gt.label" />
+            <span class="sr-only">{{ gt.label }}</span>
           </button>
         </div>
       </div>
 
       <label class="field">
-        <span>Effet de fond</span>
+        <span>{{ $t('missionEditor.pageEffect') }}</span>
         <select v-model="mission.pageEffect" class="input">
-          <option value="none">Aucun</option>
-          <option value="grain">Grain</option>
-          <option value="tache">Taché</option>
-          <option value="sable">Sable</option>
-          <option value="froisse">Froissé</option>
-          <option value="desert">Désert</option>
+          <option value="none">{{ $t('missionEditor.effects.none') }}</option>
+          <option value="grain">{{ $t('missionEditor.effects.grain') }}</option>
+          <option value="tache">{{ $t('missionEditor.effects.tache') }}</option>
+          <option value="sable">{{ $t('missionEditor.effects.sable') }}</option>
+          <option value="froisse">{{ $t('missionEditor.effects.froisse') }}</option>
+          <option value="desert">{{ $t('missionEditor.effects.desert') }}</option>
         </select>
       </label>
 
       <div v-if="availableCornerImages.length" class="field">
-        <span>Décoration de coin</span>
+        <span>{{ $t('missionEditor.cornerDeco') }}</span>
         <div class="field-row">
           <select
             :value="mission.cornerImage || ''"
             class="input flex-1"
             @change="patchCornerImage($event.target.value)"
           >
-            <option value="">Aucune</option>
+            <option value="">{{ $t('missionEditor.noCorner') }}</option>
             <option v-for="img in availableCornerImages" :key="img.id" :value="img.file">
               {{ img.label }}
             </option>
@@ -58,94 +58,94 @@
             style="width: 110px"
             @change="patchCornerSide($event.target.value)"
           >
-            <option value="left">Gauche</option>
-            <option value="right">Droite</option>
+            <option value="left">{{ $t('missionEditor.cornerLeft') }}</option>
+            <option value="right">{{ $t('missionEditor.cornerRight') }}</option>
           </select>
         </div>
       </div>
 
       <label class="field">
-        <span>Code quête (ex. B61)</span>
+        <span>{{ $t('missionEditor.questCode') }}</span>
         <input v-model="mission.questCode" type="text" class="input" placeholder="B61" />
       </label>
 
       <label class="field">
-        <span>Titre</span>
-        <input v-model="mission.title" type="text" class="input" placeholder="Titre de la mission" />
+        <span>{{ $t('missionEditor.missionTitle') }}</span>
+        <input v-model="mission.title" type="text" class="input" :placeholder="$t('missionEditor.titlePlaceholder')" />
       </label>
 
       <label class="field">
-        <span>Auteurs (un par ligne)</span>
-        <textarea v-model="authorsText" class="input textarea" rows="3" placeholder="Nom Prénom"></textarea>
+        <span>{{ $t('missionEditor.authors') }}</span>
+        <textarea v-model="authorsText" class="input textarea" rows="3" :placeholder="$t('missionEditor.authorsPlaceholder')"></textarea>
       </label>
 
       <div class="field-row">
         <label class="field half">
-          <span>Difficulté</span>
+          <span>{{ $t('missionEditor.difficulty') }}</span>
           <input v-model="mission.difficulty" type="text" class="input" placeholder="HARD" />
         </label>
         <label class="field half">
-          <span>Joueurs</span>
-          <input v-model="mission.playerCount" type="text" class="input" placeholder="6 survivants" />
+          <span>{{ $t('missionEditor.players') }}</span>
+          <input v-model="mission.playerCount" type="text" class="input" :placeholder="$t('missionEditor.playersPlaceholder')" />
         </label>
         <label class="field half">
-          <span>Durée estimée</span>
+          <span>{{ $t('missionEditor.duration') }}</span>
           <input v-model="mission.estimatedDuration" type="text" class="input" placeholder="MEDIUM" />
         </label>
       </div>
 
       <label class="field">
-        <span>Synopsis</span>
-        <textarea v-model="mission.synopsis" class="input textarea" rows="6" placeholder="Histoire..."></textarea>
+        <span>{{ $t('missionEditor.synopsis') }}</span>
+        <textarea v-model="mission.synopsis" class="input textarea" rows="6" :placeholder="$t('missionEditor.synopsisPlaceholder')"></textarea>
       </label>
 
       <label class="field">
-        <span>Objectifs (une ligne = un objectif)</span>
+        <span>{{ $t('missionEditor.objectives') }}</span>
         <textarea v-model="objectivesText" class="input textarea" rows="8"></textarea>
       </label>
 
       <label class="field">
-        <span>Règles spéciales (une ligne = une règle)</span>
+        <span>{{ $t('missionEditor.specialRules') }}</span>
         <textarea v-model="specialRulesText" class="input textarea" rows="8"></textarea>
       </label>
 
       <label class="field">
-        <span>Matériel requis</span>
+        <span>{{ $t('missionEditor.material') }}</span>
         <input
           v-model="mission.materialRequired"
           type="text"
           class="input"
-          placeholder="Zombicide: White Death"
+          :placeholder="$t('missionEditor.materialPlaceholder')"
         />
       </label>
 
       <label class="field">
-        <span>Libellé bas de page (droite)</span>
+        <span>{{ $t('missionEditor.footerLabel') }}</span>
         <input
           v-model="mission.footerLabel"
           type="text"
           class="input"
-          placeholder="QUÊTE - ZOMBICIDE"
+          :placeholder="$t('missionEditor.footerLabelPlaceholder')"
         />
       </label>
 
       <div class="field">
-        <span>Tuiles utilisées</span>
+        <span>{{ $t('missionEditor.tilesUsed') }}</span>
         <div class="tiles-row">
-          <input v-model="tilesText" type="text" class="input flex-1" placeholder="30V, 33R, 35V" />
-          <button type="button" class="btn-secondary" @click="syncTiles">Depuis la carte</button>
+          <input v-model="tilesText" type="text" class="input flex-1" :placeholder="$t('missionEditor.tilesUsedPlaceholder')" />
+          <button type="button" class="btn-secondary" @click="syncTiles">{{ $t('missionEditor.fromMap') }}</button>
         </div>
       </div>
 
       <div class="field actions">
-        <button type="button" class="btn-primary" @click="captureMap">Capturer la carte (PNG)</button>
-        <button v-if="mission.mapImageDataUrl" type="button" class="btn-secondary" @click="clearMapImage">Retirer l'image</button>
-        <button type="button" class="btn-secondary" @click="printPreview">Imprimer / PDF</button>
+        <button type="button" class="btn-primary" @click="captureMap">{{ $t('missionEditor.captureMap') }}</button>
+        <button v-if="mission.mapImageDataUrl" type="button" class="btn-secondary" @click="clearMapImage">{{ $t('missionEditor.removeImage') }}</button>
+        <button type="button" class="btn-secondary" @click="printPreview">{{ $t('missionEditor.print') }}</button>
       </div>
     </div>
 
     <div class="mission-preview-panel">
-      <h2 class="mission-form-title">Prévisualisation</h2>
+      <h2 class="mission-form-title">{{ $t('missionEditor.previewTitle') }}</h2>
       <div class="preview-scroll">
         <MissionPagePreview />
       </div>
@@ -155,6 +155,7 @@
 
 <script setup>
 import { computed, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
 import { useMapStore } from '@/stores/mapStore'
 import { useThemeStore } from '@/stores/themeStore'
@@ -170,6 +171,7 @@ import iconScifi from '@/assets/images/menu-setting-scifi.jpg'
 import iconNight from '@/assets/images/menu-setting-night.jpg'
 import MissionPagePreview from './MissionPagePreview.vue'
 
+const { t } = useI18n()
 const mapStore = useMapStore()
 const themeStore = useThemeStore()
 const { mission } = storeToRefs(mapStore)
@@ -254,8 +256,7 @@ async function captureMap () {
     console.error(e)
     const msg = e?.message || ''
     alert(
-      msg ||
-        'Impossible de capturer la carte (vérifiez que l’onglet Carte a bien chargé le canvas).'
+      msg || t('missionEditor.captureError')
     )
   }
 }

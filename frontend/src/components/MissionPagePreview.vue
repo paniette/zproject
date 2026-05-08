@@ -19,7 +19,7 @@
           <div class="mp-col-intro">
             <div class="mp-hero-inline">
               <hr class="mp-rule-top" />
-              <p v-if="mission.questCode" class="mp-quest-code">QUÊTE {{ mission.questCode }}</p>
+              <p v-if="mission.questCode" class="mp-quest-code">{{ $t('missionPreview.quest') }} {{ mission.questCode }}</p>
               <h1 class="mp-title">{{ displayTitle }}</h1>
               <hr class="mp-rule-bottom" />
               <p class="mp-meta-line">
@@ -36,7 +36,7 @@
             <div
               v-if="tokenSummaryItems.length && tokenSummaryPlacement === 'intro'"
               class="mp-token-summary"
-              aria-label="Matériel nécessaire"
+              :aria-label="$t('missionPreview.materialNeeded')"
             >
               <div v-for="item in tokenSummaryItems" :key="item.key" class="mp-ts-item" :data-key="item.key">
                 <img :src="assetToUrl(item.asset)" :alt="item.label" class="mp-ts-img" />
@@ -55,18 +55,18 @@
             <section v-if="tilesLine" class="mp-dalles">
               <div class="mp-dalles-left">
                 <p class="mp-dalles-line">
-                  <span class="mp-dalles-label">Dalles requises :</span>
+                  <span class="mp-dalles-label">{{ $t('missionPreview.tilesRequired') }}</span>
                   <span class="mp-dalles-value">{{ tilesLine }}</span>
                 </p>
                 <p v-if="mission.materialRequired" class="mp-dalles-line">
-                  <span class="mp-dalles-label">Matériel :</span>
+                  <span class="mp-dalles-label">{{ $t('missionPreview.material') }}</span>
                   <span class="mp-dalles-value">{{ mission.materialRequired }}</span>
                 </p>
                 <!-- Chips de repli : seulement si pas de tuiles posées sur la carte -->
                 <ul
                   v-if="tileChipsLayout === 'rules' && !tileGridLayout"
                   class="mp-tile-chips mp-tile-chips--in-column"
-                  aria-label="Tuiles"
+                  :aria-label="$t('missionPreview.tiles')"
                 >
                   <li v-for="code in tilesUsed" :key="'chip-col-' + code">{{ code }}</li>
                 </ul>
@@ -84,14 +84,14 @@
             </section>
 
             <section v-if="mission.objectives.length" class="mp-block">
-              <h2 class="mp-section-title">Objectifs</h2>
+              <h2 class="mp-section-title">{{ $t('missionPreview.objectives') }}</h2>
               <ul class="mp-list">
                 <li v-for="(item, i) in mission.objectives" :key="'obj-' + i">{{ item }}</li>
               </ul>
             </section>
 
             <section v-if="mission.specialRules.length" class="mp-block">
-              <h2 class="mp-section-title">Règles spéciales</h2>
+              <h2 class="mp-section-title">{{ $t('missionPreview.specialRules') }}</h2>
               <ul class="mp-list">
                 <li v-for="(item, i) in mission.specialRules" :key="'sr-' + i">{{ item }}</li>
               </ul>
@@ -100,7 +100,7 @@
             <div
               v-if="tokenSummaryItems.length && tokenSummaryPlacement === 'rules'"
               class="mp-token-summary"
-              aria-label="Matériel nécessaire"
+              :aria-label="$t('missionPreview.materialNeeded')"
             >
               <div v-for="item in tokenSummaryItems" :key="item.key" class="mp-ts-item" :data-key="item.key">
                 <img :src="assetToUrl(item.asset)" :alt="item.label" class="mp-ts-img" />
@@ -125,9 +125,9 @@
           <aside
             v-if="tilesUsed.length && tileChipsLayout === 'aside'"
             class="mp-tiles-aside"
-            aria-label="Tuiles"
+            :aria-label="$t('missionPreview.tiles')"
           >
-            <h3 class="mp-aside-title">Tuiles</h3>
+            <h3 class="mp-aside-title">{{ $t('missionPreview.tiles') }}</h3>
             <ul class="mp-tile-chips mp-tile-chips--aside">
               <li v-for="code in tilesUsed" :key="'chip-' + code">{{ code }}</li>
             </ul>
@@ -135,15 +135,15 @@
 
           <div class="mp-map-col">
             <section v-if="mission.mapImageDataUrl" class="mp-map-wrap">
-              <img :src="mission.mapImageDataUrl" alt="Carte de la mission" class="mp-map-img" />
+              <img :src="mission.mapImageDataUrl" :alt="$t('missionPreview.mapImageAlt')" class="mp-map-img" />
             </section>
-            <p v-else class="mp-map-placeholder">Aucune carte capturée — utilisez « Capturer la carte » dans le panneau de gauche.</p>
+            <p v-else class="mp-map-placeholder">{{ $t('missionPreview.noMap') }}</p>
           </div>
         </div>
 
         <div class="mp-footer-bar">
           <span class="mp-footer-url">z.paniette.fr</span>
-          <span class="mp-footer-label">{{ mission.footerLabel || 'QUÊTE - ZOMBICIDE' }}</span>
+          <span class="mp-footer-label">{{ mission.footerLabel || $t('missionPreview.footerDefault') }}</span>
         </div>
       </div>
     </div>
@@ -152,6 +152,7 @@
 
 <script setup>
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useMapStore } from '@/stores/mapStore'
 import { storeToRefs } from 'pinia'
 import { getCornerImageUrl } from '@/config/missionCornerImages'
@@ -162,6 +163,9 @@ import {
   INCLUDED_NAME_PATTERNS,
   LABEL_OVERRIDES,
 } from '@/config/tokenSummary'
+import { resolveLabel } from '@/locales/assetDictionary'
+
+const { t, locale } = useI18n()
 
 const BASE_URL = import.meta.env.BASE_URL || ''
 
@@ -226,7 +230,7 @@ const tileGridLayout = computed(() => {
 
 const pageThemeId = computed(() => (mission.value.pageTheme ? mission.value.pageTheme : 'fantasy'))
 const cornerImageUrl = computed(() => getCornerImageUrl(pageThemeId.value, mission.value.cornerImage))
-const displayTitle = computed(() => (mission.value.title ? mission.value.title : 'Sans titre'))
+const displayTitle = computed(() => (mission.value.title ? mission.value.title : t('missionPreview.untitled')))
 
 const tilesUsed = computed(() => {
   const t = mission.value.tilesUsed
@@ -242,7 +246,7 @@ const infoLine = computed(() => {
 const authorsLine = computed(() => {
   const a = mission.value.authors
   if (!a || !a.length) return ''
-  return 'Par ' + a.join(', ')
+  return t('missionPreview.by') + ' ' + a.join(', ')
 })
 
 const tilesLine = computed(() => {
@@ -295,8 +299,8 @@ const tokenSummaryItems = computed(() => {
     const group = MERGED_GROUPS.find(g => g.pattern.test(filename))
     const key = group ? group.key : filename
     const override = LABEL_OVERRIDES.find(o => o.pattern.test(filename))
-    const label = override ? override.label : (group ? group.label : filename.replace(/-/g, ' '))
-    // Image: préférer la vignette quand l'asset est dans un dossier de rotations (.../Nom.png/r_0.png)
+    const rawLabel = override ? override.label : (group ? group.label : filename.replace(/-/g, ' '))
+    const label = resolveLabel(rawLabel, locale.value)
     const thumbAsset = rawPath
       .replace(/\/r_\d+\.(?:png|webp)$/i, '/r_thumb.png')
       .replace(/\/r_\d+\.jpg$/i, '/r_thumb.jpg')

@@ -1,7 +1,7 @@
 <template>
   <div class="canvas-grid">
     <Toolbar />
-    <div v-if="mapStore.isPreviewMode" class="preview-banner" aria-live="polite">Aperçu — édition désactivée</div>
+    <div v-if="mapStore.isPreviewMode" class="preview-banner" aria-live="polite">{{ $t('canvasGrid.previewBanner') }}</div>
     <canvas
       ref="canvasRef"
       class="map-editor-canvas"
@@ -16,7 +16,7 @@
     <div class="canvas-controls">
       <button @click="zoomIn">+</button>
       <button @click="zoomOut">-</button>
-      <button @click="resetZoom">Reset</button>
+      <button @click="resetZoom">{{ $t('canvasGrid.reset') }}</button>
       <span class="zoom-level">{{ Math.round(zoom * 100) }}%</span>
     </div>
   </div>

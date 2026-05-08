@@ -1,11 +1,11 @@
 <template>
   <div class="theme-selector">
-    <label for="theme-select" class="theme-label">Thème</label>
+    <label for="theme-select" class="theme-label">{{ $t('themeSelector.label') }}</label>
     <select
       id="theme-select"
       :value="themeStore.activeTheme"
       class="theme-select"
-      aria-label="Choisir le thème de l'interface"
+      :aria-label="$t('themeSelector.ariaLabel')"
       @change="themeStore.setTheme($event.target.value)"
     >
       <option v-for="opt in GAME_TYPES.filter(t => t.id !== 'all')" :key="opt.id" :value="opt.id">
