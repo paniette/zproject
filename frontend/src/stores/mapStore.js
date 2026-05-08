@@ -236,6 +236,16 @@ export const useMapStore = defineStore('map', {
       this.gridOffsetY = mapData.gridOffsetY || 0
       const missionData = mapData.mission ? migrateLegacyPageTheme(mapData.mission) : mapData.mission
       this.mission = mergeMissionFromPayload(missionData)
+
+      // Synchroniser le thème UI + filtre assets sur le thème de la map chargée
+      // (sans re-patcher la mission puisqu’elle vient d’être chargée).
+      const themeId = this.mission?.pageTheme
+      if (themeId) {
+        import('./themeStore').then(({ useThemeStore }) => {
+          const themeStore = useThemeStore()
+          themeStore.setTheme(themeId, { syncMission: false })
+        })
+      }
     },
 
     setMission (updates) {

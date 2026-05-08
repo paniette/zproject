@@ -148,7 +148,11 @@ const openCategories = ref(new Map())
 
 const packs = computed(() => packsStore.packs)
 const themeStore = useThemeStore()
-const selectedGameType = ref('all')
+// Persisté cross-pages via themeStore
+const selectedGameType = computed({
+  get: () => themeStore.assetGameTypeFilter,
+  set: (v) => themeStore.setAssetGameTypeFilter(v)
+})
 const packGameTypeMap = ref(loadPackGameTypeMap())
 
 function onSelectGameType (id) {
