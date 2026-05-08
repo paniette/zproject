@@ -64,7 +64,7 @@
   --mp-dropcap: var(--mp-accent);
 }
 
-.mission-page-preview[data-mission-theme='slate'] {
+.mission-page-preview[data-mission-theme='modern'] {
   --mp-title: "Bebas Neue", "Arial Narrow", sans-serif;
   --mp-body: "Source Sans 3", system-ui, sans-serif;
   --mp-flavor: "Source Sans 3", system-ui, sans-serif;
@@ -76,23 +76,23 @@
   --mp-dropcap: var(--mp-accent);
 }
 
-.mission-page-preview[data-mission-theme='necro'] {
+.mission-page-preview[data-mission-theme='night'] {
   --mp-title: "Creepster", fantasy;
   --mp-body: "Roboto", system-ui, sans-serif;
   --mp-flavor: "Roboto", system-ui, sans-serif;
-  --mp-bg: #ecfccb;
-  --mp-ink: #14532d;
+  --mp-bg: #e8f5e9;
+  --mp-ink: #052e16;
   --mp-accent: #166534;
   --mp-quest: #166534;
   --mp-heading: var(--mp-accent);
   --mp-dropcap: var(--mp-accent);
 }
 
-.mission-page-preview[data-mission-theme='abyss'] {
+.mission-page-preview[data-mission-theme='scifi'] {
   --mp-title: "Cinzel", Georgia, serif;
   --mp-body: "Lato", system-ui, sans-serif;
   --mp-flavor: "Lato", system-ui, sans-serif;
-  --mp-bg: #e0e7ff;
+  --mp-bg: #eef2ff;
   --mp-ink: #1e1b4b;
   --mp-accent: #4338ca;
   --mp-quest: #4338ca;
@@ -100,8 +100,8 @@
   --mp-dropcap: var(--mp-accent);
 }
 
-/* ── Médiéval – parchemin chaud, rouge bordeaux, gothique ─────────────────── */
-.mission-page-preview[data-mission-theme='medieval'] {
+/* ── Fantasy – parchemin chaud, rouge bordeaux, gothique médiéval ──────────── */
+.mission-page-preview[data-mission-theme='fantasy'] {
   --mp-title: "Algo FY Black", "Cinzel", Georgia, serif;
   --mp-body:  "Arek Latin", "IM Fell English", Georgia, serif;
   --mp-flavor: "UnifrakturMaguntia", "IM Fell English", Georgia, serif;
@@ -163,7 +163,7 @@
 }
 
 /* Section headings : petites capitales forcées + espacement lettres pour le rendu Cinzel */
-.mission-page-preview[data-mission-theme='medieval'] .mp-section-title {
+.mission-page-preview[data-mission-theme='fantasy'] .mp-section-title {
   font-variant: small-caps;
   letter-spacing: 0.06em;
   font-weight: 700;
@@ -172,7 +172,7 @@
 /* (Dalles requises n'est plus un titre, voir `.mp-dalles-label/.mp-dalles-value` dans le composant) */
 
 /* Titre principal : gothique médiéval rouge */
-.mission-page-preview[data-mission-theme='medieval'] .mp-title {
+.mission-page-preview[data-mission-theme='fantasy'] .mp-title {
   font-family: "UnifrakturMaguntia", fantasy;
   font-weight: 400; /* UnifrakturMaguntia n'a qu'un seul grammage */
   color: var(--mp-heading);
@@ -181,7 +181,7 @@
 }
 
 /* Footer label : même traitement gothique que le titre principal (médiéval) */
-.mission-page-preview[data-mission-theme='medieval'] .mp-footer-label {
+.mission-page-preview[data-mission-theme='fantasy'] .mp-footer-label {
   font-family: "UnifrakturMaguntia", fantasy;
   font-weight: 400;
   color: var(--mp-heading);
@@ -190,18 +190,18 @@
 }
 
 /* Légère compaction typographique (medieval) */
-.mission-page-preview[data-mission-theme='medieval'] .mp-dalles-line {
+.mission-page-preview[data-mission-theme='fantasy'] .mp-dalles-line {
   font-size: 0.8rem;
   line-height: 1.30;
 }
 
-.mission-page-preview[data-mission-theme='medieval'] .mp-list {
+.mission-page-preview[data-mission-theme='fantasy'] .mp-list {
   font-size: 0.80rem;
   line-height: 1.30;
 }
 
 /* Drop cap gothique (premier paragraphe du synopsis) */
-.mission-page-preview[data-mission-theme='medieval'] .mp-synopsis--dropcap::first-letter {
+.mission-page-preview[data-mission-theme='fantasy'] .mp-synopsis--dropcap::first-letter {
   font-family: "UnifrakturMaguntia", fantasy;
   font-size: 3.4rem;
   line-height: 0.78;
@@ -211,17 +211,17 @@
 }
 
 /* spacing synopsis : légère compaction pour éviter les veuves/orphelines sur une ligne (medieval) */
-.mission-page-preview[data-mission-theme='medieval'] .mp-synopsis {
+.mission-page-preview[data-mission-theme='fantasy'] .mp-synopsis {
   line-height: 1.42; 
 }
 
 /* Séparateur sous le héros : ligne en bordeaux */
-.mission-page-preview[data-mission-theme='medieval'] .mp-hero {
+.mission-page-preview[data-mission-theme='fantasy'] .mp-hero {
   border-bottom-color: color-mix(in srgb, #7d1618 35%, transparent);
 }
 
 /* "Dalles dessinées" (mini-grille placement) : sans bordures, texte ton-sur-ton fond */
-.mission-page-preview[data-mission-theme='medieval'] .mp-tlp-cell {
+.mission-page-preview[data-mission-theme='fantasy'] .mp-tlp-cell {
   width: 30px;
   height: 30px;
   border: none;
@@ -233,19 +233,20 @@
   line-height: 1;
 }
 
-.mission-page-preview[data-mission-theme='medieval'] .mp-tlp-cell--on {
+.mission-page-preview[data-mission-theme='fantasy'] .mp-tlp-cell--on {
   background: #bfab9a;
   color: var(--mp-bg);
 }
 
-.mission-page-preview[data-mission-theme='eternal'] {
+/* ── Western – terre brûlée, typographie condensée, esprit Far West ─────────── */
+.mission-page-preview[data-mission-theme='western'] {
   --mp-title: "Oswald", "Arial Narrow", system-ui, sans-serif;
   --mp-body: "Merriweather", Georgia, "Times New Roman", serif;
-  --mp-flavor: "Ma Shan Zheng", "KaiTi", "STKaiti", cursive;
-  --mp-bg: #ffffff;
+  --mp-flavor: "Merriweather", Georgia, serif;
+  --mp-bg: #fdf3e3;
   --mp-ink: #2b1810;
-  --mp-accent: #9a1b0f;
-  --mp-quest: #1a4a6e;
+  --mp-accent: #9a4b0f;
+  --mp-quest: #6b4226;
   --mp-heading: var(--mp-accent);
   --mp-dropcap: var(--mp-accent);
 }

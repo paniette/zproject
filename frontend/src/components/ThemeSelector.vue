@@ -3,11 +3,12 @@
     <label for="theme-select" class="theme-label">Thème</label>
     <select
       id="theme-select"
-      v-model="themeId"
+      :value="themeStore.activeTheme"
       class="theme-select"
-      aria-label="Choisir le thème de l’interface"
+      aria-label="Choisir le thème de l'interface"
+      @change="themeStore.setTheme($event.target.value)"
     >
-      <option v-for="opt in themes" :key="opt.id" :value="opt.id">
+      <option v-for="opt in GAME_TYPES.filter(t => t.id !== 'all')" :key="opt.id" :value="opt.id">
         {{ opt.label }}
       </option>
     </select>
@@ -15,46 +16,10 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue'
+import { useThemeStore } from '@/stores/themeStore'
+import { GAME_TYPES } from '@/config/gameTypes'
 
-const STORAGE_KEY = 'zproject-editor-theme'
-
-const themes = [
-  { id: '', label: 'Classique (survivants)' },
-  { id: 'slate', label: 'Ardoise' },
-  { id: 'necro', label: 'Nécrose' },
-  { id: 'abyss', label: 'Abyssal' }
-]
-
-const themeId = ref('')
-
-function applyTheme (id) {
-  const root = document.documentElement
-  if (!id) {
-    root.removeAttribute('data-theme')
-  } else {
-    root.setAttribute('data-theme', id)
-  }
-  try {
-    localStorage.setItem(STORAGE_KEY, id || '')
-  } catch {
-    /* ignore */
-  }
-}
-
-onMounted(() => {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY)
-    if (saved !== null && saved !== '') {
-      themeId.value = saved
-    }
-  } catch {
-    /* ignore */
-  }
-  applyTheme(themeId.value)
-})
-
-watch(themeId, (id) => applyTheme(id))
+const themeStore = useThemeStore()
 </script>
 
 <style scoped>

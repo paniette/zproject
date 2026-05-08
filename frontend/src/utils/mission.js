@@ -17,10 +17,12 @@ export function defaultMission () {
     specialRules: [],
     materialRequired: '',
     tilesUsed: [],
-    pageTheme: 'medieval',
+    pageTheme: 'fantasy',
     pageEffect: 'grain',
     footerLabel: 'QUÊTE - ZOMBICIDE',
-    mapImageDataUrl: null
+    mapImageDataUrl: null,
+    cornerImage: null,
+    cornerSide: 'left'
   }
 }
 

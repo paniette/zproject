@@ -29,8 +29,8 @@
   --overlay-primary-mid: color-mix(in srgb, var(--primary-color) 42%, transparent);
 }
 
-/* Gris froid, interface type IDE */
-html[data-theme='slate'] {
+/* Modern — acier froid, interface sombre/neutre */
+html[data-theme='modern'] {
   --primary-color: #94a3b8;
   --secondary-color: #64748b;
   --dark-color: #0f172a;
@@ -41,45 +41,85 @@ html[data-theme='slate'] {
   --gray-dark: #0f172a;
   --gray-medium: #334155;
   --gray-light: #64748b;
+  --editor-bg-start: #0f172a;
+  --editor-bg-end: #1e293b;
   --shadow-accent: rgba(148, 163, 184, 0.35);
 }
 
-/* Vert infection / nécrose */
-html[data-theme='necro'] {
-  --primary-color: #bef264;
-  --secondary-color: #4d7c0f;
-  --dark-color: #14532d;
-  --light-color: #ecfccb;
-  --danger-color: #ef4444;
-  --success-color: #22c55e;
-  --brown-dark: #14532d;
-  --brown-medium: #166534;
-  --brown-light: #22c55e;
-  --gray-dark: #052e16;
-  --gray-medium: #15803d;
-  --gray-light: #4ade80;
-  --editor-bg-start: #052e16;
-  --editor-bg-end: #14532d;
-  --shadow-accent: rgba(190, 242, 100, 0.35);
+/* Fantasy — parchemin chaud, or et bordeaux médiéval */
+html[data-theme='fantasy'] {
+  --primary-color: #c9a227;
+  --secondary-color: #7d5228;
+  --dark-color: #2c1a0e;
+  --light-color: #f5ead6;
+  --danger-color: #bc1c1c;
+  --success-color: #5a8a3c;
+  --brown-dark: #2c1a0e;
+  --brown-medium: #5a3820;
+  --brown-light: #9c6b38;
+  --gray-dark: #1e1208;
+  --gray-medium: #4a2e14;
+  --gray-light: #8b6040;
+  --editor-bg-start: #2c1a0e;
+  --editor-bg-end: #3d2410;
+  --shadow-accent: rgba(201, 162, 39, 0.4);
 }
 
-/* Violet nuit / abyssal */
-html[data-theme='abyss'] {
-  --primary-color: #c084fc;
-  --secondary-color: #818cf8;
+/* Western — terre de Sienne, rouille et sable */
+html[data-theme='western'] {
+  --primary-color: #d4782a;
+  --secondary-color: #8b5e2a;
+  --dark-color: #2a1a08;
+  --light-color: #f5e6c8;
+  --danger-color: #b91c1c;
+  --success-color: #6b7c45;
+  --brown-dark: #2a1a08;
+  --brown-medium: #5c3a18;
+  --brown-light: #a06830;
+  --gray-dark: #1e1408;
+  --gray-medium: #3d2810;
+  --gray-light: #7a5830;
+  --editor-bg-start: #2a1a08;
+  --editor-bg-end: #3a2412;
+  --shadow-accent: rgba(212, 120, 42, 0.4);
+}
+
+/* Sci-Fi — violet tech / indigo profond */
+html[data-theme='scifi'] {
+  --primary-color: #818cf8;
+  --secondary-color: #6366f1;
   --dark-color: #1e1b4b;
   --light-color: #e0e7ff;
   --danger-color: #f472b6;
   --success-color: #34d399;
-  --brown-dark: #312e81;
-  --brown-medium: #4338ca;
-  --brown-light: #6366f1;
-  --gray-dark: #1e1b4b;
-  --gray-medium: #3730a3;
-  --gray-light: #818cf8;
-  --editor-bg-start: #1e1b4b;
-  --editor-bg-end: #312e81;
-  --shadow-accent: rgba(192, 132, 252, 0.4);
+  --brown-dark: #1e1b4b;
+  --brown-medium: #312e81;
+  --brown-light: #4338ca;
+  --gray-dark: #0d0b2e;
+  --gray-medium: #1e1b4b;
+  --gray-light: #3730a3;
+  --editor-bg-start: #0d0b2e;
+  --editor-bg-end: #1e1b4b;
+  --shadow-accent: rgba(129, 140, 248, 0.4);
+}
+
+/* Night — néon vert, infection, obscurité */
+html[data-theme='night'] {
+  --primary-color: #4ade80;
+  --secondary-color: #16a34a;
+  --dark-color: #052e16;
+  --light-color: #dcfce7;
+  --danger-color: #ef4444;
+  --success-color: #22c55e;
+  --brown-dark: #052e16;
+  --brown-medium: #14532d;
+  --brown-light: #166534;
+  --gray-dark: #021a0d;
+  --gray-medium: #052e16;
+  --gray-light: #166534;
+  --editor-bg-start: #021a0d;
+  --editor-bg-end: #052e16;
+  --shadow-accent: rgba(74, 222, 128, 0.35);
 }
 
 * {

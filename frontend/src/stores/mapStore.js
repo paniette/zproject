@@ -2,6 +2,23 @@ import { defineStore } from 'pinia'
 import { defaultMission, mergeMissionFromPayload } from '@/utils/mission'
 const MAX_HISTORY = 50
 
+const LEGACY_PAGE_THEME = {
+  '':        'classic',
+  'slate':   'modern',
+  'necro':   'night',
+  'abyss':   'scifi',
+  'medieval':'fantasy',
+  'eternal': 'western',
+}
+const VALID_PAGE_THEMES = new Set(['classic', 'modern', 'fantasy', 'western', 'scifi', 'night'])
+
+function migrateLegacyPageTheme (mission) {
+  if (!mission) return mission
+  const t = mission.pageTheme
+  if (t && VALID_PAGE_THEMES.has(t)) return mission
+  return { ...mission, pageTheme: LEGACY_PAGE_THEME[t ?? ''] ?? 'classic' }
+}
+
 function cloneLayers (layers) {
   return JSON.parse(JSON.stringify(layers || { tiles: [], objects: [] }))
 }
@@ -217,7 +234,8 @@ export const useMapStore = defineStore('map', {
       this.isUnsaved = false
       this.gridOffsetX = mapData.gridOffsetX || 0
       this.gridOffsetY = mapData.gridOffsetY || 0
-      this.mission = mergeMissionFromPayload(mapData.mission)
+      const missionData = mapData.mission ? migrateLegacyPageTheme(mapData.mission) : mapData.mission
+      this.mission = mergeMissionFromPayload(missionData)
     },
 
     setMission (updates) {

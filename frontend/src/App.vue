@@ -5,7 +5,11 @@
 </template>
 
 <script setup>
-// Main app component
+import { onMounted } from 'vue'
+import { useThemeStore } from '@/stores/themeStore'
+
+const themeStore = useThemeStore()
+onMounted(() => themeStore.initTheme())
 </script>
 
 <style>

@@ -6,6 +6,13 @@
     id="mission-print-root"
   >
     <div class="mp-sheet">
+      <img
+        v-if="cornerImageUrl"
+        class="mp-corner-deco"
+        :class="{ 'mp-corner-deco--right': mission.cornerSide === 'right' }"
+        :src="cornerImageUrl"
+        aria-hidden="true"
+      />
       <div class="mp-sheet-inner">
         <div class="mp-top-grid" :style="topGridColumnsStyle">
           <!-- Colonne gauche : hero inline + auteurs + synopsis + encart jetons si placement=intro -->
@@ -147,6 +154,7 @@
 import { computed } from 'vue'
 import { useMapStore } from '@/stores/mapStore'
 import { storeToRefs } from 'pinia'
+import { getCornerImageUrl } from '@/config/missionCornerImages'
 import {
   EXCLUDED_CATEGORIES,
   EXCLUDED_NAME_PATTERNS,
@@ -216,7 +224,8 @@ const tileGridLayout = computed(() => {
   return { slotCodes, cols, rows }
 })
 
-const pageThemeId = computed(() => (mission.value.pageTheme ? mission.value.pageTheme : 'medieval'))
+const pageThemeId = computed(() => (mission.value.pageTheme ? mission.value.pageTheme : 'fantasy'))
+const cornerImageUrl = computed(() => getCornerImageUrl(pageThemeId.value, mission.value.cornerImage))
 const displayTitle = computed(() => (mission.value.title ? mission.value.title : 'Sans titre'))
 
 const tilesUsed = computed(() => {
@@ -346,6 +355,7 @@ const topGridColumnsStyle = computed(() => {
 }
 
 .mp-sheet {
+  position: relative;
   width: min(100%, 210mm);
   aspect-ratio: 210 / 297;
   background: var(--mp-bg);
@@ -361,7 +371,25 @@ const topGridColumnsStyle = computed(() => {
   flex-direction: column;
 }
 
+.mp-corner-deco {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 38%;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.mp-corner-deco--right {
+  left: auto;
+  right: 0;
+  transform: scaleX(-1);
+}
+
 .mp-sheet-inner {
+  position: relative;
+  z-index: 1;
   flex: 1;
   min-height: 0;
   padding: clamp(10px, 3vw, 14mm);
@@ -542,17 +570,17 @@ const topGridColumnsStyle = computed(() => {
   letter-spacing: 0.02em;
 }
 
-.mission-page-preview[data-mission-theme='eternal'] .mp-title {
+.mission-page-preview[data-mission-theme='western'] .mp-title {
   text-transform: uppercase;
 }
 
 .mission-page-preview[data-mission-theme='classic'] .mp-title,
-.mission-page-preview[data-mission-theme='necro'] .mp-title {
+.mission-page-preview[data-mission-theme='night'] .mp-title {
   color: var(--mp-accent);
   font-weight: normal;
 }
 
-.mission-page-preview[data-mission-theme='medieval'] .mp-title {
+.mission-page-preview[data-mission-theme='fantasy'] .mp-title {
   font-family: "Algo FY Black", "Cinzel", Georgia, serif;
   font-weight: 900;
   color: var(--mp-heading);
@@ -786,17 +814,17 @@ const topGridColumnsStyle = computed(() => {
   line-height: 1.1;
 }
 
-.mission-page-preview[data-mission-theme='eternal'] .mp-footer-label {
+.mission-page-preview[data-mission-theme='western'] .mp-footer-label {
   text-transform: uppercase;
 }
 
 .mission-page-preview[data-mission-theme='classic'] .mp-footer-label,
-.mission-page-preview[data-mission-theme='necro'] .mp-footer-label {
+.mission-page-preview[data-mission-theme='night'] .mp-footer-label {
   color: var(--mp-accent);
   font-weight: normal;
 }
 
-.mission-page-preview[data-mission-theme='medieval'] .mp-footer-label {
+.mission-page-preview[data-mission-theme='fantasy'] .mp-footer-label {
   font-family: "Algo FY Black", "Cinzel", Georgia, serif;
   font-weight: 900;
   color: var(--mp-heading);

@@ -2,7 +2,7 @@
 
 Éditeur de cartes Zombicide compatible avec les packs du Mapeditor Windows.
 
-Contexte technique détaillé (architecture, canvas, **mode statique sans Django**, fichiers pivots) : [`docs/CONTEXT.md`](docs/CONTEXT.md). Collaboration temps réel (hors périmètre court terme) : [`docs/COLLABORATION.md`](docs/COLLABORATION.md). **Backend Django** (routes `/api/`, arborescence modules, symboles) : [`docs/BACKEND_REFERENCE.md`](docs/BACKEND_REFERENCE.md).
+Contexte technique détaillé (architecture, canvas, **mode statique sans Django**, fichiers pivots) : [`docs/CONTEXT.md`](docs/CONTEXT.md). Une **tâche** évoquée en discussion correspond en principe à une **[issue GitHub](https://github.com/paniette/zproject/issues)** (`issues/N`) — précision sous *Objectif* dans le CONTEXT. Collaboration temps réel (hors périmètre court terme) : [`docs/COLLABORATION.md`](docs/COLLABORATION.md). **Backend Django** (routes `/api/`, arborescence modules, symboles) : [`docs/BACKEND_REFERENCE.md`](docs/BACKEND_REFERENCE.md).
 
 ## Démarrage rapide (mode complet : frontend + backend)
 

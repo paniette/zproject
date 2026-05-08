@@ -3,17 +3,28 @@
     <div class="mission-form">
       <h2 class="mission-form-title">Données de la mission</h2>
 
-      <label class="field">
-        <span>Thème de la page (typo)</span>
-        <select v-model="mission.pageTheme" class="input">
-          <option value="eternal">Empire (A4 blanc)</option>
-          <option value="medieval">Médiéval (parchemin)</option>
-          <option value="classic">Classique</option>
-          <option value="slate">Ardoise</option>
-          <option value="necro">Nécrose</option>
-          <option value="abyss">Abyssal</option>
-        </select>
-      </label>
+      <div class="field">
+        <span>Série / Thème</span>
+        <div
+          class="game-type-filter"
+          :class="{ 'has-selection': themeStore.activeTheme !== '' }"
+          role="group"
+          aria-label="Choisir la série Zombicide"
+        >
+          <button
+            v-for="t in gameTypes"
+            :key="t.id"
+            type="button"
+            class="gt-btn"
+            :class="{ active: themeStore.activeTheme === t.id }"
+            :title="t.label"
+            @click="themeStore.setTheme(t.id)"
+          >
+            <img class="gt-icon" :src="getGameTypeIcon(t.id)" :alt="t.label" />
+            <span class="sr-only">{{ t.label }}</span>
+          </button>
+        </div>
+      </div>
 
       <label class="field">
         <span>Effet de fond</span>
@@ -26,6 +37,32 @@
           <option value="desert">Désert</option>
         </select>
       </label>
+
+      <div v-if="availableCornerImages.length" class="field">
+        <span>Décoration de coin</span>
+        <div class="field-row">
+          <select
+            :value="mission.cornerImage || ''"
+            class="input flex-1"
+            @change="patchCornerImage($event.target.value)"
+          >
+            <option value="">Aucune</option>
+            <option v-for="img in availableCornerImages" :key="img.id" :value="img.file">
+              {{ img.label }}
+            </option>
+          </select>
+          <select
+            v-if="mission.cornerImage"
+            :value="mission.cornerSide || 'left'"
+            class="input"
+            style="width: 110px"
+            @change="patchCornerSide($event.target.value)"
+          >
+            <option value="left">Gauche</option>
+            <option value="right">Droite</option>
+          </select>
+        </div>
+      </div>
 
       <label class="field">
         <span>Code quête (ex. B61)</span>
@@ -120,12 +157,47 @@
 import { computed, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMapStore } from '@/stores/mapStore'
+import { useThemeStore } from '@/stores/themeStore'
 import { deriveTilesFromLayers } from '@/utils/mission'
 import { requestCanvasExportWithoutGrid } from '@/services/canvasExport'
+import { GAME_TYPES } from '@/config/gameTypes'
+import { CORNER_IMAGES } from '@/config/missionCornerImages'
+import iconClassic from '@/assets/images/menu-setting-classic.jpg'
+import iconModern from '@/assets/images/menu-setting-modern.jpg'
+import iconFantasy from '@/assets/images/menu-setting-fantasy.jpg'
+import iconWestern from '@/assets/images/menu-setting-western.jpg'
+import iconScifi from '@/assets/images/menu-setting-scifi.jpg'
+import iconNight from '@/assets/images/menu-setting-night.jpg'
 import MissionPagePreview from './MissionPagePreview.vue'
 
 const mapStore = useMapStore()
+const themeStore = useThemeStore()
 const { mission } = storeToRefs(mapStore)
+
+const gameTypes = GAME_TYPES.filter(t => t.id !== 'all')
+
+const availableCornerImages = computed(() => CORNER_IMAGES[themeStore.activeTheme] ?? [])
+
+function patchCornerImage (file) {
+  mapStore.patchMission({ cornerImage: file || null })
+}
+
+function patchCornerSide (side) {
+  mapStore.patchMission({ cornerSide: side })
+}
+
+const iconById = {
+  classic: iconClassic,
+  modern: iconModern,
+  fantasy: iconFantasy,
+  western: iconWestern,
+  scifi: iconScifi,
+  night: iconNight
+}
+
+function getGameTypeIcon (id) {
+  return iconById[id] || ''
+}
 
 /** Conserve espaces et retours à la ligne en cours de frappe (pas de trim par ligne). */
 function linesToArray (text) {
@@ -200,12 +272,97 @@ watch(
   () => mission.value.pageTheme,
   (id) => {
     const el = document.getElementById('mission-print-root')
-    if (el) el.setAttribute('data-mission-theme', id || 'eternal')
+    if (el) el.setAttribute('data-mission-theme', id || 'classic')
   }
 )
 </script>
 
 <style scoped>
+.game-type-filter {
+  display: flex;
+  gap: 6px;
+  flex-wrap: nowrap;
+  width: 100%;
+  padding: 4px 0;
+  overflow: visible;
+  align-items: center;
+}
+
+.gt-btn {
+  width: auto;
+  height: 44px;
+  padding: 0;
+  border-radius: 6px;
+  border: 1px solid color-mix(in srgb, var(--primary-color) 55%, #000);
+  background: rgba(0, 0, 0, 0.22);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  flex: 1 1 0;
+  min-width: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: transform 140ms ease, background-color 140ms ease, border-color 140ms ease;
+  transform-origin: center;
+}
+
+.gt-btn.active {
+  background: color-mix(in srgb, var(--primary-color) 35%, #000);
+  border-color: var(--primary-color);
+}
+
+.game-type-filter.has-selection .gt-btn {
+  transform: scale(0.92);
+}
+
+.game-type-filter.has-selection .gt-btn.active {
+  transform: scale(1.12);
+}
+
+.game-type-filter.has-selection .gt-btn:not(.active):hover {
+  transform: scale(0.96);
+}
+
+.game-type-filter:not(.has-selection):has(.gt-btn:hover) .gt-btn {
+  transform: scale(0.92);
+}
+
+.game-type-filter:not(.has-selection):has(.gt-btn:hover) .gt-btn:hover {
+  transform: scale(1.12);
+}
+
+.game-type-filter:not(.has-selection) .gt-btn:hover {
+  transform: scale(1.12);
+}
+
+.gt-btn:active {
+  transform: scale(1.10);
+}
+
+.gt-icon {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  image-rendering: auto;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .mission-editor {
   display: flex;
   width: 100%;

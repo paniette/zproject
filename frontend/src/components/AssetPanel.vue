@@ -15,7 +15,7 @@
           class="gt-btn"
           :class="{ active: selectedGameType === t.id }"
           :title="t.label"
-          @click="selectedGameType = t.id"
+          @click="onSelectGameType(t.id)"
         >
           <span v-if="t.id === 'all'">{{ t.label }}</span>
           <template v-else>
@@ -91,6 +91,7 @@ import api from '@/services/api'
 import PackUploader from './PackUploader.vue'
 import { collectUsedTilePairKeys, isTilePairLocked as tilePairLocked } from '@/utils/tilePairs'
 import { GAME_TYPES, loadPackGameTypeMap, getPackGameTypeFromPack } from '@/config/gameTypes'
+import { useThemeStore } from '@/stores/themeStore'
 import iconClassic from '@/assets/images/menu-setting-classic.jpg'
 import iconModern from '@/assets/images/menu-setting-modern.jpg'
 import iconFantasy from '@/assets/images/menu-setting-fantasy.jpg'
@@ -133,8 +134,16 @@ const openPacks = ref(new Set())
 const openCategories = ref(new Map())
 
 const packs = computed(() => packsStore.packs)
+const themeStore = useThemeStore()
 const selectedGameType = ref('all')
 const packGameTypeMap = ref(loadPackGameTypeMap())
+
+function onSelectGameType (id) {
+  selectedGameType.value = id
+  if (id !== 'all') {
+    themeStore.setTheme(id)
+  }
+}
 
 const filteredPacks = computed(() => {
   const list = packs.value || []
@@ -320,7 +329,7 @@ const isSelected = (asset) => {
   margin-top: 10px;
   display: flex;
   gap: 6px;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   width: 100%;
   padding: 6px 0;
   overflow: visible;
@@ -392,16 +401,9 @@ const isSelected = (asset) => {
 }
 
 @media (max-width: 520px) {
-  .game-type-filter {
-    overflow-x: auto;
-    overflow-y: visible;
-    -webkit-overflow-scrolling: touch;
-  }
-
   .gt-btn {
-    flex: 0 0 auto;
-    width: 54px;
-    min-width: 54px;
+    flex: 1 1 44px;
+    min-width: 44px;
   }
 }
 

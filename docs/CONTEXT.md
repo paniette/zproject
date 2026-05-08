@@ -8,6 +8,10 @@ Document de référence pour reprendre le développement. Il synthétise les pla
 
 Éditeur web de cartes **Zombicide** compatible avec les packs du **Mapeditor Windows** : structure de dossiers et fichiers `cfg`, import ZIP, édition sur canvas (tuiles, portes, tokens, zombies), sauvegarde en **JSON** (sans base de données métier), **utilisateurs temporaires**, export image.
 
+### Tâches (GitHub)
+
+Dans ce dépôt, lorsqu’on parle d’une **tâche** (souvent **tâche N** ou **issue #N**), cela désigne une **[issue GitHub](https://github.com/paniette/zproject/issues)** du dépôt **paniette/zproject** : consulter `https://github.com/paniette/zproject/issues/N` — il n’y a en général pas de liste locale équivalente dans le workspace. Titre, description et commentaires de l’issue font foi pour le périmètre.
+
 ---
 
 ## Stack
