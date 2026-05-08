@@ -39,7 +39,19 @@
               :aria-label="$t('missionPreview.materialNeeded')"
             >
               <div v-for="item in tokenSummaryItems" :key="item.key" class="mp-ts-item" :data-key="item.key">
-                <img :src="assetToUrl(item.asset)" :alt="item.label" class="mp-ts-img" />
+                <template v-if="item.assets.length > 1">
+                  <div class="mp-ts-stack" :class="`mp-ts-stack--${Math.min(item.assets.length, 3)}`">
+                    <img
+                      v-for="(asset, idx) in item.assets.slice(0, 3)"
+                      :key="`${item.key}-${idx}`"
+                      :src="assetToUrl(asset)"
+                      :alt="item.label"
+                      class="mp-ts-img mp-ts-img--stacked"
+                      :class="`mp-ts-img--${idx + 1}`"
+                    />
+                  </div>
+                </template>
+                <img v-else :src="assetToUrl(item.asset)" :alt="item.label" class="mp-ts-img" />
                 <span class="mp-ts-label">
                   <span v-if="item.count > 1" class="mp-ts-count">{{ item.count }}x </span>{{ pluralizeLabel(item.label, item.count) }}
                 </span>
@@ -103,7 +115,19 @@
               :aria-label="$t('missionPreview.materialNeeded')"
             >
               <div v-for="item in tokenSummaryItems" :key="item.key" class="mp-ts-item" :data-key="item.key">
-                <img :src="assetToUrl(item.asset)" :alt="item.label" class="mp-ts-img" />
+                <template v-if="item.assets.length > 1">
+                  <div class="mp-ts-stack" :class="`mp-ts-stack--${Math.min(item.assets.length, 3)}`">
+                    <img
+                      v-for="(asset, idx) in item.assets.slice(0, 3)"
+                      :key="`${item.key}-${idx}`"
+                      :src="assetToUrl(asset)"
+                      :alt="item.label"
+                      class="mp-ts-img mp-ts-img--stacked"
+                      :class="`mp-ts-img--${idx + 1}`"
+                    />
+                  </div>
+                </template>
+                <img v-else :src="assetToUrl(item.asset)" :alt="item.label" class="mp-ts-img" />
                 <span class="mp-ts-label">
                   <span v-if="item.count > 1" class="mp-ts-count">{{ item.count }}x </span>{{ pluralizeLabel(item.label, item.count) }}
                 </span>
@@ -182,6 +206,28 @@ function pluralizeLabel (label, count) {
   const s = String(label || '')
   if (!s) return s
   return /s$/i.test(s) ? s : `${s}s`
+}
+
+const DOOR_VARIANTS = [
+  { id: 'blue', pattern: /^door-.*blue/i },
+  { id: 'green', pattern: /^door-.*green/i },
+  { id: 'red', pattern: /^door-.*red/i },
+]
+
+const VAULT_DOOR_VARIANTS = [
+  { id: 'yellow', pattern: /^vault-door.*(?:yellow|jaune)/i },
+  { id: 'purple', pattern: /^vault-door.*(?:purple|violet|violette)/i },
+]
+
+function getVariantId (key, filename) {
+  const variantList = key === 'Door'
+    ? DOOR_VARIANTS
+    : key === 'VaultDoor'
+      ? VAULT_DOOR_VARIANTS
+      : null
+  if (!variantList) return null
+  const hit = variantList.find(v => v.pattern.test(filename))
+  return hit ? hit.id : null
 }
 
 const mapStore = useMapStore()
@@ -299,15 +345,48 @@ const tokenSummaryItems = computed(() => {
     const group = MERGED_GROUPS.find(g => g.pattern.test(filename))
     const key = group ? group.key : filename
     const override = LABEL_OVERRIDES.find(o => o.pattern.test(filename))
-    const rawLabel = override ? override.label : (group ? group.label : filename.replace(/-/g, ' '))
+    const rawLabel = (group && group.key === 'Door')
+      ? group.label
+      : (override ? override.label : (group ? group.label : filename.replace(/-/g, ' ')))
     const label = resolveLabel(rawLabel, locale.value)
     const thumbAsset = rawPath
       .replace(/\/r_\d+\.(?:png|webp)$/i, '/r_thumb.png')
       .replace(/\/r_\d+\.jpg$/i, '/r_thumb.jpg')
-    if (!map[key]) map[key] = { key, label, asset: thumbAsset, count: 0 }
+    if (!map[key]) {
+      map[key] = {
+        key,
+        label,
+        asset: thumbAsset,
+        assets: [],
+        count: 0,
+        variantIds: new Set(),
+      }
+    }
     map[key].count++
+
+    const entry = map[key]
+    if (key === 'Door' || key === 'VaultDoor') {
+      const variantId = getVariantId(key, filename)
+      if (variantId && !entry.variantIds.has(variantId)) {
+        const maxAssets = key === 'Door' ? 3 : 2
+        if (entry.assets.length < maxAssets) {
+          entry.assets.push(thumbAsset)
+        }
+        entry.variantIds.add(variantId)
+      }
+    } else if (!entry.assets.length) {
+      entry.assets.push(thumbAsset)
+    }
   }
-  return Object.values(map).sort((a, b) => a.label.localeCompare(b.label))
+  return Object.values(map)
+    .map(item => ({
+      key: item.key,
+      label: item.label,
+      asset: item.asset,
+      count: item.count,
+      assets: item.assets.length ? item.assets : [item.asset],
+    }))
+    .sort((a, b) => a.label.localeCompare(b.label))
 })
 
 /** Colonne d'accueil de l'encart : intro (gauche) si synopsis court, rules (droite) sinon. */
@@ -721,24 +800,75 @@ const topGridColumnsStyle = computed(() => {
   object-fit: contain;
 }
 
-.mp-ts-item[data-key='Objective'] .mp-ts-img {
+.mp-ts-stack {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.mp-ts-img--stacked {
+  position: absolute;
+  width: 60%;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+
+.mp-ts-stack--2 .mp-ts-img--stacked {
+  width: 52%;
+}
+
+.mp-ts-stack--2 .mp-ts-img--1 {
+  left: 30%;
+  top: 64%;
+  transform: translate(-50%, -50%);
+}
+
+.mp-ts-stack--2 .mp-ts-img--2 {
+  left: 70%;
+  top: 36%;
+  transform: translate(-50%, -50%);
+}
+
+.mp-ts-stack--3 .mp-ts-img--stacked {
+  width: 44%;
+}
+
+.mp-ts-stack--3 .mp-ts-img--1 {
+  left: 50%;
+  top: 20%;
+  transform: translate(-50%, -50%);
+}
+
+.mp-ts-stack--3 .mp-ts-img--2 {
+  left: 24%;
+  top: 72%;
+  transform: translate(-50%, -50%);
+}
+
+.mp-ts-stack--3 .mp-ts-img--3 {
+  left: 76%;
+  top: 72%;
+  transform: translate(-50%, -50%);
+}
+
+.mp-ts-item[data-key='Objective'] .mp-ts-img:not(.mp-ts-img--stacked) {
   transform: scale(0.6);
   transform-origin: center;
 }
 
-.mp-ts-item[data-key^='Door'] .mp-ts-img {
+.mp-ts-item[data-key^='Door'] .mp-ts-img:not(.mp-ts-img--stacked) {
   transform: scale(0.6);
   transform-origin: center;
 }
 
-.mp-ts-item[data-key='Signal'] .mp-ts-img,
-.mp-ts-item[data-key='Ladder'] .mp-ts-img,
-.mp-ts-item[data-key='Cauldron'] .mp-ts-img {
+.mp-ts-item[data-key='Signal'] .mp-ts-img:not(.mp-ts-img--stacked),
+.mp-ts-item[data-key='Ladder'] .mp-ts-img:not(.mp-ts-img--stacked),
+.mp-ts-item[data-key='Cauldron'] .mp-ts-img:not(.mp-ts-img--stacked) {
   transform: scale(0.6);
   transform-origin: center;
 }
 
-.mp-ts-item[data-key='VaultDoor'] .mp-ts-img {
+.mp-ts-item[data-key='VaultDoor'] .mp-ts-img:not(.mp-ts-img--stacked) {
   transform: scale(0.6);
   transform-origin: center;
 }

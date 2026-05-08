@@ -27,6 +27,7 @@ export const EXCLUDED_NAME_PATTERNS = [
 export const MERGED_GROUPS = [
   { pattern: /^objective/i,              key: 'Objective', label: { fr: 'Objectif',       en: 'Objective'   } },
   { pattern: /^(guard|garde|gardes)/i,   key: 'Guard',     label: { fr: 'Garde',          en: 'Guard'       } },
+  { pattern: /^door-.*(?:blue|green|red)/i, key: 'Door',   label: { fr: 'Porte',          en: 'Door'        } },
   { pattern: /^vault-door/i,             key: 'VaultDoor', label: { fr: 'Porte de Crypte', en: 'Vault Door'  } },
   { pattern: /^vault/i,                  key: 'Vault',     label: { fr: 'Crypte',         en: 'Vault'       } },
   { pattern: /^spawn/i,                  key: 'Spawn',     label: { fr: 'Apparition',     en: 'Spawn'       } },
