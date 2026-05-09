@@ -44,7 +44,7 @@ export function getEditorMenuVisibility () {
         versions: false,
         uploadZip: false,
         uploadElement: false,
-        langToggle: false
+        langToggle: true
       }
     : { ...editorMenuVisibility }
 

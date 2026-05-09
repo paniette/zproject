@@ -8,6 +8,7 @@
     "by": "By"
   },
   "header": {
+    "appTitle": "Zombicide Editor",
     "modified": "Modified",
     "saved": "Saved",
     "tabMap": "Map",
@@ -35,6 +36,28 @@
     "saveSuccessLocal": " (saved locally)",
     "saveError": "Error saving: {msg}",
     "exportError": "Export error: {msg}"
+  },
+  "missionSites": {
+    "panelTitle": "Mission PDFs on other websites",
+    "openSite": "Visit site",
+    "sites": {
+      "official": {
+        "title": "Official site — Classic Missions",
+        "description": "Classic missions published by CMON as PDFs."
+      },
+      "missionsFr": {
+        "title": "Zombicide-Missions.fr",
+        "description": "Large mission library with search and tile filters."
+      },
+      "compendium": {
+        "title": "BoardGameCompendium",
+        "description": "Mission collection including Black Plague and other games."
+      },
+      "erenHistarion": {
+        "title": "Eren Histarion",
+        "description": "Community missions hosted at zombicide.eren-histarion.fr."
+      }
+    }
   },
   "toolbar": {
     "place": "Place",
@@ -73,7 +96,8 @@
     "deleteTitle": "Delete",
     "deleteConfirm": "Are you sure you want to delete the map \"{name}\"?",
     "loadError": "Error loading the map",
-    "deleteError": "Error deleting the map"
+    "deleteError": "Error deleting the map",
+    "localStorageHint": "Your maps are stored in this browser (local storage). They may be lost if you clear site data or the browser cache."
   },
   "saveModal": {
     "title": "Map name",

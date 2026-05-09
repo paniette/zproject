@@ -2,7 +2,7 @@
   <header class="app-header">
     <div class="header-content">
       <div class="header-left">
-        <div class="logo">Zombicide Editor</div>
+        <MissionSitesFlyout>{{ $t('header.appTitle') }}</MissionSitesFlyout>
         <span
           v-if="menuVis.saveStatus"
           class="save-status"
@@ -25,18 +25,7 @@
           <UserSelector v-if="menuVis.userSelector" />
         </div>
 
-        <div v-if="menuVis.langToggle" class="nav-group">
-          <select
-            class="header-btn lang-select"
-            :value="langStore.locale"
-            :aria-label="'Langue / Language'"
-            @change="langStore.setLocale($event.target.value)"
-          >
-            <option v-for="loc in supportedLocales" :key="loc" :value="loc">
-              {{ $t('lang.' + loc) }}
-            </option>
-          </select>
-        </div>
+        
 
         <div class="nav-group">
           <button
@@ -136,6 +125,19 @@
             <span class="sr-only">{{ $t('donate.buttonTitle') }}</span>
           </button>
         </div>
+
+        <div v-if="menuVis.langToggle" class="nav-group">
+          <select
+            class="header-btn lang-select"
+            :value="langStore.locale"
+            :aria-label="'Langue / Language'"
+            @change="langStore.setLocale($event.target.value)"
+          >
+            <option v-for="loc in supportedLocales" :key="loc" :value="loc">
+              {{ $t('lang.' + loc) }}
+            </option>
+          </select>
+        </div>
       </nav>
     </div>
     <MapLoader :show="showMapLoader" @close="closeMapLoader" @load="handleMapLoad" />
@@ -166,6 +168,7 @@ import MapVersionsModal from './MapVersionsModal.vue'
 import MenuGlyph from './MenuGlyph.vue'
 import SaveMapModal from './SaveMapModal.vue'
 import DonateModal from './DonateModal.vue'
+import MissionSitesFlyout from './MissionSitesFlyout.vue'
 import { useMapStore } from '@/stores/mapStore'
 import { useUserStore } from '@/stores/userStore'
 import { config } from '@/config'
@@ -467,13 +470,6 @@ const exportMap = async () => {
   gap: 15px;
 }
 
-.logo {
-  font-family: 'Creepster', cursive;
-  font-size: 1.8rem;
-  font-weight: normal;
-  color: var(--primary-color);
-}
-
 .header-nav {
   display: flex;
   flex-wrap: wrap;
@@ -650,11 +646,6 @@ const exportMap = async () => {
     flex-wrap: wrap;
     gap: 8px;
     min-width: 0;
-  }
-
-  .logo {
-    font-size: 1.35rem;
-    line-height: 1.2;
   }
 
   .header-nav {

@@ -8,6 +8,7 @@
     "by": "Par"
   },
   "header": {
+    "appTitle": "Éditeur Zombicide",
     "modified": "Modifié",
     "saved": "Enregistré",
     "tabMap": "Carte",
@@ -35,6 +36,28 @@
     "saveSuccessLocal": " (sauvegardée localement)",
     "saveError": "Erreur lors de la sauvegarde : {msg}",
     "exportError": "Erreur export : {msg}"
+  },
+  "missionSites": {
+    "panelTitle": "Missions PDF ailleurs sur le web",
+    "openSite": "Visiter le site",
+    "sites": {
+      "official": {
+        "title": "Site officiel — www.zombicide.com",
+        "description": "Missions classiques publiées par CMON, en PDF."
+      },
+      "missionsFr": {
+        "title": "zombicide-missions.fr",
+        "description": "Bibliothèque de missions avec recherche et filtres."
+      },
+      "compendium": {
+        "title": "boardgamecompendium.com",
+        "description": "Recueil de missions, dont Black Plague et autres jeux."
+      },
+      "erenHistarion": {
+        "title": "https://zombicide.eren-histarion.fr",
+        "description": "Missions communautaires hébergées sur Eren Histarion"
+      }
+    }
   },
   "toolbar": {
     "place": "Placer",
@@ -73,7 +96,8 @@
     "deleteTitle": "Supprimer",
     "deleteConfirm": "Êtes-vous sûr de vouloir supprimer la carte \"{name}\" ?",
     "loadError": "Erreur lors du chargement de la carte",
-    "deleteError": "Erreur lors de la suppression de la carte"
+    "deleteError": "Erreur lors de la suppression de la carte",
+    "localStorageHint": "Vos cartes sont enregistrées dans ce navigateur (stockage local). Elles peuvent être perdues si vous effacez les données du site ou le cache."
   },
   "saveModal": {
     "title": "Nom de la carte",

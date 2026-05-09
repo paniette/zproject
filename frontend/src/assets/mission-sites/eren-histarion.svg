@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="100" viewBox="0 0 160 100">
+  <rect width="160" height="100" rx="6" fill="#231f2e"/>
+  <rect x="8" y="12" width="144" height="76" rx="4" fill="#342d42"/>
+  <text x="80" y="52" text-anchor="middle" fill="#c9a8e8" font-family="system-ui,sans-serif" font-size="9" font-weight="600">eren-histarion</text>
+  <text x="80" y="68" text-anchor="middle" fill="#9e92ae" font-family="system-ui,sans-serif" font-size="9">.fr</text>
+</svg>

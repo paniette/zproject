@@ -36,6 +36,8 @@
         </div>
       </div>
 
+      <p class="map-loader-storage-hint" role="note">{{ $t('mapLoader.localStorageHint') }}</p>
+
       <div class="modal-content">
         <!-- Mode liste -->
         <div v-if="viewMode === 'list'" class="maps-list">
@@ -308,6 +310,18 @@ onMounted(() => {
 
 .close-btn:hover {
   color: #fff;
+}
+
+.map-loader-storage-hint {
+  margin: 0 20px 12px;
+  padding: 8px 12px;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.48);
+  background: rgba(0, 0, 0, 0.22);
+  border-left: 3px solid rgba(212, 165, 116, 0.35);
+  border-radius: 4px;
+  flex-shrink: 0;
 }
 
 /* ─── Content ─── */

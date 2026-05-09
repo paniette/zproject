@@ -8,6 +8,7 @@
     "by": "Von"
   },
   "header": {
+    "appTitle": "Zombicide Editor",
     "modified": "Geändert",
     "saved": "Gespeichert",
     "tabMap": "Karte",
@@ -35,6 +36,28 @@
     "saveSuccessLocal": " (lokal gespeichert)",
     "saveError": "Fehler beim Speichern: {msg}",
     "exportError": "Exportfehler: {msg}"
+  },
+  "missionSites": {
+    "panelTitle": "Missions-PDFs auf anderen Websites",
+    "openSite": "Website öffnen",
+    "sites": {
+      "official": {
+        "title": "Offizielle Website — Classic Missions",
+        "description": "Klassische offizielle Missionen von CMON als PDF."
+      },
+      "missionsFr": {
+        "title": "Zombicide-Missions.fr",
+        "description": "Große Missions-Bibliothek mit Suche und Kachel-Filtern."
+      },
+      "compendium": {
+        "title": "BoardGameCompendium",
+        "description": "Missions-Sammlung unter anderem für Black Plague und andere Spiele."
+      },
+      "erenHistarion": {
+        "title": "Eren Histarion",
+        "description": "Community-Missionen unter zombicide.eren-histarion.fr gehostet."
+      }
+    }
   },
   "toolbar": {
     "place": "Platzieren",
@@ -73,7 +96,8 @@
     "deleteTitle": "Löschen",
     "deleteConfirm": "Möchtest du die Karte \"{name}\" wirklich löschen?",
     "loadError": "Fehler beim Laden der Karte",
-    "deleteError": "Fehler beim Löschen der Karte"
+    "deleteError": "Fehler beim Löschen der Karte",
+    "localStorageHint": "Deine Karten werden in diesem Browser gespeichert (lokaler Speicher). Sie gehen verloren, wenn du Websitedaten oder den Cache leerst."
   },
   "saveModal": {
     "title": "Kartenname",
