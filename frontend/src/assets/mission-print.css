@@ -5,9 +5,9 @@
    Police commerciale ; le fichier W01 est servi ici via CDN onlinewebfonts pour usage local/dev. */
 @font-face {
   font-family: "Algo FY Black";
-  src: url("https://db.onlinewebfonts.com/t/0063d814390439fff78619d11b8a4910.woff2") format("woff2"),
-       url("https://db.onlinewebfonts.com/t/0063d814390439fff78619d11b8a4910.woff") format("woff"),
-       url("https://db.onlinewebfonts.com/t/0063d814390439fff78619d11b8a4910.ttf") format("truetype");
+  src: url("/fonts/Algo-ZF-Black.woff2") format("woff2"),
+      url("/fonts/Algo-ZF-Black.woff") format("woff"),
+      url("/fonts/Algo-ZF-Black.otf") format("truetype");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -16,9 +16,9 @@
 /* Alias observé dans certains exports PDF : "Algo-ZF-Black" */
 @font-face {
   font-family: "Algo-ZF-Black";
-  src: url("https://db.onlinewebfonts.com/t/0063d814390439fff78619d11b8a4910.woff2") format("woff2"),
-       url("https://db.onlinewebfonts.com/t/0063d814390439fff78619d11b8a4910.woff") format("woff"),
-       url("https://db.onlinewebfonts.com/t/0063d814390439fff78619d11b8a4910.ttf") format("truetype");
+  src: url("/fonts/Algo-ZF-Black.woff2") format("woff2"),
+      url("/fonts/Algo-ZF-Black.woff") format("woff"),
+      url("/fonts/Algo-ZF-Black.otf") format("truetype");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
