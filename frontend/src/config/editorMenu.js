@@ -13,7 +13,7 @@ import { config } from '@/config'
  * sans modifier ce fichier.
  */
 
-export const USE_MINIMAL_MENU = true
+export const USE_MINIMAL_MENU = false
 
 export const editorMenuVisibility = {
   themeSelector: true,
@@ -22,6 +22,7 @@ export const editorMenuVisibility = {
   propertyPanel: true,
   saveStatus: true,
   exportJson: true,
+  importJson: true,
   exportXml: true,
   versions: true,
   uploadZip: true,
@@ -40,6 +41,7 @@ export function getEditorMenuVisibility () {
         propertyPanel: false,
         saveStatus: false,
         exportJson: false,
+        importJson: false,
         exportXml: false,
         versions: false,
         uploadZip: false,

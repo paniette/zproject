@@ -111,7 +111,7 @@ Les fichiers `cfg` portent typiquement : `name`, `max`, `pairs`, `z-index`, `ali
 ## Frontend — écran principal
 
 - **`MapEditor.vue`** — Layout ~25 % panneau gauche / 75 % canvas.
-- **`AppHeader.vue`** — Utilisateur temporaire, charger carte, sauvegarder (dont Ctrl+S), export image.
+- **`AppHeader.vue`** — Utilisateur temporaire, charger carte, sauvegarder (dont Ctrl+S), export / **import JSON** (menu complet), export image. L’import crée une **nouvelle** carte pour l’utilisateur courant (`api.createMap` ; en mode statique, `localStorage` comme une sauvegarde locale).
 - **`AssetPanel.vue`** — Hiérarchie packs → catégories → miniatures ; drag & drop et/ou clic pour placer.
 - **`CanvasGrid.vue`** — Canvas HTML5, grille, zoom, pan, placement, sélection, halos de survol/sélection (voir section interactions).
 - **`MapLoader.vue`**, **`UserSelector.vue`**, uploaders de packs (image / ZIP) selon les besoins.

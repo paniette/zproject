@@ -26,6 +26,12 @@
     "exportPng": "Karte als PNG exportieren",
     "exportPngSr": "Karte als PNG exportieren",
     "exportJson": "Szenario-JSON herunterladen",
+    "importJson": "Szenario-JSON importieren",
+    "importJsonShort": "Import",
+    "importJsonSuccess": "Karte erfolgreich importiert.",
+    "importJsonError": "Importfehler: {msg}",
+    "importJsonInvalid": "Ungültiges JSON oder unvollständige Kartenstruktur.",
+    "importJsonNoUser": "Wählen Sie einen Benutzer aus, bevor Sie eine Karte importieren.",
     "exportXml": "Als vereinfachtes XML exportieren",
     "versions": "Versionen",
     "uploadZip": "Pack-ZIP hochladen",
@@ -98,6 +104,24 @@
     "loadError": "Fehler beim Laden der Karte",
     "deleteError": "Fehler beim Löschen der Karte",
     "localStorageHint": "Deine Karten werden in diesem Browser gespeichert (lokaler Speicher). Sie gehen verloren, wenn du Websitedaten oder den Cache leerst."
+  },
+  "importModal": {
+    "title": "Karten-JSON importieren",
+    "hint": "Exportiertes JSON einfügen (oder korrigieren), dann bestätigen. Es wird eine neue Karte für den aktuellen Benutzer erstellt.",
+    "label": "Szenario-JSON",
+    "placeholder": "{ \"name\": \"…\", \"pack\": null, \"grid\": { … }, \"layers\": { … } }",
+    "cancel": "Abbrechen",
+    "import": "Importieren",
+    "errors": {
+      "empty": "JSON in das Textfeld einfügen.",
+      "invalidJson": "Ungültiges JSON: Anführungszeichen, Kommas und Klammern prüfen.",
+      "invalidRoot": "Die Wurzel muss ein JSON-Objekt { … } sein.",
+      "missingName": "Feld « name » fehlt oder ist leer.",
+      "missingGrid": "Feld « grid » fehlt.",
+      "missingGridWidth": "« grid.width » muss eine Zahl sein.",
+      "missingGridHeight": "« grid.height » muss eine Zahl sein.",
+      "missingLayers": "Feld « layers » fehlt."
+    }
   },
   "saveModal": {
     "title": "Kartenname",

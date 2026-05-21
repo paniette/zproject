@@ -26,6 +26,12 @@
     "exportPng": "Export map as PNG",
     "exportPngSr": "Export map as PNG",
     "exportJson": "Download scenario JSON",
+    "importJson": "Import scenario JSON",
+    "importJsonShort": "Import",
+    "importJsonSuccess": "Map imported successfully.",
+    "importJsonError": "Import error: {msg}",
+    "importJsonInvalid": "Invalid JSON or incomplete map structure.",
+    "importJsonNoUser": "Select a user before importing a map.",
     "exportXml": "Export as simplified XML",
     "versions": "Versions",
     "uploadZip": "Upload Pack ZIP",
@@ -98,6 +104,24 @@
     "loadError": "Error loading the map",
     "deleteError": "Error deleting the map",
     "localStorageHint": "Your maps are stored in this browser (local storage). They may be lost if you clear site data or the browser cache."
+  },
+  "importModal": {
+    "title": "Import map JSON",
+    "hint": "Paste exported JSON (or fix it), then confirm. A new map is created for the current user.",
+    "label": "Scenario JSON",
+    "placeholder": "{ \"name\": \"…\", \"pack\": null, \"grid\": { … }, \"layers\": { … } }",
+    "cancel": "Cancel",
+    "import": "Import",
+    "errors": {
+      "empty": "Paste JSON into the text area.",
+      "invalidJson": "Invalid JSON: check quotes, commas, and braces.",
+      "invalidRoot": "Root must be a JSON object { … }.",
+      "missingName": "Missing or empty \"name\" field.",
+      "missingGrid": "Missing \"grid\" field.",
+      "missingGridWidth": "\"grid.width\" must be a number.",
+      "missingGridHeight": "\"grid.height\" must be a number.",
+      "missingLayers": "Missing \"layers\" field."
+    }
   },
   "saveModal": {
     "title": "Map name",

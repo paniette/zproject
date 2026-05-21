@@ -26,6 +26,12 @@
     "exportPng": "Exportar mapa como PNG",
     "exportPngSr": "Exportar mapa como PNG",
     "exportJson": "Descargar escenario JSON",
+    "importJson": "Importar escenario JSON",
+    "importJsonShort": "Importar",
+    "importJsonSuccess": "Mapa importado correctamente.",
+    "importJsonError": "Error al importar: {msg}",
+    "importJsonInvalid": "JSON no válido o estructura de mapa incompleta.",
+    "importJsonNoUser": "Seleccione un usuario antes de importar un mapa.",
     "exportXml": "Exportar como XML simplificado",
     "versions": "Versiones",
     "uploadZip": "Subir Pack ZIP",
@@ -98,6 +104,24 @@
     "loadError": "Error al cargar el mapa",
     "deleteError": "Error al eliminar el mapa",
     "localStorageHint": "Tus mapas se guardan en este navegador (almacenamiento local). Pueden perderse si borras los datos del sitio o la caché."
+  },
+  "importModal": {
+    "title": "Importar mapa JSON",
+    "hint": "Pegue el JSON exportado (o corríjalo) y confirme. Se creará un mapa nuevo para el usuario actual.",
+    "label": "JSON del escenario",
+    "placeholder": "{ \"name\": \"…\", \"pack\": null, \"grid\": { … }, \"layers\": { … } }",
+    "cancel": "Cancelar",
+    "import": "Importar",
+    "errors": {
+      "empty": "Pegue JSON en el área de texto.",
+      "invalidJson": "JSON no válido: revise comillas, comas y llaves.",
+      "invalidRoot": "La raíz debe ser un objeto JSON { … }.",
+      "missingName": "Falta el campo « name » o está vacío.",
+      "missingGrid": "Falta el campo « grid ».",
+      "missingGridWidth": "« grid.width » debe ser un número.",
+      "missingGridHeight": "« grid.height » debe ser un número.",
+      "missingLayers": "Falta el campo « layers »."
+    }
   },
   "saveModal": {
     "title": "Nombre del mapa",

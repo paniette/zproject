@@ -79,6 +79,15 @@
             JSON
           </button>
           <button
+            v-if="menuVis.importJson"
+            type="button"
+            class="header-btn"
+            :title="$t('header.importJson')"
+            @click="openImportJsonModal"
+          >
+            {{ $t('header.importJsonShort') }}
+          </button>
+          <button
             v-if="menuVis.exportXml"
             type="button"
             class="header-btn"
@@ -151,6 +160,11 @@
       @close="showSaveModal = false"
       @submit="handleSaveNameSubmit"
     />
+    <ImportMapJsonModal
+      :show="showImportJsonModal"
+      @close="showImportJsonModal = false"
+      @submit="handleImportJsonSubmit"
+    />
   </header>
 </template>
 
@@ -167,6 +181,7 @@ import PackUploader from './PackUploader.vue'
 import MapVersionsModal from './MapVersionsModal.vue'
 import MenuGlyph from './MenuGlyph.vue'
 import SaveMapModal from './SaveMapModal.vue'
+import ImportMapJsonModal from './ImportMapJsonModal.vue'
 import DonateModal from './DonateModal.vue'
 import MissionSitesFlyout from './MissionSitesFlyout.vue'
 import { useMapStore } from '@/stores/mapStore'
@@ -176,6 +191,7 @@ import api from '@/services/api'
 import { requestCanvasExportWithoutGrid } from '@/services/canvasExport'
 import { pushVersion } from '@/services/mapVersions'
 import { mapPayloadToXml } from '@/utils/mapExportXml'
+import { prepareMapForImport } from '@/utils/mapImport'
 import { getEditorMenuVisibility } from '@/config/editorMenu'
 
 const { t } = useI18n()
@@ -191,6 +207,7 @@ const showVersionsModal = ref(false)
 const showSaveModal = ref(false)
 const showDonateModal = ref(false)
 const pendingSave = ref(false)
+const showImportJsonModal = ref(false)
 
 const isUnsaved = ref(true)
 
@@ -203,7 +220,11 @@ const saveStatusTitle = computed(() =>
 const menuVis = computed(() => getEditorMenuVisibility())
 
 const showExportsGroup = computed(
-  () => menuVis.value.exportJson || menuVis.value.exportXml || menuVis.value.versions
+  () =>
+    menuVis.value.exportJson ||
+    menuVis.value.importJson ||
+    menuVis.value.exportXml ||
+    menuVis.value.versions
 )
 
 function buildMapPayload () {
@@ -237,6 +258,40 @@ function exportScenarioJson () {
   const payload = buildMapPayload()
   const name = (mapStore.mapName || 'scenario').replace(/[^\w\-]+/g, '_')
   downloadTextFile(`${name}_${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify(payload, null, 2), 'application/json')
+}
+
+function openImportJsonModal () {
+  if (!userStore.currentUser) {
+    alert(t('header.importJsonNoUser'))
+    return
+  }
+  showImportJsonModal.value = true
+}
+
+async function handleImportJsonSubmit (parsed) {
+  const username = userStore.currentUser
+  if (!username) {
+    alert(t('header.importJsonNoUser'))
+    return
+  }
+
+  try {
+    const mapData = prepareMapForImport(parsed, username)
+    const response = await api.createMap(username, mapData)
+    const saved = response.data
+    if (!saved?.id) {
+      throw new Error('No map id returned')
+    }
+    mapStore.loadMap(saved)
+    isUnsaved.value = false
+    mapStore.isUnsaved = false
+    showImportJsonModal.value = false
+    alert(t('header.importJsonSuccess'))
+  } catch (error) {
+    console.error('Error importing map:', error)
+    const msg = error.response?.data?.detail || error.response?.data?.error || error.message
+    alert(t('header.importJsonError', { msg }))
+  }
 }
 
 function exportScenarioXml () {

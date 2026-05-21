@@ -26,6 +26,12 @@
     "exportPng": "Export de la carte en PNG",
     "exportPngSr": "Exporter la carte en PNG",
     "exportJson": "Télécharger le scénario JSON",
+    "importJson": "Importer un scénario JSON",
+    "importJsonShort": "Importer",
+    "importJsonSuccess": "Carte importée avec succès.",
+    "importJsonError": "Erreur lors de l'import : {msg}",
+    "importJsonInvalid": "JSON invalide ou structure de carte incomplète.",
+    "importJsonNoUser": "Sélectionnez un utilisateur avant d'importer une carte.",
     "exportXml": "Exporter en XML simplifié",
     "versions": "Versions",
     "uploadZip": "Upload Pack ZIP",
@@ -98,6 +104,24 @@
     "loadError": "Erreur lors du chargement de la carte",
     "deleteError": "Erreur lors de la suppression de la carte",
     "localStorageHint": "Vos cartes sont enregistrées dans ce navigateur (stockage local). Elles peuvent être perdues si vous effacez les données du site ou le cache."
+  },
+  "importModal": {
+    "title": "Importer une carte JSON",
+    "hint": "Collez le JSON exporté (ou corrigez-le) puis validez. Un nouveau fichier sera créé pour l'utilisateur courant.",
+    "label": "JSON du scénario",
+    "placeholder": "{ \"name\": \"…\", \"pack\": null, \"grid\": { … }, \"layers\": { … } }",
+    "cancel": "Annuler",
+    "import": "Importer",
+    "errors": {
+      "empty": "Collez du JSON dans la zone de texte.",
+      "invalidJson": "JSON invalide : vérifiez les guillemets, virgules et accolades.",
+      "invalidRoot": "La racine doit être un objet JSON { … }.",
+      "missingName": "Champ « name » manquant ou vide.",
+      "missingGrid": "Champ « grid » manquant.",
+      "missingGridWidth": "« grid.width » doit être un nombre.",
+      "missingGridHeight": "« grid.height » doit être un nombre.",
+      "missingLayers": "Champ « layers » manquant."
+    }
   },
   "saveModal": {
     "title": "Nom de la carte",
