@@ -12,14 +12,11 @@ import os
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).parent.parent / 'backend'))
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'zombicide_editor.settings')
+sys.path.insert(0, str(Path(__file__).parent.parent / "backend"))
 
-import django  # noqa: E402
+import app_config  # noqa: E402
 
-django.setup()
-
-from django.conf import settings  # noqa: E402
+app_config.ensure_data_directories()
 
 from api.parsers.pack_parser import PackParser  # noqa: E402
 from editor.pack_meta import write_pack_game_type  # noqa: E402
@@ -82,7 +79,7 @@ def infer_game_type_from_pack_id(pack_id: str) -> str:
 
 
 def main():
-    assets_dir = Path(settings.ASSETS_DIR)
+    assets_dir = Path(app_config.ASSETS_DIR)
     if not assets_dir.is_dir():
         print(f'ASSETS_DIR introuvable : {assets_dir}')
         sys.exit(1)

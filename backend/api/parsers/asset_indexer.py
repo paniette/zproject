@@ -3,7 +3,7 @@ Asset indexer - wrapper for pack parsing
 """
 from .pack_parser import PackParser
 from pathlib import Path
-from django.conf import settings
+import app_config as settings
 
 class AssetIndexer:
     """Index all packs in assets directory"""

@@ -68,23 +68,25 @@ def _scan_paths(backend: Path) -> list[Path]:
     """Fichiers .py à documenter (ordre stable)."""
     roots = [
         backend / "api",
-        backend / "editor",
         backend / "api" / "parsers",
-        backend / "zombicide_editor",
+        backend / "editor",
+        backend / "routes",
     ]
     files: list[Path] = []
     for root in roots:
         if not root.is_dir():
             continue
         for p in sorted(root.rglob("*.py")):
-            if p.name == "__init__.py" and root.name in ("api", "editor"):
-                # garder __init__ editor/api s'il a du code; sinon skip empty
+            if p.name == "__init__.py" and root.name in ("api", "editor", "routes"):
                 if p.stat().st_size > 5:
                     files.append(p)
                 continue
             if "__pycache__" in p.parts:
                 continue
             files.append(p)
+    for extra in (backend / "main.py", backend / "app_config.py"):
+        if extra.is_file():
+            files.append(extra)
     # dédoublonner (windows insensible à la casse)
     seen: set[str] = set()
     unique: list[Path] = []

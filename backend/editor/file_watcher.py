@@ -3,7 +3,7 @@ File watcher for detecting changes in bgmapeditor_tiles directory
 """
 import os
 from pathlib import Path
-from django.conf import settings
+import app_config as settings
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 

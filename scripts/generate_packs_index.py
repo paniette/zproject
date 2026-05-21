@@ -16,16 +16,11 @@ from pathlib import Path
 # Add backend to path
 sys.path.insert(0, str(Path(__file__).parent.parent / 'backend'))
 
-import os
+import app_config  # noqa: E402
 
-# Setup Django settings
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'zombicide_editor.settings')
+app_config.ensure_data_directories()
 
-# Import Django
-import django
-django.setup()
-
-from api.parsers.asset_indexer import AssetIndexer
+from api.parsers.asset_indexer import AssetIndexer  # noqa: E402
 
 def generate_packs_index():
     """Generate a static JSON file with all packs and their assets"""

@@ -13,8 +13,7 @@ python generate_packs_index.py
 
 ### Prérequis
 
-- Python 3.8+
-- Django et les dépendances installées (voir `requirements.txt`)
+- Python 3.8+ et `pip install -r requirements.txt` à la racine du dépôt (les scripts ajoutent `backend/` au chemin et chargent `app_config`).
 - Les dossiers `/assets/` et `/bgmapeditor_tiles/` doivent exister
 
 ### Sortie

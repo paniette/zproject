@@ -2,22 +2,22 @@
 
 Éditeur de cartes Zombicide compatible avec les packs du Mapeditor Windows.
 
-Contexte technique détaillé (architecture, canvas, **mode statique sans Django**, fichiers pivots) : [`docs/CONTEXT.md`](docs/CONTEXT.md). Une **tâche** évoquée en discussion correspond en principe à une **[issue GitHub](https://github.com/paniette/zproject/issues)** (`issues/N`) — précision sous *Objectif* dans le CONTEXT. Collaboration temps réel (hors périmètre court terme) : [`docs/COLLABORATION.md`](docs/COLLABORATION.md). **Backend Django** (routes `/api/`, arborescence modules, symboles) : [`docs/BACKEND_REFERENCE.md`](docs/BACKEND_REFERENCE.md).
+Contexte technique détaillé (architecture, canvas, **mode statique sans serveur Python**, fichiers pivots) : [`docs/CONTEXT.md`](docs/CONTEXT.md). Une **tâche** évoquée en discussion correspond en principe à une **[issue GitHub](https://github.com/paniette/zproject/issues)** (`issues/N`) — précision sous *Objectif* dans le CONTEXT. Collaboration temps réel (hors périmètre court terme) : [`docs/COLLABORATION.md`](docs/COLLABORATION.md). **Backend FastAPI** (routes `/api/`, arborescence modules, symboles) : [`docs/BACKEND_REFERENCE.md`](docs/BACKEND_REFERENCE.md).
 
 ## Démarrage rapide (mode complet : frontend + backend)
 
-En développement avec l’**API Django**, il faut **deux terminaux** ouverts en parallèle à la racine du dépôt (`zproject/`).
+En développement avec l’**API FastAPI**, il faut **deux terminaux** ouverts en parallèle à la racine du dépôt (`zproject/`).
 
 | Rôle | Répertoire | Commande | URL |
 |------|--------------|----------|-----|
 | **Frontend** (Vite + Vue) | `frontend/` | `npm install` une fois, puis `npm run dev` | [http://localhost:5173](http://localhost:5173) |
-| **Backend** (Django) | `backend/` | `pip install -r ../requirements.txt` une fois, puis `python manage.py runserver` | [http://127.0.0.1:8000](http://127.0.0.1:8000) |
+| **Backend** (FastAPI) | `backend/` | `pip install -r ../requirements.txt` une fois, puis `python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000` | [http://127.0.0.1:8000](http://127.0.0.1:8000) |
 
 Le fichier [`frontend/vite.config.js`](frontend/vite.config.js) configure un **proxy** : depuis le port **5173**, les requêtes vers `/api` (et chemins médias utiles) sont envoyées vers **8000**. Ouvre l’éditeur dans le navigateur sur **5173** pour le mode complet.
 
 Sous **Windows PowerShell**, enchaîne les commandes avec `;` si besoin, par exemple : `cd frontend; npm run dev`.
 
-Pour le **mode statique** (sans Django), un seul `npm run dev` ou un build statique suffit ; voir [`docs/CONTEXT.md`](docs/CONTEXT.md) et [`docs/README_STATIC.md`](docs/README_STATIC.md).
+Pour le **mode statique** (sans serveur Python), un seul `npm run dev` ou un build statique suffit ; voir [`docs/CONTEXT.md`](docs/CONTEXT.md) et [`docs/README_STATIC.md`](docs/README_STATIC.md).
 
 ## Fonctionnalités
 
@@ -38,7 +38,7 @@ Pour le **mode statique** (sans Django), un seul `npm run dev` ou un build stati
 
 ### Exports & sauvegarde
 
-- **Sauvegarde / chargement** des cartes en **JSON** (API Django ou mode statique via `localStorage`)
+- **Sauvegarde / chargement** des cartes en **JSON** (API FastAPI ou mode statique via `localStorage`)
 - **Export image** (PNG depuis le canvas, nom de fichier dérivé du nom de carte)
 - **Export fichier JSON** du scénario (téléchargement)
 - **Export XML** simplifié (interop / archivage)
@@ -49,7 +49,7 @@ Pour le **mode statique** (sans Django), un seul `npm run dev` ou un build stati
 - **Utilisateurs temporaires** et sélection d’utilisateur pour les dossiers de cartes
 - **Upload** d’assets personnalisés et de packs ZIP (masqué en mode statique)
 - **Type de jeu** des packs (filtre dans le panneau Packs & Assets) : persistance **`gameType=`** dans le **`cfg` racine** de chaque pack, lue par le parseur Python et reprise dans **`packs-index.json`** en build statique ; détail dans [`docs/CONTEXT.md`](docs/CONTEXT.md) (sous-section *Type de jeu* dans *Format des packs*).
-- Détection / indexation des packs (y compris répertoires type `bgmapeditor_tiles/` ou médias Django)
+- Détection / indexation des packs (y compris répertoires type `bgmapeditor_tiles/` ou dossiers médias)
 
 ### Interface
 
@@ -57,9 +57,9 @@ Pour le **mode statique** (sans Django), un seul `npm run dev` ou un build stati
 - Libellés et tooltips **Utilisateur** / **Thème** pour clarifier l’UI
 - **Multilingue** : interface disponible en français, anglais, allemand et espagnol via **[vue-i18n v9](https://vue-i18n.intlify.dev/)**. Détection automatique de la langue du navigateur ; préférence persistée dans `localStorage`. Sélecteur disponible dans le menu étendu.
 
-### Mode statique (sans Django)
+### Mode statique (sans serveur Python)
 
-- Avec **`VITE_STATIC_MODE`** non défini ou ≠ `false` au build, l’app utilise des **index JSON** et le **navigateur** pour packs et cartes — pas besoin de `runserver`. Voir [`docs/CONTEXT.md`](docs/CONTEXT.md) section *Mode statique*.
+- Avec **`VITE_STATIC_MODE`** non défini ou ≠ `false` au build, l’app utilise des **index JSON** et le **navigateur** pour packs et cartes — pas besoin d’`uvicorn`. Voir [`docs/CONTEXT.md`](docs/CONTEXT.md) section *Mode statique*.
 
 ### Menu allégé en production
 
@@ -69,11 +69,12 @@ Pour le **mode statique** (sans Django), un seul `npm run dev` ou un build stati
 
 ```
 .
-├── backend/              # Django — détail : docs/BACKEND_REFERENCE.md
-│   ├── zombicide_editor/ # Configuration Django
-│   ├── api/              # API REST + parsers
-│   ├── editor/           # Logique métier (maps, users, packs)
-│   └── manage.py
+├── backend/              # FastAPI — détail : docs/BACKEND_REFERENCE.md
+│   ├── app_config.py     # Chemins, CORS, création des dossiers
+│   ├── main.py           # Point d’entrée ASGI (uvicorn)
+│   ├── routes/           # Handlers HTTP /api
+│   ├── api/parsers/      # PackParser, indexation
+│   └── editor/           # Logique métier (maps, users, packs)
 ├── frontend/             # Vue.js frontend
 │   ├── src/
 │   │   ├── components/   # Composants Vue
@@ -88,16 +89,15 @@ Pour le **mode statique** (sans Django), un seul `npm run dev` ou un build stati
 
 ## Installation (première fois)
 
-### Backend (Django)
+### Backend (FastAPI)
 
 ```bash
 cd backend
 pip install -r ../requirements.txt
-python manage.py migrate  # si nécessaire selon ton environnement
-python manage.py runserver
+python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-Le serveur API écoute par défaut sur **http://127.0.0.1:8000**.
+Le serveur API écoute par défaut sur **http://127.0.0.1:8000** (même port que le proxy Vite).
 
 Pour régénérer la liste des symboles Python dans la doc backend : `python scripts/generate_backend_doc.py --write` (voir [`docs/BACKEND_REFERENCE.md`](docs/BACKEND_REFERENCE.md)).
 
@@ -114,7 +114,7 @@ L’interface de développement est sur **http://localhost:5173** (avec proxy ve
 ## Utilisation
 
 1. Placez vos packs Zombicide dans le dossier `bgmapeditor_tiles/` (ou selon votre config médias)
-2. Pour le mode **complet** : lancez Django et le serveur de dev Vite ; ouvrez http://localhost:5173
+2. Pour le mode **complet** : lancez FastAPI (`uvicorn`) et le serveur de dev Vite ; ouvrez http://localhost:5173
 3. Pour le mode **statique** : build ou hébergement des fichiers générés + `packs-index.json` / `maps-index.json` si besoin
 4. Sélectionnez un pack dans le panneau gauche
 5. Glissez-déposez les assets sur le canvas pour créer votre carte
@@ -123,7 +123,7 @@ L’interface de développement est sur **http://localhost:5173** (avec proxy ve
 
 ## Technologies
 
-- **Backend**: Django + Django REST Framework
+- **Backend**: FastAPI, Uvicorn, Starlette (static), CORS
 - **Frontend**: Vue.js 3 + Vite + Pinia
 - **Stockage**: Fichiers JSON (pas de base de données métier)
 - **Images**: Pillow (PIL) pour traitement d’images côté serveur

@@ -1,9 +1,9 @@
 ---
 name: zproject-allume
 description: >-
-  Démarre le serveur de dev Vue/Vite (frontend) et Django (backend) du projet zproject.
+  Démarre le serveur de dev Vue/Vite (frontend) et FastAPI (backend) du projet zproject.
   À appliquer lorsque l’utilisateur dit allume le projet, et ensuite tu allumes, démarre le projet,
-  lance le projet, démarre zproject, ou demande explicitement les deux serveurs (npm run dev + runserver).
+  lance le projet, démarre zproject, ou demande explicitement les deux serveurs (npm run dev + uvicorn).
 ---
 
 # Allumer le projet zproject
@@ -22,16 +22,16 @@ description: >-
    - Utiliser un **lancement en arrière-plan** (ne pas bloquer l’agent sur le serveur Vite).
 3. **Démarrer le backend** (processus long) :
    - Répertoire de travail : `backend/`
-   - Commande : `python manage.py runserver` (sur Windows, utiliser `py manage.py runserver` si `python` n’est pas dans le PATH).
+   - Commande : `python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000` (sur Windows, utiliser `py -m uvicorn ...` si `python` n’est pas dans le PATH).
    - **Arrière-plan** également.
 4. **Informer l’utilisateur** des URL habituelles :
    - Frontend : `http://localhost:5173`
-   - API Django : `http://127.0.0.1:8000` (le proxy Vite du frontend pointe `/api` vers ce serveur en dev).
+   - API FastAPI : `http://127.0.0.1:8000` (le proxy Vite du frontend pointe `/api` vers ce serveur en dev).
 
 ## Prérequis (si échec au lancement)
 
 - Frontend : `npm install` dans `frontend/` si les modules manquent.
-- Backend : depuis `backend/`, `pip install -r ../requirements.txt` (voir `README.md` du repo). Migrations : `python manage.py migrate` si nécessaire.
+- Backend : depuis `backend/`, `pip install -r ../requirements.txt` (voir `README.md` du repo), puis `python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000`.
 
 ## Shell Windows (PowerShell)
 

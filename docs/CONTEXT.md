@@ -19,7 +19,7 @@ Dans ce dépôt, lorsqu’on parle d’une **tâche** (souvent **tâche N** ou *
 | Couche | Technologies |
 |--------|----------------|
 | Frontend | Vue.js 3 (Composition API), Vite, Pinia, **vue-i18n v9** |
-| Backend | Django, Django REST Framework, CORS |
+| Backend | FastAPI, Uvicorn, CORS (fichiers JSON, pas d’ORM) |
 | Persistance | Fichiers JSON (ex. sous `media/users/`) |
 | Traitement images | Pillow (PIL) côté backend |
 
@@ -42,16 +42,16 @@ Le sélecteur de langue (menu maximal uniquement) est dans `AppHeader.vue`, cont
 
 ---
 
-## Mode statique (sans Django)
+## Mode statique (sans serveur Python)
 
 L’éditeur peut tourner **sans backend** pour démo, OVH statique ou `npm run build` déployé seul.
 
 | Élément | Rôle |
 |--------|------|
 | [`frontend/src/config.js`](frontend/src/config.js) | `VITE_STATIC_MODE` : par défaut **activé** sauf si la variable vaut explicitement `'false'` au build. |
-| [`frontend/src/services/api.js`](frontend/src/services/api.js) | Si `config.staticMode`, packs / cartes / utilisateurs passent par **`fetch`** sur des JSON statiques (`packs-index.json`, `maps-index.json`, `localStorage` via `localStorageService`). Pas d’appels Django. |
+| [`frontend/src/services/api.js`](frontend/src/services/api.js) | Si `config.staticMode`, packs / cartes / utilisateurs passent par **`fetch`** sur des JSON statiques (`packs-index.json`, `maps-index.json`, `localStorage` via `localStorageService`). Pas d’appels HTTP vers l’API. |
 | Build | `npm run build` génère `editor.html` + assets ; les chemins relatifs doivent rester cohérents avec l’hébergement. |
-| Upload ZIP / élément | Boutons masqués en `staticMode` dans l’UI ; l’upload nécessite l’API Django. |
+| Upload ZIP / élément | Boutons masqués en `staticMode` dans l’UI ; l’upload nécessite l’API FastAPI en local. |
 
 **Règle pour les évolutions** : toute nouvelle fonctionnalité qui appelle l’API doit prévoir une **branche statique** (données locales, JSON, ou message « non disponible hors ligne ») pour ne pas casser le déploiement statique.
 
@@ -61,11 +61,12 @@ L’éditeur peut tourner **sans backend** pour démo, OVH statique ou `npm run 
 
 ```
 .
-├── backend/                 # Django
-│   ├── zombicide_editor/    # settings, urls, wsgi
-│   ├── api/                 # REST, parsers (pack_parser, etc.)
+├── backend/                 # Python (FastAPI + logique métier)
+│   ├── app_config.py        # chemins, CORS, création des dossiers
+│   ├── main.py              # ASGI : FastAPI + StaticFiles
+│   ├── routes/              # handlers /api
+│   ├── api/                 # parsers (pack_parser, etc.)
 │   ├── editor/              # map_manager, user_manager, file_watcher, uploaders
-│   └── manage.py
 ├── frontend/
 │   └── src/
 │       ├── components/      # MapEditor, AppHeader, CanvasGrid, AssetPanel, …
@@ -77,7 +78,7 @@ L’éditeur peut tourner **sans backend** pour démo, OVH statique ou `npm run 
 └── README.md
 ```
 
-Les médias packs/cartes peuvent aussi vivre sous `backend/media/` selon la configuration Django.
+Les médias packs/cartes peuvent aussi vivre sous `backend/media/` selon `app_config.py` (`MEDIA_ROOT`).
 
 ---
 
@@ -103,7 +104,7 @@ Les fichiers `cfg` portent typiquement : `name`, `max`, `pairs`, `z-index`, `ali
 
 **Backend** : parsing et index dans `api/parsers/pack_parser.py` ; surveillance optionnelle via `editor/file_watcher.py` (watchdog) pour re-indexer après changements sur le disque.
 
-**API (vue d’ensemble)** : lister les packs, détail, assets par catégorie, servir les images (chemins exacts dans `backend/api/`).
+**API (vue d’ensemble)** : lister les packs, détail, assets par catégorie, servir les images (chemins dans `backend/routes/`).
 
 ---
 
@@ -189,8 +190,7 @@ Export image : souvent côté client (`canvas.toDataURL`, etc.) ; export serveur
 ```bash
 cd backend
 pip install -r ../requirements.txt
-python manage.py migrate   # souvent minimal sans BD métier
-python manage.py runserver
+python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
 ```
 
 **Frontend** :
@@ -216,11 +216,11 @@ Application dev typiquement sur **http://localhost:5173**. Placer les packs dans
 | Versions locales (après sauvegarde) | `frontend/src/services/mapVersions.js`, `MapVersionsModal.vue` |
 | Collaboration temps réel (hors scope court terme) | `docs/COLLABORATION.md` |
 | Coordonnées écran ↔ grille | `frontend/src/services/canvasRenderer.js` |
-| Assets / API | `frontend/src/components/AssetPanel.vue`, `frontend/src/services/api.js` |
+| Assets / API | `frontend/src/components/AssetPanel.vue`, `frontend/src/services/api.js`, `backend/main.py`, `backend/routes/` |
 | Parsing packs, `gameType` dans le cfg | `backend/api/parsers/pack_parser.py`, `backend/api/parsers/editor_game_types.py`, `backend/editor/pack_meta.py` |
 | Index statique packs | `scripts/generate_packs_index.py`, `scripts/backfill_cfg_game_type.py` |
-| Cartes / users | `backend/editor/map_manager.py`, `backend/editor/user_manager.py`, `backend/api/views.py` |
-| Config | `backend/zombicide_editor/settings.py`, `frontend/src/config.js` |
+| Cartes / users | `backend/editor/map_manager.py`, `backend/editor/user_manager.py`, `backend/routes/users_maps.py` |
+| Config chemins / CORS | `backend/app_config.py`, `frontend/src/config.js` |
 | Menu (masquage prod / dev) | `frontend/src/config/editorMenu.js` (`USE_MINIMAL_MENU`, `VITE_EDITOR_MINIMAL_MENU`) |
 
 ---

@@ -1,6 +1,6 @@
-# Référence backend Django (API + modules)
+# Référence backend FastAPI (API + modules)
 
-Ce document décrit l’**API REST** exposée sous le préfixe **`/api/`** (voir [`backend/zombicide_editor/urls.py`](../backend/zombicide_editor/urls.py)) et résume les **modules Python** (`api`, `editor`, parsers). En développement, le frontend Vite proxy en général `/api` vers `http://127.0.0.1:8000`.
+Ce document décrit l’**API REST** exposée sous le préfixe **`/api/`** (routeurs dans [`backend/routes/`](../backend/routes/), point d’entrée [`backend/main.py`](../backend/main.py)) et résume les **modules Python** (`api/parsers`, `editor`, `routes`). En développement, le frontend Vite proxy en général `/api` vers `http://127.0.0.1:8000`.
 
 ## Régénérer l’aperçu des symboles
 
@@ -16,57 +16,57 @@ Depuis la racine du dépôt (`zproject/`). Sans `--write`, le script affiche le 
 
 ```
 backend/
-├── zombicide_editor/   # settings, urls racine, WSGI/ASGI
-├── api/                # vues DRF, routes, serializers
+├── app_config.py       # Chemins (ASSETS_DIR, MEDIA_ROOT, …), CORS, ensure_data_directories()
+├── main.py             # FastAPI, CORS, StaticFiles, inclusion des routeurs /api
+├── routes/             # Handlers HTTP (packs, users/maps, fichiers image)
+├── api/
 │   └── parsers/        # PackParser, indexation, types de jeu
-├── editor/             # cartes, utilisateurs, upload ZIP / assets
-└── manage.py
+└── editor/             # cartes, utilisateurs, upload ZIP / assets
 ```
 
 ## API REST (`/api/…`)
 
-Toutes les routes sont définies dans [`backend/api/urls.py`](../backend/api/urls.py). L’ordre des `path()` est important : les segments littéraux (`custom`, `upload-zip`, etc.) **doivent** rester avant `packs/<pack_id>/` pour ne pas être interprétés comme un `pack_id`.
+Les routes sont réparties dans [`backend/routes/packs.py`](../backend/routes/packs.py), [`backend/routes/users_maps.py`](../backend/routes/users_maps.py) et [`backend/routes/files.py`](../backend/routes/files.py). **L’ordre d’enregistrement** des routes packs est important : les segments littéraux (`custom`, `upload-zip`, `uploaded`, …) **doivent** rester avant `packs/{pack_id}` pour ne pas être pris pour un identifiant de pack.
 
-| Méthode | Chemin (relatif à `/api/`) | Classe (vue) | Rôle |
-|--------|----------------------------|--------------|------|
-| GET | `packs/` | `PackListView` | Liste les packs (ré-indexation), avec `gameType` enrichi si connu. |
-| GET | `packs/<pack_id>/` | `PackDetailView` | Métadonnées d’un pack et noms de catégories. |
-| GET | `packs/<pack_id>/assets/` | `PackAssetsView` | Assets par catégorie (chemins, miniatures, rotations, max/pair). |
-| POST | `packs/custom/upload/` | `CustomPackUploadView` | Upload d’image custom + normalisation (tuile), option `game_type`. |
-| GET | `packs/custom/` | `CustomPackListView` | Liste des packs sous `packs/custom`. |
-| POST | `packs/upload-zip/` | `PackZipUploadView` | Import ZIP pack vers le répertoire assets ; option `game_type`. |
-| GET | `packs/uploaded/` | `UploadedPackListView` | Liste des packs présents dans le dossier médias assets. |
-| DELETE | `packs/uploaded/<pack_id>/` | `UploadedPackDeleteView` | Supprime le dossier du pack dans `ASSETS_DIR`. |
-| GET | `assets/<path:asset_path>` | `AssetView` | Sert un fichier image (PNG) depuis assets ou `bgmapeditor_tiles`. |
-| GET | `users/` | `UserListView` | Liste les utilisateurs (dossiers sous `USERS_DIR`). |
-| POST | `users/` | `UserListView` | Crée l’arborescence d’un utilisateur temporaire (`username`). |
-| GET | `users/<username>/maps/` | `UserMapsView` | Liste les cartes JSON de l’utilisateur. |
-| POST | `users/<username>/maps/` | `UserMapsView` | Crée une carte (corps JSON = données carte). |
-| GET | `users/<username>/maps/<map_id>/` | `MapDetailView` | Lit une carte. |
-| PUT | `users/<username>/maps/<map_id>/` | `MapDetailView` | Met à jour une carte. |
-| DELETE | `users/<username>/maps/<map_id>/` | `MapDetailView` | Supprime le fichier carte. |
-| GET | `maps/public/` | `PublicMapsView` | Liste toutes les cartes de tous les utilisateurs. |
+| Méthode | Chemin (relatif à `/api/`) | Handler (module) | Rôle |
+|--------|----------------------------|------------------|------|
+| GET | `packs/` | `list_packs` | Liste les packs (ré-indexation), avec `gameType` enrichi si connu. |
+| GET | `packs/{pack_id}/` | `pack_detail` | Métadonnées d’un pack et noms de catégories. |
+| GET | `packs/{pack_id}/assets/` | `pack_assets` | Assets par catégorie (chemins, miniatures, rotations, max/pair). |
+| POST | `packs/custom/upload/` | `custom_pack_upload` | Upload d’image custom + normalisation (tuile), option `game_type`. |
+| GET | `packs/custom/` | `list_custom_packs` | Liste des packs sous `packs/custom`. |
+| POST | `packs/upload-zip/` | `pack_zip_upload` | Import ZIP pack vers le répertoire assets ; option `game_type`. |
+| GET | `packs/uploaded/` | `list_uploaded_packs` | Liste des packs présents dans le dossier médias assets. |
+| DELETE | `packs/uploaded/{pack_id}/` | `delete_uploaded_pack` | Supprime le dossier du pack dans `ASSETS_DIR`. |
+| GET | `assets/{asset_path}` | `get_asset` | Sert un fichier image (PNG) depuis assets ou `bgmapeditor_tiles`. |
+| GET | `users/` | `list_users` | Liste les utilisateurs (dossiers sous `USERS_DIR`). |
+| POST | `users/` | `create_user` | Crée l’arborescence d’un utilisateur temporaire (`username`). |
+| GET | `users/{username}/maps/` | `list_user_maps` | Liste les cartes JSON de l’utilisateur. |
+| POST | `users/{username}/maps/` | `create_map` | Crée une carte (corps JSON = données carte). |
+| GET | `users/{username}/maps/{map_id}/` | `get_map` | Lit une carte. |
+| PUT | `users/{username}/maps/{map_id}/` | `update_map` | Met à jour une carte. |
+| DELETE | `users/{username}/maps/{map_id}/` | `delete_map` | Supprime le fichier carte. |
+| GET | `maps/public/` | `public_maps` | Liste toutes les cartes de tous les utilisateurs. |
 
-En **DEBUG**, le projet sert aussi les médias configurés dans `settings` (fichiers médias, `/assets/`, `/bgmapeditor_tiles/` selon [`backend/zombicide_editor/urls.py`](../backend/zombicide_editor/urls.py)).
+Le serveur monte aussi les répertoires **`/media`**, **`/assets`**, **`/bgmapeditor_tiles`** (fichiers statiques), comme le faisait l’ancien Django en développement.
 
-## Configuration projet (`zombicide_editor`)
+## Configuration
 
 | Fichier | Rôle |
 |---------|------|
-| `settings.py` | Chemins `ASSETS_DIR`, `USERS_DIR`, packs, `INSTALLED_APPS` (`api`, `editor`), DRF, etc. |
-| `urls.py` | Monte `admin/`, inclut `api.urls` sous `api/`, raccourcis `static()` en développement. |
-| `wsgi.py` / `asgi.py` | Points d’entrée serveur WSGI/ASGI. |
+| [`app_config.py`](../backend/app_config.py) | `BASE_DIR`, `ASSETS_DIR`, `MEDIA_ROOT`, `USERS_DIR`, `PACKS_DIR`, CORS, création des dossiers. |
+| [`main.py`](../backend/main.py) | Application FastAPI, middleware CORS, `StaticFiles`, inclusion des routeurs. |
 
-## Schémas DRF
+## Corps JSON (cartes)
 
-[`backend/api/serializers.py`](../backend/api/serializers.py) définit des serializers **légers** (surtout placeholder / validation partielle). Le flux principal des cartes repose sur des **dicts JSON** sérialisés manuellement dans les vues et `MapManager`.
+Le flux des cartes repose sur des **dicts JSON** libres passés à `MapManager` (création / mise à jour) ; pas de schéma Pydantic imposé côté API pour rester aligné avec le frontend.
 
 <!-- GEN:BEGIN -->
 ## Modules Python (aperçu généré)
 
 Bloc régénéré par `python scripts/generate_backend_doc.py --write`. Chaque entrée reprend la **première ligne de docstring** du symbole ; sinon *non documenté*.
 
-*Dernière génération : 2026-04-29 22:12 UTC*
+*Dernière génération : 2026-05-14 15:35 UTC*
 
 ### `backend/api/parsers/__init__.py`
 - *(aucun symbole public listé — uniquement imports / assignations)*
@@ -100,49 +100,10 @@ Bloc régénéré par `python scripts/generate_backend_doc.py --write`. Chaque e
 - `PackParser._parse_max_string()` — Parse max string like 'file.png:1;file2.png:2'
 - `PackParser._parse_pairs_string()` — Parse pairs string like 'file1.png:file2.png;file3.png:file4.png'
 
-### `backend/api/serializers.py`
-*Module : Schémas DRF minimaux (validation côté API ; la plupart des payloads sont des dicts JSON libres).*
+### `backend/app_config.py`
+*Module : Chemins et répertoires du projet (sans Django).*
 
-- class `PackSerializer` — Champs id / nom / image pour représentation pack (usage réservé ou futur).
-- class `AssetSerializer` — Représentation simplifiée d'un asset (nom, chemin, catégorie).
-- class `MapSerializer` — Structure carte : grille, couches, métadonnées mission (alignée sur le JSON éditeur).
-
-### `backend/api/urls.py`
-- *(aucun symbole public listé — uniquement imports / assignations)*
-
-### `backend/api/views.py`
-- `_load_pack_game_types_from_static_index()` — Source de vérité partagée avec le build statique: `packs-index.json`.
-- `_get_pack_game_type()` — Résout le type de jeu d'un pack.
-- class `PackListView` — Liste les packs disponibles (ré-indexation à chaque requête).
-- `PackListView.get()` — List all available packs
-- class `PackDetailView` — Détail d'un pack : nom, image, align, type de jeu, liste des catégories.
-- `PackDetailView.get()` — Get details of a specific pack
-- class `PackAssetsView` — Assets d'un pack groupés par catégorie (chemins, miniatures, rotations).
-- `PackAssetsView.get()` — Get assets for a specific pack, organized by category
-- class `AssetView` — Sert un fichier image (PNG) depuis ASSETS_DIR ou BG_MAPEDITOR_TILES_DIR.
-- `AssetView.get()` — Stream binaire d'une image pack / tuile.
-- class `UserListView` — Utilisateurs « temporaires » (dossiers sous USERS_DIR).
-- `UserListView.get()` — List all temporary users
-- `UserListView.post()` — Create a new temporary user
-- class `UserMapsView` — CRUD de liste : cartes JSON d'un utilisateur donné.
-- `UserMapsView.get()` — List all maps for a user
-- `UserMapsView.post()` — Create a new map for a user
-- class `MapDetailView` — Lecture, mise à jour et suppression d'une carte JSON par id.
-- `MapDetailView.get()` — Get a specific map
-- `MapDetailView.put()` — Update a map
-- `MapDetailView.delete()` — Delete a map
-- class `PublicMapsView` — Agrège toutes les cartes de tous les utilisateurs (aperçu / galerie).
-- `PublicMapsView.get()` — List all public maps (from all users)
-- class `CustomPackUploadView` — Upload d'image personnalisée : redimensionnement, rotations, entrée cfg.
-- `CustomPackUploadView.post()` — Upload and normalize a custom asset
-- class `CustomPackListView` — Liste les packs du répertoire `packs/custom` (métadonnées via PackParser).
-- `CustomPackListView.get()` — List custom packs
-- class `PackZipUploadView` — Import d'un pack ZIP Mapeditor vers ASSETS_DIR (validation structure).
-- `PackZipUploadView.post()` — Upload and extract a ZIP pack
-- class `UploadedPackListView` — Liste les dossiers-pack présents sous le répertoire médias « assets ».
-- `UploadedPackListView.get()` — List uploaded packs
-- class `UploadedPackDeleteView` — Supprime un pack uploadé (dossier sous ASSETS_DIR) par identifiant.
-- `UploadedPackDeleteView.delete()` — Delete an uploaded pack from assets directory
+- `ensure_data_directories()` — Crée les dossiers attendus s’ils n’existent pas.
 
 ### `backend/editor/file_watcher.py`
 *Module : File watcher for detecting changes in bgmapeditor_tiles directory*
@@ -214,27 +175,48 @@ Bloc régénéré par `python scripts/generate_backend_doc.py --write`. Chaque e
 
 - `ensure_directory()` — Create directory if it doesn't exist.
 
-### `backend/zombicide_editor/__init__.py`
+### `backend/main.py`
+*Module : Application FastAPI — même contrat que l'ancien Django (port 8000, préfixe /api).*
+
+- `lifespan()` — *non documenté*
+
+### `backend/routes/__init__.py`
 - *(aucun symbole public listé — uniquement imports / assignations)*
 
-### `backend/zombicide_editor/asgi.py`
-*Module : ASGI config for zombicide_editor project.*
+### `backend/routes/files.py`
+*Module : Sert les images sous /api/assets/ (même logique que l'ancienne AssetView).*
 
-- *(aucun symbole public listé — uniquement imports / assignations)*
+- `get_asset()` — *non documenté*
 
-### `backend/zombicide_editor/settings.py`
-*Module : Django settings for zombicide_editor project.*
+### `backend/routes/packs.py`
+*Module : Routes /api/packs/* et uploads (ordre des routes = même contrainte que l'ancien urls.py Django).*
 
-- *(aucun symbole public listé — uniquement imports / assignations)*
+- `list_packs()` — *non documenté*
+- `custom_pack_upload()` — *non documenté*
+- `list_custom_packs()` — *non documenté*
+- `pack_zip_upload()` — *non documenté*
+- `list_uploaded_packs()` — *non documenté*
+- `delete_uploaded_pack()` — *non documenté*
+- `pack_assets()` — *non documenté*
+- `pack_detail()` — *non documenté*
 
-### `backend/zombicide_editor/urls.py`
-*Module : URL configuration for zombicide_editor project.*
+### `backend/routes/packs_helpers.py`
+*Module : Helpers partagés pour les routes packs (index statique packs-index.json).*
 
-- *(aucun symbole public listé — uniquement imports / assignations)*
+- `load_pack_game_types_from_static_index()` — Source de vérité partagée avec le build statique: packs-index.json.
+- `get_pack_game_type()` — Priorité: pack['gameType'] puis mapping du static index.
+- `parse_form_bool()` — Interprète une valeur issue d'un formulaire (bool ou chaîne).
 
-### `backend/zombicide_editor/wsgi.py`
-*Module : WSGI config for zombicide_editor project.*
+### `backend/routes/users_maps.py`
+*Module : Routes /api/users/* et /api/maps/public/.*
 
-- *(aucun symbole public listé — uniquement imports / assignations)*
+- `list_users()` — *non documenté*
+- `create_user()` — *non documenté*
+- `list_user_maps()` — *non documenté*
+- `create_map()` — *non documenté*
+- `get_map()` — *non documenté*
+- `update_map()` — *non documenté*
+- `delete_map()` — *non documenté*
+- `public_maps()` — *non documenté*
 
 <!-- GEN:END -->

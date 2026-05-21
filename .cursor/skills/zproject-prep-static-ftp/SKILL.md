@@ -21,11 +21,11 @@ description: >-
    - `python generate_maps_index.py`  
    Sur Windows, utiliser `py` à la place de `python` si nécessaire.
 
-2. **Prérequis** : venv + `pip install -r requirements.txt` si besoin. Django via `DJANGO_SETTINGS_MODULE=zombicide_editor.settings`.
+2. **Prérequis** : venv + `pip install -r requirements.txt` si besoin. Les scripts chargent `backend/app_config.py` (pas de Django).
 
 ## Comportement attendu — `npm run build` pour un déploiement statique en ligne
 
-Pour que le bundle utilise **packs-index / cartes statiques** (et pas l’API Django), **`VITE_STATIC_MODE` doit être `true` au moment du build**. En local, après le build, il faut **revenir à `false`** pour retrouver le mode dev avec Django (packs et assets via l’API).
+Pour que le bundle utilise **packs-index / cartes statiques** (et pas l’API FastAPI), **`VITE_STATIC_MODE` doit être `true` au moment du build**. En local, après le build, il faut **revenir à `false`** pour retrouver le mode dev avec `uvicorn` (packs et assets via l’API).
 
 **Workflow obligatoire** (fichier **`frontend/.env`**) :
 
@@ -37,7 +37,7 @@ Pour que le bundle utilise **packs-index / cartes statiques** (et pas l’API Dj
    `VITE_STATIC_MODE=false`  
    pour le travail quotidien en local.
 
-Sans l’étape 1, un build avec `false` produit une app qui attend l’API : **en ligne sur FTP sans Django**, les packs et assets ne se chargent pas correctement. Sans l’étape 3, le dev local reste coincé en mode statique.
+Sans l’étape 1, un build avec `false` produit une app qui attend l’API : **en ligne sur FTP sans backend Python**, les packs et assets ne se chargent pas correctement. Sans l’étape 3, le dev local reste coincé en mode statique.
 
 ## Fichiers produits par les scripts (à uploader / fusionner sur le FTP)
 
@@ -58,5 +58,5 @@ Sous **`frontend/public/`** :
 
 ## En cas d’erreur
 
-- Django / imports : venv, `requirements.txt`, exécution depuis `scripts/`.
-- Index de cartes vide : vérifier `media/users/*/maps/*.json` (`MEDIA_ROOT` / `USERS_DIR` dans `backend/zombicide_editor/settings.py`).
+- Python / imports : venv, `requirements.txt`, exécution depuis `scripts/`.
+- Index de cartes vide : vérifier `media/users/*/maps/*.json` (`MEDIA_ROOT` / `USERS_DIR` dans `backend/app_config.py`).

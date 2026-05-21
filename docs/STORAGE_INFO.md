@@ -11,7 +11,7 @@ Par exemple :
 - `media/users/temp/maps/map_abc123.json`
 - `media/users/camp/maps/map_def456.json`
 
-Le répertoire `media/` est défini dans `backend/zombicide_editor/settings.py` :
+Le répertoire `media/` est défini dans `backend/app_config.py` :
 - `MEDIA_ROOT = BASE_DIR / 'media'`
 - `USERS_DIR = MEDIA_ROOT / 'users'`
 

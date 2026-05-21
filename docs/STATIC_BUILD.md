@@ -1,10 +1,10 @@
 # Build statique avec pré-indexation
 
-Ce guide explique comment générer un build statique de l'application qui fonctionne sans serveur Django.
+Ce guide explique comment générer un build statique de l'application qui fonctionne sans serveur Python (API).
 
 ## Prérequis
 
-- Python 3.8+ avec Django installé (uniquement pour générer l'index)
+- Python 3.8+ avec les paquets du `requirements.txt` (uniquement pour générer les index JSON)
 - Node.js et npm (pour le build frontend)
 
 ## Étapes

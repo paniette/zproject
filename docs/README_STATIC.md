@@ -2,7 +2,7 @@
 
 ## Activation du mode statique
 
-1. **Générer l'index des packs** (nécessite Python/Django) :
+1. **Générer l'index des packs** (nécessite Python + dépendances du `requirements.txt`) :
    ```bash
    cd scripts
    python generate_packs_index.py
@@ -29,7 +29,7 @@
 - Boutons d'upload désactivés
 
 ✅ **Mode normal (VITE_STATIC_MODE=false) :**
-- Packs chargés depuis l'API Django
+- Packs chargés depuis l'API FastAPI (`uvicorn` sur le port 8000)
 - Cartes sauvegardées sur le serveur
 - Boutons d'upload actifs
 
@@ -45,5 +45,5 @@ Les cartes sont stockées dans le localStorage du navigateur (par utilisateur).
 ## Cartes « serveur » (liste Charger) + cartes créées en local
 
 - **Liste « Charger une carte »** : fusion de `maps-index.json` + les entrées `localStorage` pour l’utilisateur courant (par défaut `temp`). Seules les cartes dont `metadata.author` correspond à l’utilisateur sélectionné apparaissent.
-- **Publier des cartes faites en dev Django** : copier les JSON depuis `media/users/<user>/maps/*.json` (ou équivalent) vers `frontend/public/maps/`, puis depuis la racine du dépôt exécuter `cd scripts` et `python generate_maps_index.py` (met à jour `frontend/public/maps-index.json` et recopie les fichiers). Rebuild (`npm run build` avec `VITE_STATIC_MODE=true`) et déployer `dist/` + `maps/` + `maps-index.json`.
+- **Publier des cartes faites en dev avec l’API** : copier les JSON depuis `media/users/<user>/maps/*.json` (ou équivalent) vers `frontend/public/maps/`, puis depuis la racine du dépôt exécuter `cd scripts` et `python generate_maps_index.py` (met à jour `frontend/public/maps-index.json` et recopie les fichiers). Rebuild (`npm run build` avec `VITE_STATIC_MODE=true`) et déployer `dist/` + `maps/` + `maps-index.json`.
 - **Supprimer** : une carte entièrement dans le `localStorage` est effacée pour de bon. Une carte qui vient seulement des fichiers statiques ne peut pas être supprimée sur le disque du FTP ; le bouton supprime l’entrée **pour ce navigateur** (liste masquée dans `localStorage`, clé `zombicide_static_maps_suppressed`).

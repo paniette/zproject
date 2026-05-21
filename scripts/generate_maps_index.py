@@ -1,25 +1,19 @@
 """
 Script to generate a static maps index JSON file
-This allows the frontend to work without Django backend
+This allows the frontend to work without the Python API server
 """
 import json
 import sys
 from pathlib import Path
 
 # Add backend to path
-sys.path.insert(0, str(Path(__file__).parent.parent / 'backend'))
+sys.path.insert(0, str(Path(__file__).parent.parent / "backend"))
 
-from django.conf import settings
-import os
+import app_config  # noqa: E402
 
-# Setup Django settings
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'zombicide_editor.settings')
+app_config.ensure_data_directories()
 
-# Import Django
-import django
-django.setup()
-
-from editor.map_manager import MapManager
+from editor.map_manager import MapManager  # noqa: E402
 
 
 def generate_maps_index():
@@ -65,7 +59,7 @@ def generate_maps_index():
     maps_public_dir.mkdir(parents=True, exist_ok=True)
     
     print("\nCopying map files to public directory...")
-    users_dir = Path(settings.USERS_DIR)
+    users_dir = Path(app_config.USERS_DIR)
     copied_count = 0
     
     if users_dir.exists():

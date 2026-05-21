@@ -4,7 +4,7 @@ Map manager for saving/loading maps as JSON files
 import json
 import os
 from pathlib import Path
-from django.conf import settings
+import app_config as settings
 from .utils import ensure_directory
 import uuid
 from datetime import datetime

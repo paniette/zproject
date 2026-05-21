@@ -5,7 +5,7 @@ import re
 import shutil
 from pathlib import Path
 from PIL import Image
-from django.conf import settings
+import app_config as settings
 from .utils import ensure_directory
 
 

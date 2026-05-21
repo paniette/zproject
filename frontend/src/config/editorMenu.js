@@ -7,7 +7,7 @@ import { config } from '@/config'
  * - **Dev local** : laissez tout à `true` (ou `USE_MINIMAL_MENU` à `false`).
  * - **Production** : passez les entrées à `false`, ou activez `USE_MINIMAL_MENU` / la variable d’environnement.
  *
- * Les uploads restent aussi désactivés si `config.staticMode` (pas d’API Django).
+ * Les uploads restent aussi désactivés si `config.staticMode` (pas d’API locale).
  *
  * Variable Vite optionnelle : `VITE_EDITOR_MINIMAL_MENU=true` au build → même effet que `USE_MINIMAL_MENU`
  * sans modifier ce fichier.

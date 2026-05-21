@@ -8,7 +8,7 @@ Préférence : écrire `gameType=…` dans le fichier `cfg` à la racine du pack
 import json
 from pathlib import Path
 
-from django.conf import settings
+import app_config as settings
 
 from api.parsers.editor_game_types import normalize_editor_game_type
 
