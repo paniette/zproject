@@ -4,54 +4,55 @@
  * Thème de l’éditeur : couleurs centralisées dans :root.
  * Pour un thème alternatif, définir sur <html> : data-theme="slate" (voir bloc ci-dessous).
  */
+/* Classic 1E — parchemin chaud, rouge brand Zombicide (réf. PDF Classic) */
 :root {
-  --primary-color: #e63946;
-  --secondary-color: #457b9d;
-  --dark-color: #1d3557;
-  --light-color: #f1faee;
+  --primary-color: #C41230;   /* rouge brand = --mp-quest/accent */
+  --secondary-color: #7a3820;
+  --dark-color: #1e0f08;
+  --light-color: #EEDAB7;     /* = --mp-bg parchemin */
   --danger-color: #bc1c1c;
   --success-color: #2a9d8f;
-  --brown-dark: #3d2817;
-  --brown-medium: #5a3e2b;
-  --brown-light: #8b6f47;
-  --gray-dark: #2c2c2c;
-  --gray-medium: #4a4a4a;
-  --gray-light: #6b6b6b;
-  --editor-bg-start: var(--brown-dark);
-  --editor-bg-end: var(--gray-dark);
+  --brown-dark: #2e1a0c;
+  --brown-medium: #5a3620;
+  --brown-light: #8b5a3c;
+  --gray-dark: #2a1a10;
+  --gray-medium: #4a3020;
+  --gray-light: #7a5840;
+  --editor-bg-start: #2e1a0c;
+  --editor-bg-end: #3a2415;
   /* Liste native des <select> : fond clair côté OS — texte foncé obligatoire */
   --select-option-text: #1a1a1a;
   --select-option-bg: #ffffff;
-  --shadow-accent: rgba(230, 57, 70, 0.3);
+  --shadow-accent: rgba(196, 18, 48, 0.35);
   --glow-soft: color-mix(in srgb, var(--primary-color) 14%, transparent);
   --glow-strong: color-mix(in srgb, var(--primary-color) 48%, transparent);
   --overlay-primary-weak: color-mix(in srgb, var(--primary-color) 22%, transparent);
   --overlay-primary-mid: color-mix(in srgb, var(--primary-color) 42%, transparent);
 }
 
-/* Modern — acier froid, interface sombre/neutre */
+/* Modern 2E — gris neutre pur, monochrome (réf. WM44) */
 html[data-theme='modern'] {
-  --primary-color: #94a3b8;
-  --secondary-color: #64748b;
-  --dark-color: #0f172a;
-  --light-color: #f8fafc;
-  --brown-dark: #1e293b;
-  --brown-medium: #334155;
-  --brown-light: #475569;
-  --gray-dark: #0f172a;
-  --gray-medium: #334155;
-  --gray-light: #64748b;
-  --editor-bg-start: #0f172a;
-  --editor-bg-end: #1e293b;
-  --shadow-accent: rgba(148, 163, 184, 0.35);
+  --primary-color: #555555;   /* gris foncé neutre — accent UI */
+  --secondary-color: #888888;
+  --dark-color: #111111;
+  --light-color: #EBEBEB;     /* = --mp-bg */
+  --brown-dark: #1a1a1a;
+  --brown-medium: #2c2c2c;
+  --brown-light: #4a4a4a;
+  --gray-dark: #111111;
+  --gray-medium: #2a2a2a;
+  --gray-light: #555555;
+  --editor-bg-start: #1a1a1a;
+  --editor-bg-end: #262626;
+  --shadow-accent: rgba(100, 100, 100, 0.40);
 }
 
-/* Fantasy — parchemin chaud, or et bordeaux médiéval */
+/* Fantasy — parchemin chaud, or médiéval (réf. PDF Black Plague / Green Horde) */
 html[data-theme='fantasy'] {
-  --primary-color: #c9a227;
-  --secondary-color: #7d5228;
+  --primary-color: #b8920f;   /* or chaud, plus proche parchemin PDF que l'or saturé */
+  --secondary-color: #7d1618; /* bordeaux = --mp-accent PDF */
   --dark-color: #2c1a0e;
-  --light-color: #f5ead6;
+  --light-color: #f1efe2;     /* = --mp-bg exactement */
   --danger-color: #bc1c1c;
   --success-color: #5a8a3c;
   --brown-dark: #2c1a0e;
@@ -62,64 +63,64 @@ html[data-theme='fantasy'] {
   --gray-light: #8b6040;
   --editor-bg-start: #2c1a0e;
   --editor-bg-end: #3d2410;
-  --shadow-accent: rgba(201, 162, 39, 0.4);
+  --shadow-accent: rgba(184, 146, 15, 0.42);
 }
 
-/* Western — terre de Sienne, rouille et sable */
+/* Western — Undead or Alive, rouille et sable (réf. PDF UoA) */
 html[data-theme='western'] {
-  --primary-color: #d4782a;
-  --secondary-color: #8b5e2a;
+  --primary-color: #C87020;   /* rouille ambrée — proche --mp-accent #9A4B0F mais lisible UI */
+  --secondary-color: #8B4513; /* saddle brown */
   --dark-color: #2a1a08;
-  --light-color: #f5e6c8;
+  --light-color: #F5E6C8;     /* = --mp-bg */
   --danger-color: #b91c1c;
   --success-color: #6b7c45;
   --brown-dark: #2a1a08;
   --brown-medium: #5c3a18;
-  --brown-light: #a06830;
+  --brown-light: #9a6030;
   --gray-dark: #1e1408;
   --gray-medium: #3d2810;
   --gray-light: #7a5830;
   --editor-bg-start: #2a1a08;
   --editor-bg-end: #3a2412;
-  --shadow-accent: rgba(212, 120, 42, 0.4);
+  --shadow-accent: rgba(200, 112, 32, 0.45);
 }
 
-/* Sci-Fi — violet tech / indigo profond */
+/* Sci-Fi — Invader / Dark Side, cyan acier (réf. PDF Invader) */
 html[data-theme='scifi'] {
-  --primary-color: #818cf8;
-  --secondary-color: #6366f1;
-  --dark-color: #1e1b4b;
-  --light-color: #e0e7ff;
-  --danger-color: #f472b6;
-  --success-color: #34d399;
-  --brown-dark: #1e1b4b;
-  --brown-medium: #312e81;
-  --brown-light: #4338ca;
-  --gray-dark: #0d0b2e;
-  --gray-medium: #1e1b4b;
-  --gray-light: #3730a3;
-  --editor-bg-start: #0d0b2e;
-  --editor-bg-end: #1e1b4b;
-  --shadow-accent: rgba(129, 140, 248, 0.4);
+  --primary-color: #0099CC;   /* cyan Invader = --mp-quest */
+  --secondary-color: #0077A0;
+  --dark-color: #061824;
+  --light-color: #E8ECF0;     /* = --mp-bg */
+  --danger-color: #E91E8C;    /* magenta accent 2 */
+  --success-color: #00C4A0;
+  --brown-dark: #061824;
+  --brown-medium: #0d2d42;
+  --brown-light: #1a4d6e;
+  --gray-dark: #061824;
+  --gray-medium: #0d1e2e;
+  --gray-light: #1a3a52;
+  --editor-bg-start: #061824;
+  --editor-bg-end: #0a2030;
+  --shadow-accent: rgba(0, 153, 204, 0.50);
 }
 
-/* Night — néon vert, infection, obscurité */
+/* Night — NOTLD Romero, film noir, encre noire sur crème (réf. PDF NOTLD) */
 html[data-theme='night'] {
-  --primary-color: #4ade80;
-  --secondary-color: #16a34a;
-  --dark-color: #052e16;
-  --light-color: #dcfce7;
-  --danger-color: #ef4444;
-  --success-color: #22c55e;
-  --brown-dark: #052e16;
-  --brown-medium: #14532d;
-  --brown-light: #166534;
-  --gray-dark: #021a0d;
-  --gray-medium: #052e16;
-  --gray-light: #166534;
-  --editor-bg-start: #021a0d;
-  --editor-bg-end: #052e16;
-  --shadow-accent: rgba(74, 222, 128, 0.35);
+  --primary-color: #c8c8c8;   /* gris film clair — accent sur fond sombre */
+  --secondary-color: #888888;
+  --dark-color: #0a0a0a;
+  --light-color: #F5F0E6;     /* = --mp-bg */
+  --danger-color: #cc2200;    /* rouge sang ciné N&B */
+  --success-color: #888888;
+  --brown-dark: #0a0a0a;
+  --brown-medium: #1a1a1a;
+  --brown-light: #2e2e2e;
+  --gray-dark: #080808;
+  --gray-medium: #141414;
+  --gray-light: #2e2e2e;
+  --editor-bg-start: #0a0a0a;
+  --editor-bg-end: #161616;
+  --shadow-accent: rgba(200, 200, 200, 0.28);
 }
 
 * {
