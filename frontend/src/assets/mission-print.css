@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@600;700&family=IM+Fell+English:ital@0;1&family=UnifrakturMaguntia&family=Lato&family=Source+Sans+3&family=Ma+Shan+Zheng&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;600;700&display=swap');
-@import url('https://fonts.cdnfonts.com/css/heorot');
+/* Toutes les polices sont déclarées en @font-face local dans mission-fonts.css — 0 CDN */
 
 /* Algo FY Black – utilisée dans les PDFs Zombicide officiels (FONTYOU / Black[Foundry]).
    Police commerciale ; le fichier W01 est servi ici via CDN onlinewebfonts pour usage local/dev. */
@@ -52,10 +51,24 @@
 
 /* Prévisualisation page mission (hors thème UI) — variables par thème */
 
+/* ── Classic 1E — typographie Zombicide original (2012–2018) ─────────────── */
 .mission-page-preview[data-mission-theme='classic'] {
-  --mp-title: "Creepster", fantasy;
-  --mp-body: "Roboto", system-ui, sans-serif;
-  --mp-flavor: "Roboto", system-ui, sans-serif;
+  /* Polices sémantiques */
+  --mp-font-quest:       "Creepster", fantasy;
+  --mp-font-hero:        "Creepster", fantasy;
+  --mp-font-meta:        "TeX Gyre Heros", "Arial", sans-serif;
+  --mp-font-synopsis:    "Gorri Sans", Georgia, serif;
+  --mp-font-section:     "TeX Gyre Heros", "Arial", sans-serif;
+  --mp-font-body:        "TeX Gyre Heros", "Arial", sans-serif;
+  --mp-font-label:       "TeX Gyre Heros", "Arial", sans-serif;
+  --mp-font-map:         "TeX Gyre Heros", "Arial", sans-serif;
+  --mp-font-token-name:  "Creepster", fantasy;
+  --mp-font-token-deco:  "WC Rhesus B", fantasy;
+  /* Shims rétrocompatibles (classes génériques du composant) */
+  --mp-title:   var(--mp-font-hero);
+  --mp-body:    var(--mp-font-body);
+  --mp-flavor:  var(--mp-font-synopsis);
+  /* Couleurs */
   --mp-bg: #f7f3e9;
   --mp-ink: #1a1208;
   --mp-accent: #8b2500;
@@ -64,10 +77,24 @@
   --mp-dropcap: var(--mp-accent);
 }
 
+/* ── Modern 2E — modèle de référence WM44 (depuis 2021) ─────────────────── */
 .mission-page-preview[data-mission-theme='modern'] {
-  --mp-title: "Bebas Neue", "Arial Narrow", sans-serif;
-  --mp-body: "Source Sans 3", system-ui, sans-serif;
-  --mp-flavor: "Source Sans 3", system-ui, sans-serif;
+  /* Polices sémantiques */
+  --mp-font-quest:       "League Gothic", "Overpass", sans-serif;
+  --mp-font-hero:        "League Gothic", "Overpass", sans-serif;
+  --mp-font-meta:        "Overpass", "Arial", sans-serif;
+  --mp-font-synopsis:    "Gorri Sans", Georgia, serif;
+  --mp-font-section:     "Overpass", "Arial", sans-serif;
+  --mp-font-body:        "Source Sans 3", system-ui, sans-serif;
+  --mp-font-label:       "Source Sans 3", system-ui, sans-serif;
+  --mp-font-map:         "Overpass", "Arial", sans-serif;
+  --mp-font-token-name:  "Capture It", "Archivo Narrow", sans-serif;
+  --mp-font-token-deco:  "WC Rhesus B", fantasy;
+  /* Shims rétrocompatibles */
+  --mp-title:   var(--mp-font-hero);
+  --mp-body:    var(--mp-font-body);
+  --mp-flavor:  var(--mp-font-synopsis);
+  /* Couleurs */
   --mp-bg: #f1f5f9;
   --mp-ink: #0f172a;
   --mp-accent: #334155;
@@ -76,10 +103,24 @@
   --mp-dropcap: var(--mp-accent);
 }
 
+/* ── Night / NOTLD — typographie cinéma Romero (années 60) ──────────────── */
 .mission-page-preview[data-mission-theme='night'] {
-  --mp-title: "Creepster", fantasy;
-  --mp-body: "Roboto", system-ui, sans-serif;
-  --mp-flavor: "Roboto", system-ui, sans-serif;
+  /* Polices sémantiques */
+  --mp-font-quest:       "Anton", "Overpass", sans-serif;
+  --mp-font-hero:        "Anton", "Overpass", sans-serif;
+  --mp-font-meta:        "Jost", system-ui, sans-serif;
+  --mp-font-synopsis:    "Roboto Slab", Georgia, serif;
+  --mp-font-section:     "Jost", system-ui, sans-serif;
+  --mp-font-body:        "Roboto Slab", Georgia, serif;
+  --mp-font-label:       "Jost", system-ui, sans-serif;
+  --mp-font-map:         "Special Elite", monospace;
+  --mp-font-token-name:  "Special Elite", monospace;
+  --mp-font-token-deco:  "WC Rhesus B", fantasy;
+  /* Shims rétrocompatibles */
+  --mp-title:   var(--mp-font-hero);
+  --mp-body:    var(--mp-font-body);
+  --mp-flavor:  var(--mp-font-synopsis);
+  /* Couleurs */
   --mp-bg: #e8f5e9;
   --mp-ink: #052e16;
   --mp-accent: #166534;
@@ -88,10 +129,24 @@
   --mp-dropcap: var(--mp-accent);
 }
 
+/* ── Sci-Fi (Invader / Dark Side) — look high-tech ──────────────────────── */
 .mission-page-preview[data-mission-theme='scifi'] {
-  --mp-title: "Cinzel", Georgia, serif;
-  --mp-body: "Lato", system-ui, sans-serif;
-  --mp-flavor: "Lato", system-ui, sans-serif;
+  /* Polices sémantiques */
+  --mp-font-quest:       "Zekton", "Michroma", sans-serif;
+  --mp-font-hero:        "Zekton", "Michroma", sans-serif;
+  --mp-font-meta:        "TeX Gyre Heros", "Arial", sans-serif;
+  --mp-font-synopsis:    "TeX Gyre Heros", "Arial", sans-serif;
+  --mp-font-section:     "Zekton", "Michroma", sans-serif;
+  --mp-font-body:        "TeX Gyre Heros", "Arial", sans-serif;
+  --mp-font-label:       "TeX Gyre Heros", "Arial", sans-serif;
+  --mp-font-map:         "Michroma", "TeX Gyre Heros", sans-serif;
+  --mp-font-token-name:  "Michroma", "TeX Gyre Heros", sans-serif;
+  --mp-font-token-deco:  "WC Rhesus B", fantasy;
+  /* Shims rétrocompatibles */
+  --mp-title:   var(--mp-font-hero);
+  --mp-body:    var(--mp-font-body);
+  --mp-flavor:  var(--mp-font-synopsis);
+  /* Couleurs */
   --mp-bg: #eef2ff;
   --mp-ink: #1e1b4b;
   --mp-accent: #4338ca;
@@ -238,11 +293,24 @@
   color: var(--mp-bg);
 }
 
-/* ── Western – terre brûlée, typographie condensée, esprit Far West ─────────── */
+/* ── Western (Undead or Alive) — esprit Far West ────────────────────────── */
 .mission-page-preview[data-mission-theme='western'] {
-  --mp-title: "Oswald", "Arial Narrow", system-ui, sans-serif;
-  --mp-body: "Merriweather", Georgia, "Times New Roman", serif;
-  --mp-flavor: "Merriweather", Georgia, serif;
+  /* Polices sémantiques */
+  --mp-font-quest:       "Rye", "Roboto Slab", serif;
+  --mp-font-hero:        "Rye", "Roboto Slab", serif;
+  --mp-font-meta:        "Overpass", "Arial", sans-serif;
+  --mp-font-synopsis:    "Roboto Slab", Georgia, serif;
+  --mp-font-section:     "Roboto Slab", Georgia, serif;
+  --mp-font-body:        "Roboto Slab", Georgia, serif;
+  --mp-font-label:       "Roboto Slab", Georgia, serif;
+  --mp-font-map:         "Overpass", "Arial", sans-serif;
+  --mp-font-token-name:  "Roboto Slab", Georgia, serif;
+  --mp-font-token-deco:  "WC Rhesus B", fantasy;
+  /* Shims rétrocompatibles */
+  --mp-title:   var(--mp-font-hero);
+  --mp-body:    var(--mp-font-body);
+  --mp-flavor:  var(--mp-font-synopsis);
+  /* Couleurs */
   --mp-bg: #fdf3e3;
   --mp-ink: #2b1810;
   --mp-accent: #9a4b0f;

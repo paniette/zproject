@@ -1,239 +1,120 @@
-# Contexte projet — Éditeur de cartes Zombicide (web)
+# Contexte projet — zproject
 
-Document de référence pour reprendre le développement. Il synthétise les plans Cursor « Éditeur Zombicide Web » et « Correction interactions éditeur carte », ainsi que le README racine.
+Document **court** pour reprendre le dev (humains et agents). Détails par domaine : annexes ci-dessous. Démarrage local et stack : [`README.md`](../README.md).
 
 ---
 
 ## Objectif
 
-Éditeur web de cartes **Zombicide** compatible avec les packs du **Mapeditor Windows** : structure de dossiers et fichiers `cfg`, import ZIP, édition sur canvas (tuiles, portes, tokens, zombies), sauvegarde en **JSON** (sans base de données métier), **utilisateurs temporaires**, export image.
+Éditeur web de **scénarios Zombicide** : carte interactive (Mapeditor) + **fiche mission** imprimable (style PDF officiel) avec **capture de la carte** en bas. Persistance **JSON**, pas de BDD. Production cible : **mode statique** sans Python (`z.paniette.fr`).
 
-### Tâches (GitHub)
-
-Dans ce dépôt, lorsqu’on parle d’une **tâche** (souvent **tâche N** ou **issue #N**), cela désigne une **[issue GitHub](https://github.com/paniette/zproject/issues)** du dépôt **paniette/zproject** : consulter `https://github.com/paniette/zproject/issues/N` — il n’y a en général pas de liste locale équivalente dans le workspace. Titre, description et commentaires de l’issue font foi pour le périmètre.
+**Tâches** : « tâche N » / « issue #N » → [issue GitHub](https://github.com/paniette/zproject/issues/N) (pas de liste locale). Détail : règle `.cursor/rules/github-issues.mdc`.
 
 ---
 
-## Stack
+## Vocabulaire
 
-| Couche | Technologies |
-|--------|----------------|
-| Frontend | Vue.js 3 (Composition API), Vite, Pinia, **vue-i18n v9** |
-| Backend | FastAPI, Uvicorn, CORS (fichiers JSON, pas d’ORM) |
-| Persistance | Fichiers JSON (ex. sous `media/users/`) |
-| Traitement images | Pillow (PIL) côté backend |
+| Terme (utilisateur) | Code / UI | Rôle |
+|----------------------|-----------|------|
+| **Page carte**, map, plans | `#/` · `MapEditor` | Édition canvas : `layers.tiles` / `layers.objects` — **source géométrique**. |
+| **Page mission** | `#/mission` · `MissionEditor` | Rendu **HTML A4** (`MissionPagePreview`) + `@media print` — **pas** un éditeur PDF séparé. |
+| **Capture carte** | `mission.mapImageDataUrl` | PNG sans grille (crop auto) via `canvasExport.js` → `CanvasGrid`. |
+| **Mode statique** | `config.staticMode` | Packs/cartes sans FastAPI : index JSON + `localStorage`. |
+
+**Ne pas confondre** : canvas interactif ≠ PNG mission · thème UI (`themeStore` / `data-theme`) ≠ thème fiche (`mission.pageTheme` / `#mission-print-root`).
+
+**Architecture** : une SPA, deux onglets (`EditorLayout`, `v-show`), **un seul store** `mapStore` (carte + `mission` + undo/redo). **Ne pas** créer de `missionStore` séparé. Router hash : `#/`, `#/mission`.
+
+Schéma mission : [`frontend/src/utils/mission.js`](../frontend/src/utils/mission.js). Utilisateur par défaut : **`temp`** (`userStore`).
 
 ---
 
-## Internationalisation (i18n)
+## Trois « thèmes » liés
 
-L'interface est traduite via **vue-i18n v9** (Composition API, `legacy: false`). Langues disponibles : français (par défaut), anglais, allemand, espagnol.
+| Concept | Où | Rôle |
+|---------|-----|------|
+| **`mission.pageTheme`** | JSON mission | Style **PDF mission** (classic, modern, fantasy, western, scifi, night). |
+| **`pack.gameType`** | `cfg` pack / `packs-index.json` | Série du **pack** ; filtre panneau Packs & Assets. |
+| **`themeStore.activeTheme`** | UI éditeur | Thème chrome + filtre assets ; en Mission, sync vers `pageTheme` via `setTheme`. |
 
-| Élément | Rôle |
+Détail mission : [`CONTEXT_MISSION.md`](CONTEXT_MISSION.md). Détail packs : [`CONTEXT_PACKS.md`](CONTEXT_PACKS.md).
+
+---
+
+## Décisions produit (figées)
+
+| Sujet | Décision |
+|-------|----------|
+| Style page mission | Reproduire le **PDF officiel** de chaque `pageTheme` (affinage continu). |
+| Capture / export PNG | **Crop auto** tuiles posées — même pipeline que l’export en-tête (`mapExportBounds.js`). |
+| Format mission | **Une page A4** (pas de multi-pages court terme). |
+| Utilisateur | **`temp`** (dev + statique longtemps) ; cartes embarquées `metadata.author === "temp"`. |
+| PDF | **100 % client** (`window.print()`). |
+
+---
+
+## Mode statique (impératif)
+
+Prod sans FastAPI. Dev local **avec** API : `frontend/.env` → `VITE_STATIC_MODE=false`. Build FTP : `true` avant `npm run build`, puis remettre `false` (skill `zproject-prep-static-ftp`).
+
+| Fichier | Rôle |
 |---------|------|
-| [`frontend/src/i18n.js`](frontend/src/i18n.js) | Instance globale `createI18n`. Détection automatique via `navigator.language` ; repli sur `fr`. Préférence persistée dans `localStorage` (`zproject_locale`). |
-| [`frontend/src/locales/`](frontend/src/locales/) | Fichiers JSON par langue : `fr.json`, `en.json`, `de.json`, `es.json`. |
-| [`frontend/src/locales/assetDictionary.js`](frontend/src/locales/assetDictionary.js) | Dictionnaire bilingue (FR/EN) des noms de fichiers d'assets et catégories de packs ; fonctions `translateAssetLabel`, `translateCategoryName`, `resolveLabel`. |
-| [`frontend/src/stores/langStore.js`](frontend/src/stores/langStore.js) | Store Pinia : `locale` (réactif), `setLocale(lang)`, `cycle()`. |
+| `frontend/src/config.js` | `staticMode` (défaut **activé** sauf `'false'` au build). |
+| `frontend/src/services/api.js` | **Seule façade** HTTP : `fetch` index + `localStorage` si statique. |
+| `frontend/public/packs-index.json`, `maps-index.json`, `maps/*.json` | Données embarquées. |
+| `scripts/generate_packs_index.py`, `generate_maps_index.py` | Régénération index. |
 
-**Règle pour les évolutions** : tout texte visible dans l'UI doit passer par `$t('clé')` dans le template ou `t('clé')` dans `<script setup>`. Ne jamais hardcoder de chaînes localisées dans les composants Vue. Toute nouvelle clé doit être ajoutée dans les **quatre** fichiers de locale.
+**Règles** : jamais `/api/...` depuis un composant · tester statique **et** API · feature backend-only → UI masquée ou i18n · médias via `api.getAsset()` · nouveaux champs JSON → localStorage + scripts maps si besoin.
 
-Le sélecteur de langue (menu maximal uniquement) est dans `AppHeader.vue`, contrôlé par `menuVis.langToggle` dans [`frontend/src/config/editorMenu.js`](frontend/src/config/editorMenu.js).
+**Pièges** : capture carte depuis onglet Mission (`CanvasGrid` en `v-show`, doit exporter quand même) · proxy Vite 5173→8000 uniquement en dev API · chemins packs : `bgmapeditor_tiles/`, `assets/`, ou `backend/media/` selon config.
 
----
-
-## Mode statique (sans serveur Python)
-
-L’éditeur peut tourner **sans backend** pour démo, OVH statique ou `npm run build` déployé seul.
-
-| Élément | Rôle |
-|--------|------|
-| [`frontend/src/config.js`](frontend/src/config.js) | `VITE_STATIC_MODE` : par défaut **activé** sauf si la variable vaut explicitement `'false'` au build. |
-| [`frontend/src/services/api.js`](frontend/src/services/api.js) | Si `config.staticMode`, packs / cartes / utilisateurs passent par **`fetch`** sur des JSON statiques (`packs-index.json`, `maps-index.json`, `localStorage` via `localStorageService`). Pas d’appels HTTP vers l’API. |
-| Build | `npm run build` génère `editor.html` + assets ; les chemins relatifs doivent rester cohérents avec l’hébergement. |
-| Upload ZIP / élément | Boutons masqués en `staticMode` dans l’UI ; l’upload nécessite l’API FastAPI en local. |
-
-**Règle pour les évolutions** : toute nouvelle fonctionnalité qui appelle l’API doit prévoir une **branche statique** (données locales, JSON, ou message « non disponible hors ligne ») pour ne pas casser le déploiement statique.
+Guide déploiement : [`README_STATIC.md`](README_STATIC.md).
 
 ---
 
-## Arborescence utile
+## Chemins & docs (quand lire quoi)
 
-```
-.
-├── backend/                 # Python (FastAPI + logique métier)
-│   ├── app_config.py        # chemins, CORS, création des dossiers
-│   ├── main.py              # ASGI : FastAPI + StaticFiles
-│   ├── routes/              # handlers /api
-│   ├── api/                 # parsers (pack_parser, etc.)
-│   ├── editor/              # map_manager, user_manager, file_watcher, uploaders
-├── frontend/
-│   └── src/
-│       ├── components/      # MapEditor, AppHeader, CanvasGrid, AssetPanel, …
-│       ├── stores/          # mapStore, toolStore, userStore, packs/assets
-│       ├── services/        # api.js, canvasRenderer.js
-│       └── utils/
-├── bgmapeditor_tiles/       # Packs décompressés (référence Mapeditor)
-├── requirements.txt
-└── README.md
-```
+| Besoin | Document |
+|--------|----------|
+| Contexte général (ce fichier) | `docs/CONTEXT.md` |
+| Canvas, pan, zoom, outils | [`CONTEXT_CANVAS.md`](CONTEXT_CANVAS.md) |
+| Page mission, print, layout | [`CONTEXT_MISSION.md`](CONTEXT_MISSION.md) |
+| Packs Mapeditor, `gameType`, index | [`CONTEXT_PACKS.md`](CONTEXT_PACKS.md) |
+| API FastAPI, modules Python | [`BACKEND_REFERENCE.md`](BACKEND_REFERENCE.md) |
+| Install, démarrage, features | [`README.md`](../README.md) |
+| Build / FTP statique | [`README_STATIC.md`](README_STATIC.md), [`STATIC_BUILD.md`](STATIC_BUILD.md) |
+| Collaboration (hors scope) | [`COLLABORATION.md`](COLLABORATION.md) |
 
-Les médias packs/cartes peuvent aussi vivre sous `backend/media/` selon `app_config.py` (`MEDIA_ROOT`).
+**Menu prod** : `frontend/src/config/editorMenu.js` — `USE_MINIMAL_MENU` / `VITE_EDITOR_MINIMAL_MENU` masque exports, uploads, thème, etc. ; uploads aussi off si `staticMode`.
+
+**i18n** : tout texte UI via `$t` / `t` ; 4 locales (`fr`, `en`, `de`, `es`). Asset labels : `assetDictionary.js`.
 
 ---
 
-## Format des packs (Mapeditor)
-
-À la racine d’un pack : `cfg`, `guillotine.png`, `licence`, puis des dossiers du type :
-
-- `01.tiles/` — sol (souvent recto/verso, rotations `r_0.png`, `r_90.png`, …, `r_thumb.png`)
-- `02.doors/`
-- `04.other tokens/` (spawn, exit, objectives, …)
-- `05.zombies/`
-- autres catégories selon le pack
-
-Les fichiers `cfg` portent typiquement : `name`, `max`, `pairs`, `z-index`, `align`.
-
-#### Type de jeu (`gameType`, filtre Packs & Assets)
-
-- **Source de vérité sur disque** : dans le **`cfg` à la racine du pack**, clé optionnelle **`gameType=`** (ou `game_type=`). Valeurs reconnues : `classic`, `modern`, `fantasy`, `western`, `scifi`, `night` — normalisation dans `backend/api/parsers/editor_game_types.py`.
-- **Rétrocompat** : si le `cfg` ne définit pas encore le type, le parser peut lire **`editor_pack_meta.json`** à la racine du pack (uploads anciens).
-- **Upload** (ZIP ou asset custom) : le front envoie **`game_type`** ; `backend/editor/pack_meta.py` met à jour la ligne dans le **`cfg`** (et supprime le meta legacy lorsque le `cfg` est mis à jour).
-- **Index statique** : `scripts/generate_packs_index.py` s’appuie sur `PackParser` / `AssetIndexer` → le champ **`gameType`** de `packs-index.json` reflète ce qui est lu sur disque ; si absent, défaut **`fantasy`** dans le JSON uniquement.
-- **Pré-remplissage des `cfg` sans type** : `scripts/backfill_cfg_game_type.py` parcourt `assets/`, déduit le type depuis le **nom du dossier** (logique alignée sur les ids Mapeditor), puis écrit `gameType=` si besoin.
-
-**Backend** : parsing et index dans `api/parsers/pack_parser.py` ; surveillance optionnelle via `editor/file_watcher.py` (watchdog) pour re-indexer après changements sur le disque.
-
-**API (vue d’ensemble)** : lister les packs, détail, assets par catégorie, servir les images (chemins dans `backend/routes/`).
-
----
-
-## Frontend — écran principal
-
-- **`MapEditor.vue`** — Layout ~25 % panneau gauche / 75 % canvas.
-- **`AppHeader.vue`** — Utilisateur temporaire, charger carte, sauvegarder (dont Ctrl+S), export image.
-- **`AssetPanel.vue`** — Hiérarchie packs → catégories → miniatures ; drag & drop et/ou clic pour placer.
-- **`CanvasGrid.vue`** — Canvas HTML5, grille, zoom, pan, placement, sélection, halos de survol/sélection (voir section interactions).
-- **`MapLoader.vue`**, **`UserSelector.vue`**, uploaders de packs (image / ZIP) selon les besoins.
-
-**Stores principaux** :
-
-- **`mapStore`** — `currentPack`, taille de grille, `tileSize`, `layers.tiles` / `layers.objects`, sélection, historique (undo/redo prévu), **`gridOffsetX` / `gridOffsetY`** (voir ci-dessous).
-- **`toolStore`** — Outil actif : **`move`**, `rotate`, `delete` (plus d’outil « place » séparé).
-
----
-
-## Format JSON d’une carte (référence)
-
-Champs typiques : `version`, `name`, `pack`, `grid` (width, height, tileSize), `layers.tiles` (x, y, asset, rotation), `layers.objects` (id, type, asset, x, y, rotation, properties), `metadata` (created, modified, **author** = utilisateur temporaire, ex. `camp`).
-
-**API cartes** : chemins du type `/api/users/<username>/maps/` pour CRUD ; possibilité de lister des cartes « publiques » / tous utilisateurs selon l’implémentation.
-
----
-
-## Interactions canvas (plan « correction interactions »)
-
-Ces choix sont **normatifs** pour éviter les régressions lors de modifications dans `CanvasGrid.vue`, `mapStore`, `canvasRenderer.js`, `Toolbar.vue`, `toolStore.js`.
-
-### Offset global de grille
-
-- État : **`gridOffsetX`**, **`gridOffsetY`** dans `mapStore`, action **`setGridOffset(x, y)`**.
-- Le **pan** déplace cet offset : la **grille et tous les éléments** se déplacent ensemble.
-- Position monde (concept) : coordonnées grille × `tileSize` + offset.
-
-### Outils unifiés
-
-- L’outil **« place »** a été **fusionné** avec **« move »** :
-  - Clic sur un élément → sélection + déplacement (drag).
-  - Clic sur case vide avec un **asset sélectionné** → placement + sélection de l’élément créé.
-  - Sinon (vide, pas d’asset) → **pan** de la grille (offset).
-
-### Sélection
-
-- Clic : sélection cohérente des tuiles/objets (sauf cas **delete** qui supprime sans focus sélection si tel est le comportement retenu).
-- Après **drag & drop** depuis le panneau : **sélection automatique** du nouvel élément.
-- **Hover-to-selection** : l’élément **survolé** (`hoveredItem`) est pris en compte au clic avant l’action.
-
-### Coordonnées
-
-- **`getGridCoordinates`** / **`getGridCoordinatesWithSnap`** dans `canvasRenderer.js` doivent intégrer **`gridOffsetX/Y`** (et le zoom / tout décalage « vue » encore utilisé).
-
-### Zoom
-
-- Zoom via transformation canvas (`scale`, etc.) : grille et éléments doivent rester **cohérents** ; les tests manuels couvrent zoom + pan + placement.
-
-### Feedback visuel
-
-- **Survol** : halo bleu (`drawHover` ou équivalent), curseur selon outil (`move`, `delete`, `rotate`).
-- **Sélection** : halo rouge plus visible (fond + contour).
-
----
-
-## Backend métier (rappel)
-
-| Module | Rôle |
-|--------|------|
-| `editor/map_manager.py` | Sauvegarde / chargement cartes JSON |
-| `editor/user_manager.py` | Utilisateurs temporaires, dossiers par nom |
-| `editor/pack_uploader.py` | Upload image, normalisation (rotations, thumbs) |
-| `editor/pack_zip_uploader.py` | ZIP complet, validation, décompression |
-| `editor/file_watcher.py` | Détection changements sur les assets |
-
-Export image : souvent côté client (`canvas.toDataURL`, etc.) ; export serveur possible (Pillow) si implémenté.
-
----
-
-## Démarrage local
-
-**Backend** (`README`) :
-
-```bash
-cd backend
-pip install -r ../requirements.txt
-python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
-```
-
-**Frontend** :
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Application dev typiquement sur **http://localhost:5173**. Placer les packs dans **`bgmapeditor_tiles/`** puis utiliser l’UI (sélection pack, drag & drop, Ctrl+S, export).
-
----
-
-## Fichiers pivots pour coder
+## Fichiers pivots
 
 | Sujet | Fichiers |
 |-------|----------|
-| Canvas, pan, zoom, sélection | `frontend/src/components/CanvasGrid.vue` |
-| État carte, offset grille, undo/redo, aperçu | `frontend/src/stores/mapStore.js` |
-| Outils | `frontend/src/stores/toolStore.js`, `frontend/src/components/Toolbar.vue` |
-| Propriétés sélection | `frontend/src/components/PropertyPanel.vue` |
-| Versions locales (après sauvegarde) | `frontend/src/services/mapVersions.js`, `MapVersionsModal.vue` |
-| Collaboration temps réel (hors scope court terme) | `docs/COLLABORATION.md` |
-| Coordonnées écran ↔ grille | `frontend/src/services/canvasRenderer.js` |
-| Assets / API | `frontend/src/components/AssetPanel.vue`, `frontend/src/services/api.js`, `backend/main.py`, `backend/routes/` |
-| Parsing packs, `gameType` dans le cfg | `backend/api/parsers/pack_parser.py`, `backend/api/parsers/editor_game_types.py`, `backend/editor/pack_meta.py` |
-| Index statique packs | `scripts/generate_packs_index.py`, `scripts/backfill_cfg_game_type.py` |
-| Cartes / users | `backend/editor/map_manager.py`, `backend/editor/user_manager.py`, `backend/routes/users_maps.py` |
-| Config chemins / CORS | `backend/app_config.py`, `frontend/src/config.js` |
-| Menu (masquage prod / dev) | `frontend/src/config/editorMenu.js` (`USE_MINIMAL_MENU`, `VITE_EDITOR_MINIMAL_MENU`) |
+| Layout onglets | `EditorLayout.vue`, `router/index.js`, `AppHeader.vue` |
+| État scénario | `stores/mapStore.js`, `utils/mission.js` |
+| Page carte | `MapEditor.vue`, `CanvasGrid.vue`, `canvasRenderer.js`, `stores/toolStore.js` |
+| Page mission | `MissionEditor.vue`, `MissionPagePreview.vue`, `assets/mission-print.css` |
+| Capture PNG | `services/canvasExport.js`, `utils/mapExportBounds.js`, `CanvasGrid.vue` |
+| API / statique | `services/api.js`, `services/localStorage.js`, `config.js` |
+| Thèmes | `stores/themeStore.js`, `config/missionCornerImages.js`, `config/tokenSummary.js` |
+| Packs (backend) | `backend/api/parsers/pack_parser.py`, `backend/routes/packs.py` |
+| Menu / prod | `config/editorMenu.js` |
 
 ---
 
-## Checklist de non-régression (interactions)
+## Anti-patterns
 
-1. Drop depuis le panneau → élément créé **sélectionné**.
-2. Clic sur élément → **sélection** (comportement attendu selon outil, sauf delete).
-3. Pan → **grille + contenu** bougent ensemble (offset grille).
-4. Zoom → grille et éléments **alignés**.
-5. Outil **move** : déplacer, placer avec asset, pan sur fond vide.
-6. Curseurs et halos (survol / sélection) **cohérents**.
+- Appeler l’API hors `api.js`.
+- Hardcoder des chaînes UI (sans i18n).
+- Dupliquer l’état mission hors `mapStore`.
+- Casser le mode statique pour une feature « dev only ».
+- Exporter toute la grille vide (ignorer `mapExportBounds`).
 
 ---
 
-*Dernière mise à jour : contexte figé à la demande pour le dépôt zproject.*
+*Juin 2026 — contexte principal allégé ; annexes `CONTEXT_*.md`.*

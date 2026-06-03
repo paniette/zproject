@@ -2,7 +2,7 @@
 
 Éditeur de cartes Zombicide compatible avec les packs du Mapeditor Windows.
 
-Contexte technique détaillé (architecture, canvas, **mode statique sans serveur Python**, fichiers pivots) : [`docs/CONTEXT.md`](docs/CONTEXT.md). Une **tâche** évoquée en discussion correspond en principe à une **[issue GitHub](https://github.com/paniette/zproject/issues)** (`issues/N`) — précision sous *Objectif* dans le CONTEXT. Collaboration temps réel (hors périmètre court terme) : [`docs/COLLABORATION.md`](docs/COLLABORATION.md). **Backend FastAPI** (routes `/api/`, arborescence modules, symboles) : [`docs/BACKEND_REFERENCE.md`](docs/BACKEND_REFERENCE.md).
+Contexte technique : [`docs/CONTEXT.md`](docs/CONTEXT.md) (vue d’ensemble) ; annexes [`CONTEXT_CANVAS.md`](docs/CONTEXT_CANVAS.md), [`CONTEXT_MISSION.md`](docs/CONTEXT_MISSION.md), [`CONTEXT_PACKS.md`](docs/CONTEXT_PACKS.md). **Tâche** / issue #N → [GitHub issues](https://github.com/paniette/zproject/issues). Collaboration (hors scope) : [`docs/COLLABORATION.md`](docs/COLLABORATION.md). **Backend FastAPI** : [`docs/BACKEND_REFERENCE.md`](docs/BACKEND_REFERENCE.md).
 
 ## Démarrage rapide (mode complet : frontend + backend)
 
@@ -48,7 +48,7 @@ Pour le **mode statique** (sans serveur Python), un seul `npm run dev` ou un bui
 - Import de packs **ZIP** compatibles Mapeditor (nécessite le backend)
 - **Utilisateurs temporaires** et sélection d’utilisateur pour les dossiers de cartes
 - **Upload** d’assets personnalisés et de packs ZIP (masqué en mode statique)
-- **Type de jeu** des packs (filtre dans le panneau Packs & Assets) : persistance **`gameType=`** dans le **`cfg` racine** de chaque pack, lue par le parseur Python et reprise dans **`packs-index.json`** en build statique ; détail dans [`docs/CONTEXT.md`](docs/CONTEXT.md) (sous-section *Type de jeu* dans *Format des packs*).
+- **Type de jeu** des packs (filtre dans le panneau Packs & Assets) : persistance **`gameType=`** dans le **`cfg` racine** de chaque pack, lue par le parseur Python et reprise dans **`packs-index.json`** en build statique ; détail dans [`docs/CONTEXT_PACKS.md`](docs/CONTEXT_PACKS.md).
 - Détection / indexation des packs (y compris répertoires type `bgmapeditor_tiles/` ou dossiers médias)
 
 ### Interface

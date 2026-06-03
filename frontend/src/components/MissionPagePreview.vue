@@ -424,6 +424,7 @@ const topGridColumnsStyle = computed(() => {
 </script>
 
 <style scoped>
+@import url('../assets/mission-fonts.css');
 @import url('../assets/mission-print.css');
 
 .mission-page-preview {
@@ -502,6 +503,7 @@ const topGridColumnsStyle = computed(() => {
 }
 
 .mp-authors {
+  font-family: var(--mp-font-body, var(--mp-body));
   font-size: 0.82rem;
   font-style: italic;
   margin: 0 0 0.5rem;
@@ -514,7 +516,7 @@ const topGridColumnsStyle = computed(() => {
 
 .mp-synopsis {
   margin: 0;
-  font-family: var(--mp-flavor);
+  font-family: var(--mp-font-synopsis, var(--mp-flavor));
   line-height: 1.5;
   white-space: pre-wrap;
   font-size: 0.95rem;
@@ -522,7 +524,7 @@ const topGridColumnsStyle = computed(() => {
 
 .mp-synopsis--dropcap::first-letter {
   float: left;
-  font-family: var(--mp-flavor);
+  font-family: var(--mp-font-synopsis, var(--mp-flavor));
   font-size: 2.65rem;
   line-height: 0.85;
   padding-right: 0.12em;
@@ -585,12 +587,12 @@ const topGridColumnsStyle = computed(() => {
 }
 
 .mp-dalles-label {
-  font-family: var(--mp-body);
+  font-family: var(--mp-font-label, var(--mp-body));
   font-weight: 400;
 }
 
 .mp-dalles-value {
-  font-family: var(--mp-body);
+  font-family: var(--mp-font-label, var(--mp-body));
   font-weight: 800;
 }
 
@@ -603,7 +605,7 @@ const topGridColumnsStyle = computed(() => {
 }
 
 .mp-section-title {
-  font-family: var(--mp-title);
+  font-family: var(--mp-font-section, var(--mp-title));
   font-size: 1.05rem;
   font-weight: 600;
   margin: 0 0 0.28rem;
@@ -616,6 +618,7 @@ const topGridColumnsStyle = computed(() => {
   padding-left: 1.1rem;
   line-height: 1.42;
   font-size: 0.86rem;
+  font-family: var(--mp-font-body, var(--mp-body));
 }
 
 .mp-list li {
@@ -634,7 +637,7 @@ const topGridColumnsStyle = computed(() => {
 }
 
 .mp-quest-code {
-  font-family: var(--mp-title);
+  font-family: var(--mp-font-quest, var(--mp-title));
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -644,7 +647,7 @@ const topGridColumnsStyle = computed(() => {
 }
 
 .mp-title {
-  font-family: var(--mp-title);
+  font-family: var(--mp-font-hero, var(--mp-title));
   font-size: clamp(1.25rem, 2.8vw, 1.85rem);
   font-weight: 700;
   margin: 0 0 0.25rem;
@@ -673,7 +676,7 @@ const topGridColumnsStyle = computed(() => {
 }
 
 .mp-meta-line {
-  font-family: var(--mp-title);
+  font-family: var(--mp-font-meta, var(--mp-title));
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.06em;
@@ -708,7 +711,7 @@ const topGridColumnsStyle = computed(() => {
 }
 
 .mp-aside-title {
-  font-family: var(--mp-title);
+  font-family: var(--mp-font-section, var(--mp-title));
   font-size: 0.65rem;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -723,6 +726,7 @@ const topGridColumnsStyle = computed(() => {
   padding: 0;
   font-size: 0.68rem;
   font-weight: 700;
+  font-family: var(--mp-font-map, var(--mp-body));
 }
 
 .mp-tile-chips--aside {
@@ -776,8 +780,8 @@ const topGridColumnsStyle = computed(() => {
 }
 
 .mp-ts-chevrons span {
-  font-family: "Heorot", "Arial Black", Impact, sans-serif;
-  font-weight: 900;
+  font-family: var(--mp-font-token-deco, "WC Rhesus B", "Arial Black", Impact, sans-serif);
+  font-weight: 400;
   font-size: 40px;
   line-height: 1;
   color: var(--mp-bg);
@@ -874,7 +878,7 @@ const topGridColumnsStyle = computed(() => {
 }
 
 .mp-ts-label {
-  font-family: var(--mp-body);
+  font-family: var(--mp-font-token-name, var(--mp-body));
   font-size: 0.6rem;
   line-height: 1.2;
   margin-top: 0.12rem;
@@ -932,7 +936,7 @@ const topGridColumnsStyle = computed(() => {
 }
 
 .mp-footer-url {
-  font-family: var(--mp-body);
+  font-family: var(--mp-font-body, var(--mp-body));
   font-size: 0.82rem;
   color: var(--mp-ink);
   opacity: 0.5;
@@ -940,7 +944,7 @@ const topGridColumnsStyle = computed(() => {
 }
 
 .mp-footer-label {
-  font-family: var(--mp-title);
+  font-family: var(--mp-font-hero, var(--mp-title));
   font-size: clamp(1.25rem, 2.8vw, 1.85rem);
   font-weight: 700;
   color: var(--mp-ink);
@@ -1008,5 +1012,19 @@ const topGridColumnsStyle = computed(() => {
   .mp-map-placeholder {
     min-height: 40mm;
   }
+
+  /* Tailles typographiques en pt (référence WM44 Modern) */
+  .mp-title       { font-size: 16pt; }
+  .mp-quest-code  { font-size: 24pt; }
+  .mp-meta-line   { font-size: 9pt; }
+  .mp-synopsis    { font-size: 8.5pt; }
+  .mp-section-title { font-size: 11pt; }
+  .mp-aside-title   { font-size: 8pt; }
+  .mp-list        { font-size: 9pt; }
+  .mp-authors     { font-size: 8pt; }
+  .mp-dalles-line { font-size: 8pt; }
+  .mp-ts-label    { font-size: 6pt; }
+  .mp-footer-label { font-size: 16pt; }
+  .mp-footer-url  { font-size: 7pt; }
 }
 </style>

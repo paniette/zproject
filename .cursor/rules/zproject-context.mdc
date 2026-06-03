@@ -1,0 +1,28 @@
+---
+description: Vocabulaire zproject — page mission, page carte, mode statique obligatoire
+alwaysApply: true
+---
+
+# Contexte produit zproject
+
+Référence : [docs/CONTEXT.md](docs/CONTEXT.md) · annexes `CONTEXT_CANVAS.md`, `CONTEXT_MISSION.md`, `CONTEXT_PACKS.md`.
+
+## Vocabulaire
+
+- **Page carte** (`#/`) : canvas, `layers` — géométrie du scénario.
+- **Page mission** (`#/mission`) : rendu A4 HTML (`MissionPagePreview`) + print ; PNG carte en bas (`mapImageDataUrl`).
+- **Un seul état** : `mapStore` (carte + mission + undo). Pas de `missionStore`.
+
+## Mode statique
+
+- Façade **`frontend/src/services/api.js`** uniquement ; défaut `staticMode` activé.
+- Dev API : `VITE_STATIC_MODE=false` dans `frontend/.env`.
+- Utilisateur **`temp`** ; uploads ZIP = backend only.
+
+## Décisions produit
+
+- PDF par `pageTheme` (fidélité officielle) · **1 page A4** · capture **crop auto** · print **100 % client**.
+
+## Fichiers clés
+
+`mapStore.js`, `mission.js`, `CanvasGrid.vue`, `MissionPagePreview.vue`, `canvasExport.js`, `mapExportBounds.js`, `api.js`.
