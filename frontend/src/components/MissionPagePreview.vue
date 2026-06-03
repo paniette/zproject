@@ -758,7 +758,7 @@ const topGridColumnsStyle = computed(() => {
 
 /* ── Encart résumé des jetons ─────────────────────────────────────────────── */
 .mp-token-summary {
-  background: #bfab9a;
+  background: var(--mp-token-bg, #bfab9a);
   border-radius: 3px;
   padding: 0.4rem;
   display: grid;

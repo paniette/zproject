@@ -68,13 +68,15 @@
   --mp-title:   var(--mp-font-hero);
   --mp-body:    var(--mp-font-body);
   --mp-flavor:  var(--mp-font-synopsis);
-  /* Couleurs */
-  --mp-bg: #f7f3e9;
-  --mp-ink: #1a1208;
-  --mp-accent: #8b2500;
-  --mp-quest: #8b2500;
-  --mp-heading: var(--mp-accent);
-  --mp-dropcap: var(--mp-accent);
+  /* Couleurs — PDF Classic 1E / template Figma All-Zombicides */
+  --mp-bg: #EEDAB7;
+  --mp-ink: #000000;
+  --mp-quest: #C41230;
+  --mp-heading: #000000;
+  --mp-accent: #C41230;
+  --mp-dropcap: #C41230;
+  --mp-vignette: rgba(80, 40, 10, 0.22);
+  --mp-token-bg: #D4C4A8;
 }
 
 /* ── Modern 2E — modèle de référence WM44 (depuis 2021) ─────────────────── */
@@ -94,13 +96,15 @@
   --mp-title:   var(--mp-font-hero);
   --mp-body:    var(--mp-font-body);
   --mp-flavor:  var(--mp-font-synopsis);
-  /* Couleurs */
-  --mp-bg: #f1f5f9;
-  --mp-ink: #0f172a;
-  --mp-accent: #334155;
-  --mp-quest: #334155;
-  --mp-heading: var(--mp-accent);
-  --mp-dropcap: var(--mp-accent);
+  /* Couleurs — PDF Modern 2E (WM44) / template Figma All-Zombicides */
+  --mp-bg: #EBEBEB;
+  --mp-ink: #000000;
+  --mp-quest: #000000;
+  --mp-heading: #000000;
+  --mp-accent: #000000;
+  --mp-dropcap: #000000;
+  --mp-vignette: rgba(0, 0, 0, 0.18);
+  --mp-token-bg: #C8C8C8;
 }
 
 /* ── Night / NOTLD — typographie cinéma Romero (années 60) ──────────────── */
@@ -120,13 +124,15 @@
   --mp-title:   var(--mp-font-hero);
   --mp-body:    var(--mp-font-body);
   --mp-flavor:  var(--mp-font-synopsis);
-  /* Couleurs */
-  --mp-bg: #e8f5e9;
-  --mp-ink: #052e16;
-  --mp-accent: #166534;
-  --mp-quest: #166534;
-  --mp-heading: var(--mp-accent);
-  --mp-dropcap: var(--mp-accent);
+  /* Couleurs — NOTLD Romero / template Figma All-Zombicides */
+  --mp-bg: #F5F0E6;
+  --mp-ink: #000000;
+  --mp-quest: #000000;
+  --mp-heading: #000000;
+  --mp-accent: #000000;
+  --mp-dropcap: #000000;
+  --mp-vignette: rgba(0, 0, 0, 0.15);
+  --mp-token-bg: #D9D9D9;
 }
 
 /* ── Sci-Fi (Invader / Dark Side) — look high-tech ──────────────────────── */
@@ -146,13 +152,15 @@
   --mp-title:   var(--mp-font-hero);
   --mp-body:    var(--mp-font-body);
   --mp-flavor:  var(--mp-font-synopsis);
-  /* Couleurs */
-  --mp-bg: #eef2ff;
-  --mp-ink: #1e1b4b;
-  --mp-accent: #4338ca;
-  --mp-quest: #4338ca;
-  --mp-heading: var(--mp-accent);
-  --mp-dropcap: var(--mp-accent);
+  /* Couleurs — Invader / Dark Side / template Figma All-Zombicides */
+  --mp-bg: #E8ECF0;
+  --mp-ink: #0D1117;
+  --mp-quest: #0099CC;
+  --mp-heading: #0D1117;
+  --mp-accent: #0099CC;
+  --mp-dropcap: #1A1F2E;
+  --mp-vignette: rgba(10, 20, 40, 0.20);
+  --mp-token-bg: #B0BEC5;
 }
 
 /* ── Fantasy – parchemin chaud, rouge bordeaux, gothique médiéval ──────────── */
@@ -167,6 +175,7 @@
   --mp-heading: #573c27; /* marron titres */
   --mp-dropcap: #c1212b; /* première lettre synopsis rouge */
   --mp-vignette: rgba(68, 32, 6, 0.32); /* fondu bords : marron foncé chaud */
+  --mp-token-bg: #bfab9a; /* encart jetons + mini-grille tuiles */
 }
 
 /* ── Effets de fond — indépendants du thème ─────────────────────────────────── */
@@ -310,11 +319,13 @@
   --mp-title:   var(--mp-font-hero);
   --mp-body:    var(--mp-font-body);
   --mp-flavor:  var(--mp-font-synopsis);
-  /* Couleurs */
-  --mp-bg: #fdf3e3;
-  --mp-ink: #2b1810;
-  --mp-accent: #9a4b0f;
-  --mp-quest: #6b4226;
-  --mp-heading: var(--mp-accent);
-  --mp-dropcap: var(--mp-accent);
+  /* Couleurs — Undead or Alive / template Figma All-Zombicides */
+  --mp-bg: #F5E6C8;
+  --mp-ink: #2B1810;
+  --mp-quest: #5C3A18;
+  --mp-heading: #9A4B0F;
+  --mp-accent: #9A4B0F;
+  --mp-dropcap: #8B4513;
+  --mp-vignette: rgba(90, 50, 10, 0.25);
+  --mp-token-bg: #C9A87C;
 }
