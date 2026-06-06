@@ -66,8 +66,8 @@
           >
             <div class="map-card-thumb">
               <img
-                v-if="map.mission?.mapImageDataUrl"
-                :src="map.mission.mapImageDataUrl"
+                v-if="mapThumbSrc(map)"
+                :src="mapThumbSrc(map)"
                 :alt="map.name"
                 class="thumb-img"
               />
@@ -98,7 +98,7 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { useMapStore } from '@/stores/mapStore'
 import { useUserStore } from '@/stores/userStore'
 import api from '@/services/api'
-import { formatDate } from '@/utils/mapUtils'
+import { formatDate, mapThumbSrc } from '@/utils/mapUtils'
 
 const props = defineProps({
   show: Boolean

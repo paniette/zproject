@@ -161,6 +161,7 @@ import { useMapStore } from '@/stores/mapStore'
 import { useThemeStore } from '@/stores/themeStore'
 import { deriveTilesFromLayers } from '@/utils/mission'
 import { requestCanvasExportWithoutGrid } from '@/services/canvasExport'
+import { printMissionPdf } from '@/services/missionPrint'
 import { GAME_TYPES } from '@/config/gameTypes'
 import { CORNER_IMAGES } from '@/config/missionCornerImages'
 import iconClassic from '@/assets/images/menu-setting-classic.jpg'
@@ -266,7 +267,7 @@ function clearMapImage () {
 }
 
 function printPreview () {
-  window.print()
+  printMissionPdf()
 }
 
 watch(

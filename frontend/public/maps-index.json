@@ -5,9 +5,20 @@
       "name": "La purge",
       "metadata": {
         "created": "2026-04-20T20:20:47.965953",
-        "modified": "2026-05-08T16:20:28.450470",
+        "modified": "2026-05-21T23:49:24.097946",
         "author": "temp"
-      }
+      },
+      "thumbUrl": "maps/thumbs/map_2973a344f961.png"
+    },
+    {
+      "id": "map_c45074d9c330",
+      "name": "Personne sur le carreau",
+      "metadata": {
+        "created": "2026-05-21T23:32:56.447787",
+        "modified": "2026-05-21T23:49:10.265050",
+        "author": "temp"
+      },
+      "thumbUrl": "maps/thumbs/map_c45074d9c330.png"
     },
     {
       "id": "map_33fc8cbea9d5",
@@ -28,5 +39,5 @@
       }
     }
   ],
-  "generated_at": "2026-05-21T23:01:45.454978"
+  "generated_at": "2026-05-21T23:49:44.508676"
 }

@@ -22,6 +22,11 @@
       v-else-if="name === 'exportImage'"
       d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
     />
+    <!-- Imprimer / PDF mission (Material print) -->
+    <path
+      v-else-if="name === 'exportPdf'"
+      d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"
+    />
     <path
       v-else-if="name === 'heart'"
       d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
@@ -34,7 +39,7 @@ defineProps({
   name: {
     type: String,
     required: true,
-    validator: (v) => ['undo', 'redo', 'load', 'save', 'exportImage', 'heart'].includes(v)
+    validator: (v) => ['undo', 'redo', 'load', 'save', 'exportImage', 'exportPdf', 'heart'].includes(v)
   }
 })
 </script>

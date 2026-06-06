@@ -48,6 +48,7 @@ Sous **`frontend/public/`** :
 | `packs-index.json` | Index des packs pour le mode statique |
 | `maps-index.json` | Index des cartes (métadonnées + liste) |
 | `maps/*.json` | Une copie par carte (corps complet du scénario) |
+| `maps/thumbs/*.png` | Vignettes pour « Charger une carte » (générées par `generate_maps_index.py` si `mission.mapImageDataUrl` est présent ; `thumbUrl` dans `maps-index.json`) |
 
 À copier sur le FTP aux **mêmes chemins relatifs** qu’à la racine du site généré par Vite (`dist/`), en plus du contenu du **`dist/`** si tu fais un build statique.
 

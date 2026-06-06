@@ -116,6 +116,15 @@
             <MenuGlyph name="exportImage" />
             <span class="sr-only">{{ $t('header.exportPngSr') }}</span>
           </button>
+          <button
+            type="button"
+            class="header-btn header-btn-icon"
+            :title="$t('header.exportPdf')"
+            @click="exportMissionPdf"
+          >
+            <MenuGlyph name="exportPdf" />
+            <span class="sr-only">{{ $t('header.exportPdfSr') }}</span>
+          </button>
         </div>
 
         <div v-if="menuVis.uploadZip || menuVis.uploadElement" class="nav-group">
@@ -189,6 +198,7 @@ import { useUserStore } from '@/stores/userStore'
 import { config } from '@/config'
 import api from '@/services/api'
 import { requestCanvasExportWithoutGrid } from '@/services/canvasExport'
+import { printMissionPdf } from '@/services/missionPrint'
 import { pushVersion } from '@/services/mapVersions'
 import { mapPayloadToXml } from '@/utils/mapExportXml'
 import { prepareMapForImport } from '@/utils/mapImport'
@@ -441,6 +451,13 @@ const saveMap = async () => {
   } catch (error) {
     console.error('Error saving map:', error)
     alert(t('header.saveError', { msg: error.response?.data?.error || error.message }))
+  }
+}
+
+function exportMissionPdf () {
+  const result = printMissionPdf()
+  if (!result.ok) {
+    alert(t('header.exportPdfError'))
   }
 }
 

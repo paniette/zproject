@@ -2,8 +2,8 @@
   <div class="editor-layout">
     <AppHeader />
     <div class="editor-stack">
-      <MapEditor v-show="isMap" class="editor-main" />
-      <MissionEditor v-show="!isMap" class="editor-main" />
+      <MapEditor v-show="isMap" class="editor-main editor-main--map" />
+      <MissionEditor v-show="!isMap" class="editor-main editor-main--mission" />
     </div>
   </div>
 </template>

@@ -13,7 +13,7 @@ import { config } from '@/config'
  * sans modifier ce fichier.
  */
 
-export const USE_MINIMAL_MENU = false
+export const USE_MINIMAL_MENU = true
 
 export const editorMenuVisibility = {
   themeSelector: true,
