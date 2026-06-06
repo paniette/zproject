@@ -1,5 +1,5 @@
 ---
-description: Pas de commit/push sans ordre explicite ; proposition PR/commit en fin de tâche
+description: Pas de commit/push/PR sans ordre explicite ; ne pas mentionner Git en fin de tâche
 alwaysApply: true
 ---
 
@@ -12,13 +12,9 @@ alwaysApply: true
 
 ## Fin de tâche
 
-- Quand une série de changements semble **aboutie** et prête à être intégrée, **ne pas** commit/push tout seul.
-- **En fin de message**, proposer clairement quelque chose comme :
-  - souhaitez-vous que je fasse un **commit** (et éventuellement **push**) sur la branche actuelle ;
-  - ou une **pull request** ;
-  - ou rien pour l’instant afin que vous **testiez** d’abord.
-- Mentionner si la branche n’est pas `main` et qu’un retour sur `main` pourra passer par merge / PR selon leur choix.
+- **Ne pas** proposer commit, push ou pull request en fin de message par défaut.
+- **Ne pas** mentionner Git sauf si l’utilisateur en parle (commit, push, PR, merge, déploiement, branche, etc.) ou le demande explicitement.
 
 ## Rappel
 
-- L’utilisateur préfère en général **tester avant** commit ; respecter ce rythme par défaut.
+- L’utilisateur teste et valide Git lui-même ; ne pas relancer la question sans qu’il l’ait évoquée.

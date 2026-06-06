@@ -1,0 +1,234 @@
+/*
+ * mission-fonts.css — @font-face pour les thèmes mission (classic/modern/western/scifi/night)
+ *
+ * Polices auto-hébergées dans frontend/public/fonts/ — aucune requête CDN.
+ * Fantasy (Algo FY Black, Arek Latin) est déclarée dans mission-print.css ; ne pas dupliquer ici.
+ * Licences : frontend/public/fonts/LICENSES.md
+ */
+
+/* ── Fantasy — polices locales (règles Fantasy inchangées dans mission-print.css) ──── */
+
+/* UnifrakturMaguncia — OFL — police principale Fantasy (titres, dropcap, footer) */
+@font-face {
+  font-family: "UnifrakturMaguntia";
+  src: url("/fonts/shared/unifraktur-maguntia.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Cinzel Bold — OFL — fallback titre Fantasy */
+@font-face {
+  font-family: "Cinzel";
+  src: url("/fonts/shared/cinzel-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* IM Fell English — OFL — fallback body Fantasy */
+@font-face {
+  font-family: "IM Fell English";
+  src: url("/fonts/shared/im-fell-english.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IM Fell English";
+  src: url("/fonts/shared/im-fell-english-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ── Partagées ────────────────────────────────────────────────────────────── */
+
+/* Gorri Sans — OFL/domaine public — dafont.com/gorrisans */
+@font-face {
+  font-family: "Gorri Sans";
+  src: url("/fonts/shared/gorri-sans.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* WC Rhesus B Bta — 100% free — dafont.com/wc-rhesus-b-bta */
+@font-face {
+  font-family: "WC Rhesus B";
+  src: url("/fonts/shared/wc-rhesus-b.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Overpass — OFL — fonts.google.com/specimen/Overpass */
+@font-face {
+  font-family: "Overpass";
+  src: url("/fonts/shared/overpass/overpass-extrabold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Overpass";
+  src: url("/fonts/shared/overpass/overpass-black.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Source Sans 3 — OFL — fonts.google.com/specimen/Source+Sans+3 */
+@font-face {
+  font-family: "Source Sans 3";
+  src: url("/fonts/shared/source-sans-3/source-sans-3-light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Source Sans 3";
+  src: url("/fonts/shared/source-sans-3/source-sans-3-semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* TeX Gyre Heros — GUST Font License (libre) — gust.org.pl/tex-gyre/heros */
+@font-face {
+  font-family: "TeX Gyre Heros";
+  src: url("/fonts/shared/tex-gyre-heros/tex-gyre-heros-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "TeX Gyre Heros";
+  src: url("/fonts/shared/tex-gyre-heros/tex-gyre-heros-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Roboto Slab — OFL — fonts.google.com/specimen/Roboto+Slab */
+@font-face {
+  font-family: "Roboto Slab";
+  src: url("/fonts/shared/roboto-slab/roboto-slab-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto Slab";
+  src: url("/fonts/shared/roboto-slab/roboto-slab-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto Slab";
+  src: url("/fonts/shared/roboto-slab/roboto-slab-black.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── Modern ───────────────────────────────────────────────────────────────── */
+
+/* League Gothic — OFL — fonts.google.com/specimen/League+Gothic */
+@font-face {
+  font-family: "League Gothic";
+  src: url("/fonts/modern/league-gothic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Archivo Narrow Bold — OFL — fonts.google.com/specimen/Archivo+Narrow */
+@font-face {
+  font-family: "Archivo Narrow";
+  src: url("/fonts/modern/archivo-narrow-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Capture It — free personal & commercial — dafont.com/capture-it */
+@font-face {
+  font-family: "Capture It";
+  src: url("/fonts/modern/capture-it.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── Classic ──────────────────────────────────────────────────────────────── */
+
+/* Creepster — OFL — fonts.google.com/specimen/Creepster */
+@font-face {
+  font-family: "Creepster";
+  src: url("/fonts/classic/creepster.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── Western ──────────────────────────────────────────────────────────────── */
+
+/* Rye — OFL — fonts.google.com/specimen/Rye */
+@font-face {
+  font-family: "Rye";
+  src: url("/fonts/western/rye.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── Sci-Fi ───────────────────────────────────────────────────────────────── */
+
+/* Zekton — Free desktop commercial — typodermicfonts.com/zekton */
+@font-face {
+  font-family: "Zekton";
+  src: url("/fonts/scifi/zekton.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Michroma — OFL — fonts.google.com/specimen/Michroma */
+@font-face {
+  font-family: "Michroma";
+  src: url("/fonts/scifi/michroma.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── Night / NOTLD ────────────────────────────────────────────────────────── */
+
+/* Anton — OFL — fonts.google.com/specimen/Anton */
+@font-face {
+  font-family: "Anton";
+  src: url("/fonts/night/anton.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Special Elite — OFL — fonts.google.com/specimen/Special+Elite */
+@font-face {
+  font-family: "Special Elite";
+  src: url("/fonts/night/special-elite.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Jost Medium — OFL — fonts.google.com/specimen/Jost */
+@font-face {
+  font-family: "Jost";
+  src: url("/fonts/night/jost-medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
