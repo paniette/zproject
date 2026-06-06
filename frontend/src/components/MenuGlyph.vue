@@ -31,6 +31,16 @@
       v-else-if="name === 'heart'"
       d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
     />
+    <!-- Vue carte : grille de tuiles -->
+    <path
+      v-else-if="name === 'editorMap'"
+      d="M3 3h7v7H3V3zm11 0h7v7h-7V3zM3 14h7v7H3v-7zm11 0h7v7h-7v-7z"
+    />
+    <!-- Vue mission : page A4 avec lignes -->
+    <path
+      v-else-if="name === 'editorMission'"
+      d="M7 2h7l5 5v15H7V2zm2 2v13h10V9h-5V4H9zm1.5 5h7v1.5h-7V7zm0 3h7v1.5h-7V10zm0 3h5v1.5h-5V13z"
+    />
   </svg>
 </template>
 
@@ -39,7 +49,7 @@ defineProps({
   name: {
     type: String,
     required: true,
-    validator: (v) => ['undo', 'redo', 'load', 'save', 'exportImage', 'exportPdf', 'heart'].includes(v)
+    validator: (v) => ['undo', 'redo', 'load', 'save', 'exportImage', 'exportPdf', 'heart', 'editorMap', 'editorMission'].includes(v)
   }
 })
 </script>

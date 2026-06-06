@@ -14,9 +14,21 @@
       </div>
       <nav class="header-nav">
         <div class="nav-group">
-          <div class="editor-tabs">
-            <router-link to="/" class="nav-tab" active-class="nav-tab-active">{{ $t('header.tabMap') }}</router-link>
-            <router-link to="/mission" class="nav-tab" active-class="nav-tab-active">{{ $t('header.tabMission') }}</router-link>
+          <div class="editor-tabs" role="tablist" :aria-label="$t('header.editorTabsAria')">
+            <router-link to="/" class="nav-tab" active-class="nav-tab-active" role="tab">
+              <MenuGlyph name="editorMap" class="nav-tab-icon" />
+              <span class="nav-tab-text">
+                <span class="nav-tab-title">{{ $t('header.tabMap') }}</span>
+                <span class="nav-tab-hint">{{ $t('header.tabMapHint') }}</span>
+              </span>
+            </router-link>
+            <router-link to="/mission" class="nav-tab" active-class="nav-tab-active" role="tab">
+              <MenuGlyph name="editorMission" class="nav-tab-icon" />
+              <span class="nav-tab-text">
+                <span class="nav-tab-title">{{ $t('header.tabMission') }}</span>
+                <span class="nav-tab-hint">{{ $t('header.tabMissionHint') }}</span>
+              </span>
+            </router-link>
           </div>
         </div>
 
@@ -594,27 +606,97 @@ const exportMap = async () => {
 
 .editor-tabs {
   display: flex;
-  gap: 4px;
-  align-items: center;
+  align-items: flex-end;
+  gap: 2px;
+  padding: 4px 4px 0;
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
 }
 
 .nav-tab {
-  padding: 6px 12px;
-  border-radius: 4px;
-  color: rgba(255, 255, 255, 0.85);
+  position: relative;
+  flex: 1 1 0;
+  min-width: 7.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 7px 14px 9px;
+  border-radius: 6px 6px 0 0;
+  color: rgba(255, 255, 255, 0.62);
   text-decoration: none;
   font-size: 14px;
   border: 1px solid transparent;
+  border-bottom: none;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 
 .nav-tab:hover {
-  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-tab-icon {
+  opacity: 0.75;
+  transition: opacity 0.2s;
+}
+
+.nav-tab-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.15;
+  gap: 1px;
+}
+
+.nav-tab-title {
+  font-weight: 600;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.nav-tab-hint {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.55;
 }
 
 .nav-tab-active {
-  border-color: var(--primary-color);
-  background: color-mix(in srgb, var(--primary-color) 22%, transparent);
-  color: white;
+  z-index: 1;
+  margin-bottom: -2px;
+  padding-bottom: 11px;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.22);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--light-color) 28%, transparent) 0%,
+    color-mix(in srgb, var(--light-color) 10%, transparent) 100%
+  );
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.18);
+}
+
+.nav-tab-active .nav-tab-icon {
+  opacity: 1;
+}
+
+.nav-tab-active .nav-tab-hint {
+  opacity: 0.75;
+  color: color-mix(in srgb, var(--primary-color) 70%, white);
+}
+
+.nav-tab-active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: var(--primary-color);
+  border-radius: 2px 2px 0 0;
 }
 
 .save-status {
@@ -744,10 +826,12 @@ const exportMap = async () => {
   }
 
   .nav-tab {
-    padding: 10px 12px;
+    padding: 10px 12px 12px;
     min-height: 44px;
-    display: inline-flex;
-    align-items: center;
+  }
+
+  .nav-tab-active {
+    padding-bottom: 14px;
   }
 
   .save-status {
