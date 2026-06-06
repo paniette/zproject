@@ -23,6 +23,7 @@ Fichiers versionnés dans le repo ; ne pas redistribuer hors de ce projet sans v
 |---------|---------|----------|--------|---------|------------|
 | `shared/gorri-sans.woff2` | Gorri Sans | Regular | Sergio Ruiz | OFL / domaine public | https://www.dafont.com/gorrisans.font |
 | `shared/wc-rhesus-b.woff2` | WC Rhesus B Bta | Regular | atypeekdesign.com | 100 % Free | https://www.dafont.com/wc-rhesus-b-bta.font |
+| `shared/heorot.woff2` | Heorot | Regular | Iconian Fonts / Daniel Zadorozny | Gratuit non-commercial ; donation commerciale | https://www.iconian.com |
 | `shared/overpass/overpass-black.woff2` | Overpass | 900 Black | Delve Fonts / RedHat | OFL | https://fonts.google.com/specimen/Overpass |
 | `shared/overpass/overpass-extrabold.woff2` | Overpass | 800 ExtraBold | Delve Fonts / RedHat | OFL | https://fonts.google.com/specimen/Overpass |
 | `shared/source-sans-3/source-sans-3-light.woff2` | Source Sans 3 | 300 Light | Paul D. Hunt / Adobe | OFL | https://fonts.google.com/specimen/Source+Sans+3 |

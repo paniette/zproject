@@ -102,6 +102,20 @@ fi
 
 dafont_convert gorrisans    gorrisans         "GorriSans.ttf"         "$DEST/shared"  "gorri-sans.woff2"
 dafont_convert wc-rhesus-b  wc_rhesus_b_bta   "WC_Rhesus_B_Bta.otf"  "$DEST/shared"  "wc-rhesus-b.woff2"
+
+# Heorot (Iconian) — chevrons directionnels encart jetons ; source cdnfonts (même fichier qu'avant migration locale)
+if [ ! -f "$DEST/shared/heorot.woff2" ]; then
+  curl -sL -A "Mozilla/5.0" "https://fonts.cdnfonts.com/s/37364/Heorot-4rLK.woff" -o "$TMPDIR/heorot.woff"
+  python3 -c "
+from fontTools.ttLib import TTFont
+font = TTFont('${TMPDIR}/heorot.woff')
+font.flavor = 'woff2'
+font.save('${DEST}/shared/heorot.woff2')
+"
+  log "OK   heorot.woff2"
+else
+  log "SKIP heorot.woff2"
+fi
 dafont_convert capture-it   capture_it        "Capture it.ttf"        "$DEST/modern"  "capture-it.woff2"
 
 # ── Zekton (Typodermic) ───────────────────────────────────────────────────────

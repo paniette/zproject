@@ -63,7 +63,7 @@
   --mp-font-label:       "TeX Gyre Heros", "Arial", sans-serif;
   --mp-font-map:         "TeX Gyre Heros", "Arial", sans-serif;
   --mp-font-token-name:  "Creepster", fantasy;
-  --mp-font-token-deco:  "WC Rhesus B", fantasy;
+  --mp-font-token-deco:  "Heorot", "Arial Black", Impact, sans-serif;
   /* Shims rétrocompatibles (classes génériques du composant) */
   --mp-title:   var(--mp-font-hero);
   --mp-body:    var(--mp-font-body);
@@ -91,7 +91,7 @@
   --mp-font-label:       "Source Sans 3", system-ui, sans-serif;
   --mp-font-map:         "Overpass", "Arial", sans-serif;
   --mp-font-token-name:  "Capture It", "Archivo Narrow", sans-serif;
-  --mp-font-token-deco:  "WC Rhesus B", fantasy;
+  --mp-font-token-deco:  "Heorot", "Arial Black", Impact, sans-serif;
   /* Shims rétrocompatibles */
   --mp-title:   var(--mp-font-hero);
   --mp-body:    var(--mp-font-body);
@@ -119,7 +119,7 @@
   --mp-font-label:       "Jost", system-ui, sans-serif;
   --mp-font-map:         "Special Elite", monospace;
   --mp-font-token-name:  "Special Elite", monospace;
-  --mp-font-token-deco:  "WC Rhesus B", fantasy;
+  --mp-font-token-deco:  "Heorot", "Arial Black", Impact, sans-serif;
   /* Shims rétrocompatibles */
   --mp-title:   var(--mp-font-hero);
   --mp-body:    var(--mp-font-body);
@@ -147,7 +147,7 @@
   --mp-font-label:       "TeX Gyre Heros", "Arial", sans-serif;
   --mp-font-map:         "Michroma", "TeX Gyre Heros", sans-serif;
   --mp-font-token-name:  "Michroma", "TeX Gyre Heros", sans-serif;
-  --mp-font-token-deco:  "WC Rhesus B", fantasy;
+  --mp-font-token-deco:  "Heorot", "Arial Black", Impact, sans-serif;
   /* Shims rétrocompatibles */
   --mp-title:   var(--mp-font-hero);
   --mp-body:    var(--mp-font-body);
@@ -314,7 +314,7 @@
   --mp-font-label:       "Roboto Slab", Georgia, serif;
   --mp-font-map:         "Overpass", "Arial", sans-serif;
   --mp-font-token-name:  "Roboto Slab", Georgia, serif;
-  --mp-font-token-deco:  "WC Rhesus B", fantasy;
+  --mp-font-token-deco:  "Heorot", "Arial Black", Impact, sans-serif;
   /* Shims rétrocompatibles */
   --mp-title:   var(--mp-font-hero);
   --mp-body:    var(--mp-font-body);

@@ -780,9 +780,9 @@ const topGridColumnsStyle = computed(() => {
 }
 
 .mp-ts-chevrons span {
-  font-family: var(--mp-font-token-deco, "WC Rhesus B", "Arial Black", Impact, sans-serif);
-  font-weight: 400;
-  font-size: 40px;
+  font-family: "Heorot", "Arial Black", Impact, sans-serif;
+  font-weight: 900;
+  font-size: 34px;
   line-height: 1;
   color: var(--mp-bg);
   display: inline-block;
