@@ -5,7 +5,23 @@
     :data-page-effect="mission.pageEffect || 'none'"
     id="mission-print-root"
   >
-    <div class="mp-sheet">
+    <div class="mp-sheet" :class="{ 'mp-sheet--has-page-bg': !!pageBgLayers.bg }">
+      <img
+        v-if="pageBgLayers.bg"
+        class="mp-page-bg"
+        :src="pageBgLayers.bg"
+        aria-hidden="true"
+      />
+      <img
+        v-if="pageBgLayers.band"
+        class="mp-page-band"
+        :class="{
+          'mp-page-band--right': pageBgLayers.bandSide === 'right',
+          'mp-page-band--left': pageBgLayers.bandSide === 'left',
+        }"
+        :src="pageBgLayers.band"
+        aria-hidden="true"
+      />
       <img
         v-if="cornerImageUrl"
         class="mp-corner-deco"
@@ -180,6 +196,7 @@ import { useI18n } from 'vue-i18n'
 import { useMapStore } from '@/stores/mapStore'
 import { storeToRefs } from 'pinia'
 import { getCornerImageUrl } from '@/config/missionCornerImages'
+import { getPageBackgroundLayers } from '@/config/missionPageBackgrounds'
 import {
   EXCLUDED_CATEGORIES,
   EXCLUDED_NAME_PATTERNS,
@@ -270,12 +287,22 @@ const tileGridLayout = computed(() => {
 
   const cols = Math.round((xs[xs.length - 1] - minX) / step) + 1
   const rows = Math.round((ys[ys.length - 1] - minY) / step) + 1
+  const totalCells = cols * rows
+  const occupied = slotCodes.size
+
+  // Dalles Western / tailles variables : ancres irrégulières → PGCD = 1 → grille énorme
+  // remplie de cases vides. On retombe sur les puces texte (tilesUsed).
+  const tooSparse = totalCells > Math.max(tiles.length * 2, tiles.length + 4)
+  const stepCollapsed = tiles.length > 1 && step < 5
+  const slotCollisions = occupied < tiles.length
+  if (tooSparse || stepCollapsed || slotCollisions) return null
 
   return { slotCodes, cols, rows }
 })
 
 const pageThemeId = computed(() => (mission.value.pageTheme ? mission.value.pageTheme : 'fantasy'))
 const cornerImageUrl = computed(() => getCornerImageUrl(pageThemeId.value, mission.value.cornerImage))
+const pageBgLayers = computed(() => getPageBackgroundLayers(pageThemeId.value, mission.value.pageBackground))
 const displayTitle = computed(() => (mission.value.title ? mission.value.title : t('missionPreview.untitled')))
 
 const tilesUsed = computed(() => {
@@ -453,6 +480,36 @@ const topGridColumnsStyle = computed(() => {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+}
+
+.mp-page-bg,
+.mp-page-band {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.mp-page-band {
+  --mp-band-shift: 20px;
+}
+
+.mp-page-band--right {
+  object-position: right center;
+  transform: translateX(var(--mp-band-shift));
+}
+
+.mp-page-band--left {
+  object-position: left center;
+  transform: translateX(calc(-1 * var(--mp-band-shift)));
+}
+
+.mp-sheet--has-page-bg {
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.14);
 }
 
 .mp-corner-deco {
@@ -660,7 +717,23 @@ const topGridColumnsStyle = computed(() => {
   text-transform: uppercase;
 }
 
-.mission-page-preview[data-mission-theme='classic'] .mp-title,
+.mission-page-preview[data-mission-theme='classic'] .mp-title {
+  font-family: "Barlow Condensed", var(--mp-font-hero);
+  color: #F7A501;
+  font-weight: 700;
+}
+
+.mission-page-preview[data-mission-theme='modern'] .mp-title {
+  font-family: "Overpass", var(--mp-font-hero);
+  font-style: italic;
+  font-weight: 700;
+  color: #646567;
+}
+
+.mission-page-preview[data-mission-theme='modern'] .mp-meta-line {
+  color: #EF7F01;
+}
+
 .mission-page-preview[data-mission-theme='night'] .mp-title {
   color: var(--mp-accent);
   font-weight: normal;
@@ -994,6 +1067,12 @@ const topGridColumnsStyle = computed(() => {
     border-radius: 0;
     overflow: visible;
     background: var(--mp-bg);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .mp-page-bg,
+  .mp-page-band {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }

@@ -86,6 +86,13 @@
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: "Overpass";
+  src: url("/fonts/shared/overpass/overpass-bold-italic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
 
 /* Source Sans 3 — OFL — fonts.google.com/specimen/Source+Sans+3 */
 @font-face {
@@ -178,6 +185,15 @@
   font-family: "Creepster";
   src: url("/fonts/classic/creepster.woff2") format("woff2");
   font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Barlow Condensed — OFL — fonts.google.com/specimen/Barlow+Condensed */
+@font-face {
+  font-family: "Barlow Condensed";
+  src: url("/fonts/classic/barlow-condensed-bold.woff2") format("woff2");
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }

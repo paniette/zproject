@@ -264,6 +264,9 @@ export const useMapStore = defineStore('map', {
       this.clearHistoryStacks()
       this.compoundDepth = 0
       this.isPreviewMode = false
+      this.currentPack = null
+      this.gridSize = { width: 10, height: 10 }
+      this.tileSize = 10
       this.layers = { tiles: [], objects: [] }
       this.selectedObject = null
       this.currentMapId = null
@@ -272,6 +275,14 @@ export const useMapStore = defineStore('map', {
       this.gridOffsetX = 0
       this.gridOffsetY = 0
       this.mission = defaultMission()
+
+      const themeId = this.mission.pageTheme
+      if (themeId) {
+        import('./themeStore').then(({ useThemeStore }) => {
+          const themeStore = useThemeStore()
+          themeStore.setTheme(themeId, { syncMission: false })
+        })
+      }
     }
   }
 })

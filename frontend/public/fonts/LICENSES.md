@@ -26,6 +26,7 @@ Fichiers versionnés dans le repo ; ne pas redistribuer hors de ce projet sans v
 | `shared/heorot.woff2` | Heorot | Regular | Iconian Fonts / Daniel Zadorozny | Gratuit non-commercial ; donation commerciale | https://www.iconian.com |
 | `shared/overpass/overpass-black.woff2` | Overpass | 900 Black | Delve Fonts / RedHat | OFL | https://fonts.google.com/specimen/Overpass |
 | `shared/overpass/overpass-extrabold.woff2` | Overpass | 800 ExtraBold | Delve Fonts / RedHat | OFL | https://fonts.google.com/specimen/Overpass |
+| `shared/overpass/overpass-bold-italic.woff2` | Overpass | 700 Bold Italic | Delve Fonts / RedHat | OFL | https://fonts.google.com/specimen/Overpass |
 | `shared/source-sans-3/source-sans-3-light.woff2` | Source Sans 3 | 300 Light | Paul D. Hunt / Adobe | OFL | https://fonts.google.com/specimen/Source+Sans+3 |
 | `shared/source-sans-3/source-sans-3-semibold.woff2` | Source Sans 3 | 600 SemiBold | Paul D. Hunt / Adobe | OFL | https://fonts.google.com/specimen/Source+Sans+3 |
 | `shared/tex-gyre-heros/tex-gyre-heros-regular.woff2` | TeX Gyre Heros | Regular | GUST e-foundry | GUST Font License (libre) | https://www.gust.org.pl/projects/e-foundry/tex-gyre/heros |
@@ -55,6 +56,7 @@ Fichiers versionnés dans le repo ; ne pas redistribuer hors de ce projet sans v
 | Fichier | Famille | Auteur | Licence | URL source |
 |---------|---------|--------|---------|------------|
 | `classic/creepster.woff2` | Creepster | Sideshow | OFL | https://fonts.google.com/specimen/Creepster |
+| `classic/barlow-condensed-bold.woff2` | Barlow Condensed | 700 Bold | Jeremy Tribby | OFL | https://fonts.google.com/specimen/Barlow+Condensed |
 
 ---
 

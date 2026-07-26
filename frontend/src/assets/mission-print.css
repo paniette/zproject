@@ -55,7 +55,7 @@
 .mission-page-preview[data-mission-theme='classic'] {
   /* Polices sémantiques */
   --mp-font-quest:       "Creepster", fantasy;
-  --mp-font-hero:        "Creepster", fantasy;
+  --mp-font-hero:        "Barlow Condensed", "TeX Gyre Heros", sans-serif;
   --mp-font-meta:        "TeX Gyre Heros", "Arial", sans-serif;
   --mp-font-synopsis:    "Gorri Sans", Georgia, serif;
   --mp-font-section:     "TeX Gyre Heros", "Arial", sans-serif;
@@ -83,7 +83,7 @@
 .mission-page-preview[data-mission-theme='modern'] {
   /* Polices sémantiques */
   --mp-font-quest:       "League Gothic", "Overpass", sans-serif;
-  --mp-font-hero:        "League Gothic", "Overpass", sans-serif;
+  --mp-font-hero:        "Overpass", "League Gothic", sans-serif;
   --mp-font-meta:        "Overpass", "Arial", sans-serif;
   --mp-font-synopsis:    "Gorri Sans", Georgia, serif;
   --mp-font-section:     "Overpass", "Arial", sans-serif;

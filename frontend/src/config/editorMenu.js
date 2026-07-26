@@ -41,7 +41,7 @@ export function getEditorMenuVisibility () {
         propertyPanel: false,
         saveStatus: false,
         exportJson: false,
-        importJson: false,
+        importJson: true,
         exportXml: false,
         versions: false,
         uploadZip: false,

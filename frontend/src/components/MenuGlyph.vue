@@ -15,7 +15,17 @@
     <g v-else-if="name === 'redo'" transform="translate(24,0) scale(-1,1)">
       <path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z" />
     </g>
+    <!-- Nouvelle mission : document vierge + -->
+    <path
+      v-else-if="name === 'newMission'"
+      d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 2v5h5.5L13 4zM11 13h6v2h-6v-2zm0 4h6v2h-6v-2zM7 13h2v2H7v-2zm0 4h2v2H7v-2z"
+    />
     <path v-else-if="name === 'load'" d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2zm0 4l4 4-4 4v-3H4v-2h6V8z" />
+    <!-- Import JSON : flèche vers le haut dans un plateau -->
+    <path
+      v-else-if="name === 'importJson'"
+      d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"
+    />
     <path v-else-if="name === 'save'" d="M17 3H5c-1.11 0-2 .9-2 2v14a2 2 0 002 2h14a2 2 0 002-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" />
     <!-- Export image carte : paysage (Material “image”) -->
     <path
@@ -49,7 +59,7 @@ defineProps({
   name: {
     type: String,
     required: true,
-    validator: (v) => ['undo', 'redo', 'load', 'save', 'exportImage', 'exportPdf', 'heart', 'editorMap', 'editorMission'].includes(v)
+    validator: (v) => ['undo', 'redo', 'newMission', 'load', 'importJson', 'save', 'exportImage', 'exportPdf', 'heart', 'editorMap', 'editorMission'].includes(v)
   }
 })
 </script>

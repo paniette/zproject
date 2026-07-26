@@ -64,6 +64,20 @@
         </div>
       </div>
 
+      <label v-if="availablePageBackgrounds.length" class="field">
+        <span>{{ $t('missionEditor.pageBackgroundDeco') }}</span>
+        <select
+          :value="mission.pageBackground || ''"
+          class="input"
+          @change="patchPageBackground($event.target.value)"
+        >
+          <option value="">{{ $t('missionEditor.noPageBackground') }}</option>
+          <option v-for="bg in availablePageBackgrounds" :key="bg.id" :value="bg.id">
+            {{ bg.label }}
+          </option>
+        </select>
+      </label>
+
       <label class="field">
         <span>{{ $t('missionEditor.questCode') }}</span>
         <input v-model="mission.questCode" type="text" class="input" placeholder="B61" />
@@ -141,6 +155,7 @@
         <button type="button" class="btn-primary" @click="captureMap">{{ $t('missionEditor.captureMap') }}</button>
         <button v-if="mission.mapImageDataUrl" type="button" class="btn-secondary" @click="clearMapImage">{{ $t('missionEditor.removeImage') }}</button>
         <button type="button" class="btn-secondary" @click="printPreview">{{ $t('missionEditor.print') }}</button>
+        <button type="button" class="btn-secondary" :title="$t('header.exportJson')" @click="exportScenarioJson">{{ $t('missionEditor.exportJson') }}</button>
       </div>
     </div>
 
@@ -162,8 +177,10 @@ import { useThemeStore } from '@/stores/themeStore'
 import { deriveTilesFromLayers } from '@/utils/mission'
 import { requestCanvasExportWithoutGrid } from '@/services/canvasExport'
 import { printMissionPdf } from '@/services/missionPrint'
+import { exportScenarioJson as downloadScenarioJson } from '@/services/scenarioJson'
 import { GAME_TYPES } from '@/config/gameTypes'
 import { CORNER_IMAGES } from '@/config/missionCornerImages'
+import { PAGE_BACKGROUNDS } from '@/config/missionPageBackgrounds'
 import iconClassic from '@/assets/images/menu-setting-classic.jpg'
 import iconModern from '@/assets/images/menu-setting-modern.jpg'
 import iconFantasy from '@/assets/images/menu-setting-fantasy.jpg'
@@ -180,9 +197,14 @@ const { mission } = storeToRefs(mapStore)
 const gameTypes = GAME_TYPES.filter(t => t.id !== 'all')
 
 const availableCornerImages = computed(() => CORNER_IMAGES[themeStore.activeTheme] ?? [])
+const availablePageBackgrounds = computed(() => PAGE_BACKGROUNDS[themeStore.activeTheme] ?? [])
 
 function patchCornerImage (file) {
   mapStore.patchMission({ cornerImage: file || null })
+}
+
+function patchPageBackground (file) {
+  mapStore.patchMission({ pageBackground: file || null })
 }
 
 function patchCornerSide (side) {
@@ -268,6 +290,10 @@ function clearMapImage () {
 
 function printPreview () {
   printMissionPdf()
+}
+
+function exportScenarioJson () {
+  downloadScenarioJson(mapStore)
 }
 
 watch(

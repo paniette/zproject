@@ -3,6 +3,35 @@
     <div class="header-content">
       <div class="header-left">
         <MissionSitesFlyout>{{ $t('header.appTitle') }}</MissionSitesFlyout>
+        <div class="header-file-actions">
+          <button
+            type="button"
+            class="header-btn header-btn-icon"
+            :title="$t('header.newMissionTitle')"
+            @click="startNewMission"
+          >
+            <MenuGlyph name="newMission" />
+            <span class="sr-only">{{ $t('header.newMission') }}</span>
+          </button>
+          <button type="button" class="header-btn header-btn-icon" :title="$t('header.loadMap')" @click="openMapLoader">
+            <MenuGlyph name="load" />
+            <span class="sr-only">{{ $t('header.loadMap') }}</span>
+          </button>
+          <button
+            v-if="menuVis.importJson"
+            type="button"
+            class="header-btn header-btn-icon"
+            :title="$t('header.importJson')"
+            @click="openImportJsonModal"
+          >
+            <MenuGlyph name="importJson" />
+            <span class="sr-only">{{ $t('header.importJsonShort') }}</span>
+          </button>
+          <button type="button" class="header-btn header-btn-icon" :title="$t('header.saveMap')" @click="saveMap">
+            <MenuGlyph name="save" />
+            <span class="sr-only">{{ $t('header.saveMap') }}</span>
+          </button>
+        </div>
         <span
           v-if="menuVis.saveStatus"
           class="save-status"
@@ -70,14 +99,6 @@
           >
             {{ mapStore.isPreviewMode ? $t('header.exitPreview') : $t('header.preview') }}
           </button>
-          <button type="button" class="header-btn header-btn-icon" :title="$t('header.loadMap')" @click="openMapLoader">
-            <MenuGlyph name="load" />
-            <span class="sr-only">{{ $t('header.loadMap') }}</span>
-          </button>
-          <button type="button" class="header-btn header-btn-icon" :title="$t('header.saveMap')" @click="saveMap">
-            <MenuGlyph name="save" />
-            <span class="sr-only">{{ $t('header.saveMap') }}</span>
-          </button>
         </div>
 
         <div v-if="showExportsGroup" class="nav-group">
@@ -89,15 +110,6 @@
             @click="exportScenarioJson"
           >
             JSON
-          </button>
-          <button
-            v-if="menuVis.importJson"
-            type="button"
-            class="header-btn"
-            :title="$t('header.importJson')"
-            @click="openImportJsonModal"
-          >
-            {{ $t('header.importJsonShort') }}
           </button>
           <button
             v-if="menuVis.exportXml"
@@ -178,7 +190,7 @@
     <SaveMapModal
       :show="showSaveModal"
       :initial-name="saveModalInitialName"
-      @close="showSaveModal = false"
+      @close="onSaveModalClose"
       @submit="handleSaveNameSubmit"
     />
     <ImportMapJsonModal
@@ -190,7 +202,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch } from 'vue'
+import { ref, onMounted, computed, watch, nextTick } from 'vue'
+import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useLangStore } from '@/stores/langStore'
 import { SUPPORTED_LOCALES } from '@/i18n'
@@ -212,11 +225,13 @@ import api from '@/services/api'
 import { requestCanvasExportWithoutGrid } from '@/services/canvasExport'
 import { printMissionPdf } from '@/services/missionPrint'
 import { pushVersion } from '@/services/mapVersions'
+import { exportScenarioJson as downloadScenarioJson, buildMapPayload } from '@/services/scenarioJson'
 import { mapPayloadToXml } from '@/utils/mapExportXml'
 import { prepareMapForImport } from '@/utils/mapImport'
 import { getEditorMenuVisibility } from '@/config/editorMenu'
 
 const { t } = useI18n()
+const router = useRouter()
 const langStore = useLangStore()
 const supportedLocales = SUPPORTED_LOCALES
 const mapStore = useMapStore()
@@ -229,6 +244,7 @@ const showVersionsModal = ref(false)
 const showSaveModal = ref(false)
 const showDonateModal = ref(false)
 const pendingSave = ref(false)
+const pendingNewMission = ref(false)
 const showImportJsonModal = ref(false)
 
 const isUnsaved = ref(true)
@@ -249,21 +265,8 @@ const showExportsGroup = computed(
     menuVis.value.versions
 )
 
-function buildMapPayload () {
-  return {
-    id: mapStore.currentMapId || undefined,
-    name: mapStore.mapName,
-    pack: mapStore.currentPack,
-    grid: {
-      width: mapStore.gridSize.width,
-      height: mapStore.gridSize.height,
-      tileSize: mapStore.tileSize
-    },
-    layers: JSON.parse(JSON.stringify(mapStore.layers)),
-    gridOffsetX: mapStore.gridOffsetX,
-    gridOffsetY: mapStore.gridOffsetY,
-    mission: JSON.parse(JSON.stringify(mapStore.mission))
-  }
+function exportScenarioJson () {
+  downloadScenarioJson(mapStore)
 }
 
 function downloadTextFile (filename, text, mime) {
@@ -274,12 +277,6 @@ function downloadTextFile (filename, text, mime) {
   link.download = filename
   link.click()
   URL.revokeObjectURL(url)
-}
-
-function exportScenarioJson () {
-  const payload = buildMapPayload()
-  const name = (mapStore.mapName || 'scenario').replace(/[^\w\-]+/g, '_')
-  downloadTextFile(`${name}_${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify(payload, null, 2), 'application/json')
 }
 
 function openImportJsonModal () {
@@ -317,7 +314,7 @@ async function handleImportJsonSubmit (parsed) {
 }
 
 function exportScenarioXml () {
-  const payload = buildMapPayload()
+  const payload = buildMapPayload(mapStore)
   const name = (mapStore.mapName || 'scenario').replace(/[^\w\-]+/g, '_')
   downloadTextFile(`${name}_${new Date().toISOString().slice(0, 10)}.xml`, mapPayloadToXml(payload), 'application/xml;charset=utf-8')
 }
@@ -420,21 +417,62 @@ function ensureMapNameForSave () {
   return false
 }
 
+function onSaveModalClose () {
+  showSaveModal.value = false
+  pendingSave.value = false
+  pendingNewMission.value = false
+}
+
+function applyNewMission () {
+  mapStore.clearMap()
+  isUnsaved.value = true
+  if (router.currentRoute.value.name !== 'MapEditor') {
+    router.push('/')
+  } else {
+    nextTick(() => window.dispatchEvent(new Event('resize')))
+  }
+}
+
+async function startNewMission () {
+  if (mapStore.isUnsaved) {
+    if (confirm(t('header.newMissionSavePrompt'))) {
+      pendingNewMission.value = true
+      const ok = await saveMap()
+      if (!ok) {
+        if (!showSaveModal.value) pendingNewMission.value = false
+        return
+      }
+      pendingNewMission.value = false
+      applyNewMission()
+      return
+    }
+    if (!confirm(t('header.newMissionDiscardPrompt'))) return
+  }
+  applyNewMission()
+}
+
 async function handleSaveNameSubmit (name) {
   mapStore.mapName = String(name).trim()
   showSaveModal.value = false
+  const shouldNew = pendingNewMission.value
   if (pendingSave.value) {
     pendingSave.value = false
-    await saveMap()
+    const ok = await saveMap()
+    if (shouldNew && ok) {
+      pendingNewMission.value = false
+      applyNewMission()
+    } else if (shouldNew && !ok) {
+      pendingNewMission.value = false
+    }
   }
 }
 
 const saveMap = async () => {
   try {
-    if (!ensureMapNameForSave()) return
+    if (!ensureMapNameForSave()) return false
     
     const mapData = {
-      ...buildMapPayload(),
+      ...buildMapPayload(mapStore),
       metadata: {
         created: mapStore.currentMapId ? undefined : new Date().toISOString(),
         modified: new Date().toISOString(),
@@ -454,15 +492,19 @@ const saveMap = async () => {
     isUnsaved.value = false
     mapStore.isUnsaved = false
     try {
-      const snapshot = { ...buildMapPayload(), id: mapStore.currentMapId }
+      const snapshot = { ...buildMapPayload(mapStore), id: mapStore.currentMapId }
       pushVersion(mapStore.currentMapId || 'draft', t('map.versionLabel'), snapshot)
     } catch (verErr) {
       console.warn('Version locale non enregistrée', verErr)
     }
-    alert(t('header.saveSuccess') + (config.staticMode ? t('header.saveSuccessLocal') : ''))
+    if (!pendingNewMission.value) {
+      alert(t('header.saveSuccess') + (config.staticMode ? t('header.saveSuccessLocal') : ''))
+    }
+    return true
   } catch (error) {
     console.error('Error saving map:', error)
     alert(t('header.saveError', { msg: error.response?.data?.error || error.message }))
+    return false
   }
 }
 
@@ -551,7 +593,17 @@ const exportMap = async () => {
 .header-left {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 12px;
+  min-width: 0;
+}
+
+.header-file-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: 10px;
+  margin-left: 2px;
+  border-left: 1px solid rgba(255, 255, 255, 0.22);
 }
 
 .header-nav {

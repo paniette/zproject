@@ -22,7 +22,8 @@ export function defaultMission () {
     footerLabel: 'QUÊTE - ZOMBICIDE',
     mapImageDataUrl: null,
     cornerImage: null,
-    cornerSide: 'left'
+    cornerSide: 'left',
+    pageBackground: null
   }
 }
 
