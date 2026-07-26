@@ -81,7 +81,9 @@
     "rotate": "Rotater",
     "delete": "Supprimer",
     "rotateSelection": "Pivoter la sélection (+90°, équivalent clic droit)",
-    "rotateSelectionSr": "Pivoter la sélection"
+    "rotateSelectionSr": "Pivoter la sélection",
+    "bringToFront": "Mettre au premier plan",
+    "bringToFrontSr": "Mettre au premier plan"
   },
   "assetPanel": {
     "title": "Packs & Assets",

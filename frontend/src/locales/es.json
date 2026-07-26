@@ -81,7 +81,9 @@
     "rotate": "Rotar",
     "delete": "Eliminar",
     "rotateSelection": "Rotar selección (+90°, equivalente a clic derecho)",
-    "rotateSelectionSr": "Rotar selección"
+    "rotateSelectionSr": "Rotar selección",
+    "bringToFront": "Traer al frente",
+    "bringToFrontSr": "Traer al frente"
   },
   "assetPanel": {
     "title": "Packs & Assets",

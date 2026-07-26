@@ -22,6 +22,17 @@
         <span class="tool-icon" aria-hidden="true">↻</span>
         <span class="sr-only">{{ $t('toolbar.rotateSelectionSr') }}</span>
       </button>
+      <button
+        v-if="selectedIsObject"
+        type="button"
+        class="tool-btn tool-btn-bring-front"
+        :disabled="mapStore.isPreviewMode || selectedIsAlreadyFront"
+        :title="$t('toolbar.bringToFront')"
+        @click="bringSelectionToFront"
+      >
+        <span class="tool-icon" aria-hidden="true">⬆</span>
+        <span class="sr-only">{{ $t('toolbar.bringToFrontSr') }}</span>
+      </button>
     </div>
   </div>
 </template>
@@ -43,6 +54,18 @@ const tools = computed(() => [
   { id: 'delete', label: t('toolbar.delete'), icon: '🗑️' }
 ])
 
+const selectedIsObject = computed(() => {
+  const id = toolStore.selectedObject
+  if (!id) return false
+  return mapStore.layers.objects.some((o) => o.id === id)
+})
+
+const selectedIsAlreadyFront = computed(() => {
+  const objs = mapStore.layers.objects
+  if (!objs.length) return true
+  return objs[objs.length - 1]?.id === toolStore.selectedObject
+})
+
 function rotateSelection () {
   const id = toolStore.selectedObject
   if (!id) return
@@ -53,6 +76,12 @@ function rotateSelection () {
   } else if (tile) {
     mapStore.updateTile(tile.id, { rotation: (tile.rotation + 90) % 360 })
   }
+}
+
+function bringSelectionToFront () {
+  const id = toolStore.selectedObject
+  if (!id) return
+  mapStore.bringObjectToFront(id)
 }
 </script>
 
@@ -108,7 +137,8 @@ function rotateSelection () {
   box-shadow: 0 0 8px var(--glow-strong);
 }
 
-.tool-btn-rotate-selection {
+.tool-btn-rotate-selection,
+.tool-btn-bring-front {
   border-color: color-mix(in srgb, var(--primary-color) 55%, var(--brown-light));
 }
 

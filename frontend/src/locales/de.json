@@ -81,7 +81,9 @@
     "rotate": "Drehen",
     "delete": "Löschen",
     "rotateSelection": "Auswahl drehen (+90°, entspricht Rechtsklick)",
-    "rotateSelectionSr": "Auswahl drehen"
+    "rotateSelectionSr": "Auswahl drehen",
+    "bringToFront": "In den Vordergrund",
+    "bringToFrontSr": "In den Vordergrund"
   },
   "assetPanel": {
     "title": "Packs & Assets",

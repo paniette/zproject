@@ -27,6 +27,7 @@ L’outil **« place »** est fusionné avec **« move »** (`toolStore`) :
 - Clic : sélection tuile/objet (sauf **delete**).
 - Drop depuis panneau → **sélection auto** du nouvel élément.
 - **Hover-to-selection** : `hoveredItem` pris en compte au clic.
+- Bouton **premier plan** (toolbar) : visible seulement si un **objet** est sélectionné (pas une tuile) ; réordonne `layers.objects` (dernier = devant au dessin / hit-test).
 
 ---
 

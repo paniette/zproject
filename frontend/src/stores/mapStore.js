@@ -207,6 +207,16 @@ export const useMapStore = defineStore('map', {
       }
     },
 
+    /** Dernier dans layers.objects = devant au dessin / hit-test. */
+    bringObjectToFront (objectId) {
+      const i = this.layers.objects.findIndex(o => o.id === objectId)
+      if (i === -1 || i === this.layers.objects.length - 1) return
+      this._recordBeforeMutation()
+      this.isUnsaved = true
+      const [obj] = this.layers.objects.splice(i, 1)
+      this.layers.objects.push(obj)
+    },
+
     selectObject (objectId) {
       this.selectedObject = objectId
     },
