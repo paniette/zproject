@@ -12,7 +12,7 @@ Rendu imprimable, capture carte, mise en page adaptative. Retour : [`CONTEXT.md`
 | `MissionPagePreview.vue` | Rendu A4 live ; `#mission-print-root`. |
 | `assets/mission-fonts.css` | `@font-face` pour les 5 thèmes + fallbacks Fantasy — polices auto-hébergées. |
 | `assets/mission-print.css` | Variables par `data-mission-theme` (dont `--mp-font-*`), `@media print`. |
-| `utils/mission.js` | `defaultMission()`, `mergeMissionFromPayload`, `deriveTilesFromLayers`. |
+| `utils/mission.js` | `defaultMission()`, `mergeMissionFromPayload`, `deriveTilesFromLayers`, `deriveMaterialRequiredFromLayers`. |
 | `config/missionCornerImages.js` | Décor coin par série. |
 | `config/tokenSummary.js` | Règles encart matériel (exclusions, fusion portes…). |
 | `config/missionSites.js` | Liens communautaires (flyout). |
@@ -24,6 +24,8 @@ Rendu imprimable, capture carte, mise en page adaptative. Retour : [`CONTEXT.md`
 Champs principaux : `questCode`, `title`, `authors[]`, `difficulty`, `playerCount`, `estimatedDuration`, `synopsis`, `objectives[]`, `specialRules[]`, `materialRequired`, `tilesUsed[]`, `pageTheme`, `pageEffect`, `footerLabel`, `mapImageDataUrl`, `cornerImage`, `cornerSide`.
 
 Source complète : `defaultMission()` dans `utils/mission.js`. Persisté **dans** le JSON carte (`mapStore.mission`).
+
+**`materialRequired`** : prérempli automatiquement depuis les **packs des tuiles** posées (`addTile` / `removeTile` dans `mapStore`) ; éditable dans le formulaire ; **écrasé** au prochain ajout/retrait de tuile. Non recalculé au `loadMap` (valeur JSON conservée).
 
 ---
 

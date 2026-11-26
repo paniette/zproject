@@ -38,6 +38,42 @@ export function deriveTilesFromLayers (layers) {
   return sortTileCodes(Array.from(codes))
 }
 
+/** Pack id = premier segment du chemin asset tuile (`G-Zombicide-WD/01.tiles/...`). */
+export function packIdFromTileAsset (asset) {
+  if (!asset || typeof asset !== 'string') return null
+  const id = asset.split(/[/\\]/)[0]?.trim()
+  return id || null
+}
+
+/** Libellé boîte pour matériel requis : retire le préfixe Zombicide courant. */
+export function formatMaterialPackLabel (name) {
+  if (!name || typeof name !== 'string') return ''
+  const trimmed = name.trim()
+  const stripped = trimmed.replace(/^Zombicide\s*(Extension:\s*|:\s*)?/i, '').trim()
+  return stripped || trimmed
+}
+
+/**
+ * Liste unique des packs des tuiles posées → chaîne pour `mission.materialRequired`.
+ * @param {object} layers
+ * @param {Array<{ id: string, name?: string }>} packs
+ */
+export function deriveMaterialRequiredFromLayers (layers, packs = []) {
+  const byId = new Map()
+  for (const p of packs || []) {
+    if (p?.id) byId.set(p.id, p.name || p.id)
+  }
+  const labels = new Set()
+  for (const t of layers?.tiles || []) {
+    const packId = packIdFromTileAsset(t.asset)
+    if (!packId) continue
+    const rawName = byId.get(packId) || packId
+    const label = formatMaterialPackLabel(rawName)
+    if (label) labels.add(label)
+  }
+  return Array.from(labels).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' })).join(', ')
+}
+
 function sortTileCodes (codes) {
   return codes.sort((a, b) => {
     const na = parseInt(a, 10)

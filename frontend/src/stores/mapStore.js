@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
-import { defaultMission, mergeMissionFromPayload } from '@/utils/mission'
+import { defaultMission, mergeMissionFromPayload, deriveMaterialRequiredFromLayers } from '@/utils/mission'
+import { usePacksStore } from '@/stores/packsStore'
 const MAX_HISTORY = 50
 
 const LEGACY_PAGE_THEME = {
@@ -156,6 +157,12 @@ export const useMapStore = defineStore('map', {
       this.tileSize = size
     },
 
+    /** Met à jour materialRequired sans entrée d’historique séparée (appelé depuis add/removeTile). */
+    _syncMaterialRequiredFromTiles () {
+      const packsStore = usePacksStore()
+      this.mission.materialRequired = deriveMaterialRequiredFromLayers(this.layers, packsStore.packs)
+    },
+
     addTile (x, y, asset, rotation = 0) {
       this._recordBeforeMutation()
       this.isUnsaved = true
@@ -166,12 +173,14 @@ export const useMapStore = defineStore('map', {
         asset,
         rotation
       })
+      this._syncMaterialRequiredFromTiles()
     },
 
     removeTile (tileId) {
       this._recordBeforeMutation()
       this.isUnsaved = true
       this.layers.tiles = this.layers.tiles.filter(t => t.id !== tileId)
+      this._syncMaterialRequiredFromTiles()
     },
 
     updateTile (tileId, updates) {
